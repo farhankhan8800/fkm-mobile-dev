@@ -7,7 +7,7 @@ const HeadTag = (props) => {
         <meta charSet="UTF-8" />
         <meta
           name="description"
-          content="Online Shopping India, Best Deals, Offers, Coupons & Free Stuff in India | Freekaamaal"
+          content="Onlinee Shopping India, Best Deals, Offers, Coupons & Free Stuff in India | Freekaamaal"
         />
         <meta
           name="keywords"
