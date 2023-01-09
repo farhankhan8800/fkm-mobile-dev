@@ -59,8 +59,7 @@ const EnterOtp = () => {
               phoneotp:OTP
             },{
               headers:{
-                'Access-Control-Allow-Origin':'*',
-                Authorization:registerToken
+                Authorization:registerToken,
                 
               }
             })
