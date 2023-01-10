@@ -23,7 +23,7 @@ const CategoryDetail = () => {
   const router = useRouter();
   const cate_slug = router.query["category-detail"];
 
- 
+  // console.log("Component agya",cate_slug);
   
   const GetData = async () => {
 
@@ -70,10 +70,13 @@ const CategoryDetail = () => {
     }
   };
 
-
   useEffect(() => {
-    GetData();
-  },[Page, changeOption]);
+    // console.log("PAGE UPDATE----")
+    if(cate_slug){
+      // console.log("firse")
+      GetData();
+    }
+  },[Page, changeOption,cate_slug]);
 
   const dealsTabCall = () => {
     setChangeOption("deals");

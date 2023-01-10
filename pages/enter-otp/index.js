@@ -54,14 +54,14 @@ const EnterOtp = () => {
         //   setServerErr(result)
          
         // }
+        const verifyUser1 = "https://fkmdata.freekaamaal.com/test-api.php";
         let { result } = await axios.post(verifyUser, {
               apiAuth:apiAuth,
               phoneotp:OTP
             },{
               headers:{
-                Authorization:registerToken,
-                
-              }
+                Authorization:registerToken
+                }
             })
         console.log(result)
       } catch (error) {

@@ -76,8 +76,10 @@ const StoreDetails = () => {
       } catch (err) {}
     };
     useEffect(()=>{
+      if(store_slug){
       storeData();
-    },[Page, changeOption])
+      }
+    },[Page, changeOption,store_slug])
   
  
 
