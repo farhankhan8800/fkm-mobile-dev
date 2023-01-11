@@ -11,6 +11,7 @@ import CashBackStore from "components/homeComponents/CashBackStore";
 import HowToEarnCashback from "components/HowToEarnCashback";
 import { homeApi } from "service/API";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const apiAuth = process.env.API_AUTH;
 
@@ -31,43 +32,38 @@ export default function Home() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const GetData = async () => {
     try {
-      let data = await fetch(homeApi, {
-        method: "post",
-        body: JSON.stringify({
+      let {data} = await axios.post(homeApi, {
           apiAuth: apiAuth,
           page: page,
           sponsored_count: sponsoredCount,
-        }),
-        mode: "cors",
-        Headers: {
+      },
+      { 
+        headers: {
           "Content-Type": "application/json",
-        },
+        }
       });
-      let result = await data.json();
+    
+      console.log(data.response)
+      setCbStore(data.response.cbstores);
+      setCarousel(data.response.slider);
+      setLiveDeal(data.response.live_deals);
+      setDealofday(data.response.sticky);
+      setHowtoearncashback(data.response.earn_cashback);
 
-      setCbStore(result.response.cbstores);
-      setCarousel(result.response.slider);
-      setLiveDeal(result.response.live_deals);
-      setDealofday(result.response.sticky);
-      setHowtoearncashback(result.response.earn_cashback);
-
-      if (result.response.hotdeals.length == 0) {
+      if (data.response.hotdeals.length == 0) {
         // console.log(`no data`)
         setNoData(true);
       } else {
-        setHotdeals([...hotdeals, ...result.response.hotdeals]);
+        setHotdeals([...hotdeals, ...data.response.hotdeals]);
       }
-
-      setSponsoredCount(result.response.sponsored_count);
+      setSponsoredCount(data.response.sponsored_count);
     } catch (error) {}
   };
 
   useEffect(() => {
     GetData();
-  }, [ page]);
-
+  }, [page]);
   // console.log(hotdeals)
-
   const pageFunction = () => {
     setPage(page + 1);
   };

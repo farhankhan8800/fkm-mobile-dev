@@ -9,6 +9,7 @@ import Image from "next/image";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 import { registerApi } from "../../service/API";
+import axios from "axios";
 
 const apiAuth = process.env.API_AUTH
 
@@ -49,10 +50,9 @@ const SignUp = () => {
     ) {
       SetCallWarning(true);
     } else {
-      // console.log(`email = ${email} , password = ${password}, mobile = ${mobile} , mobile = ${userName}`)
-      let result = await fetch(registerApi, {
-        method: "post",
-        body: JSON.stringify({
+      try {
+        // console.log(`email = ${email} , password = ${password}, mobile = ${mobile} , mobile = ${userName}`)
+      let {data} = await axios.post(registerApi, {
           apiAuth:apiAuth,
           email: email,
           pass: password,
@@ -61,28 +61,33 @@ const SignUp = () => {
           name: userName,
           referral_code:"",
           app_device_id:""
-        }),
-          mode: 'cors', 
-          Headers: {
-             'Content-Type': 'application/json', 
+        },
+        {
+          headers:{
+            "Content-Type": "application/json",
           }
-      });
-      result = await result.json();
-      console.log(result);
-      if (result.status == 1) {
-         localStorage.setItem("registerToken", JSON.stringify(result));
-        setTimeout(() => {
+        }
+        )
+      if (data.status == "1") {
+         localStorage.setItem("registerToken", JSON.stringify(data));
+          setTimeout(() => {
           setEmail("");
           setPassword("");
           setUserName("");
           setMobile("");
           setShowSignUp(true);
-        }, 1000);
+        }, 500);
         setTimeout(() => {
           router.push("/enter-otp");
         }, 3000);
       } else {
-        setSignupError(result.message);
+       
+        
+      }
+      } catch (error) {
+      // setSignupError(error.message);
+      console.log(error)
+      setSignupError(error.response.data.message)
       }
     }
   };
@@ -104,10 +109,8 @@ const SignUp = () => {
     if (item.length < 9) {
       setMobileErr(true);
       setMobile("");
-     
     } else {
       setMobileErr(false);
-      
     }
     setMobile(item);
   };

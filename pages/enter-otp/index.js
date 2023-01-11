@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import enterOtpImage from "../../public/images/enter-otp.png";
-// import OTPInput  from "otp-input-react";
-// import OTPInput, { ResendOTP } from "otp-input-react";
+
 import { Box, Button, Typography, TextField, Alert} from "@mui/material";
 import Image from "next/image";
 import Header from "../../components/headerComponent/Header";
@@ -16,55 +15,51 @@ const EnterOtp = () => {
   const [OtpErr, setOtpErr] = useState(false);
   const [serverErr, setServerErr] = useState()
   const [registerToken, setRegisterToken] = useState()
+  const [time, setTime] = useState(90)
   const router = useRouter();
 
   const apiAuth = process.env.API_AUTH
   useEffect(()=>{
-   
+    setRegisterToken(JSON.parse(localStorage.getItem("registerToken")).token)
+    resendOTP()
   },[])
- 
-  // console.log(registerToken)
   
+ 
+  const resendOTP =()=>{
+   
+  }
+  useEffect(() => {
+    if(time == 0 ){
+      setTime(time);
+    }else{
+     
+      const timer = setInterval(function() {
+        setTime(time - 1);
+    }, 1000)
+    return () => {
+       clearInterval(timer)
+    }
+    }
+    
+
+
+   }, [time]);
   const onSubmit = async (e) => {
     e.preventDefault()
-      setRegisterToken(JSON.parse(localStorage.getItem("registerToken")).token)
      if(OTP){
-      try {
-       
 
-        // let result = await fetch(verifyUser, {
-        //   method: "post",
-        //   headers:headers ,
-        //   mode: 'cors',
-        //   body: JSON.stringify({
-        //     apiAuth:apiAuth,
-        //     phoneotp:OTP
-        //   }),
-        // });
-        // result = await result.json();
-       
-        // if(result.status == 1){
-  
-        //    setTimeout(() => {
-        //      localStorage.clear("registerToken")
-        //      setOTP("");
-        //       router.push("/login");
-        //     }, 1000);
-        // }else{
-        //   setServerErr(result)
-         
-        // }
+      try {
         let { result } = await axios.post(verifyUser, {
               apiAuth:apiAuth,
               phoneotp:OTP
             },{
               headers:{
                 Authorization:registerToken,
-                
               }
             })
-        console.log(result)
+        console.log(result.response)
       } catch (error) {
+        setServerErr(error.response.data)
       }
      }
      else{
@@ -126,26 +121,18 @@ const EnterOtp = () => {
                 serverErr? <Box sx={{paddingTop:"10px"}}><Alert severity="error">{serverErr.message}</Alert></Box>:""
             }
            
-            {/* <OTPInput
-              value={OTP}
-              inputClassName="input_otp_box"
-              onChange={setOTP}
-              autoFocus
-              OTPLength={6}
-              timeInterval="120"
-              otpType="number"
-              disabled={false}
-            /> */}
-            {/* <ResendOTP
-              handelResendClick={() => console.log("Resend clicked")}
-            /> */}
+           <Box sx={{display:"flex", padding:"10px", justifyContent:"space-between", alignItems:"center"}}> 
+            <Typography  fontSize={"21px"} fontWeight={"600"} color={"#f27935"}>00:{time}s</Typography> 
+            <Button variant="outlined">Re send OTP</Button>
+           </Box>
+            
             <Button
               variant="contained"
               sx={{
                 width: "100%",
                 color: "#fff",
                 fontWeight: "bold",
-                margin: "20px 0",
+                margin: "10px 0",
                 letterSpacing: "1px",
                 fontSize: "17px",
               }}
@@ -163,3 +150,5 @@ const EnterOtp = () => {
 }
 
 export default EnterOtp
+
+            

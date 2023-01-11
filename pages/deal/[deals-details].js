@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import {useEffect, useState } from "react";
 import { deal_detail} from "service/API"
 import CircularProgress from '@mui/material/CircularProgress';
+import axios from "axios";
 
 const apiAuth = process.env.API_AUTH
 
@@ -26,38 +27,30 @@ useEffect(()=>{
   const storeData = async () => {
     
     try {
-      let resp = await fetch(deal_detail, {
-        method: "Post",
-        body: JSON.stringify({
+      let {data} = await axios.post(deal_detail, {
           apiAuth: apiAuth,
           page: "1",
           deal_slug: dealSlug,
           device_type:"4"
-        }),
-        mode: "cors",
-        Headers: {
-          "Content-Type": "application/json",
         },
+        {  
+          headers: {
+          "Content-Type": "application/json",
+        }
       });
-      let result = await resp.json();
 
-      setDeal(result.response.deal)
-      setSimilarDeal(result.response.related_deals)
-  
+
+      setDeal(data.response.deal)
+      setSimilarDeal(data.response.related_deals)
     } catch (err) {
     
     }
-   
   }
+  
   storeData()
 },[dealSlug])
 
-
-// console.log(similarDeal)
-// console.log(setDeal)
-
-
-
+   
   return (
     <>
      
@@ -172,7 +165,10 @@ useEffect(()=>{
                     </Typography>
                     <div className="about_the_deals" id="about_the_deals">
                     {
-                      // deal.deal_description_url
+                        deal.deal_description_url.replace(/(<([^>]+)>)/ig,"")
+                       // deal.deal_description_url
+                        // deal.deal_description_url
+                        // html2plaintext(deal.deal_description_url)
                     }
                     </div>
                   </Box>
@@ -219,6 +215,9 @@ useEffect(()=>{
           }
           .about_the_deals {
             padding: 10px 0 !important;
+          }
+          .about_the_deals p{
+        display :block
           }
           .about_the_deals_tag strong {
             color: rgba(62, 62, 168, 0.521);

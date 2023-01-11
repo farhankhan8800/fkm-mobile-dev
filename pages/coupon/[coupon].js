@@ -63,8 +63,10 @@ const couponid = router.query["coupon"];
   };
 
   useEffect(()=>{
+    if(couponid){
     GetData()
-  },[])
+    }
+  },[couponid])
   
   
 

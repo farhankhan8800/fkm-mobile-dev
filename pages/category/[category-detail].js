@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { categoryDetailApi } from "../../service/API";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 const apiAuth = process.env.API_AUTH;
 
@@ -25,55 +26,56 @@ const CategoryDetail = () => {
 
  
   
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const GetData = async () => {
 
     try {
-      let data = await fetch(categoryDetailApi, {
-        method: "post",
-        body: JSON.stringify({
+      let {data} = await axios.post(categoryDetailApi, {
+     
+       
           apiAuth: apiAuth,
           page: Page,
           cate_slug: cate_slug,
           option: changeOption,
-        }),
-        mode: "cors",
-        Headers: {
-          "Content-Type": "application/json",
         },
-      });
-      let result = await data.json();       
+        { headers: {
+          "Content-Type": "application/json",
+        }
+      },
+      );
+       
       if(changeOption ==""){
-          setCategoryProduct(result.response.category);
-          if((result.response.deals).length == 0){
+          setCategoryProduct(data.response.category);
+          if((data.response.deals).length == 0){
             setNoDealData(true)
           }else{
-            setCategoryDeals([...categoryDeals, ...result.response.deals]);
+            setCategoryDeals([...categoryDeals, ...data.response.deals]);
           }
           
       }else if(changeOption =="deals") {
-        if((result.response.deals).length == 0){
+        if((data.response.deals).length == 0){
           setNoDealData(true)
         }else{
-          setCategoryDeals([...categoryDeals, ...result.response.deals]);
+          setCategoryDeals([...categoryDeals, ...data.response.deals]);
         }
 
       }else if(changeOption =="coupons"){
-        if((result.response.coupons).length == 0){
+        if((data.response.coupons).length == 0){
           setNoCouponData(true)
         }else{
-          setCategoryCoupons([...categoryCoupons, ...result.response.coupons]);
+          setCategoryCoupons([...categoryCoupons, ...data.response.coupons]);
         }
-        
       }
     } catch (error) {
       return error;
     }
   };
-
-
+  
   useEffect(() => {
+    if(cate_slug){
     GetData();
-  },[Page, changeOption]);
+    }
+  },[Page, changeOption,cate_slug]);
 
   const dealsTabCall = () => {
     setChangeOption("deals");

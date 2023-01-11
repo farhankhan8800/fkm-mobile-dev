@@ -7,6 +7,7 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import { useRouter } from "next/router";
 import CashBackClaimCard from "components/CashBackClaimCard";
 import Link from "next/link";
+import axios from "axios";
 import { StoreDetailApi } from "service/API";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Image from "next/image";
@@ -36,50 +37,47 @@ const StoreDetails = () => {
 
     const storeData = async () => {
       try {
-        let resp = await fetch(StoreDetailApi, {
-          method: "post",
-          body: JSON.stringify({
+        let {data} = await axios.post(StoreDetailApi, {
             apiAuth: apiAuth,
             page: Page,
             store_slug: store_slug,
             opction: changeOption,
-          }),
-          mode: "cors",
-          Headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        let result = await resp.json();
-        setStore_data(result.response.store_details);
-        setStoreRate(result.response.store_rates);
+          }, 
+            {
+              headers: {
+                "Content-Type": "application/json",  
+              }
+            });
+        setStore_data(data.response.store_details);
+        setStoreRate(data.response.store_rates);
         if (changeOption == "") {
-          if((result.response.deals).length  == 0){
+          if((data.response.deals).length  == 0){
             setNoDealData(true)
           }else{
-            setStoreDeals([...storeDeals, ...result.response.deals]);
+            setStoreDeals([...storeDeals, ...data.response.deals]);
           }
           
         } else if (changeOption == "deals") {
-          if((result.response.deals).length   == 0){
+          if((data.response.deals).length   == 0){
             setNoDealData(true)
           }else{
-            setStoreDeals([...storeDeals, ...result.response.deals]);
+            setStoreDeals([...storeDeals, ...data.response.deals]);
           }
         } else if (changeOption == "coupons") {
-          if((result.response.coupons).length == 0){
+          if((data.response.coupons).length == 0){
             setNoCouponData(true)
           }else{
-            setStoreCoupons([...storeCoupons, ...result.response.coupons]);
+            setStoreCoupons([...storeCoupons, ...data.response.coupons]);
           }
           
         }
       } catch (err) {}
     };
     useEffect(()=>{
+      if(store_slug){
       storeData();
-    },[Page, changeOption])
-  
- 
+      }
+    },[Page, changeOption,store_slug])
 
   const addDealPage = () => {
     setPage(Page + 1);
