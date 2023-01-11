@@ -24,7 +24,7 @@ const CategoryDetail = () => {
   const router = useRouter();
   const cate_slug = router.query["category-detail"];
 
- 
+  // console.log("Component agya",cate_slug);
   
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const GetData = async () => {
@@ -70,10 +70,19 @@ const CategoryDetail = () => {
       return error;
     }
   };
+<<<<<<< HEAD
   
   useEffect(() => {
     if(cate_slug){
     GetData();
+=======
+
+  useEffect(() => {
+    // console.log("PAGE UPDATE----")
+    if(cate_slug){
+      // console.log("firse")
+      GetData();
+>>>>>>> 4d7ac1dc5d01a175bced95d9fb219ea5763d77bf
     }
   },[Page, changeOption,cate_slug]);
 

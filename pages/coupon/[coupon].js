@@ -63,9 +63,14 @@ const couponid = router.query["coupon"];
   };
 
   useEffect(()=>{
+<<<<<<< HEAD
     if(couponid){
     GetData()
     }
+=======
+    if(couponid)
+      GetData()
+>>>>>>> 4d7ac1dc5d01a175bced95d9fb219ea5763d77bf
   },[couponid])
   
   

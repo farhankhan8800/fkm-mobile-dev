@@ -78,6 +78,8 @@ const StoreDetails = () => {
       storeData();
       }
     },[Page, changeOption,store_slug])
+  
+ 
 
   const addDealPage = () => {
     setPage(Page + 1);
