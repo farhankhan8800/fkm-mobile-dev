@@ -21,3 +21,7 @@ export const coupon_detail= "https://fkmdata.freekaamaal.com/coupons/coupon-deta
 export const deal_detail = "https://fkmdata.freekaamaal.com/deals/dealdetail"
 
 export const verifyUser = "https://fkmdata.freekaamaal.com/user/verifyuser"
+
+export const clickHistoryAPI = "https://fkmdata.freekaamaal.com/cashback/click-history"
+
+export const cashbackHistoryAPI = "https://fkmdata.freekaamaal.com/cashback/cashback-history"

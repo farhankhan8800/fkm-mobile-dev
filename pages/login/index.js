@@ -35,14 +35,12 @@ const Login = () => {
   const router = useRouter();
 
   useEffect(() => {
+   
     setUserdata(localStorage.getItem("user"));
     if (userdata) {
       router.push("/");
     }
   },[router, userdata]);
-
-
-
   const onSubmit = async (e) => {
     e.preventDefault()
     if (email.length < 4 || password.length < 6) {

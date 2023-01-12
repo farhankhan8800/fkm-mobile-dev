@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 import Image from "next/image";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,41 +11,60 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import axios from "axios";
+import { useEffect } from "react";
+import { useState } from "react";
+import {clickHistoryAPI} from "service/API"
 
-const storeData = [
-  {
-    store: "xyxxy",
-    amount: 7635,
-    status: "conform",
-  },
-  {
-    store: "xyxxy",
-    amount: 7635,
-    status: "conform",
-  },
-  {
-    store: "xyxxy",
-    amount: 7635,
-    status: "conform",
-  },
-  {
-    store: "xyxxy",
-    amount: 7635,
-    status: "panding",
-  },
-  {
-    store: "xyxxy",
-    amount: 7635,
-    status: "conform",
-  },
-  {
-    store: "xyxxy",
-    amount: 7635,
-    status: "panding",
-  },
-];
+
+const apiAuth = process.env.API_AUTH
 
 const ClickHistory = () => {
+
+const [click_History, setClick_History] = useState([])
+const [authToken, setAuthToken] = useState()
+const [page, setPage] = useState()
+const [noMoreData,setNoMoreData] = useState(false)
+const [click_history_title , setClick_history_title] = useState()
+
+// eslint-disable-next-line react-hooks/exhaustive-deps
+const getData = async ()=>{
+  try {
+    const {data} = await axios.post(clickHistoryAPI,{
+        apiAuth:apiAuth,
+        device_type:"4",
+        page:page
+    },
+    {
+      headers:{
+        Authorization:authToken
+      }
+    })
+
+  setClick_history_title(data.response.top_desc)
+  if((data.response.click_history).length == 0){
+    setNoMoreData(true)
+  }else{
+    setClick_History([...click_History,...data.response.click_history])
+  }
+  
+ } catch (error) {
+   
+ }
+ } 
+  useEffect(()=>{
+    setAuthToken(JSON.parse(localStorage.getItem("user")).token)
+  },[])
+
+  useEffect(()=>{
+    getData()
+  },[authToken, page])
+
+  
+const moreData = ()=>{
+  setPage(page + 1)
+}
+
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,
@@ -73,36 +92,63 @@ const ClickHistory = () => {
       <div style={{ paddingTop: "56px" }}>
         <Box sx={{ p: 2, m: 2, bgcolor: "#f1f1f1", borderRadius: "5px" }}>
           <Typography component="p" fontSize="13px" color="gray">
-            tting, remaining essentially unchanged. It was popularised in the
-            1960s with the release of Letraset sheets containing Lorem Ipsum
-            passages, and more recently with desktop p
+           {
+            click_history_title ? click_history_title :"Loding..."
+           }
           </Typography>
         </Box>
         <Box sx={{ m: 2 }}>
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 300 }} aria-label="customized table">
+         
+            <Table sx={{minWidth:"350px"}}  aria-label="customized table">
               <TableHead>
                 <TableRow>
                   <StyledTableCell>SN</StyledTableCell>
                   <StyledTableCell>Store</StyledTableCell>
                   <StyledTableCell>Amount</StyledTableCell>
-                  <StyledTableCell>Status</StyledTableCell>
+                  <StyledTableCell>Last Click</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {storeData.map((item, i) => (
+                {
+                click_History  &&  click_History.map((item, i) => (
                   <StyledTableRow key={i + 1}>
                     <StyledTableCell>{i + 1}</StyledTableCell>
                     <StyledTableCell>{item.store}</StyledTableCell>
-                    <StyledTableCell>&#8377; {item.amount}</StyledTableCell>
-                    <StyledTableCell>{item.status}</StyledTableCell>
+                    <StyledTableCell>&#8377; {item.num_of_time}</StyledTableCell>
+                    <StyledTableCell>{item.last_click}</StyledTableCell>
                   </StyledTableRow>
-                ))}
+                ))
+
+                }
+             
               </TableBody>
             </Table>
+           
+            
           </TableContainer>
-        </Box>
+        </Box>{
+          noMoreData ? "No More Data...":<>
+          {
+          click_History ?  <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
+          <Button onClick={moreData} variant="outlined">More Data</Button>
+        </Box> :""
+        }
+          </>
+        }
       </div>
+      <style jxs>{`
+      .css-sli737-MuiTableCell-root{
+        padding: 12px 6px;
+      }
+      .css-sli737-MuiTableCell-root.MuiTableCell-body{
+        font-size: 13px;
+      }
+      .css-1f97x3w-MuiTableCell-root{
+        padding: 11px 10px;
+      }
+    `}</style>
+   
     </>
   );
 };

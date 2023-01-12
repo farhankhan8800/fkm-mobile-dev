@@ -6,6 +6,7 @@ import Header from "components/headerComponent/Header";
 import HeadTag from "components/headTagComponent/HeadTag";
 import { useRouter } from "next/router";
 import {coupon_detail} from "service/API"
+import axios from "axios";
 
 
 const apiAuth = process.env.API_AUTH
@@ -42,20 +43,19 @@ const couponid = router.query["coupon"];
   const GetData = async () => {
 
     try {
-      let data = await fetch(coupon_detail, {
-        method: "post",
-        body: JSON.stringify({
+      let {data} = await axios.post(coupon_detail, {
+  
+       
           apiAuth: apiAuth,
           coupon_id:couponid
-        }),
-        mode: "cors",
-        Headers: {
-          "Content-Type": "application/json",
         },
+       {
+         headers: {
+          "Content-Type": "application/json",
+        }
       });
-      let result = await data.json();
-        // console.log(result.response.coupon);
-        setCouponCode(result.response.coupon)
+    
+        setCouponCode(data.response.coupon)
        
     } catch (error) {
       return error;
@@ -93,7 +93,7 @@ const couponid = router.query["coupon"];
               style={cardCupon}
               sx={{ position: "absolute" }}
             >
-              <Image src={couponCode.store_image} width={150} height={50} alt="" />
+              <Image src={couponCode.store_image} width={150} height={50} alt="store" />
             </Box>
             <Box>
               <Typography
