@@ -32,11 +32,13 @@ const SignUp = () => {
   const router = useRouter();
 
   useEffect(() => {
+    localStorage.removeItem("verified");
     setUserdata(localStorage.getItem("user"))
     if (userdata) {
       router.push("/")
     }
   },[router, userdata]);
+  
   
   // console.log(userdata);return false;
   const onSubmit = async (e) => {

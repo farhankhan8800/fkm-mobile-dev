@@ -16,41 +16,54 @@ import TabsListUnstyled from "@mui/base/TabsListUnstyled";
 import TabPanelUnstyled from "@mui/base/TabPanelUnstyled";
 
 import TabUnstyled, { tabUnstyledClasses } from "@mui/base/TabUnstyled";
+import axios from "axios";
+import {cashbackHistoryAPI} from "service/API"
+import { useState } from "react";
+import { useEffect } from "react";
 
-const storeData = [
-  {
-    store: "xyxxy",
-    amount: 7635,
-    status: "conform",
-  },
-  {
-    store: "xyxxy",
-    amount: 7635,
-    status: "conform",
-  },
-  {
-    store: "xyxxy",
-    amount: 7635,
-    status: "conform",
-  },
-  {
-    store: "xyxxy",
-    amount: 7635,
-    status: "panding",
-  },
-  {
-    store: "xyxxy",
-    amount: 7635,
-    status: "conform",
-  },
-  {
-    store: "xyxxy",
-    amount: 7635,
-    status: "panding",
-  },
-];
+const apiAuth = process.env.API_AUTH
+
 
 const CashbackHistory = () => {
+
+  const [page, setPage] = useState()
+  const [authToken, setAuthToken] = useState()
+  const [cashback_history_title, setCashback_history_title] = useState()
+  const [cashback_history_all, setCashback_history_all] = useState()
+  useEffect(()=>{
+    setAuthToken(JSON.parse(localStorage.getItem("user")).token)
+  },[]) 
+
+const getData = async () =>{
+  try {
+    const {data} = await axios.post(cashbackHistoryAPI,{
+      apiAuth:apiAuth,
+      device_type:"4",
+      option:"all",
+      page:page
+    },
+    {
+      headers:{
+        Authorization:authToken
+    }
+  })
+
+  setCashback_history_title(data.response.top_desc)
+  setCashback_history_all(data.response.all)
+  
+  } catch (error) {
+    console.log(error)
+  }
+} 
+
+useEffect(()=>{
+  getData()
+},[authToken, page])
+
+const moreData = ()=>{
+  setPage(page + 1)
+}
+
   const Tab = styled(TabUnstyled)`
     font-family: IBM Plex Sans, sans-serif;
 
@@ -135,9 +148,9 @@ const CashbackHistory = () => {
           }}
         >
           <Typography component="p" fontSize="13px" color="gray">
-            tting, remaining essentially unchanged. It was popularised in the
-            1960s with the release of Letraset sheets containing Lorem Ipsum
-            passages, and more recently with desktop p
+           {
+             setCashback_history_title ? cashback_history_title : "Loding.."
+           }
           </Typography>
         </Box>
         <Box sx={{ p: 2 }}>
@@ -157,18 +170,18 @@ const CashbackHistory = () => {
                         <StyledTableCell>SN</StyledTableCell>
                         <StyledTableCell>Store</StyledTableCell>
                         <StyledTableCell>Amount</StyledTableCell>
-                        <StyledTableCell>Status</StyledTableCell>
+                        <StyledTableCell>Order Id</StyledTableCell>
+                        <StyledTableCell>Transaction Data</StyledTableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {storeData.map((item, i) => (
+                      { cashback_history_all && cashback_history_all.map((item, i) => (
                         <StyledTableRow key={i + 1}>
                           <StyledTableCell>{i + 1}</StyledTableCell>
-                          <StyledTableCell>{item.store}</StyledTableCell>
-                          <StyledTableCell>
-                            &#8377; {item.amount}
-                          </StyledTableCell>
-                          <StyledTableCell>{item.status}</StyledTableCell>
+                          <StyledTableCell>{item.store_name}</StyledTableCell>
+                          <StyledTableCell> &#8377; {item.amount} </StyledTableCell>
+                          <StyledTableCell>{item.orderid}</StyledTableCell>
+                          <StyledTableCell>{item.transaction_date}</StyledTableCell>
                         </StyledTableRow>
                       ))}
                     </TableBody>
@@ -187,7 +200,7 @@ const CashbackHistory = () => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {storeData.map((item, i) => (
+                      {/* {storeData.map((item, i) => (
                         <StyledTableRow key={i + 1}>
                           <StyledTableCell>{i + 1}</StyledTableCell>
                           <StyledTableCell>{item.store}</StyledTableCell>
@@ -196,7 +209,7 @@ const CashbackHistory = () => {
                           </StyledTableCell>
                           <StyledTableCell>{item.status}</StyledTableCell>
                         </StyledTableRow>
-                      ))}
+                      ))} */}
                     </TableBody>
                   </Table>
                 </TableContainer>
@@ -213,7 +226,18 @@ const CashbackHistory = () => {
                           display: none;
                       }
                     
-                    `}
+                      .css-sli737-MuiTableCell-root{
+                        padding: 12px 6px;
+                      }
+                      .css-sli737-MuiTableCell-root.MuiTableCell-body{
+                        font-size: 13px;
+                      }
+                      .css-1f97x3w-MuiTableCell-root{
+                        padding: 11px 10px;
+                      }
+                  
+                    
+        `}
       </style>
     </>
   );
