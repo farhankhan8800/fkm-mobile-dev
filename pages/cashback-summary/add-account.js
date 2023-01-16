@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 import { Box, Button, TextField } from "@mui/material";
+import axios from "axios";
+
+
+
 
 const AddAccount = () => {
   const [name, setName] = useState();
@@ -11,16 +15,25 @@ const AddAccount = () => {
   const [bankName, setBankName] = useState();
   const [accountType, setAccountType] = useState();
 
+
   const onSubmit = (e) => {
     e.preventDefault();
-    // console.log(`${name},${phone},${accountnumber},${ifsc},${bankName},${accountType}`)
-    setName("");
-    setPhone("");
-    setAccountNumber("");
-    setIfsc("");
-    setBankName("");
-    setAccountType("");
+    if(name.length > 2 && phone.length > 9 && accountType != " " && bankName.length > 3 && ifsc.length > 9 && accountnumber.length > 10){
+   console.log("valid")
+   console.log(`${name},${phone},${accountnumber},${ifsc},${bankName},${accountType}`)
+
+    }else{
+      console.log("err")
+    }
+   
   };
+//     setName("");
+//     setPhone("");
+//     setAccountNumber("");
+//     setIfsc("");
+//     setBankName("");
+//     setAccountType("");
+
   const nameHandler = (e) => {
     setName(e.target.value);
   };

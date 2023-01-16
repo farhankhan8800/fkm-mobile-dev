@@ -25,3 +25,9 @@ export const verifyUser = "https://fkmdata.freekaamaal.com/user/verifyuser"
 export const clickHistoryAPI = "https://fkmdata.freekaamaal.com/cashback/click-history"
 
 export const cashbackHistoryAPI = "https://fkmdata.freekaamaal.com/cashback/cashback-history"
+
+export const withdrawal_historyAPI = "https://fkmdata.freekaamaal.com/cashback/withdrawal-history"
+
+export const missing_historyAPI = "https://fkmdata.freekaamaal.com/cashback/missing-history"
+
+export const referral_summaryAPI = "https://fkmdata.freekaamaal.com/cashback/referral-summary"

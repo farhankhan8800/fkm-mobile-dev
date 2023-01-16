@@ -23,9 +23,14 @@ const ClickHistory = () => {
 
 const [click_History, setClick_History] = useState([])
 const [authToken, setAuthToken] = useState()
-const [page, setPage] = useState()
+const [page, setPage] = useState(1)
 const [noMoreData,setNoMoreData] = useState(false)
 const [click_history_title , setClick_history_title] = useState()
+
+useEffect(()=>{
+  setAuthToken(JSON.parse(localStorage.getItem("user")).token)
+  
+},[])
 
 // eslint-disable-next-line react-hooks/exhaustive-deps
 const getData = async ()=>{
@@ -40,7 +45,7 @@ const getData = async ()=>{
         Authorization:authToken
       }
     })
-
+    // console.log(data.response.click_history)
   setClick_history_title(data.response.top_desc)
   if((data.response.click_history).length == 0){
     setNoMoreData(true)
@@ -52,18 +57,18 @@ const getData = async ()=>{
    
  }
  } 
-  useEffect(()=>{
-    setAuthToken(JSON.parse(localStorage.getItem("user")).token)
-  },[])
+
+ const moreData = ()=>{
+  setPage(page + 1)
+}
+
 
   useEffect(()=>{
     getData()
-  },[authToken, page])
+  },[page,authToken])
 
   
-const moreData = ()=>{
-  setPage(page + 1)
-}
+
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -105,7 +110,7 @@ const moreData = ()=>{
                 <TableRow>
                   <StyledTableCell>SN</StyledTableCell>
                   <StyledTableCell>Store</StyledTableCell>
-                  <StyledTableCell>Amount</StyledTableCell>
+                  <StyledTableCell>Clicks</StyledTableCell>
                   <StyledTableCell>Last Click</StyledTableCell>
                 </TableRow>
               </TableHead>
@@ -115,7 +120,7 @@ const moreData = ()=>{
                   <StyledTableRow key={i + 1}>
                     <StyledTableCell>{i + 1}</StyledTableCell>
                     <StyledTableCell>{item.store}</StyledTableCell>
-                    <StyledTableCell>&#8377; {item.num_of_time}</StyledTableCell>
+                    <StyledTableCell>{item.num_of_time}</StyledTableCell>
                     <StyledTableCell>{item.last_click}</StyledTableCell>
                   </StyledTableRow>
                 ))

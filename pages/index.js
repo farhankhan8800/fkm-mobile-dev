@@ -43,7 +43,7 @@ export default function Home() {
         }
       });
     
-      console.log(data.response)
+      // console.log(data.response)
       setCbStore(data.response.cbstores);
       setCarousel(data.response.slider);
       setLiveDeal(data.response.live_deals);

@@ -1,8 +1,12 @@
-import React from "react";
+
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
+import { Box, Button, Grid, Typography  } from "@mui/material";
+import axios from "axios";
+import { useState,useEffect } from "react";
+import {referral_summaryAPI} from "service/API"
+import React from "react";
 import Image from "next/image";
-import { Box, Button, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
@@ -14,136 +18,153 @@ import { styled } from "@mui/system";
 import TabsUnstyled from "@mui/base/TabsUnstyled";
 import TabsListUnstyled from "@mui/base/TabsListUnstyled";
 import TabPanelUnstyled from "@mui/base/TabPanelUnstyled";
-
 import TabUnstyled, { tabUnstyledClasses } from "@mui/base/TabUnstyled";
-import axios from "axios";
 import {cashbackHistoryAPI} from "service/API"
-import { useState } from "react";
-import { useEffect } from "react";
+
 
 const apiAuth = process.env.API_AUTH
 
-
-const CashbackHistory = () => {
-
-  const [page, setPage] = useState(1)
-  const [authToken, setAuthToken] = useState()
-  const [cashback_history_title, setCashback_history_title] = useState()
-  const [cashback_history_all, setCashback_history_all] = useState([])
-  const [cashback_history_pending, setCashback_history_pending] = useState([])
-  const [cashback_history_confirmed, setCashback_history_confirmed] = useState([])
-  const [cashback_history_declined, setCashback_history_declined] = useState([])
-  const [option, setOption] = useState("all")
-  const [noMoreData,setNoMoreData] = useState(false)
+const ReferralHistory = () => {
+    const [referral, setReferral] = useState()
+    const [page, setPage] = useState(1)
+    const [authToken, setAuthToken] = useState()
+    const [cashback_history_all, setCashback_history_all] = useState([])
+    const [cashback_history_pending, setCashback_history_pending] = useState([])
+    const [cashback_history_confirmed, setCashback_history_confirmed] = useState([])
+    const [cashback_history_declined, setCashback_history_declined] = useState([])
+    const [option, setOption] = useState("all")
+    const [noMoreData,setNoMoreData] = useState(false)
 
 
 
+    useEffect(()=>{
+        setAuthToken(JSON.parse(localStorage.getItem("user")).token)
+        
+      },[])
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const getData = async ()=>{
+        try {
+            const {data} = await axios.post(referral_summaryAPI,{
+                apiAuth:apiAuth,
+                device_type:"4",
+                option:"summary",
+                page:1
+            },{
+                headers:{
+                    Authorization:authToken
+                  }
+            })
+            console.log(data.response.summary)
+            setReferral(data.response.summary)
+        }catch(error) {
+            console.log(error)
+        }
+      
+    }
 
 // eslint-disable-next-line react-hooks/exhaustive-deps
-const getData = async () =>{
-  try {
-    const {data} = await axios.post(cashbackHistoryAPI,{
-      apiAuth:apiAuth,
-      device_type:"4",
-      option:option,
-      page:page
-    },
-    {
-      headers:{
-        Authorization:authToken
-    }
-  })
-
+const cashback_History = async () =>{
+    try {
+      const {data} = await axios.post(cashbackHistoryAPI,{
+        apiAuth:apiAuth,
+        device_type:"4",
+        option:option,
+        page:page
+      },
+      {
+        headers:{
+          Authorization:authToken
+      }
+    })
   
-  
-  setCashback_history_title(data.response.top_desc)
-  if(option == " "){
-    if((data.response.all).length == 0 ){
     
-    }else{
-      setCashback_history_all([...cashback_history_all, ...data.response.all])
-    }
-    
-  }else if(option == "pending"){
-     if((data.response.pending).length == 0){
+    if(option == " "){
+      if((data.response.all).length == 0 ){
+      
+      }else{
+        setCashback_history_all([...cashback_history_all, ...data.response.all])
+      }
+      
+    }else if(option == "pending"){
+       if((data.response.pending).length == 0){
+       
+       }else{
+        setCashback_history_pending([...cashback_history_pending, ...data.response.pending])
+       }
+      
+    }else if(option == "confirmed"){
+      if((data.response.confirmed).length == 0){
+        
+      }else{
+        setCashback_history_confirmed([...cashback_history_confirmed, ...data.response.confirmed])
+      }
      
-     }else{
-      setCashback_history_pending([...cashback_history_pending, ...data.response.pending])
-     }
-    
-  }else if(option == "confirmed"){
-    if((data.response.confirmed).length == 0){
+    }else if(option == "declined"){
+      if((data.response.declined).length == 0){
+      
+      }else{
+        setCashback_history_declined([...cashback_history_declined, ...data.response.declined])
+      }
       
     }else{
-      setCashback_history_confirmed([...cashback_history_confirmed, ...data.response.confirmed])
+      if((data.response.all).length == 0 ){
+        
+      }else{
+        setCashback_history_all([...cashback_history_all, ...data.response.all])
+      }
+     
     }
-   
-  }else if(option == "declined"){
-    if((data.response.declined).length == 0){
-    
-    }else{
-      setCashback_history_declined([...cashback_history_declined, ...data.response.declined])
+    } catch (error) {
+     
     }
-    
-  }else{
-    if((data.response.all).length == 0 ){
-      
-    }else{
-      setCashback_history_all([...cashback_history_all, ...data.response.all])
-    }
-   
+  } 
+
+  const moreData = ()=>{
+    setPage(page + 1)
   }
-  } catch (error) {
-   
-  }
-} 
-const moreData = ()=>{
-  setPage(page + 1)
-}
 
 useEffect(()=>{
-  setAuthToken(JSON.parse(localStorage.getItem("user")).token)
-  getData()
-},[authToken]) 
+    getData()
+   
 
+},[page,authToken])
 
 useEffect(()=>{
-  getData()
-},[option, page])
+    cashback_History()
+},[page,authToken,option])
 
 const allTab = ()=>{
-setOption("all")
-setPage(1)
-setCashback_history_pending("")
-setCashback_history_confirmed('')
-setCashback_history_declined('')
-}
-const pendingTab =()=>{
-setOption("pending")
-setPage(1)
-setCashback_history_all("")
-setCashback_history_confirmed('')
-setCashback_history_declined('')
-}
-const confirmedTab = ()=>{
- setOption("confirmed")
- setPage(1)
- setCashback_history_all("")
- setCashback_history_pending("")
-setCashback_history_declined('')
-}
-const declinedTab =()=>{
- setOption("declined")
- setPage(1)
- setCashback_history_all("")
- setCashback_history_pending("")
- setCashback_history_confirmed('')
-}
+    setOption("all")
+    setPage(1)
+    setCashback_history_pending("")
+    setCashback_history_confirmed('')
+    setCashback_history_declined('')
+    }
+    const pendingTab =()=>{
+    setOption("pending")
+    setPage(1)
+    setCashback_history_all("")
+    setCashback_history_confirmed('')
+    setCashback_history_declined('')
+    }
+    const confirmedTab = ()=>{
+     setOption("confirmed")
+     setPage(1)
+     setCashback_history_all("")
+     setCashback_history_pending("")
+    setCashback_history_declined('')
+    }
+    const declinedTab =()=>{
+     setOption("declined")
+     setPage(1)
+     setCashback_history_all("")
+     setCashback_history_pending("")
+     setCashback_history_confirmed('')
+    }
+    
 
-// console.log(option)
-// console.log("page", page)
-
-const Tab = styled(TabUnstyled)`
+    const Tab = styled(TabUnstyled)`
     font-family: IBM Plex Sans, sans-serif;
 
     cursor: pointer;
@@ -212,27 +233,119 @@ const Tab = styled(TabUnstyled)`
     },
   }));
 
-  const headeTitle = "Cashback History | Freekaamaal";
+  const headeTitle = "Referral History | Freekaamaal";
   return (
     <>
       <HeadTag headeTitle={headeTitle}></HeadTag>
       <Header></Header>
       <div style={{ paddingTop: "56px" }}>
+      
         <Box
-          sx={{
-            p: 2,
-            margin: "10px 10px 0",
-            bgcolor: "#f1f1f1",
-            borderRadius: "5px",
-          }}
+          sx={{ m: 2, bgcolor: "#f9f9f9", borderRadius: "3px" }}
+          component="div"
         >
-          <Typography component="p" fontSize="13px" color="gray">
-           {
-             setCashback_history_title ? cashback_history_title : "Loding.."
-           }
-          </Typography>
-        </Box>
-        <Box sx={{ p: 2 }}>
+            <Box><Typography variant="h6" fontWeight={600} color="initial">Referral History</Typography></Box>
+          <Grid container spacing={1}> {
+            referral ? <>
+            <Grid item xs={6}>
+              <Box
+                sx={{ p: 1, bgcolor: "#fff", borderRadius: "5px" }}
+                component="div"
+              >
+                <Typography component="p" textAlign="center" fontWeight="600">
+                  &#8377; {referral.confirm_ref_amount}
+                </Typography>
+                <Typography component="p" textAlign="center" fontSize="10px">
+                Confirm Ref Amount
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box
+                sx={{ p: 1, bgcolor: "#fff", borderRadius: "5px" }}
+                component="div"
+              >
+                <Typography component="p" textAlign="center" fontWeight="600">
+                  &#8377; {referral.pending_ref_amount}
+                </Typography>
+                <Typography component="p" textAlign="center" fontSize="10px">
+                Pending Ref Amount{" "}
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box
+                sx={{ p: 1, bgcolor: "#fff", borderRadius: "5px" }}
+                component="div"
+              >
+                <Typography component="p" textAlign="center" fontWeight="600">
+                  &#8377; {referral.declined_ref_amount}
+                </Typography>
+                <Typography component="p" textAlign="center" fontSize="10px">
+                Declined Ref Amount
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box
+                sx={{ p: 1, bgcolor: "#fff", borderRadius: "5px" }}
+                component="div"
+              >
+                <Typography component="p" textAlign="center" fontWeight="600">
+                  &#8377; {referral.withdrawal_ref_amount}
+                </Typography>
+                <Typography component="p" textAlign="center" fontSize="10px">
+                Withdrawal Ref Amount
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box
+                sx={{ p: 1, bgcolor: "#fff", borderRadius: "5px" }}
+                component="div"
+              >
+                <Typography component="p" textAlign="center" fontWeight="600">
+                  &#8377; {referral.withdrawal_request_amount}
+                </Typography>
+                <Typography component="p" textAlign="center" fontSize="10px">
+                Withdrawal Request Amount
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box
+                sx={{ p: 1, bgcolor: "#fff", borderRadius: "5px" }}
+                component="div"
+              >
+                <Typography component="p" textAlign="center" fontWeight="600">
+                  &#8377; {referral.withdrawal_declined_amount}
+                </Typography>
+                <Typography component="p" textAlign="center" fontSize="10px">
+                Withdrawal Declined Amount
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box
+                sx={{ p: 1, bgcolor: "#fff", borderRadius: "5px" }}
+                component="div"
+              >
+                <Typography component="p" textAlign="center" fontWeight="600">
+                  &#8377; {referral.available_ref_amount}
+                </Typography>
+                <Typography component="p" textAlign="center" fontSize="10px">
+                Available Ref Amount
+                </Typography>
+              </Box>
+            </Grid>
+            </>:"Loding.."
+          }
+            
+          </Grid>
+          <Box sx={{ pt: 2 }}>
+          <Typography variant="h6" fontWeight={600} color="initial">Cashback History</Typography>
+          </Box>
+          <Box sx={{ pt: 1 }}>
           <Box sx={{ width: "100%" }}>
             <TabsUnstyled defaultValue={0}>
               <TabsList className="tabsList">
@@ -416,8 +529,8 @@ const Tab = styled(TabUnstyled)`
             </TabsUnstyled>
           </Box>
         </Box>
-      </div>
-      <style>
+        </Box>
+        <style>
         {`
             .tabsList::-webkit-scrollbar {
               display: none;
@@ -438,8 +551,10 @@ const Tab = styled(TabUnstyled)`
                     
         `}
       </style>
+      </div>
     </>
   );
 };
 
-export default CashbackHistory;
+export default ReferralHistory;
+
