@@ -70,14 +70,10 @@ const CategoryDetail = () => {
       return error;
     }
   };
-
-
+  
   useEffect(() => {
-    // console.log("PAGE UPDATE----")
     if(cate_slug){
-      // console.log("firse")
-      GetData();
-
+    GetData();
     }
   },[Page, changeOption,cate_slug]);
 
