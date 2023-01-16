@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
 
 
@@ -61,8 +61,11 @@ const AddAccount = () => {
       <div style={{ paddingTop: "56px" }}>
         <Box
           component="div"
-          sx={{ p: 2, m: 2, background: "#f7f7f7", borderRadius: "5px" }}
+          sx={{ p: 2, m: 2,mt:0, background: "#f7f7f7", borderRadius: "5px" }}
         >
+          <Box sx={{}}>
+            <Typography variant="h6" fontWeight={600} color="initial">Add Account</Typography>
+          </Box>
           <Box>
             <form onSubmit={onSubmit}>
               <label>Account Type</label>

@@ -58,21 +58,21 @@ const getData = async () =>{
   setCashback_history_title(data.response.top_desc)
   if(option == " "){
     if((data.response.all).length == 0 ){
-     
+      setNoMoreData(true)
     }else{
       setCashback_history_all([...cashback_history_all, ...data.response.all])
     }
     
   }else if(option == "pending"){
      if((data.response.pending).length == 0){
-    
+      setNoMoreData(true)
      }else{
       setCashback_history_pending([...cashback_history_pending, ...data.response.pending])
      }
     
   }else if(option == "debit"){
     if((data.response.debit).length == 0){
-     
+      setNoMoreData(true)
     }else{
 
       setCashback_history_debit([...cashback_history_debit, ...data.response.debit])
@@ -80,13 +80,13 @@ const getData = async () =>{
    
   }else if(option == "decline"){
     if((data.response.decline).length == 0){
-    
+      setNoMoreData(true)
     }else{
       setCashback_history_decline([...cashback_history_decline, ...data.response.decline])
     }
   }else{
     if((data.response.all).length == 0 ){
-      
+      setNoMoreData(true)
     }else{
       setCashback_history_all([...cashback_history_all, ...data.response.all])
     }
@@ -110,6 +110,7 @@ useEffect(()=>{
 },[option, page])
 
 const allTab = ()=>{
+  setNoMoreData(false)
 setOption("all")
 setPage(1)
 setCashback_history_pending("")
@@ -118,6 +119,7 @@ setCashback_history_decline('')
 }
 
 const pendingTab =()=>{
+  setNoMoreData(false)
 setOption("pending")
 setPage(1)
 setCashback_history_all("")
@@ -126,6 +128,7 @@ setCashback_history_decline('')
 }
 
 const debitTab = ()=>{
+  setNoMoreData(false)
  setOption("debit")
  setPage(1)
  setCashback_history_all("")
@@ -134,13 +137,14 @@ const debitTab = ()=>{
 }
 
 const declineTab =()=>{
+  setNoMoreData(false)
  setOption("decline")
  setPage(1)
  setCashback_history_all("")
  setCashback_history_pending("")
  setCashback_history_debit('')
 }
-console.log(cashback_history_debit)
+// console.log(cashback_history_debit)
   
 const Tab = styled(TabUnstyled)`
     font-family: IBM Plex Sans, sans-serif;
@@ -269,14 +273,11 @@ const Tab = styled(TabUnstyled)`
                 </TableContainer>
                 <div>
                   {
-              noMoreData ? "No More Data...":<>
-              {
-              (cashback_history_all) ?  <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
-              <Button onClick={moreData} variant="outlined">More Data</Button>
-                </Box> :""
-                }
-                  </>
-                }
+                  noMoreData ? "No More Data..." : 
+                    <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
+                        <Button onClick={moreData} variant="outlined">More Data</Button>
+                    </Box> 
+                  }
                   </div>
               </TabPanel>
               <TabPanel value={1}>
@@ -309,14 +310,11 @@ const Tab = styled(TabUnstyled)`
                 </TableContainer>
                 <div>
                   {
-              noMoreData ? "No More Data...":<>
-              {
-              cashback_history_pending.length > 0 ?  <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
-              <Button onClick={moreData} variant="outlined">More Data</Button>
-                </Box> :""
-                }
-                  </>
-                }
+                  noMoreData ? "No More Data..." : 
+                    <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
+                        <Button onClick={moreData} variant="outlined">More Data</Button>
+                    </Box> 
+                  }
                   </div>
               </TabPanel>
               <TabPanel value={2}>
@@ -349,14 +347,11 @@ const Tab = styled(TabUnstyled)`
                 </TableContainer>
                 <div>
                   {
-              noMoreData ? "No More Data...":<>
-              {
-              (cashback_history_debit).length > 0 ?  <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
-              <Button onClick={moreData} variant="outlined">More Data</Button>
-                </Box> :""
-                }
-                  </>
-                }
+                  noMoreData ? "No More Data..." : 
+                    <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
+                        <Button onClick={moreData} variant="outlined">More Data</Button>
+                    </Box> 
+                  }
                   </div>
               </TabPanel>
               <TabPanel value={3}>
@@ -391,14 +386,11 @@ const Tab = styled(TabUnstyled)`
                 </TableContainer>
                 <div>
                   {
-              noMoreData ? "No More Data...":<>
-              {
-              cashback_history_decline.length > 0 ?  <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
-              <Button onClick={moreData} variant="outlined">More Data</Button>
-                </Box> :""
-                }
-                  </>
-                }
+                  noMoreData ? "No More Data..." : 
+                    <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
+                        <Button onClick={moreData} variant="outlined">More Data</Button>
+                    </Box> 
+                  }
                   </div>
               </TabPanel>
             </TabsUnstyled>

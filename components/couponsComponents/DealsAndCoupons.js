@@ -94,6 +94,9 @@ const DealsAndCoupons = ({categoryCoupons,tabCountNumber, noCouponData, noDealDa
             </Box>
           </TabPanel>
           <TabPanel value={1}>
+            {
+            // console.log(coupons)
+            }
             <CouponsCade couponCard={coupons} />
             <Box component="div" sx={{ p: 1, textAlign: "center" }}>{
               noCouponData ? `No Data Found`:

@@ -16,7 +16,6 @@ const HotDealsCards = (props) => {
   
   useEffect(()=>{
      SethotDeals(props.hotdeals)
-
   },[props])
 
   return (
@@ -24,9 +23,9 @@ const HotDealsCards = (props) => {
      
       <div className="flex_div">
         {hotDeals && hotDeals.map((item, i) => {
-         
-          const {is_cashback,deal_image,slug_url, store_name, title, offer_price, price}= item;
-          // console.log(item)
+          const {is_cashback,deal_image,slug_url,deal_slug,title, store_name, deal_title, offer_price, price}= item;
+
+        //  console.log(item)
          
           
           return (
@@ -45,7 +44,7 @@ const HotDealsCards = (props) => {
               >
                 <Link
                   className="card_link"
-                  href={`/deal/${slug_url}`}
+                  href={slug_url? `/deal/${slug_url}`:`/deal/${deal_slug}`}
                 >
                   <span>{is_cashback == "1" ? <span className="card_cashback">Cashback</span>:<span></span>}</span>
                 
@@ -78,7 +77,7 @@ const HotDealsCards = (props) => {
                           fontSize: "11px",
                         }}
                       >
-                        {title}{" "}
+                        {deal_title ? deal_title :  title }{" "}
                       </Typography>
                       <Box component="div" sx={{ paddingTop: "4px" }}>
                         <strong className="card_amouunt">

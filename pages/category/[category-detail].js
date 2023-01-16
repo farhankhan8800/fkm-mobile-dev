@@ -12,7 +12,7 @@ import axios from "axios";
 const apiAuth = process.env.API_AUTH;
 
 const CategoryDetail = () => {
-   const [categoryDeals, setCategoryDeals] = useState([]);
+  const [categoryDeals, setCategoryDeals] = useState([]);
   const [categoryCoupons, setCategoryCoupons] = useState([]);
   const [categoryProduct, setCategoryProduct] = useState();
   const [Page, setPage] = useState(1);
@@ -31,8 +31,6 @@ const CategoryDetail = () => {
 
     try {
       let {data} = await axios.post(categoryDetailApi, {
-     
-       
           apiAuth: apiAuth,
           page: Page,
           cate_slug: cate_slug,

@@ -57,41 +57,38 @@ const getData = async () =>{
   
   
   setCashback_history_title(data.response.top_desc)
-  if(option == " "){
-    if((data.response.all).length == 0 ){
-    
+  if(option == ""){
+    if(data.response.all.length == 0 ){
+      setNoMoreData(true)
     }else{
       setCashback_history_all([...cashback_history_all, ...data.response.all])
     }
     
   }else if(option == "pending"){
-     if((data.response.pending).length == 0){
-     
+    
+     if(data.response.pending.length == 0){
+      setNoMoreData(true)
      }else{
       setCashback_history_pending([...cashback_history_pending, ...data.response.pending])
      }
-    
   }else if(option == "confirmed"){
-    if((data.response.confirmed).length == 0){
-      
+    if(data.response.confirmed.length == 0){
+      setNoMoreData(true)
     }else{
       setCashback_history_confirmed([...cashback_history_confirmed, ...data.response.confirmed])
     }
-   
   }else if(option == "declined"){
-    if((data.response.declined).length == 0){
-    
+    if(data.response.declined.length == 0){
+      setNoMoreData(true)
     }else{
       setCashback_history_declined([...cashback_history_declined, ...data.response.declined])
     }
-    
   }else{
-    if((data.response.all).length == 0 ){
-      
+    if(data.response.all.length == 0 ){
+      setNoMoreData(true)
     }else{
       setCashback_history_all([...cashback_history_all, ...data.response.all])
     }
-   
   }
   } catch (error) {
    
@@ -112,20 +109,25 @@ useEffect(()=>{
 },[option, page])
 
 const allTab = ()=>{
+setNoMoreData(false)
 setOption("all")
 setPage(1)
+
 setCashback_history_pending("")
 setCashback_history_confirmed('')
 setCashback_history_declined('')
 }
 const pendingTab =()=>{
+  setNoMoreData(false)
 setOption("pending")
 setPage(1)
+
 setCashback_history_all("")
 setCashback_history_confirmed('')
 setCashback_history_declined('')
 }
 const confirmedTab = ()=>{
+  setNoMoreData(false)
  setOption("confirmed")
  setPage(1)
  setCashback_history_all("")
@@ -133,6 +135,7 @@ const confirmedTab = ()=>{
 setCashback_history_declined('')
 }
 const declinedTab =()=>{
+  setNoMoreData(false)
  setOption("declined")
  setPage(1)
  setCashback_history_all("")
@@ -272,14 +275,11 @@ const Tab = styled(TabUnstyled)`
                 </TableContainer>
                 <div>
                   {
-              noMoreData ? "No More Data...":<>
-              {
-              (cashback_history_all) ?  <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
-              <Button onClick={moreData} variant="outlined">More Data</Button>
-                </Box> :""
-                }
-                  </>
-                }
+                  noMoreData ? "No More Data..." : 
+                    <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
+                        <Button onClick={moreData} variant="outlined">More Data</Button>
+                    </Box> 
+                  }
                   </div>
               </TabPanel>
 
@@ -317,17 +317,13 @@ const Tab = styled(TabUnstyled)`
                 </TableContainer>
                 <div>
                   {
-              noMoreData ? "No More Data...":<>
-              {
-              cashback_history_pending.length > 0 ?  <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
-              <Button onClick={moreData} variant="outlined">More Data</Button>
-                </Box> :""
-                }
-                  </>
-                }
+                  noMoreData ? "No More Data..." : 
+                    <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
+                        <Button onClick={moreData} variant="outlined">More Data</Button>
+                    </Box> 
+                  }
                   </div>
               </TabPanel>
-
 
               <TabPanel value={2}>
                 <TableContainer component={Paper}>
@@ -359,16 +355,13 @@ const Tab = styled(TabUnstyled)`
                   }
                  
                 </TableContainer>
-                <div>
+               <div>
                   {
-              noMoreData ? "No More Data...":<>
-              {
-              (cashback_history_confirmed).length > 0 ?  <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
-              <Button onClick={moreData} variant="outlined">More Data</Button>
-                </Box> :""
-                }
-                  </>
-                }
+                  noMoreData ? "No More Data..." : 
+                    <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
+                        <Button onClick={moreData} variant="outlined">More Data</Button>
+                    </Box> 
+                  }
                   </div>
               </TabPanel>
               <TabPanel value={3}>
@@ -403,14 +396,11 @@ const Tab = styled(TabUnstyled)`
                 </TableContainer>
                 <div>
                   {
-              noMoreData ? "No More Data...":<>
-              {
-              cashback_history_declined.length > 0 ?  <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
-              <Button onClick={moreData} variant="outlined">More Data</Button>
-                </Box> :""
-                }
-                  </>
-                }
+                  noMoreData ? "No More Data..." : 
+                    <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
+                        <Button onClick={moreData} variant="outlined">More Data</Button>
+                    </Box> 
+                  }
                   </div>
               </TabPanel>
             </TabsUnstyled>

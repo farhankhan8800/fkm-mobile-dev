@@ -52,7 +52,6 @@ const getData = async ()=>{
   }else{
     setClick_History([...click_History,...data.response.click_history])
   }
-  
  } catch (error) {
    
  }
@@ -133,13 +132,10 @@ const getData = async ()=>{
             
           </TableContainer>
         </Box>{
-          noMoreData ? "No More Data...":<>
-          {
-          click_History ?  <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
-          <Button onClick={moreData} variant="outlined">More Data</Button>
-        </Box> :""
-        }
-          </>
+          noMoreData ? " No More Data..." : <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
+            <Button onClick={moreData} variant="outlined">More Data</Button>
+          </Box>
+          
         }
       </div>
       <style jxs>{`

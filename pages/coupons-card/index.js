@@ -12,10 +12,10 @@ const CouponsCade = (props) => {
 
   useEffect(()=>{
     setCoupons(props.couponCard)
-    // console.log(`couponsCard Component`, props.couponCard)
+  
   },[props])
 
- 
+ console.log(coupons)
   return (
     <div>
       {

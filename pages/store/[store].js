@@ -34,14 +34,13 @@ const StoreDetails = () => {
   const router = useRouter();
   const store_slug = router.query["store"];
 
-
     const storeData = async () => {
       try {
         let {data} = await axios.post(StoreDetailApi, {
             apiAuth: apiAuth,
             page: Page,
             store_slug: store_slug,
-            opction: changeOption,
+            option: changeOption,
           }, 
             {
               headers: {
@@ -56,7 +55,6 @@ const StoreDetails = () => {
           }else{
             setStoreDeals([...storeDeals, ...data.response.deals]);
           }
-          
         } else if (changeOption == "deals") {
           if((data.response.deals).length   == 0){
             setNoDealData(true)
@@ -70,34 +68,40 @@ const StoreDetails = () => {
             setStoreCoupons([...storeCoupons, ...data.response.coupons]);
           }
           
+        }else{
+
         }
       } catch (err) {}
     };
+
+    
     useEffect(()=>{
-      if(store_slug){
       storeData();
-      }
     },[Page, changeOption,store_slug])
   
  
 
-  const addDealPage = () => {
-    setPage(Page + 1);
-  };
-  const addCouponPage = () => {
-    setPage(Page + 1);
-  };
+  
   const dealsTabCall = () => {
+    setNoCouponData(false)
     setChangeOption("deals");
     setPage(1)
     setStoreCoupons([])
     
   };
   const couponsTabCall = () => {
+    setNoCouponData(false)
     setChangeOption("coupons");
     setPage(1)
     setStoreDeals([])
   };
+  const addDealPage = () => {
+    setPage(Page + 1);
+  };
+  const addCouponPage = () => {
+    setPage(Page + 1);
+  };
+
 
   const moreStoreHandel = () => {
     if (storeRateMore == true) {
@@ -357,8 +361,7 @@ const StoreDetails = () => {
             <DealsAndCoupons
               categoryCoupons={storeCoupons}
               categoryDeals={storeDeals}
-              dealsTabCall={dealsTabCall}
-              couponsTabCall={couponsTabCall}
+          
               addDealPage={addDealPage}
               addCouponPage={addCouponPage}
                 tabCountNumber ={store_data}

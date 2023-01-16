@@ -45,15 +45,17 @@ const getData = async ()=>{
         Authorization:authToken
       }
     })
-  //  console.log(data.response.missing_history)
-   setMissing_history([...missing_history,...data.response.missing_history])
+   if((data.response.missing_history).length == 0){
+    setNoMoreData(true)
+   }else{
+    setMissing_history([...missing_history,...data.response.missing_history])
+   }
  } catch (error) {
-  // console.log(error.response.data.status)
-  // if(error.response.data.status = 0 ){
-  //   setNoMoreData(true)
-  // }
+  //  console.log(error)
  }
  } 
+
+
  const moreData = ()=>{
   setPage(page + 1)
 }
@@ -119,13 +121,18 @@ const getData = async ()=>{
                 ))
 
                 }
-             
               </TableBody>
             </Table>
-           
-            
           </TableContainer>
-        </Box>{
+        </Box>
+        
+        {
+          noMoreData ?  <Box sx={{textAlign:"center"}}>No More Data...</Box> :
+          <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
+            <Button onClick={moreData} variant="outlined">More Data</Button>
+         </Box> 
+        }
+        {/* {
           noMoreData ? <Box sx={{textAlign:"center"}}>No More Data...</Box>:<>
           {
           missing_history ?  <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
@@ -133,7 +140,7 @@ const getData = async ()=>{
         </Box> :""
         }
           </>
-        }
+        } */}
       </div>
       <style jxs>{`
       .css-sli737-MuiTableCell-root{
