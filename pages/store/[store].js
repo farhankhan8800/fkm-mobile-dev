@@ -187,6 +187,8 @@ const StoreDetails = () => {
                         spacing={1}
                         sx={{ padding: "10px 0" }}
                       >
+                        {store_data.is_cashback==1 ? (
+                          <div>
                         <Grid item>
                           <Typography
                             sx={{ color: "#ad2323", fontSize: "14px" }}
@@ -235,11 +237,14 @@ const StoreDetails = () => {
                             <small>{store_data.is_missing}</small>
                           </Typography>
                         </Grid>
+                        </div>
+                        ) : " " }
                       </Grid>
                     </Box>
                   </Box>
                 </Box>
               </Link>
+              {storeRate ?(
               <Box
                 component="div"
                 sx={{
@@ -323,7 +328,7 @@ const StoreDetails = () => {
                     })}
                 </div>
 
-                {storeRate.length > 1 ? (
+                {storeRate && storeRate.length > 1 ? (
                   <Box
                     component="div"
                     width="100%"
@@ -343,6 +348,7 @@ const StoreDetails = () => {
                   ""
                 )}
               </Box>
+               ): ""}
 
               {store_data.is_claim == 1 ? (
                 <CashBackClaimCard
