@@ -15,7 +15,11 @@ import {
 } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterListIcon from "@mui/icons-material/FilterList";
+<<<<<<< HEAD
 import dealsImage from "../../public/images/enter-otp.png";
+=======
+import dealsImage from "../../public/images/coupon.png";
+>>>>>>> da1fa997469de8fde4f5fd6b053e3b812ddf0fbf
 import Link from "next/link";
 import Image from "next/image";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
