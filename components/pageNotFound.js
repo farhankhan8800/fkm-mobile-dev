@@ -3,7 +3,7 @@ import React from 'react'
 import Header from 'components/headerComponent/Header'
 import HeadTag from 'components/headTagComponent/HeadTag'
 import Button from '@mui/material/Button';
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 
 
 const headeTitle = " Error 404 | Freekaamaal";
@@ -12,7 +12,7 @@ const headeTitle = " Error 404 | Freekaamaal";
 
 
 const pageNotFound = () => {
-   const router = useRouter()
+//    const router = useRouter()
 
   return (
   <>
