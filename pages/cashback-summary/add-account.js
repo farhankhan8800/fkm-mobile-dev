@@ -1,85 +1,42 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import { Alert, Box, Button, TextField, Typography } from "@mui/material";
-import axios from "axios";
+import {Box, Typography} from "@mui/material";
+import Bank from "components/add-account/Bank";
+import { useEffect } from "react";
+import OtherBank from "components/add-account/OtherBank";
 
 const AddAccount = () => {
-  const [name, setName] = useState();
-  const [phone, setPhone] = useState();
-  const [accountnumber, setAccountNumber] = useState();
-  const [ifsc, setIfsc] = useState();
-  const [bankName, setBankName] = useState();
-  const [accountType, setAccountType] = useState();
-  const [notValid, setNotValid] = useState(null);
+  
+  const [account,setAccount] = useState()
+   const [activeBank, setActiveBank]= useState(false)
+   const [activePaytm, setActivePaytm]= useState(false)
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (name && phone && bankName && ifsc && accountnumber) {
-      if (accountType == "Option") {
-        setNotValid("Option is not a valid Account type");
-      } else if (name.length > 2) {
-        if (phone.length == 10) {
-          if (bankName.length > 4) {
-            if (ifsc.length == 11) {
-              if (accountnumber.length > 11) {
-                 console.log(
-                   `${name},${phone},${accountnumber},${ifsc},${bankName},${accountType}`
-                 );
-              } else {
-                setNotValid("Fill the Valid Account Number");
-              }
-            } else {
-              setNotValid("Fill the Valid IFSC Code");
-            }
-          } else {
-            setNotValid("Fill the Valid Bank Name");
-          }
-        } else {
-          setNotValid("Fill the Valid Phone Number");
-        }
-      } else {
-        setNotValid("Fill the Valid Name");
-      }
-    } else {
-      setNotValid("Fill the all details ");
+
+
+  useEffect(()=>{
+    // setUser(json.parse(localStorage.getItem("user").token));
+  },[])
+
+  
+
+  const accountHandler = (e) =>{
+    setAccount(e.target.value)
+  }
+
+  useEffect(()=>{
+    if(account == "bank"){
+      setActiveBank(true)
+      setActivePaytm(false)
+    }else if(account == "paytm"){
+      setActiveBank(false)
+      setActivePaytm(true)
+    }else{
+      setActiveBank(false)
+      setActivePaytm(false)
     }
-  };
-
-  // console.log(
-  //   `${name},${phone},${accountnumber},${ifsc},${bankName},${accountType}`
-  // );
-  //     setName("");
-  //     setPhone("");
-  //     setAccountNumber("");
-  //     setIfsc("");
-  //     setBankName("");
-  //     setAccountType("");
-
-  const nameHandler = (e) => {
-    setName(e.target.value);
-    setNotValid(null);
-  };
-  const phoneHandler = (e) => {
-    setPhone(e.target.value);
-    setNotValid(null);
-  };
-  const acountNumberHandler = (e) => {
-    setAccountNumber(e.target.value);
-    setNotValid(null);
-  };
-  const ifscHandler = (e) => {
-    setIfsc(e.target.value);
-    setNotValid(null);
-  };
-  const bankNameHandler = (e) => {
-    setBankName(e.target.value);
-    setNotValid(null);
-  };
-  const accountTypeHandler = (e) => {
-    setAccountType(e.target.value);
-    setNotValid(null);
-  };
+  },[account])
+  
 
   const headeTitle = "Add Your bank Account | Freekaamaal";
   return (
@@ -92,106 +49,49 @@ const AddAccount = () => {
           sx={{ p: 2, m: 2, mt: 0, background: "#f7f7f7", borderRadius: "5px" }}
         >
           <Box sx={{}}>
-            <Typography variant="h6" fontWeight={600} color="initial">
-              Add Account
+            <Typography variant="p" fontWeight={400} color="initial">
+              Add Your Account to withdraw Cashback
             </Typography>
           </Box>
           <Box>
-            <form onSubmit={onSubmit}>
-              <label>Account Type</label>
-              <select
-                onChange={accountTypeHandler}
-                value={accountType}
-                name="account-type"
-                id="account-type"
+          <select className="select_tag"
+                onChange={accountHandler}
+                value={account}
               >
-                <option value="Option">Option</option>
-                <option value="saving">Saving</option>
-                <option value="current">Current</option>
-                <option value="bussines">Bussines</option>
-              </select>
-              <label>Account Holder Name</label>
-              <TextField
-                size="small"
-                fullWidth
-                value={name}
-                onChange={nameHandler}
-                type="text"
-                id="outlined-basic"
-                placeholder="Account Type"
-                variant="outlined"
-              />
-              <label>Phone</label>
-              <TextField
-                size="small"
-                fullWidth
-                onChange={phoneHandler}
-                type="number"
-                value={phone}
-                id="outlined-basic"
-                placeholder="Phone"
-                variant="outlined"
-              />
-              <label>Account Number</label>
-              <TextField
-                size="small"
-                fullWidth
-                type="text"
-                value={accountnumber}
-                onChange={acountNumberHandler}
-                id="outlined-basic"
-                placeholder="Account Number"
-                variant="outlined"
-              />
-              <label>IFSC</label>
-              <TextField
-                size="small"
-                fullWidth
-                value={ifsc}
-                onChange={ifscHandler}
-                type="text"
-                id="outlined-basic"
-                placeholder="IFSC"
-                variant="outlined"
-              />
-              <label>Bank Name</label>
-              <TextField
-                size="small"
-                fullWidth
-                type="text"
-                value={bankName}
-                onChange={bankNameHandler}
-                id="outlined-basic"
-                placeholder="Bank Name"
-                variant="outlined"
-              />
-              <Box sx={{ padding: "10px 0" }}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{ width: "100%", color: "#fff", fontWeight: "600" }}
-                >
-                  {" "}
-                  Submit
-                </Button>
-              </Box>
-              {notValid ? <Alert severity="warning">{notValid}</Alert> : ""}
-            </form>
+                <option value="Option">Select Your Payment mode</option>
+                <option value="bank">Bank</option>
+                <option value="paytm">Paytm</option>
+          </select>
+          </Box>
+          <Box>
+            <div>
+            {
+              activeBank ? <Bank />:""
+            }
+            </div>
+            
+            <div>
+            {
+              activePaytm ? <OtherBank />:""
+            }
+            </div>
           </Box>
         </Box>
       </div>
       <style jxs>{`
-    label{
-        display: block;
-        padding: 9px 2px 5px;
-    }
-    select{
-        width: 100%;
-        padding: 10px;
-        border-radius: 5px;
-        font-size: 15px;
-        border: 1px solid #c1c1c1;
-    }
+ .select_tag{
+  width: 100%;
+  margin: 18px 0px;
+  cursor: pointer;
+  padding: 8px;
+  border: none;
+  border: 2px solid #383535;
+  border-radius: 7px;
+  color: #000;
+ }
+ .select_tag option{
+  padding:5px;
+ }
     `}</style>
     </>
   );

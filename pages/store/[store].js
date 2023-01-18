@@ -30,9 +30,14 @@ const StoreDetails = () => {
   const [Page, setPage] = useState(1);
   const [noCouponData, setNoCouponData] = useState(false)
   const [noDealData, setNoDealData] = useState(false)
+  const [user, setUser]= useState()
 
   const router = useRouter();
   const store_slug = router.query["store"];
+
+  useEffect(()=>{
+    setUser(localStorage.getItem("user"));
+  },[])
 
     const storeData = async () => {
       try {
@@ -376,15 +381,24 @@ const StoreDetails = () => {
                 padding: "4px",
                 bgcolor: "#fff",
               }}
-            >
-              <Link href={store_data.store_landing_url}>
+            >{
+              user?(<Link href={store_data.store_landing_url}>
                 <Button
                   variant="contained"
                   sx={{ width: "100%", maxWidth: "600px", color: "#fff" }}
                 >
                   Shope & earn More
                 </Button>
-              </Link>
+              </Link>):(<Link href="/login">
+                <Button
+                  variant="contained"
+                  sx={{ width: "100%", maxWidth: "600px", color: "#fff" }}
+                >
+                  Login Now & Earn Cashback 
+                </Button>
+              </Link>)
+            }
+              
             </Box>
           </div>
         ) : (

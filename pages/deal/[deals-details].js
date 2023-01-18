@@ -21,8 +21,13 @@ const DealsDetails = () => {
   const [deal, setDeal] = useState()
   const [similarDeal, setSimilarDeal] = useState()
   const [myhtml , setMyHtml] = useState()
+  const [user,setUser]= useState()
   const router = useRouter()
   const dealSlug = router.query["deals-details"];
+
+  useEffect(()=>{
+    setUser(localStorage.getItem("user"));
+  },[])
  
 useEffect(()=>{
   const storeData = async () => {
@@ -175,8 +180,13 @@ useEffect(()=>{
                 {
                   similarDeal.length == 0 ?  "":<Box sx={{marginBottom:"25px"}}><SimilarMoreProducts similarDeal={similarDeal} /></Box>
                 }
-                <Box sx={{position:"fixed",bottom:"0",padding:"1px 4px",width:"100%", bgcolor:"#fff"}}>
-                <Button sx={{width:"100%", color:"#fff",fontWeight:"600"}} variant="contained">Shop & Earn Cashback</Button>
+
+                <Box sx={{position:"fixed",bottom:"0",padding:"1px 4px",width:"100%", maxWidth:"530px", bgcolor:"#fff"}}>
+                  {
+                user ? <Button sx={{width:"100%", color:"#fff",fontWeight:"600"}} variant="contained">Shop & Earn Cashback</Button>:
+                <Button sx={{width:"100%", color:"#fff",fontWeight:"600"}} variant="contained">Login Now & Earn Cashback</Button>
+                 }
+                
                 </Box>
                
               </div>):( <Box sx={{ display:"flex",width:"100%",height:"100vh",justifyContent:"center",alignItems:"center" }}>
