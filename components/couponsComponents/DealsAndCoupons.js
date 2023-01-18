@@ -86,8 +86,6 @@ const DealsAndCoupons = ({categoryCoupons, noCouponData, noDealData , categoryDe
               )}
                 </>
                 }
-             
-
             </Box>
           </TabPanel>
           <TabPanel value={1}>

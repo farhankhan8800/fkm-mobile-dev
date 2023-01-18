@@ -15,7 +15,7 @@ const CouponsCade = (props) => {
   
   },[props])
 
- console.log(coupons)
+//  console.log(coupons)
   return (
     <div>
       {
@@ -53,9 +53,6 @@ const CouponsCade = (props) => {
                      </span>
                     </Link>:""
                      }
-                        
-                      
-                     
                     </Grid>
                     <Grid item>
                       <Typography

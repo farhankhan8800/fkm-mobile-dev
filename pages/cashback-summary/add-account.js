@@ -18,14 +18,28 @@ const AddAccount = () => {
     if (name && phone && bankName && ifsc && accountnumber) {
       if (accountType == "Option") {
         setNotValid("Option is not a valid Account type");
-      }
-      // name.length > 2  && phone.length == 10 && bankName.length > 3 && ifsc.length == 11 && accountnumber
-      else if (name.length < 2) {
+      } else if (name.length > 2) {
+        if (phone.length == 10) {
+          if (bankName.length > 4) {
+            if (ifsc.length == 11) {
+              if (accountnumber.length > 11) {
+                 console.log(
+                   `${name},${phone},${accountnumber},${ifsc},${bankName},${accountType}`
+                 );
+              } else {
+                setNotValid("Fill the Valid Account Number");
+              }
+            } else {
+              setNotValid("Fill the Valid IFSC Code");
+            }
+          } else {
+            setNotValid("Fill the Valid Bank Name");
+          }
+        } else {
+          setNotValid("Fill the Valid Phone Number");
+        }
+      } else {
         setNotValid("Fill the Valid Name");
-      } else if(phone == 10) {
-        
-      }else{
-        
       }
     } else {
       setNotValid("Fill the all details ");
@@ -41,7 +55,6 @@ const AddAccount = () => {
   //     setIfsc("");
   //     setBankName("");
   //     setAccountType("");
-
 
   const nameHandler = (e) => {
     setName(e.target.value);

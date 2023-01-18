@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { Box, Typography } from "@mui/material";
-import Header from "../../components/headerComponent/Header";
-import HeadTag from "../../components/headTagComponent/HeadTag";
-import DealsAndCoupons from "../../components/couponsComponents/DealsAndCoupons";
+import Header from "components/headerComponent/Header";
+import HeadTag from "components/headTagComponent/HeadTag";
+import DealsAndCoupons from "components/couponsComponents/DealsAndCoupons";
 import { useEffect, useState } from "react";
-import { categoryDetailApi } from "../../service/API";
+import { categoryDetailApi } from "service/API";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -42,39 +42,34 @@ const CategoryDetail = () => {
         }
       },
       );
-        setCategoryProduct(data.response.category);
-        setCategoryProductTitle(data.response.category.description)
-      if(changeOption ==""){
-          if((data.response.deals).length == 0){
+       
+      if(changeOption == ""){
+         setCategoryProduct(data.response.category);
+         setCategoryProductTitle(data.response.category.description)
+          if(data.response.deals.length == 0){
             setNoDealData(true)
           }else{
             setCategoryDeals([...categoryDeals, ...data.response.deals]);
           }
           
-      }else if(changeOption =="deals") {
-        if((data.response.deals).length == 0){
+      }else if( changeOption =="deals") {
+        if(data.response.deals.length == 0 ){
           setNoDealData(true)
         }else{
           setCategoryDeals([...categoryDeals, ...data.response.deals]);
         }
-
       }else if(changeOption =="coupons"){
-        if((data.response.coupons).length == 0){
+        if(data.response.coupons.length == 0){
           setNoCouponData(true)
         }else{
           setCategoryCoupons([...categoryCoupons, ...data.response.coupons]);
         }
       }
     } catch (error) {
-      return error;
+      
     }
   };
   
-  useEffect(() => {
-    if(cate_slug){
-    GetData();
-    }
-  },[Page, changeOption,cate_slug]);
 
   const dealsTabCall = () => {
     setNoDealData(false)
@@ -90,10 +85,13 @@ const CategoryDetail = () => {
     setCategoryDeals([]);
   };
 
+  useEffect(() => {
+    GetData();
+  },[Page, changeOption,cate_slug]);
 
-    // console.log( "category_info == ", categoryProduct)
-    // console.log( "deals == ", categoryDeals)
-    //  console.log( "coupons_info == ", categoryCoupons)
+  //  console.log( "changeOption == ", changeOption)
+  //  console.log( "deals == ", categoryDeals)
+  //  console.log( "coupons == ", categoryCoupons)
 
 
   const addDealPage = () => {

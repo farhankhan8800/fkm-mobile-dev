@@ -27,7 +27,6 @@ const HotDealsCards = (props) => {
 
         //  console.log(item)
          
-          
           return (
             <Box
               sx={{ maxWidth: "154px", margin: "7px" }}

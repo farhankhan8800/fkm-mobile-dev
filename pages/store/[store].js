@@ -47,9 +47,10 @@ const StoreDetails = () => {
                 "Content-Type": "application/json",  
               }
             });
-        setStore_data(data.response.store_details);
-        setStoreRate(data.response.store_rates);
+       
         if (changeOption == "") {
+          setStore_data(data.response.store_details);
+          setStoreRate(data.response.store_rates);
           if((data.response.deals).length  == 0){
             setNoDealData(true)
           }else{
