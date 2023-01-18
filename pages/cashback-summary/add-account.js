@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
-
-
-
 
 const AddAccount = () => {
   const [name, setName] = useState();
@@ -14,43 +11,61 @@ const AddAccount = () => {
   const [ifsc, setIfsc] = useState();
   const [bankName, setBankName] = useState();
   const [accountType, setAccountType] = useState();
-
+  const [notValid, setNotValid] = useState(null);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if(name.length > 2 && phone.length > 9 && accountType != " " && bankName.length > 3 && ifsc.length > 9 && accountnumber.length > 10){
-   console.log("valid")
-   console.log(`${name},${phone},${accountnumber},${ifsc},${bankName},${accountType}`)
-
-    }else{
-      console.log("err")
+    if (name && phone && bankName && ifsc && accountnumber) {
+      if (accountType == "Option") {
+        setNotValid("Option is not a valid Account type");
+      }
+      // name.length > 2  && phone.length == 10 && bankName.length > 3 && ifsc.length == 11 && accountnumber
+      else if (name.length < 2) {
+        setNotValid("Fill the Valid Name");
+      } else if(phone == 10) {
+        
+      }else{
+        
+      }
+    } else {
+      setNotValid("Fill the all details ");
     }
-   
   };
-//     setName("");
-//     setPhone("");
-//     setAccountNumber("");
-//     setIfsc("");
-//     setBankName("");
-//     setAccountType("");
+
+  // console.log(
+  //   `${name},${phone},${accountnumber},${ifsc},${bankName},${accountType}`
+  // );
+  //     setName("");
+  //     setPhone("");
+  //     setAccountNumber("");
+  //     setIfsc("");
+  //     setBankName("");
+  //     setAccountType("");
+
 
   const nameHandler = (e) => {
     setName(e.target.value);
+    setNotValid(null);
   };
   const phoneHandler = (e) => {
     setPhone(e.target.value);
+    setNotValid(null);
   };
   const acountNumberHandler = (e) => {
     setAccountNumber(e.target.value);
+    setNotValid(null);
   };
   const ifscHandler = (e) => {
     setIfsc(e.target.value);
+    setNotValid(null);
   };
   const bankNameHandler = (e) => {
     setBankName(e.target.value);
+    setNotValid(null);
   };
   const accountTypeHandler = (e) => {
     setAccountType(e.target.value);
+    setNotValid(null);
   };
 
   const headeTitle = "Add Your bank Account | Freekaamaal";
@@ -61,10 +76,12 @@ const AddAccount = () => {
       <div style={{ paddingTop: "56px" }}>
         <Box
           component="div"
-          sx={{ p: 2, m: 2,mt:0, background: "#f7f7f7", borderRadius: "5px" }}
+          sx={{ p: 2, m: 2, mt: 0, background: "#f7f7f7", borderRadius: "5px" }}
         >
           <Box sx={{}}>
-            <Typography variant="h6" fontWeight={600} color="initial">Add Account</Typography>
+            <Typography variant="h6" fontWeight={600} color="initial">
+              Add Account
+            </Typography>
           </Box>
           <Box>
             <form onSubmit={onSubmit}>
@@ -75,7 +92,7 @@ const AddAccount = () => {
                 name="account-type"
                 id="account-type"
               >
-                <option value="">Opction</option>
+                <option value="Option">Option</option>
                 <option value="saving">Saving</option>
                 <option value="current">Current</option>
                 <option value="bussines">Bussines</option>
@@ -145,6 +162,7 @@ const AddAccount = () => {
                   Submit
                 </Button>
               </Box>
+              {notValid ? <Alert severity="warning">{notValid}</Alert> : ""}
             </form>
           </Box>
         </Box>

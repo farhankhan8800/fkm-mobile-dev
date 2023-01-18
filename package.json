@@ -26,7 +26,6 @@
     "eslint": "8.26.0",
     "eslint-config-next": "13.0.2",
     "framer-motion": "^7.6.2",
-    "html2plaintext": "^2.1.4",
     "next": "13.0.2",
     "nextjs-cors": "^2.1.2",
     "otp-input-react": "^0.3.0",

@@ -19,7 +19,8 @@ const apiAuth = process.env.API_AUTH
 
 const DealsDetails = () => {
   const [deal, setDeal] = useState()
- const [similarDeal, setSimilarDeal] = useState()
+  const [similarDeal, setSimilarDeal] = useState()
+  const [myhtml , setMyHtml] = useState()
   const router = useRouter()
   const dealSlug = router.query["deals-details"];
  
@@ -39,7 +40,7 @@ useEffect(()=>{
         }
       });
 
-
+      setMyHtml(data.response.deal.deal_description_url)
       setDeal(data.response.deal)
       setSimilarDeal(data.response.related_deals)
     } catch (err) {
@@ -49,7 +50,7 @@ useEffect(()=>{
   
   storeData()
 },[dealSlug])
-
+// console.log(myhtml)
    
   return (
     <>
@@ -163,12 +164,9 @@ useEffect(()=>{
                      
                       About The Deals
                     </Typography>
-                    <div className="about_the_deals" id="about_the_deals">
+                    <div  >
                     {
-                        deal.deal_description_url.replace(/(<([^>]+)>)/ig,"")
-                       // deal.deal_description_url
-                        // deal.deal_description_url
-                        // html2plaintext(deal.deal_description_url)
+                        <div id="about_the_deals" className="about_the_deals" dangerouslySetInnerHTML={{__html: myhtml}} />
                     }
                     </div>
                   </Box>
@@ -217,7 +215,7 @@ useEffect(()=>{
             padding: 10px 0 !important;
           }
           .about_the_deals p{
-        display :block
+           display :block
           }
           .about_the_deals_tag strong {
             color: rgba(62, 62, 168, 0.521);
@@ -233,7 +231,9 @@ useEffect(()=>{
             align-items: center;
             justify-content: space-between;
           }
-          
+          .about_the_deals p{
+           font-size:13px
+          }
         `}</style>
       </div>
     </>

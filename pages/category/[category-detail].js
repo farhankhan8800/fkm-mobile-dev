@@ -15,6 +15,7 @@ const CategoryDetail = () => {
   const [categoryDeals, setCategoryDeals] = useState([]);
   const [categoryCoupons, setCategoryCoupons] = useState([]);
   const [categoryProduct, setCategoryProduct] = useState();
+  const [ categoryProductTitle, setCategoryProductTitle] = useState()
   const [Page, setPage] = useState(1);
   const [changeOption, setChangeOption] = useState("");
   const [noDealData, setNoDealData]= useState(false)
@@ -25,8 +26,8 @@ const CategoryDetail = () => {
   const cate_slug = router.query["category-detail"];
 
   // console.log("Component agya",cate_slug);
-  
   // eslint-disable-next-line react-hooks/exhaustive-deps
+  
   const GetData = async () => {
 
     try {
@@ -41,9 +42,9 @@ const CategoryDetail = () => {
         }
       },
       );
-       
+        setCategoryProduct(data.response.category);
+        setCategoryProductTitle(data.response.category.description)
       if(changeOption ==""){
-          setCategoryProduct(data.response.category);
           if((data.response.deals).length == 0){
             setNoDealData(true)
           }else{
@@ -76,12 +77,14 @@ const CategoryDetail = () => {
   },[Page, changeOption,cate_slug]);
 
   const dealsTabCall = () => {
+    setNoDealData(false)
     setChangeOption("deals");
     setPage(1);
     setCategoryCoupons([]);
 
   };
   const couponsTabCall = () => {
+    setNoCouponData(false)
     setChangeOption("coupons");
     setPage(1);
     setCategoryDeals([]);
@@ -160,7 +163,9 @@ const CategoryDetail = () => {
                   fontSize="12px"
                   textAlign="center"
                 >
-                  {categoryProduct.description}
+                  {
+                    <div dangerouslySetInnerHTML={{__html: categoryProductTitle}} />
+                  }
                 </Typography>
               </Box>
             </Box>
@@ -179,13 +184,13 @@ const CategoryDetail = () => {
           <DealsAndCoupons
             categoryDeals={categoryDeals}
             categoryCoupons={categoryCoupons}
-            categoryProduct={categoryProduct}
+            // categoryProduct={categoryProduct}
+            noCouponData = {noCouponData}
+            noDealData={noDealData}
             addDealPage={addDealPage}
             addCouponPage={addCouponPage}
             dealsTabCall={dealsTabCall}
             couponsTabCall={couponsTabCall}
-            noCouponData = {noCouponData}
-            noDealData={noDealData}
           />
         </Box>
       </div>

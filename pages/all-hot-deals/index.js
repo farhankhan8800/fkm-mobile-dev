@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import dealsImage from "../../public/assets/images/img.jpg";
+import dealsImage from "../../public/images/img.jpg";
 import Link from "next/link";
 import Image from "next/image";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";

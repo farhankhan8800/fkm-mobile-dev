@@ -68,32 +68,28 @@ const StoreDetails = () => {
             setStoreCoupons([...storeCoupons, ...data.response.coupons]);
           }
           
-        }else{
-
         }
-      } catch (err) {}
+      } catch (err) {
+        console.log(err)
+      }
     };
 
-    
     useEffect(()=>{
-      storeData();
+        storeData();
     },[Page, changeOption,store_slug])
-  
- 
-
-  
-  const dealsTabCall = () => {
-    setNoCouponData(false)
-    setChangeOption("deals");
-    setPage(1)
-    setStoreCoupons([])
     
+  const dealsTabCall = () => {
+      setNoCouponData(false)
+      setChangeOption("deals");
+      setPage(1)
+      setStoreCoupons([])
   };
+
   const couponsTabCall = () => {
-    setNoCouponData(false)
-    setChangeOption("coupons");
-    setPage(1)
-    setStoreDeals([])
+      setNoDealData(false)
+      setChangeOption("coupons");
+      setPage(1)
+      setStoreDeals([])
   };
   const addDealPage = () => {
     setPage(Page + 1);
@@ -101,7 +97,6 @@ const StoreDetails = () => {
   const addCouponPage = () => {
     setPage(Page + 1);
   };
-
 
   const moreStoreHandel = () => {
     if (storeRateMore == true) {
@@ -111,8 +106,7 @@ const StoreDetails = () => {
     }
   };
 
-
-
+  // console.log(storeDeals,storeCoupons )
   return (
     <>
       <HeadTag headeTitle={headeTitle} />
@@ -361,15 +355,15 @@ const StoreDetails = () => {
             <DealsAndCoupons
               categoryCoupons={storeCoupons}
               categoryDeals={storeDeals}
-          
+              noCouponData = {noCouponData}
+              noDealData={noDealData}
+              couponsTabCall={couponsTabCall}
+              dealsTabCall={dealsTabCall}
               addDealPage={addDealPage}
               addCouponPage={addCouponPage}
-                tabCountNumber ={store_data}
-                noCouponData = {noCouponData}
-                noDealData={noDealData}
             />
+
             </Box>
-           
             <Box
               component="div"
               sx={{
