@@ -20,11 +20,17 @@ import axios from "axios";
 import {cashbackHistoryAPI} from "service/API"
 import { useState } from "react";
 import { useEffect } from "react";
-
+import { useRouter } from "next/router";
 const apiAuth = process.env.API_AUTH
 
 
 const CashbackHistory = () => {
+  const router = useRouter();
+  useEffect(()=>{
+    if(!(localStorage.getItem("user"))){
+      router.push("/")
+    }
+  },[router])
 
   const [page, setPage] = useState(1)
   const [authToken, setAuthToken] = useState()
@@ -99,7 +105,10 @@ const moreData = ()=>{
 }
 
 useEffect(()=>{
+  if((localStorage.getItem("user")))
+  {
   setAuthToken(JSON.parse(localStorage.getItem("user")).token)
+  }
   getData()
 },[authToken]) 
 

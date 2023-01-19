@@ -7,11 +7,16 @@ import { useEffect } from "react";
 import WithdrawOtherBank from "components/withdraw-money/withdrawOtherBank";
 import {withdrawPaymentModeAPI} from "service/API"
 import axios from "axios";
-
+import { useRouter } from "next/router";
 const apiAuth = process.env.API_AUTH
 
 const WithdrawMoney = () => {
-  
+  const router = useRouter();
+  useEffect(()=>{
+    if(!(localStorage.getItem("user"))){
+      router.push("/")
+    }
+  },[router])
   const [account,setAccount] = useState()
    const [activeBank, setActiveBank]= useState(false)
    const [activePaytm, setActivePaytm]= useState(false)
@@ -20,7 +25,9 @@ const WithdrawMoney = () => {
    const [userData, setuserData] = useState([])
 
    useEffect(()=>{
+    if((localStorage.getItem("user"))){
     setAuthToken(JSON.parse(localStorage.getItem("user")).token)
+    }
 
   },[])
  
@@ -78,7 +85,9 @@ const WithdrawMoney = () => {
           }
   }
   useEffect(()=>{
+    if((localStorage.getItem("user"))){
     setAuthToken(JSON.parse(localStorage.getItem("user")).token)
+    }
     
 
   },[account, changeAccount])
