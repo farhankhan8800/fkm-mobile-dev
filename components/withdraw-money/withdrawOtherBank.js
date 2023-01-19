@@ -5,7 +5,7 @@ import {add_accountAPI} from "service/API"
 import { useEffect } from "react";
 
 
-const OtherBank = () => {
+const WithdrawOtherBank = () => {
   const [name, setName] = useState();
   const [phone, setPhone] = useState();
   const [notValid, setNotValid] = useState(null);
@@ -141,4 +141,4 @@ const OtherBank = () => {
   );
 };
 
-export default OtherBank;
+export default WithdrawOtherBank;

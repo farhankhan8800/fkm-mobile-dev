@@ -13,6 +13,7 @@ const Bank = () => {
   const [ifsc, setIfsc] = useState();
   const [bankName, setBankName] = useState();
   const [authToken, setAuthToken] = useState()
+  const [serverdata, setServerdata] = useState()
  
   const [notValid, setNotValid] = useState(null);
 
@@ -34,7 +35,7 @@ const Bank = () => {
               if (accountnumber.length > 11) {
 
                 try {
-                  let{data}= await axios.post(add_accountAPI,{
+                  let{data} = await axios.post(add_accountAPI,{
                       apiAuth:apiAuth,
                       device_type: "4",
                       phone: phone,
@@ -46,14 +47,26 @@ const Bank = () => {
                     },
                     {
                       headers: {
-                            'Content-Type': 'application/json',
                             Authorization:authToken
                           }
                     })
-                  console.log(data)
-                  console.log(
-                   `${name},${phone},${accountnumber},${ifsc},${bankName}`
-                  );
+                   console.log(data)
+                   if(data.status == 1){
+                    setTimeout(function(){
+                      setName("");
+                      setPhone("");
+                      setAccountNumber("");
+                      setIfsc("");
+                      setBankName("");
+                      setServerdata(data.message)
+                    }, 500);
+                         
+                   }else{
+                    setServerdata(data.message)
+                   }
+                  // console.log(
+                  //  `${name},${phone},${accountnumber},${ifsc},${bankName}`
+                  // );
                 } catch (error) {
                   console.log(error)
                 }
@@ -182,6 +195,9 @@ const Bank = () => {
                 </Button>
               </Box>
               {notValid ? <Alert severity="warning">{notValid}</Alert> : ""}
+              {
+                serverdata ? <Alert severity="info">{serverdata}</Alert>:""
+              }
             </form>
           </Box>
      </div>

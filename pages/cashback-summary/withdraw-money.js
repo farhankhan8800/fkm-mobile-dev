@@ -1,31 +1,107 @@
-import { useState } from "react";
+import React, {  useState } from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import { Box, Button, TextField } from "@mui/material";
+import {Alert, Box, Typography} from "@mui/material";
+import WithdrawBank from "components/withdraw-money/withdrawBank";
+import { useEffect } from "react";
+import WithdrawOtherBank from "components/withdraw-money/withdrawOtherBank";
+import {withdrawPaymentModeAPI} from "service/API"
+import axios from "axios";
+
+const apiAuth = process.env.API_AUTH
 
 const WithdrawMoney = () => {
-  const [name, setName] = useState();
-  const [phone, setPhone] = useState();
-  const [accountType, setAccountType] = useState();
-  const onSubmit = (e) => {
-    e.preventDefault();
-    console.log(`${name},${phone},${accountType}`);
-    setName("");
-    setPhone("");
-    setAccountType("");
-  };
-  const nameHandler = (e) => {
-    setName(e.target.value);
-  };
-  const phoneHandler = (e) => {
-    setPhone(e.target.value);
-  };
-  const accountTypeHandler = (e) => {
-    setAccountType(e.target.value);
-  };
+  
+  const [account,setAccount] = useState()
+   const [activeBank, setActiveBank]= useState(false)
+   const [activePaytm, setActivePaytm]= useState(false)
+   const [authToken, setAuthToken] = useState()
+   const [serverdata, setServerdata] = useState()
+   const [userData, setuserData] = useState([])
 
-  const headeTitle = "Withdraw Money | Freekaamaal";
+   useEffect(()=>{
+    setAuthToken(JSON.parse(localStorage.getItem("user")).token)
 
+  },[])
+ 
+
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const changeAccount = async (account)=>{
+   
+          try {
+            let {data} = await axios.post(withdrawPaymentModeAPI,{
+                            apiAuth:apiAuth,
+                            device_type: "4",
+                            wallet_type:account
+            },{
+              headers: {
+                Authorization:authToken
+              }
+            }) 
+
+      
+         if(data.status ==1)
+         {
+          setuserData(data)
+          console.log(data)
+          console.log("success- data is there-")
+         }
+         else
+         {
+          setuserData(data)
+          console.log(data)
+          console.log("failed- no ndata is there-")
+         }
+        // if(data.status == 1)
+        // {
+        //   // setuserData(data)
+        //     console.log("data-");
+        //     if(account == "bank")
+        //     {
+        //       setActiveBank(true)
+        //       setActivePaytm(false)
+        //     }
+        //     else if(account == "paytm")
+        //     {
+        //       setActiveBank(false)
+        //       setActivePaytm(true) 
+        //     }
+        // }
+        // else if(data.status == 0)
+        // {
+        //   console.log("datanahi hai-",data);
+        //   setServerdata(data.message)
+        // }
+          } catch (error) {
+            // console.log(error)
+          }
+  }
+  useEffect(()=>{
+    setAuthToken(JSON.parse(localStorage.getItem("user")).token)
+    
+
+  },[account, changeAccount])
+
+ 
+
+
+  const accountHandler = (e) =>{
+    setAccount(e.target.value)
+    
+    if(account == "bank"){
+      changeAccount(account)
+    }else if(account == "paytm"){
+      changeAccount(account)
+    }else{
+      setActiveBank(false)
+      setActivePaytm(false)
+    }
+    
+    setServerdata("")
+  }
+
+  const headeTitle = "Add Your bank Account | Freekaamaal";
   return (
     <>
       <HeadTag headeTitle={headeTitle}></HeadTag>
@@ -33,70 +109,56 @@ const WithdrawMoney = () => {
       <div style={{ paddingTop: "56px" }}>
         <Box
           component="div"
-          sx={{ p: 2, m: 2, background: "#f7f7f7", borderRadius: "5px" }}
+          sx={{ p: 2, m: 2, mt: 0, background: "#f7f7f7", borderRadius: "5px" }}
         >
+          <Box sx={{}}>
+            <Typography variant="p" fontWeight={400} color="initial">
+             Select Your Payment Mode
+            </Typography>
+          </Box>
           <Box>
-            <form onSubmit={onSubmit}>
-              <label>Account Type</label>
-              <select
-                onChange={accountTypeHandler}
-                value={accountType}
-                name="account-type"
-                id="account-type"
-              >
-                <option value="">Opction</option>
-                <option value="saving">Saving</option>
-                <option value="current">Current</option>
-                <option value="bussines">Bussines</option>
-              </select>
-              <label>Account Holder Name</label>
-              <TextField
-                size="small"
-                fullWidth
-                value={name}
-                onChange={nameHandler}
-                type="text"
-                id="outlined-basic"
-                placeholder="Account Type"
-                variant="outlined"
-              />
-              <label>Phone</label>
-              <TextField
-                size="small"
-                fullWidth
-                onChange={phoneHandler}
-                type="number"
-                value={phone}
-                id="outlined-basic"
-                placeholder="Phone"
-                variant="outlined"
-              />
-              <Box sx={{ padding: "10px 0" }}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{ width: "100%", color: "#fff", fontWeight: "600" }}
+
+          <select className="select_tag"
+                onChange={accountHandler}
+                value={account}
                 >
-                  {" "}
-                  Submit
-                </Button>
-              </Box>
-            </form>
+                <option value="Option">Select Payment Mode</option>
+                <option value="bank">Bank</option>
+                <option value="paytm">Paytm</option>
+          </select>
+          </Box>
+              {
+                serverdata ? <Alert severity="info">{serverdata}</Alert>:""
+              }
+          <Box>
+            <div>
+            {
+              activeBank ? <WithdrawBank userAccountData={userData} />:""
+            }
+            </div>
+            
+            <div>
+            {
+              activePaytm ? <WithdrawOtherBank  userAccountData={userData} />:""
+            }
+            </div>
           </Box>
         </Box>
       </div>
       <style jxs>{`
-    label{
-        display: block;
-        padding: 9px 2px 5px;
-    }
-    select{
+      .select_tag{
         width: 100%;
-        padding: 10px;
-        border-radius: 5px;
-        font-size: 15px;
-        border: 1px solid #c1c1c1;
-    }
+        margin: 18px 0px;
+        cursor: pointer;
+        padding: 8px;
+        border: none;
+        border: 2px solid #383535;
+        border-radius: 7px;
+        color: #000;
+      }
+      .select_tag option{
+        padding:5px;
+      }
     `}</style>
     </>
   );
