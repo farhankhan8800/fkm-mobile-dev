@@ -23,9 +23,9 @@ const HotDealsCards = (props) => {
      
       <div className="flex_div">
         {hotDeals && hotDeals.map((item, i) => {
-          const {is_cashback,deal_image,slug_url,deal_slug,title, store_name, deal_title, offer_price, price}= item;
+          const {is_cashback,deal_image,slug_url,deal_slug,title,store_img_url:store_image, deal_title, offer_price, price}= item;
 
-        //  console.log(item)
+         
          
           return (
             <Box
@@ -66,7 +66,13 @@ const HotDealsCards = (props) => {
                         component="div"
                         sx={{ color: "#000", marginBottom: "0", fontSize:"15px"}}
                       >
-                        {store_name}{" "}
+                        <Image
+                        src={store_image}
+                        alt='FreeKaaMaal Product'
+                        height={17}
+                        width={50}
+                        style={{ borderRadius: "7px" }}
+                      />
                       </Typography>
                       <Typography
                         variant="body2"

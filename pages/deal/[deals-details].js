@@ -78,15 +78,16 @@ useEffect(()=>{
                       overflow: "hidden",
                     }}
                   >
-                    <div className="product_offer">
-                      <Typography
+                    {/* <div className="product_offer"> */}
+                      {/* 50% off  */}
+                      {/* <Typography
                         variant="strong"
                         sx={{ color: "#fff" }}
                         component="strong"
                       >
                         50% OOF
-                      </Typography>
-                    </div>
+                      </Typography> */}
+                    {/* </div> */}
                     <Box sx={{ maxWidth: "350px", margin: "auto" }} component="div">
                       <Image
                         style={{ width: "100%" }}
@@ -102,13 +103,13 @@ useEffect(()=>{
                         sx={{ fontWeight: "400", marginTop: "10px" }}
                         component="p"
                       >
-                        Choose the best price and the rertailer
+                        {/* Choose the best price and the rertailer */}
                       </Typography>
                       <Link 
-                        href={`regtg${deal.deal_slug}`}
+                        href={`${deal.deal_slug}`}
                          className="shopNowbtn"
                       >
-                        Shope & Earn CashBack
+                        {/* Shop & Earn CashBack */}
                       </Link>
                     </Box>
                     <Box
@@ -129,7 +130,7 @@ useEffect(()=>{
                           <div className="card_mrp_box">
                             <strong>&#8377; {deal.offer_price} </strong> <span>&#8377; {deal.price}</span>
                           </div>
-                          <div className="card_cashback_tag">
+                          {/* <div className="card_cashback_tag">
                             <strong>&#8377; {deal.price - deal.offer_price} </strong> <span> cashback </span>
                             <InfoIcon
                               sx={{
@@ -138,14 +139,14 @@ useEffect(()=>{
                                 color: "#fd4d4d",
                               }}
                             ></InfoIcon>{" "}
-                          </div>
+                          </div> */}
                         </Grid>
                         <Grid item>
                           <Box component="div" sx={{ maxWidth: "100px" }}>
                             <Image
                               width={100}
                               height={25}
-                              src={brandImage}
+                              src={deal.store_image}
                               alt=""
                              />
                           </Box>
