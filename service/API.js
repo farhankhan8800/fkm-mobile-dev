@@ -33,3 +33,7 @@ export const missing_historyAPI = "https://fkmdata.freekaamaal.com/cashback/miss
 export const referral_summaryAPI = "https://fkmdata.freekaamaal.com/cashback/referral-summary"
 
 export const add_accountAPI = "https://fkmdata.freekaamaal.com/cashback/add-account"
+
+export const withdrawMoneyAPI = "https://fkmdata.freekaamaal.com/cashback/withdraw-money"
+
+export const withdrawPaymentModeAPI =  "https://fkmdata.freekaamaal.com/cashback/withdraw-payment-mode"
