@@ -3,7 +3,7 @@ import { Alert, Box, Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import {withdrawMoneyAPI} from "service/API"
 import { useEffect } from "react";
-import { typography } from "@mui/system";
+import { useRouter } from 'next/router'
 
 const apiAuth = process.env.API_AUTH
 
@@ -20,9 +20,11 @@ const WithdrawOtherBank = ({userData}) => {
    const [promocodesCouponid, setPromocodesCouponid] = useState()
    const [promocodesCode, setPromocodesCode] = useState()
 
+   const router = useRouter()
  
   useEffect(()=>{
     setAuthToken(JSON.parse(localStorage.getItem("user")).token)
+    
   },[])
 
     useEffect(()=>{
@@ -50,18 +52,33 @@ const WithdrawOtherBank = ({userData}) => {
                     couponid:promocodesCode,
                     code:promocodesCouponid,
                     option:"cbrequest"
-
-
                   },
                   {
                     headers: {
                           Authorization:authToken
                         }
                   })
-                 console.log(data)
+                //  console.log(data)
+                 if(data.status == 1){
+                  setTimeout(()=>{
+                    setServerdata(data.msg)
+                    setAmount("")
+                    setAccount("")
+                    sessionStorage.setItem("verifydata",JSON.stringify(data));
+                  }, 400);
+                  setTimeout(()=>{
+                    router.push("/cashback-summary/verify-withdraw-money")
+                  }, 600);
+                  
+
+                 } else if(data.status == 0){
+                  setServerdata(data.msg)
+                 }else{
+                  setServerdata(data.msg)
+                 }
                
               } catch (error) {
-                console.log(error)
+                // console.log(error)
               }
 
         }
@@ -82,7 +99,12 @@ const WithdrawOtherBank = ({userData}) => {
   };
 
   const promocodesHandal = (e)=>{
-    setPromocodes(e.target.value);
+    if(e.target.value == "none"){
+
+    }else{
+      setPromocodes(e.target.value);
+    }
+    
   }
 
   const accountHandler =(e)=>{
@@ -157,18 +179,23 @@ const WithdrawOtherBank = ({userData}) => {
                     {
                         userPromocodes.map((item ,i)=>{
                             return(
-                                <>
-                                <div style={{display:'flex'}} classname="promocodes_class" key={i}>
-                                <input value={`${item.code} ${item.couponid}`} onChange={promocodesHandal}  style={{curser :"pointer"}} type="radio" id="Promocodes" name="Promocodes" />
-                                <label style={{fontSize:"14px", marginLeft:"10px"}} classname="" htmlfor="Promocodes">{item.usage_text}</label> 
+                                // eslint-disable-next-line react/jsx-key
+                                <React.Fragment key={i}>
+                                <div style={{display:'flex'}} classname="promocodes_class" >
+                                <input value={`${item.code} ${item.couponid}`} onChange={promocodesHandal}  style={{curser :"pointer"}} type="radio" name="Promocodes" />
+                                <label style={{fontSize:"14px", marginLeft:"10px"}} classname="" htmlFor="Promocodes">{item.usage_text}</label> 
                                 </div>
-                                </>
+                                </React.Fragment>
                             )
                         }
                         
                         //   <Typography fontSize={"13px"} component="p" key={i+1}>{item.usage_text}</Typography>
                         )
                     }
+                    <div style={{display:'flex'}} classname="promocodes_class">
+                                <input value="none" checked  style={{curser :"pointer"}} onChange={promocodesHandal} type="radio"  id="defaultChecked" name="Promocodes" />
+                                <label style={{fontSize:"14px", marginLeft:"10px"}} classname=""   htmlFor="Promocodes">If you do not have any coupons to use</label> 
+                    </div>
                 </Box>
               </Box>):""
             }
@@ -205,31 +232,3 @@ const WithdrawOtherBank = ({userData}) => {
 export default WithdrawOtherBank;
 
 
-// try {
-//     let{data} = await axios.post(add_accountAPI,{
-//         apiAuth:apiAuth,
-//         device_type: "4",
-  
-//       },
-//       {
-//         headers: {
-//               Authorization:authToken
-//             }
-//       })
-//      console.log(data)
-//      if(data.status == 1){
-//       setTimeout(function(){
-       
-//         setServerdata(data.message)
-//       }, 500);
-           
-//      }else{
-//       setServerdata(data.message)
-//      }
-//     // console.log(
-//     //  `${name},${phone},${accountnumber},${ifsc},${bankName}`
-//     // );
-//   } catch (error) {
-//     console.log(error)
-//   }
- 

@@ -111,12 +111,15 @@ const Header = () => {
           </Grid>
         </Toolbar>
           {
-            searchInput ? <Grid >
-            
-            </Grid>:""
+            searchInput ? <Box  sx={{alignItems:"center", bgcolor:"#fff", display:"flex",justifyContent:"center",padding:"10px", width:"100%" }}>
+               <TextField id="outlined-basic" size="small"  color="secondary" fullWidth sx={{bgColor:"#fff"}}  placeholder="Search" variant="outlined" />
+            </Box>:""
           }
       </AppBar>
       <Sidebar closeSidebar={toggleClick} togalButton={sidebarToggle} />
+      <style jsx>{`
+     
+      `}</style>
     </Box>
   );
 };

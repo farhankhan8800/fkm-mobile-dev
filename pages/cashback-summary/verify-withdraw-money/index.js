@@ -1,84 +1,80 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import enterOtpImage from "../../public/images/enter-otp.png";
+import enterOtpImage from "public/images/enter-otp.png";
 
 import { Box, Button, Typography, TextField, Alert } from "@mui/material";
 import Image from "next/image";
-import Header from "../../components/headerComponent/Header";
-import HeadTag from "../../components/headTagComponent/HeadTag";
-import { verifyUser } from "service/API.js";
+import Header from "components/headerComponent/Header";
+import HeadTag from "components/headTagComponent/HeadTag";
+import {withdrawMoneyAPI} from "service/API"
 import axios from "axios";
 
-const EnterOtp = () => {
+const VerifyWithdrawMoney = () => {
   const [OTP, setOTP] = useState();
+  const [userToken, setUserToken] = useState();
   const [OtpErr, setOtpErr] = useState(false);
   const [serverErr, setServerErr] = useState();
-  const [registerToken, setRegisterToken] = useState();
-  const [time, setTime] = useState(90);
-  const [successAlert, setSuccessAlert] = useState(false);
-  const [checkVerified, setCheckVerified] = useState()
+  const [successAlert, setSuccessAlert] = useState();
+  const [verifyPayment, setVerifyPayment] = useState()
   const router = useRouter();
 
   const apiAuth = process.env.API_AUTH;
-  useEffect(() => {
-   
-    setRegisterToken(JSON.parse(localStorage.getItem("registerToken")).token);
-  
-    resendOTP();
-  }, []);
-  useEffect(()=>{
-    setCheckVerified(localStorage.getItem("verified"))
-    if(checkVerified){
-      router.push("/login");
-    }
-  },[checkVerified, router])
 
-  const resendOTP = () => {};
-  
   useEffect(() => {
-    if (time == 0) {
-      setTime(time);
-    } else {
-      const timer = setInterval(function () {
-        setTime(time - 1);
-      }, 1000);
-      return () => {
-        clearInterval(timer);
-      };
-    }
-  }, [time]);
+    setUserToken(JSON.parse(localStorage.getItem("user")).token)
+    setVerifyPayment(JSON.parse(sessionStorage.getItem("verifydata")))
+  }, []);
+
   const onSubmit = async (e) => {
     e.preventDefault();
     if (OTP) {
       try {
         let { data } = await axios.post(
-          verifyUser,
+          withdrawMoneyAPI,
           {
             apiAuth: apiAuth,
-            phoneotp: OTP,
+            userotp: OTP,
+            wallet_name:verifyPayment.wallet_name,
+            code_reference:verifyPayment.code_reference,
+            request_id:verifyPayment.request_id,
+            option:"confirmotp",
           },
           {
             headers: {
-              Authorization: registerToken,
+              Authorization: userToken,
             },
           }
         );
+        console.log(data)
         if (data.status == 1) {
           setTimeout(()=>{
-            setSuccessAlert(true)
-          },500);
+            setSuccessAlert(data.message)
+          },300);
           setTimeout(()=>{
-            router.push("/login")
-            localStorage.setItem("verified", "successfully");
-          },1000);
+            router.push("/cashback-summary/withdraw-money")
+            sessionStorage.clear();
+          },500)
+
+        }else if(data.status == 0 ){
+          data.message ? setServerErr(data.message) : setServerErr(data.msg)
         }
+       
       } catch (error) {
-        setServerErr(error.response.data);
+        console.log(error);
       }
     } else {
       setOtpErr(true);
+      
     }
   };
+
+
+  const otpHandler = (e) => {
+    setOtpErr(false);
+    setOTP(e.target.value);
+    setServerErr("")
+  }
+// console.log( "verify payment",verifyPayment)
 
   const headeTitle = "Enter OTP | Freekaamaal";
   return (
@@ -108,7 +104,7 @@ const EnterOtp = () => {
             <strong style={{ fontWeight: "800" }}>Enter OTP</strong>
           </Typography>
           <Typography variant="body1" component="p" sx={{ padding: "5px 0" }}>
-            An 6 digit code has been sand to
+            An 6 digit code has been sand to Phone/Email
           </Typography>
           <form
             className="enter_otp_component"
@@ -122,10 +118,7 @@ const EnterOtp = () => {
               maxLength="6"
               value={OTP}
               label="Enter 6 digit OTP"
-              onChange={(e) => {
-                setOtpErr(false);
-                setOTP(e.target.value);
-              }}
+              onChange={otpHandler}
               type="number"
               placeholder=" Enter 6 digit OTP "
               variant="outlined"
@@ -139,42 +132,20 @@ const EnterOtp = () => {
             )}
             {serverErr ? (
               <Box sx={{ paddingTop: "10px" }}>
-                <Alert severity="error">{serverErr.message}</Alert>
+                <Alert severity="error">{serverErr}</Alert>
               </Box>
             ) : (
               ""
             )}
             {successAlert ? (
               <Box sx={{ paddingTop: "10px" }}>
-                <Alert severity="success">You are verified Successfully</Alert>
+                <Alert severity="success">{successAlert}</Alert>
               </Box>
             ) : (
               ""
             )}
 
-            <Box
-              sx={{
-                display: "flex",
-                padding: "10px",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Typography
-                fontSize={"21px"}
-                fontWeight={"600"}
-                color={"#f27935"}
-              >
-                00:{time}s
-              </Typography>
-              {time == 0 ? (
-                <Button variant="outlined">Re send OTP</Button>
-              ) : (
-                <Button disabled variant="outlined">
-                  Re send OTP
-                </Button>
-              )}
-            </Box>
+            
 
             <Button
               variant="contained"
@@ -183,6 +154,7 @@ const EnterOtp = () => {
                 color: "#fff",
                 fontWeight: "bold",
                 margin: "10px 0",
+                marginTop:"20px",
                 letterSpacing: "1px",
                 fontSize: "17px",
               }}
@@ -197,4 +169,4 @@ const EnterOtp = () => {
   );
 };
 
-export default EnterOtp;
+export default VerifyWithdrawMoney;
