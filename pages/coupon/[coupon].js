@@ -7,6 +7,7 @@ import HeadTag from "components/headTagComponent/HeadTag";
 import { useRouter } from "next/router";
 import {coupon_detail} from "service/API"
 import axios from "axios";
+import PageNotFound from "components/PageNotFound";
 
 
 const apiAuth = process.env.API_AUTH
@@ -33,7 +34,7 @@ const copyCode = () => {
 const CouponCodeCopy = () => {
 
 const [couponCode, setCouponCode]= useState({})
-
+const [CouponNotFound, setCouponNotFound] = useState(false);
 const router = useRouter();
 const couponid = router.query["coupon"];
 
@@ -54,8 +55,15 @@ const couponid = router.query["coupon"];
           "Content-Type": "application/json",
         }
       });
-    
-        setCouponCode(data.response.coupon)
+    console.log(data);
+    if(data.status==1)
+    {
+      setCouponCode(data.response.coupon)
+    }
+    else if(data.status==2)
+    {
+      setCouponNotFound(true);
+    }
        
     } catch (error) {
       return error;
@@ -71,10 +79,23 @@ const couponid = router.query["coupon"];
   
 
   const headeTitle = "Copy Code | Freekaamaal";
+  
+  
+  if(CouponNotFound===true)
+  {
+  return(
+      <>
+      <Header/>
+    <HeadTag headeTitle={`404 Page Not Found|| Freekaamaal`} />
+      <PageNotFound />
+      </> 
+    );
+  }
   return (
-    <>
+    <> 
+    <Header/>
       <HeadTag headeTitle={headeTitle}></HeadTag>
-      <Header></Header>
+      
       <div style={{ paddingTop: "56px" }}>
         {
           couponCode? (  <Box component="div" sx={{ p: 4, paddingTop: "100px" }}>
@@ -160,6 +181,8 @@ const couponid = router.query["coupon"];
        }
       
       </div>
+  
+    
     </>
   );
 };
