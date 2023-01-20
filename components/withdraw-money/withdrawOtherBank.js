@@ -90,9 +90,6 @@ const WithdrawOtherBank = ({userData}) => {
    }
   };
 
-
-
-
   const amountHandler = (e) => {
     setAmount(e.target.value);
     setNotValid(null);
