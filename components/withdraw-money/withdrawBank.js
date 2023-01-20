@@ -3,37 +3,55 @@ import { Alert, Box, Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import {withdrawMoneyAPI} from "service/API"
 import { useEffect } from "react";
+import { typography } from "@mui/system";
 
 const apiAuth = process.env.API_AUTH
 
-const WithdrawBank = () => {
+const WithdrawBank = ({userData}) => {
+
   const [amount, setAmount] = useState();
   const [account , setAccount] = useState();
   const [authToken, setAuthToken] = useState()
   const [serverdata, setServerdata] = useState()
   const [notValid, setNotValid] = useState(null);
+   const [userAccountData, setUserAccountData] = useState()
+   const [userPromocodes, setUserPromocodes] = useState()
+   const [promocodes,setPromocodes] = useState(null)
+   const [promocodesCouponid, setPromocodesCouponid] = useState()
+   const [promocodesCode, setPromocodesCode] = useState()
 
-
+ 
   useEffect(()=>{
     setAuthToken(JSON.parse(localStorage.getItem("user")).token)
   },[])
 
+    useEffect(()=>{
+        setUserAccountData(userData)
+        setUserPromocodes(userData.promocodes)
+    },[userData])
 
   const onSubmit = async (e) => {
+    setPromocodesCouponid(promocodes.split(" ")[1])
+    setPromocodesCode(promocodes.split(" ")[0])
     e.preventDefault();
    if(account){
     if (amount) {
         if(account == "00"){
            setNotValid("Select Valid Withdrawal Account");
         }else{
-        //    console.log("valid")
-        //    console.log(`account =  ${account}, amount = ${amount}`)
-
-
-            try {
+    
+        try {
                 let{data} = await axios.post(withdrawMoneyAPI,{
                     apiAuth:apiAuth,
                     device_type: "4",
+                    wallet_name:"paytm",
+                    account_ref_id:account,
+                    amount:amount,
+                    couponid:promocodesCode,
+                    code:promocodesCouponid,
+                    option:"cbrequest"
+
+
                   },
                   {
                     headers: {
@@ -41,18 +59,10 @@ const WithdrawBank = () => {
                         }
                   })
                  console.log(data)
-                //  if(data.status == 1){
-                //   setTimeout(function(){
-                
-                //     setServerdata(data.message)
-                //   }, 500);
-                    
-                //  }else{
-                //   setServerdata(data.message)
-                //  }
-                // console.log(
-                //  `${name},${phone},${accountnumber},${ifsc},${bankName}`
-                // );
+                 if(data.status == 1){
+                   
+                 }
+               
               } catch (error) {
                 console.log(error)
               }
@@ -66,21 +76,35 @@ const WithdrawBank = () => {
    }
   };
 
+
+
+
   const amountHandler = (e) => {
     setAmount(e.target.value);
     setNotValid(null);
   };
 
+  const promocodesHandal = (e)=>{
+    setPromocodes(e.target.value);
+  }
+
   const accountHandler =(e)=>{
     setAccount(e.target.value)
     setNotValid(null);
+    
   }
+
+
+
+//   console.log(promocodes)
  
   return (
     <>
      <div style={{paddingTop:"20px"}}>
+   {
+    userAccountData ?  <Typography fontSize={"13px"} fontWeight={600}> {userAccountData.label_msg}</Typography> :""
+   }
    
-    <Typography fontSize={"13px"} fontWeight={600}> Kindly Note, minimum withdrawal Amount is Rs 100</Typography>
      <Box sx={{paddingTop:"10px"}}>
             <form onSubmit={onSubmit}>
             <label>Select Account</label>
@@ -89,8 +113,16 @@ const WithdrawBank = () => {
                 value={account}
               >
                 <option value="00">Select Account</option>
-                <option value="bank">Bank</option>
-                <option value="paytm">Paytm</option>
+               {
+
+               userAccountData ? userAccountData.account.map((item,i)=>
+               
+                // eslint-disable-next-line react/jsx-key
+                <option key={i} value={item.account_ref_id}>{item.name}</option>
+
+               ):"" 
+                 
+               }
               </select>
               <label>Enter Amount</label>
               <TextField
@@ -120,6 +152,31 @@ const WithdrawBank = () => {
               }
             </form>
           </Box>
+          <div>
+            {
+              userPromocodes ? (<Box sx={{paddingTop:"10px"}}>
+                <Typography fontWeight={"600"}>Your save Coupons</Typography>
+                <Box>
+                    {
+                        userPromocodes.map((item ,i)=>{
+                            return(
+                                <>
+                                <div style={{display:'flex'}} classname="promocodes_class" key={i}>
+                                <input value={`${item.code} ${item.couponid}`} onChange={promocodesHandal}  style={{curser :"pointer"}} type="radio" id="Promocodes" name="Promocodes" />
+                                <label style={{fontSize:"14px", marginLeft:"10px"}} classname="" htmlfor="Promocodes">{item.usage_text}</label> 
+                                </div>
+                                </>
+                            )
+                        }
+                        
+                        //   <Typography fontSize={"13px"} component="p" key={i+1}>{item.usage_text}</Typography>
+                        )
+                    }
+                </Box>
+              </Box>):""
+            }
+          </div>
+          
      </div>
      
       <style jxs>{`
@@ -135,6 +192,13 @@ const WithdrawBank = () => {
        }
        .select_tag option{
         padding:5px;
+       }
+       .promocodes_class{
+         display: flex !important;
+         padding-left: 5px;
+       }
+       .promocodes_class input{
+        margin-right: 10px;
        }
     `}</style>
     </>
