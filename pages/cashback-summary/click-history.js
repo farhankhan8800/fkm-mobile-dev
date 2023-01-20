@@ -12,7 +12,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import axios from "axios";
-import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useState } from "react";
 import {clickHistoryAPI} from "service/API"
@@ -21,12 +20,6 @@ import {clickHistoryAPI} from "service/API"
 const apiAuth = process.env.API_AUTH
 
 const ClickHistory = () => {
-  const router = useRouter();
-  useEffect(()=>{
-    if(!(localStorage.getItem("user"))){
-      router.push("/")
-    }
-  },[router])
 
 const [click_History, setClick_History] = useState([])
 const [authToken, setAuthToken] = useState()
@@ -35,9 +28,7 @@ const [noMoreData,setNoMoreData] = useState(false)
 const [click_history_title , setClick_history_title] = useState()
 
 useEffect(()=>{
-  if((localStorage.getItem("user"))){
   setAuthToken(JSON.parse(localStorage.getItem("user")).token)
-  }
   
 },[])
 
