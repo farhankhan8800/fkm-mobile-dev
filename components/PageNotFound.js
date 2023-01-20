@@ -6,12 +6,7 @@ import Button from '@mui/material/Button';
 import { useRouter } from 'next/router'
 
 
-
 const headeTitle = " Error 404 | Freekaamaal";
-
-
-
-
 const PageNotFound = () => {
    const router = useRouter()
 
