@@ -1,15 +1,9 @@
 import React, { useState } from "react";
 import { Box, TextField, Button, Typography } from "@mui/material";
-import { useRouter } from "next/router";
+
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 const ReferalMoney = () => {
-  const router = useRouter();
-  useEffect(()=>{
-    if(!(localStorage.getItem("user"))){
-      router.push("/")
-    }
-  },[router])
   const [amount, setAmount] = useState();
   const [slecteHandler, setSlecteHandler] = useState();
   const onSubmit = (e) => {

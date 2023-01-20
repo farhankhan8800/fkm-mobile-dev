@@ -4,17 +4,10 @@ import { Typography, Box, Button } from "@mui/material";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 import Image from "next/image";
-import { useRouter } from "next/router";
 
 import FrequentlyQuestion from "../../components/FrequentlyQuestion";
 
 const referEarn = () => {
-  const router = useRouter();
-  useEffect(()=>{
-    if(!(localStorage.getItem("user"))){
-      router.push("/")
-    }
-  },[router])
   const copyLink = () => {
     const copyLinkValue = document.getElementById("couponLink");
     copyLinkValue.select();

@@ -3,14 +3,7 @@ import { Box, Typography } from "@mui/material";
 
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import { useRouter } from "next/router";
 const ReportMissing = () => {
-  const router = useRouter();
-  useEffect(()=>{
-    if(!(localStorage.getItem("user"))){
-      router.push("/")
-    }
-  },[router])
   const headeTitle = "Report Missing | Freekaamaal";
   return (
     <>
