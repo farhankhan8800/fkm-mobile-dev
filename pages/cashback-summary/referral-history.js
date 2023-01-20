@@ -20,11 +20,18 @@ import TabsListUnstyled from "@mui/base/TabsListUnstyled";
 import TabPanelUnstyled from "@mui/base/TabPanelUnstyled";
 import TabUnstyled, { tabUnstyledClasses } from "@mui/base/TabUnstyled";
 import {cashbackHistoryAPI} from "service/API"
+import { useRouter } from "next/router";
 
 
 const apiAuth = process.env.API_AUTH
 
 const ReferralHistory = () => {
+  const router = useRouter();
+  useEffect(()=>{
+    if(!(localStorage.getItem("user"))){
+      router.push("/")
+    }
+  },[router])
     const [referral, setReferral] = useState()
     const [page, setPage] = useState(1)
     const [authToken, setAuthToken] = useState()
