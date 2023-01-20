@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import WithdrawOtherBank from "components/withdraw-money/withdrawOtherBank";
 import { withdrawPaymentModeAPI } from "service/API";
 import axios from "axios";
-<<<<<<< HEAD
 
 const apiAuth = process.env.API_AUTH;
 
@@ -18,32 +17,6 @@ const WithdrawMoney = () => {
   const [authToken, setAuthToken] = useState();
   const [serverdata, setServerdata] = useState();
   const [userData, setuserData] = useState([]);
-=======
-import { useRouter } from "next/router";
-const apiAuth = process.env.API_AUTH
-
-const WithdrawMoney = () => {
-  const router = useRouter();
-  useEffect(()=>{
-    if(!(localStorage.getItem("user"))){
-      router.push("/")
-    }
-  },[router])
-  const [account,setAccount] = useState()
-   const [activeBank, setActiveBank]= useState(false)
-   const [activePaytm, setActivePaytm]= useState(false)
-   const [authToken, setAuthToken] = useState()
-   const [serverdata, setServerdata] = useState()
-   const [userData, setuserData] = useState([])
-
-   useEffect(()=>{
-    if((localStorage.getItem("user"))){
-    setAuthToken(JSON.parse(localStorage.getItem("user")).token)
-    }
-
-  },[])
- 
->>>>>>> e3aa3b7cb0ecf5c91801edd2fee4e9f19a269350
 
   useEffect(() => {
     setAuthToken(JSON.parse(localStorage.getItem("user")).token);
@@ -66,7 +39,6 @@ const WithdrawMoney = () => {
         }
       );
 
-<<<<<<< HEAD
       if (data.status == 1) {
          console.log(data)
          setuserData(data)
@@ -82,66 +54,6 @@ const WithdrawMoney = () => {
       }
     } catch (error) {
       console.log(error);
-=======
-      
-         if(data.status ==1)
-         {
-          setuserData(data)
-          console.log(data)
-          console.log("success- data is there-")
-         }
-         else
-         {
-          setuserData(data)
-          console.log(data)
-          console.log("failed- no ndata is there-")
-         }
-        // if(data.status == 1)
-        // {
-        //   // setuserData(data)
-        //     console.log("data-");
-        //     if(account == "bank")
-        //     {
-        //       setActiveBank(true)
-        //       setActivePaytm(false)
-        //     }
-        //     else if(account == "paytm")
-        //     {
-        //       setActiveBank(false)
-        //       setActivePaytm(true) 
-        //     }
-        // }
-        // else if(data.status == 0)
-        // {
-        //   console.log("datanahi hai-",data);
-        //   setServerdata(data.message)
-        // }
-          } catch (error) {
-            // console.log(error)
-          }
-  }
-  useEffect(()=>{
-    if((localStorage.getItem("user"))){
-    setAuthToken(JSON.parse(localStorage.getItem("user")).token)
-    }
-    
-
-  },[account, changeAccount])
-
- 
-
-
-  const accountHandler = (e) =>{
-    setAccount(e.target.value)
-    
-    if(account == "bank"){
-      changeAccount(account)
-    }else if(account == "paytm"){
-      changeAccount(account)
-    }else{
-      setActiveBank(false)
-      setActivePaytm(false)
->>>>>>> e3aa3b7cb0ecf5c91801edd2fee4e9f19a269350
     }
   };
   useEffect(() => {
