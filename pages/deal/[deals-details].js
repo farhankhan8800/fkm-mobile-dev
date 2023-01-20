@@ -13,7 +13,7 @@ import {useEffect, useState } from "react";
 import { deal_detail} from "service/API"
 import CircularProgress from '@mui/material/CircularProgress';
 import axios from "axios";
-
+import PageNotFound from "components/PageNotFound";
 const apiAuth = process.env.API_AUTH
 
 
@@ -22,6 +22,7 @@ const DealsDetails = () => {
   const [similarDeal, setSimilarDeal] = useState()
   const [myhtml , setMyHtml] = useState()
   const [user,setUser]= useState()
+  const [DealNotFound, setDealNotFound] = useState(false);
   const router = useRouter()
   const dealSlug = router.query["deals-details"];
 
@@ -44,10 +45,16 @@ useEffect(()=>{
           "Content-Type": "application/json",
         }
       });
-
+      if(data.status==1)
+      {
       setMyHtml(data.response.deal.deal_description_url)
       setDeal(data.response.deal)
       setSimilarDeal(data.response.related_deals)
+      }
+      else if(data.status==2)
+      {
+        setDealNotFound(true);
+      }
     } catch (err) {
     
     }
@@ -56,11 +63,19 @@ useEffect(()=>{
   storeData()
 },[dealSlug])
 // console.log(myhtml)
-   
+if(DealNotFound)
+{
+return(
+    <>
+    <Header />
+  <HeadTag headeTitle={`404 Page Not Found|| Freekaamaal`} />
+    <PageNotFound />
+    </> 
+  );
+}
   return (
     <>
-     
-      <Header />
+     <Header />
       <div style={{ paddingTop: "56px" }}>
         {
         deal? (<div>
