@@ -1,94 +1,143 @@
 import React, { useState } from "react";
-import { Box, TextField, Button, Typography } from "@mui/material";
-
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-const ReferalMoney = () => {
-  const [amount, setAmount] = useState();
-  const [slecteHandler, setSlecteHandler] = useState();
-  const onSubmit = (e) => {
-    e.preventDefault();
-    console.log(`${amount},${setSlecteHandler}`);
-    setAmount("");
-    setSlecteHandler("");
+import { Alert, Box, Typography } from "@mui/material";
+import WithdrawBank from "components/refferal-money/withdrawBank";
+import { useEffect } from "react";
+import WithdrawOtherBank from "components/refferal-money/withdrawOtherBank";
+import { withdrawRefferalModeAPI } from "service/API";
+import axios from "axios";
+
+const apiAuth = process.env.API_AUTH;
+
+const RefferalMoney = () => {
+  const [account, setAccount] = useState();
+  const [activeBank, setActiveBank] = useState(false);
+  const [activePaytm, setActivePaytm] = useState(false);
+  const [authToken, setAuthToken] = useState();
+  const [serverdata, setServerdata] = useState();
+  const [userData, setuserData] = useState([]);
+
+  useEffect(() => {
+    setAuthToken(JSON.parse(localStorage.getItem("user")).token);
+  }, []);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const changeAccount = async (account) => {
+    try {
+      let { data } = await axios.post(
+        withdrawRefferalModeAPI,
+        {
+          apiAuth: apiAuth,
+          device_type: "4",
+          wallet_type: account,
+        },
+        {
+          headers: {
+            Authorization: authToken,
+          },
+        }
+      );
+
+      if (data.status == 1) {
+         console.log(data)
+         setuserData(data)
+        if (account == "bank") {
+          setActiveBank(true);
+          setActivePaytm(false);
+        } else if (account == "paytm") {
+          setActiveBank(false);
+          setActivePaytm(true);
+        }
+      } else {
+        setServerdata(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
-  const amountHeandler = (e) => {
-    setAmount(e.target.value);
+  useEffect(() => {
+    setAuthToken(JSON.parse(localStorage.getItem("user")).token);
+  }, []);
+
+  const accountHandler = (e) => {
+    setServerdata("");
+    setAccount(e.target.value);
+    setActiveBank(false);
+    setActivePaytm(false);
   };
 
-  const slecteAccountHandler = (e) => {
-    setSlecteHandler(e.target.value);
-  };
-  const headeTitle = "Referal Money | Freekaamaal";
+  const callAccount = () => {
+    setActiveBank(false);
+    setActivePaytm(false);
+    if(account == "bank") {
+      changeAccount(account);
+    }else if(account == "paytm") {
+      changeAccount(account);
+    }
+
+  } 
+
+  const headeTitle = "Add Your bank Account | Freekaamaal";
   return (
     <>
       <HeadTag headeTitle={headeTitle}></HeadTag>
       <Header></Header>
       <div style={{ paddingTop: "56px" }}>
-        <Box sx={{ p: 2, m: 2, bgcolor: "#fbf6f6" }}>
+        <Box
+          component="div"
+          sx={{ p: 2, m: 2, mt: 0, background: "#f7f7f7", borderRadius: "5px" }}
+        >
+          <Box sx={{}}>
+            <Typography variant="p" fontWeight={400} color="initial">
+              Select Your Payment Mode
+            </Typography>
+          </Box>
           <Box>
-            <form onSubmit={onSubmit}>
-              <Typography component="h6" paddingBottom="5px" fontWeight="600">
-                Slecte Account{" "}
-              </Typography>
-              <select
-                onChange={slecteAccountHandler}
-                value={slecteHandler}
-                name="account-type"
-                id="account-type"
-              >
-                <option value="">Opction</option>
-                <option value="saving">Saving</option>
-                <option value="current">Current</option>
-                <option value="bussines">Bussines</option>
-              </select>
-              <Typography component="h6" padding="5px 0" fontWeight="600">
-                Enter the amount you want to redeem{" "}
-              </Typography>
+            <select
+              className="select_tag"
+              onChange={accountHandler}
+              onClick={callAccount}
+              value={account}
+            >
+              <option value="Option">Select Payment Mode</option>
+              <option value="bank">Bank</option>
+              <option value="paytm">Paytm</option>
+            </select>
+          </Box>
+          {serverdata ? <Alert severity="info">{serverdata}</Alert> : ""}
+          <Box>
+            <div>
+              {activeBank ? <WithdrawBank userData={userData} /> : ""}
+            </div>
 
-              <TextField
-                size="small"
-                fullWidth
-                value={amount}
-                onChange={amountHeandler}
-                type="number"
-                id="outlined-basic"
-                placeholder="Enter Amount"
-                variant="outlined"
-              />
-              <Box sx={{ padding: "10px 0" }}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{ width: "100%", color: "#fff", fontWeight: "600" }}
-                >
-                  {" "}
-                  Withdraw
-                </Button>
-              </Box>
-            </form>
+            <div>
+              {activePaytm ? (
+                <WithdrawOtherBank userData={userData} />
+              ) : (
+                ""
+              )}
+            </div>
           </Box>
         </Box>
       </div>
       <style jxs>{`
-    label{
-        display: block;
-        padding: 9px 2px 5px;
-    }
-    select{
+      .select_tag{
         width: 100%;
-        padding: 10px;
-        border-radius: 5px;
-        font-size: 15px;
-        margin-bottom:10px
-        border: 1px solid #c1c1c1;
-    }
-    input{
-        margin-bottom:10px
-    }
+        margin: 18px 0px;
+        cursor: pointer;
+        padding: 8px;
+        border: none;
+        border: 2px solid #383535;
+        border-radius: 7px;
+        color: #000;
+      }
+      .select_tag option{
+        padding:5px;
+      }
     `}</style>
     </>
   );
 };
 
-export default ReferalMoney;
+export default RefferalMoney;
