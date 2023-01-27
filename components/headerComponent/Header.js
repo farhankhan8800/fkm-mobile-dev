@@ -111,14 +111,25 @@ const Header = () => {
           </Grid>
         </Toolbar>
           {
-            searchInput ? <Box  sx={{alignItems:"center", bgcolor:"#fff", display:"flex",justifyContent:"center",padding:"10px", width:"100%" }}>
-               <TextField id="outlined-basic" size="small"  color="secondary" fullWidth sx={{bgColor:"#fff"}}  placeholder="Search" variant="outlined" />
+            searchInput ? <Box  sx={{alignItems:"center", display:"flex",justifyContent:"center",padding:"10px", width:"100%" }}>
+               <input placeholder="Search" className="header_input_search"></input>
             </Box>:""
           }
       </AppBar>
       <Sidebar closeSidebar={toggleClick} togalButton={sidebarToggle} />
       <style jsx>{`
-     
+     .header_input_search{
+      width: 100%;
+      padding: 8px 22px;
+      outline: none;
+      -webkit-border-radius: 35px;
+      -moz-border-radius: 35px;
+      border-radius: 35px;
+      border: none;
+      font-size: 15px;
+      letter-spacing: 1px;
+      font-weight: 500;
+     }
       `}</style>
     </Box>
   );
