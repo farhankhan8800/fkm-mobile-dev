@@ -126,10 +126,13 @@ margin-bottom: 10px;
  align-self: start;
 }
 #about_the_deals a{
-    color: #4c67cf;
+    color: blue;
     cursor: pointer;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    word-spacing: 1px;
+    font-size: 15px;
  }
+ #about_the_deals a:hover{
+  text-decoration: underline;
+ }
+ #about_the_deals img{
+  width: 52% !important;
+}

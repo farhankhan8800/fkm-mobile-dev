@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 
 const apiAuth = process.env.API_AUTH
 
-const WithdrawOtherBank = ({userData}) => {
+const ReferalBank = ({userData}) => {
 
   const [amount, setAmount] = useState();
   const [account , setAccount] = useState();
@@ -220,6 +220,6 @@ const WithdrawOtherBank = ({userData}) => {
   );
 };
 
-export default WithdrawOtherBank;
+export default ReferalBank;
 
 
