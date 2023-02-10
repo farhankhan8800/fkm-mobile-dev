@@ -56,7 +56,7 @@ const Login = () => {
             password: password
           }),
           mode: 'cors', 
-          Headers: {
+          headers: {
              'Content-Type': 'application/json', 
           }
         })

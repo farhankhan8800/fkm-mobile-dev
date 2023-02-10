@@ -36,6 +36,7 @@ const CashbackClaimform = () => {
       });
       // console.log(data.response)
       setStore(data.response)
+      // console.log(data)
     } catch (error) {
       // console.log(error)
     }
@@ -87,7 +88,12 @@ const CashbackClaimform = () => {
   };
   
   const storeHandler = (e) => {
-    setStoreType(e.target.value);
+    // (e.target.value
+    let splitValue = e.target.value
+    // console.log(splitValue)
+    let myArray =  splitValue.split(" ");
+    setStoreType(myArray[0]);
+    sessionStorage.setItem("store_name",myArray[1]);
     setErr("")
   };
 
@@ -121,7 +127,7 @@ const CashbackClaimform = () => {
                 {
                  store && store.map((item,i)=>{
                     return(
-                      <option key={item.id} value={item.store_id}>{item.name}</option>
+                      <option key={item.id} value={`${item.store_id} ${item.name}`}>{item.name}</option>
                     )
                   }) 
                 }
