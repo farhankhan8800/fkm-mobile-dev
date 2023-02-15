@@ -2,23 +2,75 @@ import Link from "next/link";
 import Image from "next/image";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import { Box, Grid, Typography, IconButton, Avatar } from "@mui/material";
+import { Box, Grid, Typography, IconButton, Avatar, TextField, Button, Alert } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import UserSummary from "../../components/clickHistoryComponents/UserSummary";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import {promoCodeAPI} from "service/API"
+
+const apiAuth = process.env.API_AUTH;
+
 
 const UserProfile = () => {
-
+  const [user_summary, setUser_summary] = useState();
+  const [getCode, setGetCode]= useState()
+  const [code_error,set_code_error] = useState()
+  const [authToken, setAuthToken] = useState();
+  const [serverError, setServerError] = useState();
+  const [alert_message, set_Alert_message] = useState();
   const router = useRouter();
   const headeTitle = "User Name | Freekaamaal";
 
-  useEffect(()=>{
-    if(!(localStorage.getItem("user"))){
-      router.push("/")
+  useEffect(() => {
+    if (!localStorage.getItem("user")) {
+      router.push("/");
     }
-  },[router])
+  }, [router]);
 
+  useEffect(() => {
+    setUser_summary(JSON.parse(localStorage.getItem("usersummary")));
+  }, []);
+
+  useEffect(() => {
+    setAuthToken(JSON.parse(localStorage.getItem("user")).token);
+  }, []);
+
+  const redeemCode = async (e)=>{
+    e.preventDefault()
+    set_code_error("")
+    setServerError("")
+    set_Alert_message("")
+    if(getCode){
+      try {
+          let {data} = await axios.post(promoCodeAPI,{
+            apiAuth: apiAuth,
+            device_type: "4",
+            promocode: getCode,
+          },{
+            headers:{
+              Authorization:authToken
+            }
+          })
+          console.log(data)
+          if(data.status == 1){
+            set_Alert_message(data.message)
+          }else{
+            setServerError(data.message)
+          }
+      } catch (error) {
+        console.log(error)
+      }
+      
+    }else{
+      set_code_error("Enter Any Code Then Press Redeem Button")
+    }
+    
+  }
+
+
+  // console.log(user_summary)
   return (
     <>
       <HeadTag headeTitle={headeTitle}></HeadTag>
@@ -83,7 +135,7 @@ const UserProfile = () => {
                 component="div"
               >
                 <Typography component="p" textAlign="center" fontWeight="600">
-                  &#8377; 5645{" "}
+                  &#8377; {user_summary ? user_summary.confirm_amount : ""}
                 </Typography>
                 <Typography component="p" textAlign="center" fontSize="10px">
                   Confirmed Cashback{" "}
@@ -96,10 +148,10 @@ const UserProfile = () => {
                 component="div"
               >
                 <Typography component="p" textAlign="center" fontWeight="600">
-                  &#8377; 5645{" "}
+                  &#8377; {user_summary ? user_summary.available_amount : ""}
                 </Typography>
                 <Typography component="p" textAlign="center" fontSize="10px">
-                  Confirmed Cashback{" "}
+                  Available Amount{" "}
                 </Typography>
               </Box>
             </Grid>
@@ -109,10 +161,10 @@ const UserProfile = () => {
                 component="div"
               >
                 <Typography component="p" textAlign="center" fontWeight="600">
-                  &#8377; 5645{" "}
+                  &#8377; {user_summary ? user_summary.pending_amount : ""}
                 </Typography>
                 <Typography component="p" textAlign="center" fontSize="10px">
-                  Confirmed Cashback{" "}
+                  Pending Amount
                 </Typography>
               </Box>
             </Grid>
@@ -122,10 +174,11 @@ const UserProfile = () => {
                 component="div"
               >
                 <Typography component="p" textAlign="center" fontWeight="600">
-                  &#8377; 5645{" "}
+                  &#8377;{" "}
+                  {user_summary ? user_summary.withdraw_pending_amount : ""}
                 </Typography>
                 <Typography component="p" textAlign="center" fontSize="10px">
-                  Confirmed Cashback{" "}
+                  Withdraw Pending Amount
                 </Typography>
               </Box>
             </Grid>
@@ -135,27 +188,40 @@ const UserProfile = () => {
                 component="div"
               >
                 <Typography component="p" textAlign="center" fontWeight="600">
-                  &#8377; 5645{" "}
+                  &#8377; {user_summary ? user_summary.withdrawal_amount : ""}
                 </Typography>
                 <Typography component="p" textAlign="center" fontSize="10px">
-                  Confirmed Cashback{" "}
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box
-                sx={{ p: 1, bgcolor: "#fff", borderRadius: "5px" }}
-                component="div"
-              >
-                <Typography component="p" textAlign="center" fontWeight="600">
-                  &#8377; 5645{" "}
-                </Typography>
-                <Typography component="p" textAlign="center" fontSize="10px">
-                  Confirmed Cashback{" "}
+                  Withdrawal Amount{" "}
                 </Typography>
               </Box>
             </Grid>
           </Grid>
+          {/* PromoCode  */}
+
+          <Box component="div" sx={{padding:" 20px 10px" , border:"1px solid #faecec",borderRadius:"5px",marginTop:"20px",background:"#fff"}}>
+
+         <Typography fontWeight={600}>Get A Promo Code</Typography>
+         <div style={{paddingTop:"10px", position:"relative"}}>
+          <form onSubmit={redeemCode}>
+          <TextField value={getCode} onChange={(e)=>{setGetCode(e.target.value)}} placeholder="Your Promo Code" size="small" sx={{width:"100%"}} id="standard-basic"  variant="standard" />
+          <div>
+            {
+              code_error ?  <Alert sx={{marginTop:"10px"}} severity="error">{code_error}</Alert> :""
+            }
+            {
+              serverError ? <Alert sx={{marginTop:"10px"}} severity="error">{serverError}</Alert> :""
+            }
+            {
+               alert_message ? <Alert sx={{marginTop:"10px"}} severity="success">{alert_message}</Alert> :""
+            }
+           
+          </div>
+            <Button type="submit" size="small" sx={{position:"absolute",top:"-3px",right:"7px"}} variant="outlined">Redeem</Button>
+          </form>
+         
+         </div>
+        
+          </Box>
         </Box>
         <UserSummary />
       </div>

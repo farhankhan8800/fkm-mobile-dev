@@ -29,7 +29,6 @@ const [click_history_title , setClick_history_title] = useState()
 
 useEffect(()=>{
   setAuthToken(JSON.parse(localStorage.getItem("user")).token)
-  
 },[])
 
 // eslint-disable-next-line react-hooks/exhaustive-deps

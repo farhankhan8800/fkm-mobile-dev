@@ -25,7 +25,18 @@ export default function Home() {
   const [page, setPage] = useState(1);
   const [noData, setNoData] = useState(false);
   const [sponsoredCount, setSponsoredCount] = useState();
+  const [authToken, setAuthToken] = useState()
 
+
+
+  useEffect(()=>{
+    if(JSON.parse(localStorage.getItem("user"))){
+      setAuthToken(JSON.parse(localStorage.getItem("user")).token)
+    }
+    
+  },[])
+
+  // console.log(authToken)
   const headeTitle =
     "Online Shopping India, Best Deals, Offers, Coupons & Free Stuff in India | Freekaamaal";
 
@@ -35,15 +46,20 @@ export default function Home() {
       let {data} = await axios.post(homeApi, {
           apiAuth: apiAuth,
           page: page,
+          device_type:"4",
           sponsored_count: sponsoredCount,
       },
       { 
-        headers: {
-          "Content-Type": "application/json",
+        headers:{
+          Authorization:authToken
         }
       });
     
-      // console.log(data.response)
+      //  console.log(data.response.user_summary)
+       if(data.response.user_summary){
+        // console.log(data.response.user_summary)
+        localStorage.setItem("usersummary", JSON.stringify(data.response.user_summary));  
+       }
       setCbStore(data.response.cbstores);
       setCarousel(data.response.slider);
       setLiveDeal(data.response.live_deals);
@@ -62,7 +78,7 @@ export default function Home() {
 
   useEffect(() => {
     GetData();
-  }, [page]);
+  }, [page,authToken]);
   // console.log(hotdeals)
   const pageFunction = () => {
     setPage(page + 1);
