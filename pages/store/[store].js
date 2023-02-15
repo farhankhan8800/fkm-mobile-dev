@@ -52,7 +52,7 @@ const StoreDetails = () => {
                 "Content-Type": "application/json",  
               }
             });
-       
+       console.log(data.response.store_details)
         if (changeOption == "") {
           setStore_data(data.response.store_details);
           setStoreRate(data.response.store_rates);

@@ -8,14 +8,13 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { searchAPI } from "service/API";
 
-
 const apiAuth = process.env.API_AUTH;
 
 const SearchPage = () => {
   const [deals, setDeals] = useState();
   const [articles, setArticles] = useState();
   const [store, setStore] = useState();
-  const [noData, setNoData]= useState(false)
+  const [noData, setNoData] = useState(false);
   const router = useRouter();
   let searchText = router.query["name"];
   const headeTitle = " Search | Freekaamaal";
@@ -29,10 +28,15 @@ const SearchPage = () => {
           keyword: searchText,
         });
         // console.log(data)
+        console.log(data);
         if (data.status == 1) {
-          setDeals(data.response.deals);
-          setStore(data.response.store);
-          
+          setNoData(false);
+          if (data.message == "Oops No Data Available") {
+            setNoData(true);
+          } else {
+            setDeals(data.response.deals);
+            setStore(data.response.store);
+          }
         }
         // console.log(data)
       } catch (error) {
@@ -42,186 +46,211 @@ const SearchPage = () => {
     getData();
   }, [searchText]);
 
-// console.log(deals)
-// console.log(articles)
-console.log(store)
-
-
+  // console.log(deals)
+  // console.log(articles)
+  console.log();
 
   return (
     <>
       <HeadTag headeTitle={headeTitle}></HeadTag>
       <Header />
       <div style={{ paddingTop: "56px" }} className="search_page">
-        <div>{
-          //  noData ? "no data": "data"
-          }
-        <div className="showing_result_title">
-          <h4>
-            Showing Results For Your Search{" "}
-            <span>{searchText ? `'${searchText}'` : ""}</span>{" "}
-          </h4>
-        </div>
-        <div style={{ padding: "10px" }} className="showing_result">
-          <div>
-            {" "}
-            {store ? (
-              <>
-              {
-                    store.length > 0 ? <> 
-                    <div className="showing_store_result_div">
-                  <h5>
-                    {" "}
-                    <span>{searchText ? `'${searchText}'` : ""},</span> In
-                    Stores <Link href="">View All</Link>
-                  </h5>
-                  <div className="showing_store_list">
-                    {store.map((item, i) => {
-                      return (
-                        <div key={i} className="showing_store_item">
-                          <span>
-                            {" "}
-                            <Image
-                              src={item.image}
-                              width={92}
-                              alt="store Image"
-                              height={30}
-                            />
-                          </span>
-                          <div>
-                            {item.is_cashback == 0 ? (
-                              <p>No CashBack</p>
-                            ) : (
-                              <p>CashBack Offer</p>
-                            )}
-                          </div>
-                          <Link style={{ fontSize: "12px" }} href={`/store/${item.name}`}>
-                            See all Offers
-                          </Link>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-                    </> :""
-              }
-                
-              </>
-            ) : (
-              ""
-            )}
-          </div>
-          {
-            deals ? <>
-            {
-              deals.length > 0 ? <> 
-               <div className=" showing_deals_result_div ">
-            <h5>
-              {" "}
-              <span>{searchText ? `'${searchText}'` : ""},</span> In Deals{" "}
-              <Link href="">View All</Link>
-            </h5>
-            <div className="showing_deals_list">
-              <div className="showing_deals_Item">
-                <span>
-                  <Image
-                    alt=""
-                    src="https://images.freekaamaal.com/featured_images/medium_188444_B.png"
-                    width={180}
-                    height={100}
-                  />
-                </span>
-                <div className="showing_deals_Item_contant">
-                  <p style={{ fontSize: "14px" }}>
-                    Winter Essential sale chose Spred 220Gm
-                  </p>
-                  <div className="showing_deals_Item_details">
-                    <div style={{ paddingRight: "7px" }}>
-                      <strong> &#8377; 499</strong> <small> &#8377; 1000</small>{" "}
-                    </div>
-                    <Link href="">
-                      <Button
-                        sx={{
-                          whiteSpace: "pre",
-                          fontSize: "10px",
-                          color: "#fff",
-                        }}
-                        variant="contained"
-                        size="small"
-                      >
-                        Read More
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-              </>:""
-            }
-           
-            </> :""
-          }
+        <div>
+          {noData ? (
+            <div className="nodata_edit">
+              <h2>Oops No Data Available</h2>
+              <p>Search Again Valid Stores, Deals & Much More.. </p>
 
-          <div>
-            {
-              articles ? <>
-              {
-                articles ? <>
-                <div className="showing_articles_result_div">
-            <h5>
-              {" "}
-              <span>{searchText ? `'${searchText}'` : ""},</span> In Articles{" "}
-              <Link href="">View All</Link>
-            </h5>
-            <div className="showing_articles_list">
-              <div className="showing_articles_item">
-                <span>
+              <Link href="/">
+                <Button sx={{marginTop:"20px"}} variant="outlined">Home</Button>
+              </Link>
+            </div>
+          ) : (
+            <>
+              <div className="showing_result_title">
+                <h4>
+                  Showing Results For Your Search{" "}
+                  <span>{searchText ? `'${searchText}'` : ""}</span>{" "}
+                </h4>
+              </div>
+              <div style={{ padding: "10px" }} className="showing_result">
+                <div>
                   {" "}
-                  <Image
-                    src="https://images.freekaamaal.com/home-slider/site/mobile_vday_sale_mobile_sitejpg.webp
+                  {store ? (
+                    <>
+                      {store.length > 0 ? (
+                        <>
+                          <div className="showing_store_result_div">
+                            <h5>
+                              {" "}
+                              <span>
+                                {searchText ? `'${searchText}'` : ""},
+                              </span>{" "}
+                              In Stores <Link href="">View All</Link>
+                            </h5>
+                            <div className="showing_store_list">
+                              {store.map((item, i) => {
+                                return (
+                                  <div key={i} className="showing_store_item">
+                                    <span>
+                                      {" "}
+                                      <Image
+                                        src={item.image}
+                                        width={92}
+                                        alt="store Image"
+                                        height={30}
+                                      />
+                                    </span>
+                                    <div>
+                                      {item.is_cashback == 0 ? (
+                                        <p>No CashBack</p>
+                                      ) : (
+                                        <p>CashBack Offer</p>
+                                      )}
+                                    </div>
+                                    <Link
+                                      style={{ fontSize: "12px" }}
+                                      href={`/store/${item.name}`}
+                                    >
+                                      See all Offers
+                                    </Link>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                {deals ? (
+                  <>
+                    {deals.length > 0 ? (
+                      <>
+                        <div className=" showing_deals_result_div ">
+                          <h5>
+                            {" "}
+                            <span>
+                              {searchText ? `'${searchText}'` : ""},
+                            </span>{" "}
+                            In Deals <Link href="">View All</Link>
+                          </h5>
+                          <div className="showing_deals_list">
+                            <div className="showing_deals_Item">
+                              <span>
+                                <Image
+                                  alt=""
+                                  src="https://images.freekaamaal.com/featured_images/medium_188444_B.png"
+                                  width={180}
+                                  height={100}
+                                />
+                              </span>
+                              <div className="showing_deals_Item_contant">
+                                <p style={{ fontSize: "14px" }}>
+                                  Winter Essential sale chose Spred 220Gm
+                                </p>
+                                <div className="showing_deals_Item_details">
+                                  <div style={{ paddingRight: "7px" }}>
+                                    <strong> &#8377; 499</strong>{" "}
+                                    <small> &#8377; 1000</small>{" "}
+                                  </div>
+                                  <Link href="">
+                                    <Button
+                                      sx={{
+                                        whiteSpace: "pre",
+                                        fontSize: "10px",
+                                        color: "#fff",
+                                      }}
+                                      variant="contained"
+                                      size="small"
+                                    >
+                                      Read More
+                                    </Button>
+                                  </Link>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </>
+                ) : (
+                  ""
+                )}
+
+                <div>
+                  {articles ? (
+                    <>
+                      {articles ? (
+                        <>
+                          <div className="showing_articles_result_div">
+                            <h5>
+                              {" "}
+                              <span>
+                                {searchText ? `'${searchText}'` : ""},
+                              </span>{" "}
+                              In Articles <Link href="">View All</Link>
+                            </h5>
+                            <div className="showing_articles_list">
+                              <div className="showing_articles_item">
+                                <span>
+                                  {" "}
+                                  <Image
+                                    src="https://images.freekaamaal.com/home-slider/site/mobile_vday_sale_mobile_sitejpg.webp
                     "
-                    width={200}
-                    alt="store Image"
-                    height={90}
-                  />
-                </span>
-                <div style={{ padding: "6px" }}>
-                  <p>
-                    How to Airtel Missed Call Alert: Through # different Ways
-                  </p>
-                  <div className="showing_articles_Item_details">
-                    <div>
-                      <small> 3 hours Ago</small>
-                    </div>
-                    <Link href="">
-                      <Button
-                        sx={{
-                          whiteSpace: "pre",
-                          fontSize: "10px",
-                          color: "#fff",
-                        }}
-                        variant="contained"
-                        size="small"
-                      >
-                        Read More
-                      </Button>
-                    </Link>
-                  </div>
+                                    width={200}
+                                    alt="store Image"
+                                    height={90}
+                                  />
+                                </span>
+                                <div style={{ padding: "6px" }}>
+                                  <p>
+                                    How to Airtel Missed Call Alert: Through #
+                                    different Ways
+                                  </p>
+                                  <div className="showing_articles_Item_details">
+                                    <div>
+                                      <small> 3 hours Ago</small>
+                                    </div>
+                                    <Link href="">
+                                      <Button
+                                        sx={{
+                                          whiteSpace: "pre",
+                                          fontSize: "10px",
+                                          color: "#fff",
+                                        }}
+                                        variant="contained"
+                                        size="small"
+                                      >
+                                        Read More
+                                      </Button>
+                                    </Link>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
-            </div>
-               </div>
-                </>:""
-              }
-                
-              </>:""
-            }
-          </div>
-        
+            </>
+          )}
         </div>
-        </div>
-        
       </div>
       <style jsx>
         {`
@@ -325,6 +354,11 @@ console.log(store)
             display: flex;
             align-items: center;
             justify-content: space-between;
+          }
+          .nodata_edit {
+            padding-top: 24px;
+
+            text-align: center;
           }
         `}
       </style>
