@@ -1,6 +1,7 @@
 import React, { useEffect, useState,useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from 'next/router'
 import { Toolbar, AppBar, Box, IconButton, Grid,TextField } from "@mui/material";
 import menuButton from "public/images/icon/menu-button.png";
 import searchButton from "public/images/icon/search.png";
@@ -21,6 +22,9 @@ const Header = () => {
   const [searchInput, setSearchInput] = useState(false)
   const [searchSuggestion, setSearchSuggestion] = useState()
   const [searchTextLength, setSearchTextLength] = useState(0)
+  const [getInputvalue, setGetInputvalue] = useState()
+
+  const router = useRouter()
 
   const toggleClick = () => {
     setSidebarToggle(!sidebarToggle);
@@ -39,6 +43,7 @@ const Header = () => {
 
 const OnInputSearchText = async (e)=>{
  let value = e.target.value
+ setGetInputvalue(value)
  setSearchTextLength(value.length)
  try {
   // if(value.length > 2){
@@ -74,6 +79,31 @@ const optimizedFunction = useCallback(debounce(OnInputSearchText),[])
     setuser(localStorage.getItem("user"));
   }, []);
 // console.log(searchSuggestion)
+
+// search event 
+const handleKeyPress = (e)=>{
+  if(searchTextLength >= 3){
+    if(e.key === "Enter"){
+      e.preventDefault();
+      router.push({pathname:"/search",
+      query: { name: getInputvalue }
+    })
+    setSearchInput(false)
+    setSearchSuggestion("")
+     }
+    
+  } 
+}
+const searchButtonClick =(e)=>{
+  if(searchTextLength >= 3){
+    e.preventDefault();
+    router.push({pathname:"/search",
+    query: { name: getInputvalue }
+  })
+  setSearchSuggestion("")
+  setSearchInput(false)
+}}
+
   return (
     <Box sx={{ position: "relative" }}>
       <AppBar
@@ -171,7 +201,7 @@ const optimizedFunction = useCallback(debounce(OnInputSearchText),[])
             searchInput ? <Box  sx={{alignItems:"center", display:"flex",justifyContent:"center",padding:"10px", width:"100%",position:"relative" }}>
                <input onChange={optimizedFunction} placeholder="Search Your Favorites Deals" className="header_input_search"></input>
                <button className="header_input_button" >
-                {/* <BiSearch style={{height:"24px", width:"24px"}}></BiSearch> */}
+                <BiSearch style={{height:"24px", width:"24px"}}></BiSearch>
                 </button>
             </Box>:""
           }
@@ -184,7 +214,7 @@ const optimizedFunction = useCallback(debounce(OnInputSearchText),[])
                   {
                     searchSuggestion.map((item,i)=>
                     <ul className="search_out_put_box" key={i}>
-                      <li> <span>{item.name}</span>  <span style={{float:"right"}}><span style={{fontWeight:"600"}}> &#x20B9; {item.amount}</span> <span style={{color:"red"}}>Cashback</span></span> </li>
+                      <li> <Link style={{color:"#000"}} href=""> <span>{item.name}</span>  <span style={{float:"right"}}><span style={{fontWeight:"600"}}> &#x20B9; {item.amount}</span> <span style={{color:"red"}}>Cashback</span></span></Link> </li>
                     </ul>
                   )
                   }

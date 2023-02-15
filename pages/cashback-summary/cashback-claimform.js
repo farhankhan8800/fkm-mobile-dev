@@ -15,6 +15,7 @@ const CashbackClaimform = () => {
   const [authToken, setAuthToken] = useState();
   const [store, setStore] = useState()
   const [err, setErr] =useState()
+  // const [storeValue, setStoreValue] =  useState()
 
   const router = useRouter()
 
@@ -36,6 +37,7 @@ const CashbackClaimform = () => {
       });
       // console.log(data.response)
       setStore(data.response)
+      // console.log(data)
     } catch (error) {
       // console.log(error)
     }
@@ -87,10 +89,17 @@ const CashbackClaimform = () => {
   };
   
   const storeHandler = (e) => {
-    setStoreType(e.target.value);
+    // (e.target.value
+    let splitValue = e.target.value
+    // console.log(splitValue)
+    let myArray =  splitValue.split(" ");
+    setStoreType(myArray[0]);
+    sessionStorage.setItem("store_name",myArray[1]);
+    // setStoreValue(myArray[1])
     setErr("")
   };
 
+  // console.log( "store click" , storeValue)
   const headeTitle = "Cashback CalimForm | Freekaamaal";
   return (
     <>
@@ -113,7 +122,6 @@ const CashbackClaimform = () => {
             <form  onSubmit={onSubmit}>
               <select
                 onChange={storeHandler}
-                value={storeType}
                 name="account-type"
                 id="account-type"
               >
@@ -121,7 +129,7 @@ const CashbackClaimform = () => {
                 {
                  store && store.map((item,i)=>{
                     return(
-                      <option key={item.id} value={item.store_id}>{item.name}</option>
+                      <option key={item.id} value={`${item.store_id} ${item.name}`}>{item.name}</option>
                     )
                   }) 
                 }

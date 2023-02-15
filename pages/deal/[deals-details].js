@@ -197,7 +197,7 @@ return(
                   similarDeal.length == 0 ?  "":<Box sx={{marginBottom:"25px"}}><SimilarMoreProducts similarDeal={similarDeal} /></Box>
                 }
 
-                <Box sx={{position:"fixed",bottom:"0",padding:"1px 4px",width:"100%", maxWidth:"530px", bgcolor:"#fff"}}>
+                <Box sx={{position:"fixed",bottom:"0",padding:"1px 4px",width:"100%", maxWidth:"548px", bgcolor:"#fff"}}>
                   {
                 user ? <Button sx={{width:"100%", color:"#fff",fontWeight:"600"}} variant="contained">Shop & Earn Cashback</Button>:
                 <Button sx={{width:"100%", color:"#fff",fontWeight:"600"}} variant="contained">Login Now & Earn Cashback</Button>

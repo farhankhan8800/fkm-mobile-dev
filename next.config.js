@@ -16,6 +16,14 @@
    // your project has ESLint errors.
    ignoreDuringBuilds: true,
  },
+ async rewrites() {
+  return [
+    {
+      source: '/all-hot-deals',
+      destination: '/hot-deals', // Matched parameters can be used in the destination
+    },
+  ]
+},
 
  }
 
