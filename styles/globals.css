@@ -59,7 +59,9 @@ body {
 a{
   text-decoration: none;
 }
-
+span{
+  display: inline-block;
+}
 
  /* start Carousel component  */
 .carousel_component .swiper-slide {
@@ -135,4 +137,20 @@ margin-bottom: 10px;
  }
  #about_the_deals img{
   width: 52% !important;
+}
+.search_page h5 a{
+  float: right;
+  color: #f27935;
+  font-size: 14px;
+  font-weight: 500;
+}
+#about_the_deals p iframe{
+  width: 100% !important;
+  height: 170px !important;
+}
+#about_the_deals table {
+  border-collapse: collapse;
+}
+#about_the_deals table td,#about_the_deals table th{
+  padding: 4px;
 }

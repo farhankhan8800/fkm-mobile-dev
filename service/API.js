@@ -45,3 +45,5 @@ export const searchSuggestionApi = "https://fkmdata.freekaamaal.com/search/sugge
  export  const userClaimformAPI = "https://fkmdata.freekaamaal.com/cashback/userclaimform"
  
  export  const userclaimdataAPI = "https://fkmdata.freekaamaal.com/cashback/userclaimdata"
+
+ export const  searchAPI= "https://fkmdata.freekaamaal.com/search/search"
