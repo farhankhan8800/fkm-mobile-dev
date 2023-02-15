@@ -61,7 +61,7 @@ const Login = () => {
           }
         })
         result = await result.json({});
-        console.log(result)
+        // console.log(result)
           if (result.status == 1) {
             localStorage.setItem("user", JSON.stringify(result));
             setEmail("");

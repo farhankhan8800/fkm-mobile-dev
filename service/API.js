@@ -47,3 +47,5 @@ export const searchSuggestionApi = "https://fkmdata.freekaamaal.com/search/sugge
  export  const userclaimdataAPI = "https://fkmdata.freekaamaal.com/cashback/userclaimdata"
 
  export const  searchAPI= "https://fkmdata.freekaamaal.com/search/search"
+
+ export const promoCodeAPI = "https://fkmdata.freekaamaal.com/cashback/userpromocode"
