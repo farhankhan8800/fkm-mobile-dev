@@ -260,6 +260,9 @@ return(
           .about_the_deals p{
            font-size:13px
           }
+          .about_the_deals img{
+            width: 100% !important;
+          }
         `}</style>
       </div>
     </>

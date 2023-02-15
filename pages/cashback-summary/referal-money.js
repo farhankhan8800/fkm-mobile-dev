@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 import { Alert, Box, Typography } from "@mui/material";
-import WithdrawBank from "components/refferal-money/withdrawBank";
+import ReferalOtherBank from "components/referal-money/referalOtherBank";
 import { useEffect } from "react";
-import WithdrawOtherBank from "components/refferal-money/withdrawOtherBank";
-import { withdrawRefferalModeAPI } from "service/API";
+import ReferalBank from "components/referal-money/referalBank";
+import { withdrawPaymentModeAPI } from "service/API";
 import axios from "axios";
 
 const apiAuth = process.env.API_AUTH;
 
-const RefferalMoney = () => {
+const ReferalMoney = () => {
   const [account, setAccount] = useState();
   const [activeBank, setActiveBank] = useState(false);
   const [activePaytm, setActivePaytm] = useState(false);
@@ -26,7 +26,7 @@ const RefferalMoney = () => {
   const changeAccount = async (account) => {
     try {
       let { data } = await axios.post(
-        withdrawRefferalModeAPI,
+        withdrawPaymentModeAPI,
         {
           apiAuth: apiAuth,
           device_type: "4",
@@ -40,7 +40,7 @@ const RefferalMoney = () => {
       );
 
       if (data.status == 1) {
-         console.log(data)
+        //  console.log(data)
          setuserData(data)
         if (account == "bank") {
           setActiveBank(true);
@@ -108,12 +108,12 @@ const RefferalMoney = () => {
           {serverdata ? <Alert severity="info">{serverdata}</Alert> : ""}
           <Box>
             <div>
-              {activeBank ? <WithdrawBank userData={userData} /> : ""}
+              {activeBank ? <ReferalBank userData={userData} /> : ""}
             </div>
 
             <div>
               {activePaytm ? (
-                <WithdrawOtherBank userData={userData} />
+                <ReferalOtherBank userData={userData} />
               ) : (
                 ""
               )}
@@ -140,4 +140,4 @@ const RefferalMoney = () => {
   );
 };
 
-export default RefferalMoney;
+export default ReferalMoney;

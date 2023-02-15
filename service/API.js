@@ -38,4 +38,8 @@ export const withdrawMoneyAPI = "https://fkmdata.freekaamaal.com/cashback/withdr
 
 export const withdrawPaymentModeAPI =  "https://fkmdata.freekaamaal.com/cashback/withdraw-payment-mode"
 
-export const withdrawRefferalModeAPI =  "https://fkmdata.freekaamaal.com/cashback/refferal-payment-mode"
+export const searchSuggestionApi = "https://fkmdata.freekaamaal.com/search/suggestion"
+
+ export const claimformStoreAPI = "https://fkmdata.freekaamaal.com/cashback/claimformstore"
+
+ export  const userClaimformAPI = "https://fkmdata.freekaamaal.com/cashback/userclaimform"

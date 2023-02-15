@@ -90,7 +90,6 @@ const OtherBank = () => {
         <hr></hr>
      <Box sx={{paddingTop:"10px"}}>
             <form onSubmit={onSubmit}>
-             
               <label>Paytm Account Holder Name</label>
               <TextField
                 size="small"

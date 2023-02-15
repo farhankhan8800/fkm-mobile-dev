@@ -70,7 +70,7 @@ const userManage = [
     headingTag: "Cashback Claim Form",
     pTage: "List Of store your visited reacently",
     icon: climeFormImage,
-    link: "/cashback-summary/cashback-calimform",
+    link: "/cashback-summary/cashback-claimform",
   },
   {
     headingTag: "Missing Cashback History",

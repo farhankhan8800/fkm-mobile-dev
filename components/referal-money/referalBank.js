@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 
 const apiAuth = process.env.API_AUTH
 
-const WithdrawOtherBank = ({userData}) => {
+const ReferalBank = ({userData}) => {
 
   const [amount, setAmount] = useState();
   const [account , setAccount] = useState();
@@ -16,15 +16,16 @@ const WithdrawOtherBank = ({userData}) => {
   const [notValid, setNotValid] = useState(null);
    const [userAccountData, setUserAccountData] = useState()
    const [userPromocodes, setUserPromocodes] = useState()
-   const [promocodes,setPromocodes] = useState(null)
-   const [promocodesCouponid, setPromocodesCouponid] = useState()
-   const [promocodesCode, setPromocodesCode] = useState()
+  const [promocodes_code, setPromocodes_code] = useState()
+  const [promocodes_couponid, setPromocodes_couponid] = useState()
+
 
    const router = useRouter()
  
   useEffect(()=>{
     setAuthToken(JSON.parse(localStorage.getItem("user")).token)
-    
+    setPromocodes_code("")
+    setPromocodes_couponid("")
   },[])
 
     useEffect(()=>{
@@ -32,16 +33,13 @@ const WithdrawOtherBank = ({userData}) => {
         setUserPromocodes(userData.promocodes)
     },[userData])
 
-  const onSubmit = async (e) => {
-    setPromocodesCouponid(promocodes.split(" ")[1])
-    setPromocodesCode(promocodes.split(" ")[0])
-    e.preventDefault();
-   if(account){
+  const SubmitFormHandal = async () => {
+    // e.prevent.default()
+    if(account){
     if (amount) {
         if(account == "00"){
            setNotValid("Select Valid Withdrawal Account");
         }else{
-    
         try {
                 let{data} = await axios.post(withdrawMoneyAPI,{
                     apiAuth:apiAuth,
@@ -49,8 +47,8 @@ const WithdrawOtherBank = ({userData}) => {
                     wallet_name:"paytm",
                     account_ref_id:account,
                     amount:amount,
-                    couponid:promocodesCode,
-                    code:promocodesCouponid,
+                    couponid:promocodes_couponid,
+                    code:promocodes_code,
                     option:"cbrequest"
                   },
                   {
@@ -68,7 +66,7 @@ const WithdrawOtherBank = ({userData}) => {
                   }, 400);
                   setTimeout(()=>{
                     router.push("/cashback-summary/verify-withdraw-money")
-                  }, 600);
+                  }, 3000);
                   
 
                  } else if(data.status == 0){
@@ -92,30 +90,24 @@ const WithdrawOtherBank = ({userData}) => {
 
 
 
-
   const amountHandler = (e) => {
     setAmount(e.target.value);
     setNotValid(null);
   };
 
-  const promocodesHandal = (e)=>{
-    if(e.target.value == "none"){
-
-    }else{
-      setPromocodes(e.target.value);
+  const promocodesHandal = (promo_code , promo_id )=>{
+   
+    setPromocodes_code(promo_code)
+    setPromocodes_couponid(promo_id)
     }
-    
-  }
 
   const accountHandler =(e)=>{
     setAccount(e.target.value)
     setNotValid(null);
-    
   }
-
-
-
-//   console.log(promocodes)
+  useEffect(()=>{
+   
+  },[])
  
   return (
     <>
@@ -125,7 +117,7 @@ const WithdrawOtherBank = ({userData}) => {
    }
    
      <Box sx={{paddingTop:"10px"}}>
-            <form onSubmit={onSubmit}>
+            <div >
             <label>Select Account</label>
               <select  className="select_tag_account"
                 onChange={accountHandler}
@@ -157,7 +149,8 @@ const WithdrawOtherBank = ({userData}) => {
             
               <Box sx={{ padding: "10px 0" }}>
                 <Button
-                  type="submit"
+                  type="button"
+                  onClick={SubmitFormHandal}
                   variant="contained"
                   sx={{ width: "100%", color: "#fff", fontWeight: "600" }}
                 >
@@ -169,21 +162,23 @@ const WithdrawOtherBank = ({userData}) => {
               {
                 serverdata ? <Alert severity="info">{serverdata}</Alert>:""
               }
-            </form>
+            </div>
           </Box>
           <div>
             {
-              userPromocodes ? (<Box sx={{paddingTop:"10px"}}>
+              userPromocodes ? (<Box sx={{paddingTop:"10px"}}>{
+                // console.log(userPromocodes)
+              }
                 <Typography fontWeight={"600"}>Your save Coupons</Typography>
                 <Box>
                     {
                         userPromocodes.map((item ,i)=>{
                             return(
-                                // eslint-disable-next-line react/jsx-key
+                               
                                 <React.Fragment key={i}>
-                                <div style={{display:'flex'}} classname="promocodes_class" >
-                                <input value={`${item.code} ${item.couponid}`} onChange={promocodesHandal}  style={{curser :"pointer"}} type="radio" name="Promocodes" />
-                                <label style={{fontSize:"14px", marginLeft:"10px"}} classname="" htmlFor="Promocodes">{item.usage_text}</label> 
+                                <div style={{display:'flex'}} className="promocodes_class" >
+                                  <input  onClick={()=>promocodesHandal(item.code ,item.couponid)}  id={`id_${i}`} style={{curser :"pointer"}} type="radio" name="Promocodes" />
+                                  <label  htmlFor={`id_${i}`} style={{fontSize:"14px", marginLeft:"10px"}} className="">{item.usage_text}</label> 
                                 </div>
                                 </React.Fragment>
                             )
@@ -192,10 +187,6 @@ const WithdrawOtherBank = ({userData}) => {
                         //   <Typography fontSize={"13px"} component="p" key={i+1}>{item.usage_text}</Typography>
                         )
                     }
-                    <div style={{display:'flex'}} classname="promocodes_class">
-                                <input value="none" checked  style={{curser :"pointer"}} onChange={promocodesHandal} type="radio"  id="defaultChecked" name="Promocodes" />
-                                <label style={{fontSize:"14px", marginLeft:"10px"}} classname=""   htmlFor="Promocodes">If you do not have any coupons to use</label> 
-                    </div>
                 </Box>
               </Box>):""
             }
@@ -229,6 +220,6 @@ const WithdrawOtherBank = ({userData}) => {
   );
 };
 
-export default WithdrawOtherBank;
+export default ReferalBank;
 
 

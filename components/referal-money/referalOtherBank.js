@@ -3,11 +3,11 @@ import { Alert, Box, Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import {withdrawMoneyAPI} from "service/API"
 import { useEffect } from "react";
-import { typography } from "@mui/system";
+import { useRouter } from 'next/router'
 
 const apiAuth = process.env.API_AUTH
 
-const WithdrawBank = ({userData}) => {
+const ReferalOtherBank = ({userData}) => {
 
   const [amount, setAmount] = useState();
   const [account , setAccount] = useState();
@@ -15,26 +15,31 @@ const WithdrawBank = ({userData}) => {
   const [serverdata, setServerdata] = useState()
   const [notValid, setNotValid] = useState(null);
    const [userAccountData, setUserAccountData] = useState()
-   
+   const [userPromocodes, setUserPromocodes] = useState()
+  const [promocodes_code, setPromocodes_code] = useState()
+  const [promocodes_couponid, setPromocodes_couponid] = useState()
 
+
+   const router = useRouter()
  
   useEffect(()=>{
     setAuthToken(JSON.parse(localStorage.getItem("user")).token)
+    setPromocodes_code("")
+    setPromocodes_couponid("")
   },[])
 
     useEffect(()=>{
         setUserAccountData(userData)
-        
+        setUserPromocodes(userData.promocodes)
     },[userData])
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-   if(account){
+  const SubmitFormHandal = async () => {
+    // e.prevent.default()
+    if(account){
     if (amount) {
         if(account == "00"){
            setNotValid("Select Valid Withdrawal Account");
         }else{
-    
         try {
                 let{data} = await axios.post(withdrawMoneyAPI,{
                     apiAuth:apiAuth,
@@ -42,23 +47,36 @@ const WithdrawBank = ({userData}) => {
                     wallet_name:"paytm",
                     account_ref_id:account,
                     amount:amount,
+                    couponid:promocodes_couponid,
+                    code:promocodes_code,
                     option:"cbrequest"
-
-
                   },
                   {
                     headers: {
                           Authorization:authToken
                         }
                   })
-                 console.log(data)
+                //  console.log(data)
                  if(data.status == 1){
-                   console.log(userAccountData)
-                   
+                  setTimeout(()=>{
+                    setServerdata(data.msg)
+                    setAmount("")
+                    setAccount("")
+                    sessionStorage.setItem("verifydata",JSON.stringify(data));
+                  }, 400);
+                  setTimeout(()=>{
+                    router.push("/cashback-summary/verify-withdraw-money")
+                  }, 3000);
+                  
+
+                 } else if(data.status == 0){
+                  setServerdata(data.msg)
+                 }else{
+                  setServerdata(data.msg)
                  }
                
               } catch (error) {
-                console.log(error)
+                // console.log(error)
               }
 
         }
@@ -72,22 +90,24 @@ const WithdrawBank = ({userData}) => {
 
 
 
-
   const amountHandler = (e) => {
     setAmount(e.target.value);
     setNotValid(null);
   };
 
-  
+  const promocodesHandal = (promo_code , promo_id )=>{
+   
+    setPromocodes_code(promo_code)
+    setPromocodes_couponid(promo_id)
+    }
+
   const accountHandler =(e)=>{
     setAccount(e.target.value)
     setNotValid(null);
-    
   }
-
-
-
-//   console.log(promocodes)
+  useEffect(()=>{
+   
+  },[])
  
   return (
     <>
@@ -97,7 +117,7 @@ const WithdrawBank = ({userData}) => {
    }
    
      <Box sx={{paddingTop:"10px"}}>
-            <form onSubmit={onSubmit}>
+            <div >
             <label>Select Account</label>
               <select  className="select_tag_account"
                 onChange={accountHandler}
@@ -106,14 +126,14 @@ const WithdrawBank = ({userData}) => {
                 <option value="00">Select Account</option>
                {
 
-               userAccountData && userAccountData.account.map((item,i)=>
+               userAccountData ? userAccountData.account.map((item,i)=>
                
                 // eslint-disable-next-line react/jsx-key
                 <option key={i} value={item.account_ref_id}>{item.name}</option>
 
-               
+               ):"" 
                  
-              )}
+               }
               </select>
               <label>Enter Amount</label>
               <TextField
@@ -129,7 +149,8 @@ const WithdrawBank = ({userData}) => {
             
               <Box sx={{ padding: "10px 0" }}>
                 <Button
-                  type="submit"
+                  type="button"
+                  onClick={SubmitFormHandal}
                   variant="contained"
                   sx={{ width: "100%", color: "#fff", fontWeight: "600" }}
                 >
@@ -141,9 +162,35 @@ const WithdrawBank = ({userData}) => {
               {
                 serverdata ? <Alert severity="info">{serverdata}</Alert>:""
               }
-            </form>
+            </div>
           </Box>
-          
+          <div>
+            {
+              userPromocodes ? (<Box sx={{paddingTop:"10px"}}>{
+                // console.log(userPromocodes)
+              }
+                <Typography fontWeight={"600"}>Your save Coupons</Typography>
+                <Box>
+                    {
+                        userPromocodes.map((item ,i)=>{
+                            return(
+                               
+                                <React.Fragment key={i}>
+                                <div style={{display:'flex'}} className="promocodes_class" >
+                                  <input  onClick={()=>promocodesHandal(item.code ,item.couponid)}  id={`id_${i}`} style={{curser :"pointer"}} type="radio" name="Promocodes" />
+                                  <label  htmlFor={`id_${i}`} style={{fontSize:"14px", marginLeft:"10px"}} className="">{item.usage_text}</label> 
+                                </div>
+                                </React.Fragment>
+                            )
+                        }
+                        
+                        //   <Typography fontSize={"13px"} component="p" key={i+1}>{item.usage_text}</Typography>
+                        )
+                    }
+                </Box>
+              </Box>):""
+            }
+          </div>
           
      </div>
      
@@ -173,34 +220,6 @@ const WithdrawBank = ({userData}) => {
   );
 };
 
-export default WithdrawBank;
+export default ReferalOtherBank;
 
 
-// try {
-//     let{data} = await axios.post(add_accountAPI,{
-//         apiAuth:apiAuth,
-//         device_type: "4",
-  
-//       },
-//       {
-//         headers: {
-//               Authorization:authToken
-//             }
-//       })
-//      console.log(data)
-//      if(data.status == 1){
-//       setTimeout(function(){
-       
-//         setServerdata(data.message)
-//       }, 500);
-           
-//      }else{
-//       setServerdata(data.message)
-//      }
-//     // console.log(
-//     //  `${name},${phone},${accountnumber},${ifsc},${bankName}`
-//     // );
-//   } catch (error) {
-//     console.log(error)
-//   }
- 
