@@ -199,9 +199,9 @@ const searchButtonClick =(e)=>{
         <Box sx={{position:"relative"}}>
          {
             searchInput ? <Box  sx={{alignItems:"center", display:"flex",justifyContent:"center",padding:"10px", width:"100%",position:"relative" }}>
-               <input onChange={optimizedFunction} placeholder="Search Your Favorites Deals" className="header_input_search"></input>
+               <input onKeyDown={(e)=>{handleKeyPress(e)}} onChange={optimizedFunction} placeholder="Search Your Favorites Deals" className="header_input_search"></input>
                <button className="header_input_button" >
-                <BiSearch style={{height:"24px", width:"24px"}}></BiSearch>
+                {/* <BiSearch style={{height:"24px", width:"24px"}}></BiSearch> */}
                 </button>
             </Box>:""
           }
