@@ -1,8 +1,10 @@
 import React from "react";
-
+import Header from "../../components/headerComponent/Header";
+import HeadTag from "../../components/headTagComponent/HeadTag";
 const fkmTestimonial = () => {
   return (
     <>
+    <Header/>
       <div className="fkm-heroes">
         <div>
           <h1 className="main-title">

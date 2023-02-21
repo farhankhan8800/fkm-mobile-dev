@@ -45,6 +45,7 @@ useEffect(()=>{
           "Content-Type": "application/json",
         }
       });
+      // alert(data.status);
       if(data.status==1)
       {
       setMyHtml(data.response.deal.deal_description_url)

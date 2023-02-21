@@ -39,7 +39,10 @@ const Articels = () => {
 
   // console.log(page)
   useEffect(()=>{
+    if(localStorage.getItem("user"))
+    {
     setUserToken(JSON.parse(localStorage.getItem("user")).token);
+    }
   },[])
   const getData = async ()=>{
     try {
@@ -90,7 +93,7 @@ const Articels = () => {
         <div className="articels_page" style={{ padding: "15px 4px" }}>
           <div className="main_articels">
             {
-              featured_article ? <Link id={featured_article.post_id} style={{color:"#000"}} href="">
+              featured_article ? <Link id={featured_article.post_id} style={{color:"#000"}} href={`/${featured_article.slug_url}`}>
               <div className="" style={{ textAlign: "center" }}>
               <Image
                 style={{ width: "100%", borderRadius: "8px" }}
@@ -160,7 +163,7 @@ const Articels = () => {
                       </p>
                     </div>
                     <div>
-                      <Link href={`/articles/${item.slug_url}`}>
+                      <Link href={`/${item.slug_url}`}>
                         <Button
                           variant="text"
                           sx={{ fontWeight: "600", letterSpacing: "1px" }}

@@ -33,12 +33,12 @@ export const menuList = [
   
   {
     link: "/all-store",
-    menuName: "Store",
+    menuName: "Top Stores",
     menuIcon: shopIcon,
   },
   {
     link: "/category",
-    menuName: "Category",
+    menuName: "Top Categories",
     menuIcon: categoryIcon,
   },
   {
@@ -46,36 +46,51 @@ export const menuList = [
     menuName: "Coupons",
     menuIcon: promoCodeIcon,
   },
-  {
-    link: "/",
-    menuName: "Festival",
-    menuIcon: confettiIcon,
-  },
-  {
-    link: "/",
-    menuName: "100% Cashback",
-    menuIcon: cashbackIcon,
-  },
+  // {
+  //   link: "/",
+  //   menuName: "Festival",
+  //   menuIcon: confettiIcon,
+  // },
+  // {
+  //   link: "/",
+  //   menuName: "100% Cashback",
+  //   menuIcon: cashbackIcon,
+  // },
   {
     link: "/articles",
-    menuName: " Artical",
+    menuName: " Articles",
     menuIcon: contentWritingIcon,
   },
+  // {
+  //   link: "/",
+  //   menuName: "Carrer",
+  //   menuIcon: briefcaseIcon,
+  // },
   {
-    link: "/",
-    menuName: "Carrer",
-    menuIcon: briefcaseIcon,
-  },
-  {
-    link: "/",
+    link: "/contact-us",
     menuName: "Contact Us",
     menuIcon: phoneCallIcon,
   },
   {
-    link: "/",
-    menuName: "Help & Support",
-    menuIcon: questionIcon,
+    link: "/about-us",
+    menuName: "About Us",
+    menuIcon: phoneCallIcon,
   },
+  {
+    link: "/advertise-with-us",
+    menuName: "Advertise with Us",
+    menuIcon: phoneCallIcon,
+  },
+  {
+    link: "/faq",
+    menuName: "FAQ's",
+    menuIcon: phoneCallIcon,
+  },
+  // {
+  //   link: "/",
+  //   menuName: "Help & Support",
+  //   menuIcon: questionIcon,
+  // },
 ];
 
 const Sidebar = ({ togalButton, closeSidebar }) => {

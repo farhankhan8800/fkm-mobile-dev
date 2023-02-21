@@ -123,7 +123,7 @@ import Link from 'next/link';
                       </p>
                     </div>
                     <div>
-                      <Link href={`${item.slug_url}`}>
+                      <Link href={`/${item.slug_url}`}>
                       <Button
                         variant="text"
                         sx={{ fontWeight: "600", letterSpacing: "1px",fontSize:"13px" }}
@@ -181,7 +181,7 @@ import Link from 'next/link';
                       </p>
                     </div>
                     <div>
-                      <Link href={`/articles/:${item.slug_url}`}>
+                      <Link href={`${item.slug_url}`}>
                       <Button
                         variant="text"
                         sx={{ fontWeight: "600", letterSpacing: "1px",fontSize:"13px" }}
@@ -238,7 +238,7 @@ import Link from 'next/link';
                       </p>
                     </div>
                     <div>
-                      <Link href={`/articles/${item.slug_url}`}>
+                      <Link href={`/${item.slug_url}`}>
                       <Button
                         variant="text"
                         sx={{ fontWeight: "600", letterSpacing: "1px",fontSize:"13px" }}
@@ -295,7 +295,7 @@ import Link from 'next/link';
                       </p>
                     </div>
                     <div>
-                      <Link href={item.slug_url}>
+                      <Link href={`/${item.slug_url}`}>
                       <Button
                         variant="text"
                         sx={{ fontWeight: "600", letterSpacing: "1px",fontSize:"13px" }}
@@ -352,7 +352,7 @@ import Link from 'next/link';
                       </p>
                     </div>
                     <div>
-                      <Link href={item.slug_url}>
+                      <Link href={`/${item.slug_url}`}>
                       <Button
                         variant="text"
                         sx={{ fontWeight: "600", letterSpacing: "1px",fontSize:"13px" }}
@@ -409,7 +409,7 @@ import Link from 'next/link';
                       </p>
                     </div>
                     <div>
-                      <Link href={item.slug_url}>
+                      <Link href={`/${item.slug_url}`}>
                       <Button
                         variant="text"
                         sx={{ fontWeight: "600", letterSpacing: "1px",fontSize:"13px" }}

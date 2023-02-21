@@ -68,7 +68,7 @@ const TopCoupons = (props) => {
                 <Link
                   style={{ borderRadius: "0" }}
                   className="card_link"
-                  href={`/coupon/${couponid}`}
+                  href={`/coupon-codes/${couponid}`}
                 >
                   <CardActionArea 
                   sx={{textAlign:"center"}}>

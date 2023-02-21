@@ -51,7 +51,7 @@ const Index = () => {
           allStore && allStore.map((store,i)=>
                
               <Grid item xs={6}  sx={{marginBottom:"20px"}} key={i+1}>
-                <Link  href={`store/${store.store_slug}`} 
+                <Link  href={`/${store.store_slug}`} 
                 >
                   <Box
                     component="div"

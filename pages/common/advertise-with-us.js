@@ -1,8 +1,10 @@
 import * as React from "react";
-
+import Header from "../../components/headerComponent/Header";
+import HeadTag from "../../components/headTagComponent/HeadTag";
 const advertiseWithUs = () => {
   return (
     <>
+    <Header/>
       <div>
         <div className="intro-box">
           <h1>Advertise with us</h1>

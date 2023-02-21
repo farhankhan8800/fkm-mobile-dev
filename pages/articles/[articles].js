@@ -16,7 +16,7 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import {articleDetailsAPI} from "service/API"
-
+import PageNotFound from "components/PageNotFound";
 
 
 const Articels = () => {
@@ -24,12 +24,12 @@ const Articels = () => {
   const [authToken, setAuthToken] = useState()
   const [articleDetails, setArticleDetails]= useState()
   const [articleHtml, setArticleHtml]= useState()
-
+  const [ArticleNotFound, setArticleNotFound] = useState(false);
   const router = useRouter();
   const paramId  = router.query
 
 
-  console.log(articleDetails)
+  // console.log(articleDetails)
   const apiAuth = process.env.API_AUTH;
 
   useEffect(()=>{
@@ -56,7 +56,7 @@ const Articels = () => {
         setArticleDetails(data)
         setArticleHtml(data.article_detail.description)
     } catch (error) {
-      console.log(error)
+      setArticleNotFound(true);
     }
   }
 
@@ -64,6 +64,16 @@ const Articels = () => {
   }, [apiAuth, authToken, paramId]);
 
   const headeTitle = "Articels | Freekaamaal";
+  if(ArticleNotFound)
+{
+return(
+    <>
+    <Header />
+  <HeadTag headeTitle={`404 Page Not Found|| Freekaamaal`} />
+    <PageNotFound />
+    </> 
+  );
+}
   return (
     <>
       <HeadTag headeTitle={headeTitle}></HeadTag>

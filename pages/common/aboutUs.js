@@ -1,5 +1,6 @@
 import { Box, styled, Typography } from "@mui/material";
-import Header from "components/headerComponent/Header";
+import Header from "../../components/headerComponent/Header";
+import HeadTag from "../../components/headTagComponent/HeadTag";
 
 const CardWrap = styled(Box)(({ theme }) => ({
   display: "flex",
