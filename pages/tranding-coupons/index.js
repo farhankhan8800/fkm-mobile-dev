@@ -65,7 +65,7 @@ useEffect(()=>{
                 <Link
                   className="card_link"
                   style={{ borderRadius: "0" }}
-                  href={`coupon-codes/${couponid}`}
+                  href={`/coupon-code/${couponid}`}
                 
                 >
                   <CardActionArea

@@ -49,7 +49,7 @@ const FeaturedStore = (props) => {
         
           return (
             <SwiperSlide key={i}>
-              <Link  href={`store/${name}`} style={{height:"70px",display:"flex",justifyContent:"center",alignItems:"center" }}>
+              <Link  href={`/${name}`} style={{height:"70px",display:"flex",justifyContent:"center",alignItems:"center" }}>
                 <Image src={store_image} width={90} style={{width:"90px",height:"30px"}}  height={30} alt="" />
               </Link>
             </SwiperSlide>
