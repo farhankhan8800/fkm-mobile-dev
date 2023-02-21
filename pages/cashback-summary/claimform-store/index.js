@@ -64,7 +64,7 @@ const ClaimformStore = () => {
           if (responce.data.status == 0) {
             setServerError(responce.data);
           } else if (responce.data.status == 1) {
-
+                  
           }
         } catch (error) {
           //  console.log(error)

@@ -49,3 +49,13 @@ export const searchSuggestionApi = "https://fkmdata.freekaamaal.com/search/sugge
  export const  searchAPI= "https://fkmdata.freekaamaal.com/search/search"
 
  export const promoCodeAPI = "https://fkmdata.freekaamaal.com/cashback/userpromocode"
+
+ export const missingStoreAPI = "https://fkmdata.freekaamaal.com/cashback/missingstore"
+
+ export const missingStoreClickAPI = "https://fkmdata.freekaamaal.com/cashback/missingstoreclicks"
+
+ export const saveMissingAPI = "https://fkmdata.freekaamaal.com/cashback/savemissing"
+
+ export const allArticleAPI = "https://fkmdata.freekaamaal.com/article/allArticle"
+
+ export const articleDetailsAPI = "https://fkmdata.freekaamaal.com/article/articleDetail"

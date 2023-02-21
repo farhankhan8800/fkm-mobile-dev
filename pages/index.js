@@ -40,6 +40,9 @@ export default function Home() {
   const headeTitle =
     "Online Shopping India, Best Deals, Offers, Coupons & Free Stuff in India | Freekaamaal";
 
+
+
+    console.log(sponsoredCount)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const GetData = async () => {
     try {
@@ -65,14 +68,14 @@ export default function Home() {
       setLiveDeal(data.response.live_deals);
       setDealofday(data.response.sticky);
       setHowtoearncashback(data.response.earn_cashback);
-
+      setSponsoredCount(data.response.sponsored_count);
       if (data.response.hotdeals.length == 0) {
         // console.log(`no data`)
         setNoData(true);
       } else {
         setHotdeals([...hotdeals, ...data.response.hotdeals]);
       }
-      setSponsoredCount(data.response.sponsored_count);
+     
     } catch (error) {}
   };
 

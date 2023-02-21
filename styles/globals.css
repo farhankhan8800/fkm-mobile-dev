@@ -154,3 +154,15 @@ margin-bottom: 10px;
 #about_the_deals table td,#about_the_deals table th{
   padding: 4px;
 }
+
+/* articels webkits  */
+.MuiTabsList-root.MuiTabsList-horizontal.css-17ij0x9::-webkit-scrollbar {
+  display: none;
+}
+.MuiTabsList-root.MuiTabsList-horizontal.css-17ij0x9{
+    -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.articels_dynimic_bottom .share_Blog .social_icon span a{
+  color:#3b5998;
+}

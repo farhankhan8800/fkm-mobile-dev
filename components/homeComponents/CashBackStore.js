@@ -126,7 +126,7 @@ const CashBackStore = (props) => {
                         boxShadow: "0 0 0 ",
                       }}
                     >
-                      <Link className="cash_back_store_link" href={`store/${store.name}`}>
+                      <Link className="cash_back_store_link" href={`${store.name}`}>
                         <CardActionArea>
                           <Box
                               component="div"

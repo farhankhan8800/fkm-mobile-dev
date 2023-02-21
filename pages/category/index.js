@@ -96,7 +96,7 @@ const Category = () => {
                     <Box sx={{ textAlign: "center", p: 1 }}>
                       <Button variant="outlined">
                         <Link
-                          href={`/category/${item.cate_slug}`}
+                          href={`${item.cate_slug}`}
                           style={{ color: "#f27935" }}
                         >
                           View Deals

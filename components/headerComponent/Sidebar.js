@@ -57,8 +57,8 @@ export const menuList = [
     menuIcon: cashbackIcon,
   },
   {
-    link: "/",
-    menuName: "Hindi Artical",
+    link: "/articles",
+    menuName: " Artical",
     menuIcon: contentWritingIcon,
   },
   {
@@ -93,7 +93,8 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
     }, 200);
   };
   const logoutUser = () => {
-    localStorage.clear("user");
+    localStorage.clear();
+    sessionStorage.clear();
     router.push("/login");
   };
 

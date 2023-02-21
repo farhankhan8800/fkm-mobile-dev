@@ -43,7 +43,7 @@ const HotDealsCards = (props) => {
               >
                 <Link
                   className="card_link"
-                  href={slug_url? `/deal/${slug_url}`:`/deal/${deal_slug}`}
+                  href={slug_url? `/deals/${slug_url}`:`/deals/${deal_slug}`}
                 >
                   <span>{is_cashback == "1" ? <span className="card_cashback">Cashback</span>:<span></span>}</span>
                 

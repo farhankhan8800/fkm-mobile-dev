@@ -40,7 +40,7 @@ const userManage = [
     headingTag: "Report Missing",
     pTage: "List Of store your visited reacently",
     icon:reportIconImage,
-    link: "/cashback-summary/report-missing",
+    link: "/cashback-summary/missing-claimform",
   },
   {
     headingTag: "Refer and earn",
@@ -78,6 +78,7 @@ const userManage = [
     icon: missingCashbackImage,
     link: "/cashback-summary/missing-order",
   },
+  
   {
     headingTag: "Add Account",
     pTage: "List Of store your visited reacently",

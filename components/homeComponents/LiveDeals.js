@@ -56,7 +56,7 @@ const LiveDeals = (props) => {
                 <Card sx={{ height: "190px" }}>
                   <Link
                     className="card_link"
-                    href={`deal/${slug_url}`}
+                    href={`deals/${slug_url}`}
                     rel="noopener"
                   >
                     <div className="view_count">
