@@ -39,7 +39,10 @@ const Articels = () => {
 
   // console.log(page)
   useEffect(()=>{
-    setUserToken(JSON.parse(localStorage.getItem("user")).token);
+    if(localStorage.getItem("user")){
+      setUserToken(JSON.parse(localStorage.getItem("user")).token);
+    }
+
   },[])
   const getData = async ()=>{
     try {

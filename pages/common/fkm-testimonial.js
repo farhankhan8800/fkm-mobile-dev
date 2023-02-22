@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const fkmTestimonial = () => {
@@ -6,19 +7,19 @@ const fkmTestimonial = () => {
       <div className="fkm-heroes">
         <div>
           <h1 className="main-title">
-            <img
+            <Image
               src="https://images.freekaamaal.com/common-images/herostar2021.png"
               alt="icon"
             />
             <span> Meet Freekaamaal Heroes</span>
-            <img
+            <Image
               src="https://images.freekaamaal.com/common-images/herostar2021.png"
               alt="icon"
             />
           </h1>
           <p className="pre-desc">
             Meet Our splendid FKM heroes sharing their amazing experience Via
-            shopping through us. They're top achievers with extraordinary
+            shopping through us. They re top achievers with extraordinary
             cashback earnings
           </p>
         </div>
@@ -100,7 +101,7 @@ const fkmTestimonial = () => {
           </p>
           <h3 className="first-heading-title"> Freekaamaal Reviews </h3>
           <h3 className="sec-heading-title">
-            <img
+            <Image
               src="https://images.freekaamaal.com/common-images/newtrustpilotico.svg"
               alt="icon"
             />
@@ -111,7 +112,7 @@ const fkmTestimonial = () => {
           <div className="trustpilot-flex">
             <div className="trustpilot-single-box">
               <p>
-                Hi, I am using FKM from last 4 year It's the best cash back
+                Hi, I am using FKM from last 4 year It s the best cash back
                 site, no one can beat them. Naver gave any issue with anything.
                 If issue occurred always got satisfactory solution. You people
                 are best.
@@ -120,7 +121,7 @@ const fkmTestimonial = () => {
                 <p>
                   Kushal Rana
                   <strong>
-                    <img
+                    <Image
                       src="https://images.freekaamaal.com/common-images/mapsflags.png"
                       alt="nav-icon"
                     />
@@ -149,7 +150,7 @@ const fkmTestimonial = () => {
                 <p>
                   Sushil
                   <strong>
-                    <img
+                    <Image
                       src="https://images.freekaamaal.com/common-images/mapsflags.png"
                       alt="nav-icon"
                     />
@@ -177,7 +178,7 @@ const fkmTestimonial = () => {
                 <p>
                   Piyush Kumar
                   <strong>
-                    <img
+                    <Image
                       src="https://images.freekaamaal.com/common-images/mapsflags.png"
                       alt="nav-icon"
                     />
@@ -196,10 +197,10 @@ const fkmTestimonial = () => {
             </div>
             <div className="trustpilot-single-box">
               <p>
-                I Don't Think There Is Any Other App On…, I Don't Think There Is
+                I Dont Think There Is Any Other App On…, I Dont Think There Is
                 Any Other App On Playstore That Give Upto 100% Cashback On Your
                 Purchase, I Have Already Earned 1000 Rs Cashback And Still
-                Counting. There's No Match To This App. Just Follow The
+                Counting. Theres No Match To This App. Just Follow The
                 Instructions For Shopping And Gauranteed Your Cashback Is
                 Tracked And Confirmed.👍🏽👍🏽👍🏽
               </p>
@@ -207,7 +208,7 @@ const fkmTestimonial = () => {
                 <p>
                   Anjali Gupta
                   <strong>
-                    <img
+                    <Image
                       src="https://images.freekaamaal.com/common-images/mapsflags.png"
                       alt="nav-icon"
                     />
@@ -226,20 +227,20 @@ const fkmTestimonial = () => {
             </div>
             <div className="trustpilot-single-box">
               <p>
-                It's A Good And Highest Cashback Rewarding Site To Save More
-                Money. Only Thing Is Your Family Members Can't Use The Another
+                Its A Good And Highest Cashback Rewarding Site To Save More
+                Money. Only Thing Is Your Family Members Cant Use The Another
                 Account, I Think Only One Person In Family Can Use Fkm. If Your
                 Family Members Creates A New Fkm Account And Purchase Anything ,
-                They Are Saying That It's Multiple Account And Seizing Their
-                Earned Money. That's The Only Drawback I Have Seen, Need To
-                Rectify That Problem In Future. Otherwise It's Good Rewarding
+                They Are Saying That Its Multiple Account And Seizing Their
+                Earned Money. Thats The Only Drawback I Have Seen, Need To
+                Rectify That Problem In Future. Otherwise Its Good Rewarding
                 Site. Loved It
               </p>
               <div className="trustpilot-inner">
                 <p>
                   Uma Mageshwari
                   <strong>
-                    <img
+                    <Image
                       src="https://images.freekaamaal.com/common-images/mapsflags.png"
                       alt="nav-icon"
                     />

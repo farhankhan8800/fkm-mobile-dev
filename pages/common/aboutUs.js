@@ -30,10 +30,10 @@ const AboutUs = () => {
           FreeKaaMaal.com - Your Saving Partner!!
         </Typography>
         <Typography variant="p" component="p" marginBottom={1}>
-          FreeKaaMaaI.com is India's leading cashback website, where you can
+          FreeKaaMaaI.com is India 's leading cashback website, where you can
           earn up to 100% cashback on your online shopping. With 10 L+
           registered users & 7.5 miIIion+ pageviews/month, we rank as one of
-          India's top 250 internet properties (Source Alexa.com).
+          India s top 250 internet properties (Source Alexa.com).
         </Typography>
         <Typography variant="p" component="p" marginBottom={1}>
           We work closely with hundreds of retailers across India to publish
@@ -65,7 +65,7 @@ const AboutUs = () => {
         </Typography>
         <Typography variant="p" component="p" marginBottom={1}>
           Whether you're looking for the lowest prices, discount coupons,
-          freebies, or contest giveaways - everything's on FreeKaaMaal!
+          freebies, or contest giveaways - everything s on FreeKaaMaal!
         </Typography>
         <Typography
           variant="h2"

@@ -142,7 +142,6 @@ const Articels = () => {
             </div>
           </div>
         </div>
-          
           </>:"Loding.."
         }
         
