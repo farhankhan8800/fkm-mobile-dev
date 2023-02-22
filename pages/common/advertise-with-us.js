@@ -1,9 +1,102 @@
+import Image from "next/image";
 import * as React from "react";
 
+import "swiper/css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import Header from "../../components/headerComponent/Header";
+import HeadTag from "../../components/headTagComponent/HeadTag";
+
+const imageLink = [
+  {
+    "imgsrc": "https://images.freekaamaal.com/store-images/4209.jpg",
+    "imgalt": "icon"
+  },
+  {
+    "imgsrc": "https://images.freekaamaal.com/store-images/4209.jpg",
+    "imgalt": "icon"
+  },
+  {
+    "imgsrc": "https://images.freekaamaal.com/store-images/4209.jpg",
+    "imgalt": "icon"
+  },
+  {
+    "imgsrc": "https://images.freekaamaal.com/store-images/4209.jpg",
+    "imgalt": "icon"
+  },
+  {
+    "imgsrc": "https://images.freekaamaal.com/store-images/4209.jpg",
+    "imgalt": "icon"
+  },
+  {
+    "imgsrc": "https://images.freekaamaal.com/store-images/4209.jpg",
+    "imgalt": "icon"
+  },
+   {
+    "imgsrc": "https://images.freekaamaal.com/store-images/4209.jpg",
+    "imgalt": "icon"
+  },
+  {
+    "imgsrc": "https://images.freekaamaal.com/store-images/4209.jpg",
+    "imgalt": "icon"
+  },
+  
+  
+];
+
+const MetroCity = [
+  {
+    "imgsrc":"https://images.freekaamaal.com/store-images/4209.jpg",
+    "city":"noida",
+    "count":"7857657"
+  },
+  {
+    "imgsrc":"https://images.freekaamaal.com/store-images/4209.jpg",
+    "city":"noida",
+    "count":"7857657"
+  },
+  {
+    "imgsrc":"https://images.freekaamaal.com/store-images/4209.jpg",
+    "city":"noida",
+    "count":"7857657"
+  },
+  {
+    "imgsrc":"https://images.freekaamaal.com/store-images/4209.jpg",
+    "city":"noida",
+    "count":"7857657"
+  },
+  {
+    "imgsrc":"https://images.freekaamaal.com/store-images/4209.jpg",
+    "city":"noida",
+    "count":"7857657"
+  },
+  {
+    "imgsrc":"https://images.freekaamaal.com/store-images/4209.jpg",
+    "city":"noida",
+    "count":"7857657"
+  },
+  {
+    "imgsrc":"https://images.freekaamaal.com/store-images/4209.jpg",
+    "city":"noida",
+    "count":"7857657"
+  },
+  {
+    "imgsrc":"https://images.freekaamaal.com/store-images/4209.jpg",
+    "city":"noida",
+    "count":"7857657"
+  },
+  {
+    "imgsrc":"https://images.freekaamaal.com/store-images/4209.jpg",
+    "city":"noida",
+    "count":"7857657"
+  },
+
+]
 const advertiseWithUs = () => {
   return (
     <>
-      <div>
+      <HeadTag />
+      <Header />
+      <div style={{ padding: "7px", paddingTop: "57px" }}>
         <div className="intro-box">
           <h1>Advertise with us</h1>
           <p>
@@ -13,7 +106,9 @@ const advertiseWithUs = () => {
           </p>
           <a href="" className="get-in-touch">
             Get In Touch
-            <img
+            <Image
+              width={20}
+              height={20}
               src="https://images.freekaamaal.com/common-images/btn_pro_ico2021.svg"
               alt="icon"
             />
@@ -23,71 +118,39 @@ const advertiseWithUs = () => {
           <div className="section-title">
             <h2>Meet Some Of Our Happy :) Customers</h2>
             <div className="slider">
-              <button className="slider-btn">
-                <img
-                  className="slider-img"
-                  src="https://images.freekaamaal.com/common-images/anglearrow15-9-20.png"
-                  alt="left-arrow"
-                />
-              </button>
-              <div className="swipe-slider">
-                <div className="slider-card">
-                  <img
-                    src="https://images.freekaamaal.com/store-images/1.jpg"
-                    alt="store-img"
-                  />
-                </div>
-                <div className="slider-card">
-                  <img
-                    src="https://images.freekaamaal.com/store-images/1.jpg"
-                    alt="store-img"
-                  />
-                </div>
-                <div className="slider-card">
-                  <img
-                    src="https://images.freekaamaal.com/store-images/1.jpg"
-                    alt="store-img"
-                  />
-                </div>
-                <div className="slider-card">
-                  <img
-                    src="https://images.freekaamaal.com/store-images/1.jpg"
-                    alt="store-img"
-                  />
-                </div>
-                <div className="slider-card">
-                  <img
-                    src="https://images.freekaamaal.com/store-images/1.jpg"
-                    alt="store-img"
-                  />
-                </div>
-                <div className="slider-card">
-                  <img
-                    src="https://images.freekaamaal.com/store-images/1.jpg"
-                    alt="store-img"
-                  />
-                </div>
-              </div>
-              <button className="slider-btn">
-                <img
-                  className="slider-img"
-                  src="	https://images.freekaamaal.com/common-images/anglearrownxt15-9-20.png"
-                  alt="right-arrow"
-                />
-              </button>
+              <Swiper
+                className="deal_of_the_day_component"
+                slidesPerView={3}
+                spaceBetween={10}
+              >
+                {imageLink.map((item,i) => 
+                      <SwiperSlide key={i}>
+                        <div className="slider-card">
+                          <Image
+                            width={50}
+                            height={50}
+                            src={item.imgsrc}
+                            alt={item.imgalt}
+                          />
+                        </div>
+                      </SwiperSlide>
+               )}
+              </Swiper>
             </div>
           </div>
         </div>
         <div className="section3">
           <h2>About FreekaaMaal</h2>
           <p>
-            FreeKaaMaal.com is India's Leading bargain hunting website where we
-            help avid shoppers find the Best Deals, Freebies, Contests
+            FreeKaaMaal.com is India&#39;s Leading bargain hunting website where
+            we help avid shoppers find the Best Deals, Freebies, Contests
             Giveaways, Discount Coupons and many more on the online platform.
           </p>
           <a href="" className="get-in-touch">
             Read More
-            <img
+            <Image
+              width={20}
+              height={20}
               src="https://images.freekaamaal.com/common-images/btn_pro_ico2021.svg"
               alt="icon"
             />
@@ -165,28 +228,33 @@ const advertiseWithUs = () => {
                 <div className="slider responsive slick-initialized slick-slider slick-dotted">
                   <div className="slick-list draggable">
                     <div className="slick-track">
-                      <div className="top-cities slick-slide slick-current slick-active">
+
+
+                    <Swiper
+                className="deal_of_the_day_component"
+                slidesPerView={1}
+              >
+                {MetroCity.map((item,i) => 
+                      <SwiperSlide key={i}>
+                       <div className="top-cities slick-slide slick-current slick-active">
                         <span>
-                          <img
-                            src="https://images.freekaamaal.com/common-images/delhi2020.png"
-                            alt="city-img"
+                          <Image
+                            width={70}
+                            height={70}
+                            src={item.imgsrc}
+                            alt={item.imgalt}
                           />
                         </span>
-                        <p>60,000+ Happy Customers</p>
-                        <span className="city-name">Delhi-NCR</span>
+                        <p>{item.count} + Happy Customers</p>
+                        <span className="city-name">{item.city}</span>
                       </div>
-                      <div className="top-cities slick-slide slick-current slick-active">
-                        <span>
-                          <img
-                            src="https://images.freekaamaal.com/common-images/mub24-2-20.png"
-                            alt="city-img"
-                          />
-                        </span>
-                        <p>55,000+ Happy Customers</p>
-                        <span className="city-name">mumbai</span>
-                      </div>
+                      </SwiperSlide>
+               )}
+              </Swiper>
+                      
+                      
                     </div>
-                    <ul className="slick-dots">
+                    {/* <ul className="slick-dots">
                       <li className="slick-active">
                         <button>1</button>
                       </li>
@@ -199,7 +267,7 @@ const advertiseWithUs = () => {
                       <li className="slick-dots">
                         <button>4</button>
                       </li>
-                    </ul>
+                    </ul> */}
                   </div>
                 </div>
               </div>
@@ -218,7 +286,9 @@ const advertiseWithUs = () => {
             <div className="flex-cities hidebox">
               <div className="cities-card">
                 <span className="bg-radius">
-                  <img
+                  <Image
+                    width={60}
+                    height={60}
                     src="	https://images.freekaamaal.com/common-images/b_town_ico2021.svg"
                     alt="town-img"
                   />
@@ -232,7 +302,9 @@ const advertiseWithUs = () => {
               </div>
               <div className="cities-card">
                 <span className="bg-radius">
-                  <img
+                  <Image
+                    width={60}
+                    height={60}
                     src="https://images.freekaamaal.com/common-images/city_ico1_2021.png"
                     alt="town-img"
                   />
@@ -246,7 +318,9 @@ const advertiseWithUs = () => {
               </div>
               <div className="cities-card">
                 <span className="bg-radius">
-                  <img
+                  <Image
+                    width={60}
+                    height={60}
                     src="	https://images.freekaamaal.com/common-images/city_ico2_2021.svg"
                     alt="town-img"
                   />
@@ -259,7 +333,9 @@ const advertiseWithUs = () => {
               </div>
               <div className="cities-card">
                 <span className="bg-radius">
-                  <img
+                  <Image
+                    width={60}
+                    height={60}
                     src="	https://images.freekaamaal.com/common-images/city_ico3_2021.svg"
                     alt="town-img"
                   />
@@ -273,7 +349,9 @@ const advertiseWithUs = () => {
               </div>
               <div className="cities-card">
                 <span className="bg-radius">
-                  <img
+                  <Image
+                    width={60}
+                    height={60}
                     src="	https://images.freekaamaal.com/common-images/city_ico4_2021.svg"
                     alt="town-img"
                   />
@@ -286,7 +364,9 @@ const advertiseWithUs = () => {
               </div>
               <div className="cities-card">
                 <span className="bg-radius">
-                  <img
+                  <Image
+                    width={60}
+                    height={60}
                     src="https://images.freekaamaal.com/common-images/city_ico5_2021.svg"
                     alt="town-img"
                   />
@@ -299,7 +379,9 @@ const advertiseWithUs = () => {
               </div>
               <div className="cities-card">
                 <span className="bg-radius">
-                  <img
+                  <Image
+                    width={60}
+                    height={60}
                     src="	https://images.freekaamaal.com/common-images/city_ico6_2021.svg"
                     alt="town-img"
                   />
@@ -327,56 +409,72 @@ const advertiseWithUs = () => {
             </p>
             <div className="campaigns-wrapper">
               <div className="campaign-card">
-                <img
+                <Image
+                  width={30}
+                  height={30}
                   src="	https://images.freekaamaal.com/common-images/speaker_ico2021.svg"
                   alt="icon"
                 />
                 <span>CPI</span>
               </div>
               <div className="campaign-card">
-                <img
+                <Image
+                  width={30}
+                  height={30}
                   src="	https://images.freekaamaal.com/common-images/speaker_ico2021.svg"
                   alt="icon"
                 />
                 <span>CPS</span>
               </div>
               <div className="campaign-card">
-                <img
+                <Image
+                  width={30}
+                  height={30}
                   src="	https://images.freekaamaal.com/common-images/speaker_ico2021.svg"
                   alt="icon"
                 />
                 <span>CPL</span>
               </div>
               <div className="campaign-card">
-                <img
+                <Image
+                  width={30}
+                  height={30}
                   src="	https://images.freekaamaal.com/common-images/speaker_ico2021.svg"
                   alt="icon"
                 />
                 <span>CPM</span>
               </div>
               <div className="campaign-card">
-                <img
+                <Image
+                  width={30}
+                  height={30}
                   src="	https://images.freekaamaal.com/common-images/speaker_ico2021.svg"
                   alt="icon"
                 />
                 <span>CPC</span>
               </div>
               <div className="campaign-card">
-                <img
+                <Image
+                  width={30}
+                  height={30}
                   src="	https://images.freekaamaal.com/common-images/brand_tag_ico2021.svg"
                   alt="icon"
                 />
                 <span>Influence Marketing</span>
               </div>
               <div className="campaign-card">
-                <img
+                <Image
+                  width={30}
+                  height={30}
                   src="	https://images.freekaamaal.com/common-images/speaker_ico2021.svg"
                   alt="icon"
                 />
                 <span>BRANDING</span>
               </div>
               <div className="campaign-card">
-                <img
+                <Image
+                  width={30}
+                  height={30}
                   src="	https://images.freekaamaal.com/common-images/bar_chart_ico2021.svg"
                   alt="icon"
                 />
@@ -397,7 +495,9 @@ const advertiseWithUs = () => {
             <div className="audience-flex">
               <div className="audience-card">
                 <span className="img-block">
-                  <img
+                  <Image
+                    width={50}
+                    height={50}
                     src="	https://images.freekaamaal.com/common-images/childnew_group_ico.png"
                     alt="icon"
                   />
@@ -410,7 +510,9 @@ const advertiseWithUs = () => {
               </div>
               <div className="audience-card">
                 <span className="img-block">
-                  <img
+                  <Image
+                    width={50}
+                    height={50}
                     src="	https://images.freekaamaal.com/common-images/adultnew_group_ico.png"
                     alt="icon"
                   />
@@ -423,7 +525,9 @@ const advertiseWithUs = () => {
               </div>
               <div className="audience-card">
                 <span className="img-block">
-                  <img
+                  <Image
+                    width={50}
+                    height={50}
                     src="	https://images.freekaamaal.com/common-images/oldnew_group_ico.png"
                     alt="icon"
                   />
@@ -436,7 +540,9 @@ const advertiseWithUs = () => {
               </div>
               <div className="audience-card">
                 <span className="img-block">
-                  <img
+                  <Image
+                    width={50}
+                    height={50}
                     src="	https://images.freekaamaal.com/common-images/user_connect_iconew2021.svg"
                     alt="icon"
                   />
@@ -468,7 +574,9 @@ const advertiseWithUs = () => {
                 <div>
                   <button type="button" className="get-in-touch">
                     Get In Touch
-                    <img
+                    <Image
+                      width={20}
+                      height={20}
                       src="https://images.freekaamaal.com/common-images/btn_pro_ico2021.svg"
                       alt="icon"
                     />
@@ -513,7 +621,6 @@ const advertiseWithUs = () => {
             font-weight: 300;
             color: #30364e;
             line-height: 29px;
-            padding: 0 15px;
           }
           .get-in-touch {
             background-color: #30364e;
@@ -540,14 +647,14 @@ const advertiseWithUs = () => {
             padding: 20px 15px 10px;
           }
           .section-title {
-            padding-bottom: 30px;
+            padding-bottom: 10px;
           }
           .section-title h2 {
-            position: relative;
             color: #30364e;
-            font-size: 15px;
+            font-size: 18px;
           }
-          .section-title h2:after {
+           {
+            /* .section-title h2:after {
             content: "";
             display: inline-block;
             width: 48%;
@@ -556,11 +663,12 @@ const advertiseWithUs = () => {
             position: absolute;
             top: 11px;
             right: 6px;
+          } */
           }
           .slider {
             position: relative;
-            height: 160px;
-            margin: 20px 0 20px 0;
+            height: 83px;
+            margin: 20px 0 5px 0;
           }
           .slider,
           .swipe-slider {
@@ -584,7 +692,6 @@ const advertiseWithUs = () => {
             height: 20px;
           }
           .slider-card {
-            padding: 30px 40px;
             margin: 10px;
             box-shadow: 0 0 10px 10px whitesmoke;
             display: flex;
@@ -1006,10 +1113,12 @@ const advertiseWithUs = () => {
             margin-top: 20px;
           }
           .google_auto_placed {
-            width: 100%;
+             {
+              /* width: 100%;
             height: 400px;
             clear: both;
-            text-align: center;
+            text-align: center; */
+            }
           }
         `}
       </style>

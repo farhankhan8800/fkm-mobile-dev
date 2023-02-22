@@ -36,7 +36,7 @@ const CouponCodeCopy = () => {
   const router = useRouter();
   const couponid = router.query["coupon"];
 
-  // console.log(coupon_id)
+  // alert(couponid);
 
   const GetData = async () => {
     try {
@@ -64,6 +64,7 @@ const CouponCodeCopy = () => {
   };
 
   useEffect(() => {
+    // alert('okay');
     if (couponid) {
       GetData();
     }

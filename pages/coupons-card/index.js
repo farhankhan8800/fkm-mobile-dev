@@ -20,7 +20,7 @@ const CouponsCade = (props) => {
     <div>
       {
        coupons && coupons.map((item, i)=>
-       <Link key={i+1} href={`/coupon/${item.coupon_id}`}>
+       <Link key={i+1} href={`/coupon-code/${item.coupon_id}`}>
         <Box 
                 component="div"
                 sx={{

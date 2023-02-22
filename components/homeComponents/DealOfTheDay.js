@@ -12,8 +12,6 @@ import { useEffect, useState } from "react";
 const DealOfTheDay = (props) => {
 
   const [dealofday, setDealofday] = useState()
-  
- 
 
 useEffect(()=>{
   setDealofday(props.dealofday)

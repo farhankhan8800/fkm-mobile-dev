@@ -52,7 +52,10 @@ const StoreDetails = () => {
                 "Content-Type": "application/json",  
               }
             });
-       console.log(data.response.store_details)
+       
+       if(data.status == 0 && data.error == 0){
+        router.push(`/${store_slug}`);
+       } else{
         if (changeOption == "") {
           setStore_data(data.response.store_details);
           setStoreRate(data.response.store_rates);
@@ -75,8 +78,12 @@ const StoreDetails = () => {
           }
           
         }
+       }
+
+       
       } catch (err) {
         console.log(err)
+        // console.log(err.response.data.message)
       }
     };
 
@@ -112,7 +119,13 @@ const StoreDetails = () => {
     }
   };
 
-  // console.log(storeDeals,storeCoupons )
+  useEffect(()=>{
+    if(store_data){
+      
+    }
+    
+  },[store_data])
+  
   return (
     <>
       <HeadTag headeTitle={headeTitle} />

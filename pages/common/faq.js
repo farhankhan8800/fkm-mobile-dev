@@ -4,46 +4,51 @@ import {
   AccordionDetails,
   AccordionSummary,
   Breadcrumbs,
-  Link,
+ 
   Typography,
 } from "@mui/material";
+import Link from "next/link";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import HeadTag from "components/headTagComponent/HeadTag";
 
+
+const headeTitle = "FAQ | Freekaamaal";
 const faq = () => {
   return (
     <>
-      <div>
-        <div>
-          <Header />
-          <h1 className="faq-heading">Frequently Asked Questions</h1>
+    <HeadTag headeTitle={headeTitle} />
+     <Header />
+      <div className="faq_page" style={{ paddingTop: "56px" }}>
+        <div className="faq-heading">
+        <h1 className="">Frequently Asked Questions</h1>
         </div>
-        <div role="presentation" style={{ padding: "20px 0 0 10px" }}>
+        <div role="presentation" style={{padding:"10px"}} >
           <Breadcrumbs aria-label="breadcrumb">
             <Link underline="hover" color="inherit" href="/">
               Home
             </Link>
-            <Typography color="text.primary">FAQ's</Typography>
+            <Typography color="text.primary">FAQ&#39;s</Typography>
           </Breadcrumbs>
         </div>
         <div className="faq-list-section">
           <div className="faq-list">
             <p>
-              <a href="#cashback">CASHBACK</a>
+              <Link  href="#cashback">CASHBACK</Link>
             </p>
             <p>
-              <a href="#promo-balance">PROMO BALANCE</a>
+              <Link href="#promo-balance">PROMO BALANCE</Link>
             </p>
             <p>
-              <a href="#fkm-gold">FKM GOLD MEMBERSHIP</a>
+              <Link href="#fkm-gold">FKM GOLD MEMBERSHIP</Link>
             </p>
             <p>
-              <a href="#missing-cashback">CLAIM FORM / MISSING CASHBACK</a>
+              <Link href="#missing-cashback">CLAIM FORM / MISSING CASHBACK</Link>
             </p>
             <p>
-              <a href="#withdraw">WITHDRAW</a>
+              <Link href="#withdraw">WITHDRAW</Link>
             </p>
             <p>
-              <a href="#miscellaneous">MISCELLANEOUS</a>
+              <Link href="#miscellaneous">MISCELLANEOUS</Link>
             </p>
           </div>
           <div id="cashback">
@@ -58,7 +63,7 @@ const faq = () => {
               <AccordionDetails>
                 FreeKaaMaal provides rewards in the form of Cashback every time
                 users successfully purchase something, redirecting via
-                Freekaamaal, from its partner’s website. The cashback can be
+                Freekaamaal, from its partner&#39;s website. The cashback can be
                 used like real Cash as it can be transferred back to your
                 account or Paytm wallet.
               </AccordionDetails>
@@ -96,7 +101,7 @@ const faq = () => {
                 <br />
                 Check out the best deals, Cashback offers, and discounts as per
                 your requirements.Click on Shop & Earn Button. Shop on the
-                partner’s website like you do regularly (Follow the steps
+                partner&#39;s website like you do regularly (Follow the steps
                 mentioned on the offer page).
                 <br />
                 Once the purchase has been completed. Take a screenshot for
@@ -140,7 +145,7 @@ const faq = () => {
               <AccordionDetails>
                 There are three types of status for your cashback: <br /> <br />
                 <strong>Pending Cashback:</strong> When your transaction is
-                successful on the Merchant’s Site, Your cashback will be
+                successful on the Merchant&#39;s Site, Your cashback will be
                 credited with Pending Status. Now you have to wait till as per
                 the confirmation days mentioned on the store page. <br />
                 <strong>Confirmed Cashback:</strong> Once the merchant confirms
@@ -150,7 +155,7 @@ const faq = () => {
                 cashback status. Which means it is available to withdraw. <br />
                 <strong>Declined Cashback:</strong> When your pending cashback
                 gets declined it means your transaction had some issues and your
-                cashback can’t be processed further.
+                cashback can&#39;t be processed further.
               </AccordionDetails>
             </Accordion>
             <Accordion>
@@ -183,7 +188,7 @@ const faq = () => {
                 Session Took Too Long <br />
                 Products were already in the cart when redirected <br />
                 Session Took Too Long <br />
-                previous cookies and caches not cleared "Use Incognito Mode"{" "}
+                previous cookies and caches not cleared &#34;Use Incognito Mode&#34;{" "}
                 <br />
                 Compliance Issue: If You did not follow the steps mentioned on
                 the offer page.
@@ -199,7 +204,7 @@ const faq = () => {
               </AccordionSummary>
               <AccordionDetails>
                 No, We create a unique link with every deal posted on the
-                FreeKaaMaal website, which gets us a commission on your Sale's
+                FreeKaaMaal website, which gets us a commission on your Sale&#39;s
                 completion. The unique link makes the merchant capable of
                 tracking that you came from Freekaamaal. Purchasing
                 intentionally or unintentionally from somewhere else and
@@ -222,7 +227,7 @@ const faq = () => {
                 you will get an email within 15 to 20 min. If it is 2-3 business
                 days then you will receive an email within 2-3 business days. In
                 the case where the tracking speed time is over and you still
-                haven’t received the cashback kindly raise a missing request or
+                haven&#39;t received the cashback kindly raise a missing request or
                 connect with the support team asap.
               </AccordionDetails>
             </Accordion>
@@ -234,10 +239,10 @@ const faq = () => {
                 Why is my cashback not tracked?
               </AccordionSummary>
               <AccordionDetails>
-                When you visit the partner’s website via the shop & earn
+                When you visit the partner&#39;s website via the shop & earn
                 cashback button on FKM. our system tracks and records it as an
                 “Exit Click.” On the basis of the unique link passed in the exit
-                click, we track your purchase. In case when you don’t get your
+                click, we track your purchase. In case when you don&#39;t get your
                 cashback you can raise a missing request if allowed (this Varies
                 from store to store). In case if it is not credited after all
                 this, It means your transaction has been denied by the partner
@@ -250,7 +255,7 @@ const faq = () => {
                 website correctly. <br />
                 You have used a voucher code or gift card, which our website
                 does not support. <br />
-                You have disabled the cookies, which didn’t allow the retailer
+                You have disabled the cookies, which didn&#39;t allow the retailer
                 to track the purchase. <br />
                 Your Session after redirection took too long or expired. <br />
                 Products were already in the cart when you redirected. <br />
@@ -308,16 +313,16 @@ const faq = () => {
                 your ID using your Facebook and Google+ ID).
                 <br />
                 Go to the cashback summary. <br />
-                Apply the promo code provided by us in the 'Get a promo code?'
+                Apply the promo code provided by us in the &#39;Get a promo code?&#39;
                 section
                 <br />
                 Click on Redeem! <br />
                 Now click on Withdraw and enter the information required for
                 availing the earned cashback. If you want to know more about the
                 radio button for adding the promo code value, then{" "}
-                <a href="" style={{ color: "#f27935" }}>
+                <Link href="" style={{ color: "#f27935" }}>
                   CLICK HERE
-                </a>
+                </Link>
               </AccordionDetails>
             </Accordion>
             <Accordion>
@@ -364,9 +369,9 @@ const faq = () => {
                 through our portal and being an gold member you will get plenty
                 of Benefits for each purchase you make and to check your
                 eligibility and gold membership in details{" "}
-                <a href="" style={{ color: "#f27935" }}>
+                <Link href="" style={{ color: "#f27935" }}>
                   click here
-                </a>
+                </Link>
               </AccordionDetails>
             </Accordion>
           </div>
@@ -395,7 +400,7 @@ const faq = () => {
                 What if the Store is not live or I forget to fill out the form?
               </AccordionSummary>
               <AccordionDetails>
-                It's very rare to occur such cases, though you can visit your
+                It&#39;s very rare to occur such cases, though you can visit your
                 Cashback summary wherein you will get the Option to Submit the
                 Claim form for your purchase.
               </AccordionDetails>
@@ -439,12 +444,12 @@ const faq = () => {
                 kindly follow the below-mentioned steps to raise the missing
                 cashback request from your freekaamaal account. <br />
                 <br />
-                <a href="" style={{ color: "#f27935" }}>
+                <Link href="" style={{ color: "#f27935" }}>
                   click here
-                </a>{" "}
-                and visit your FreeKaaMaal Cashback Summary.Select "Report
-                Missing Cashback" by clicking on the left Menu.Now fill-up the
-                mandate details for your order and click on the "SUBMIT "
+                </Link>{" "}
+                and visit your FreeKaaMaal Cashback Summary.Select &#34;Report
+                Missing Cashback&#34; by clicking on the left Menu.Now fill-up the
+                mandate details for your order and click on the &#34;SUBMIT &#34;
                 buttonWe will verify your request and upon verification,
                 cashback will be added to your account within 2-3 Business days.
               </AccordionDetails>
@@ -579,12 +584,12 @@ const faq = () => {
                 <strong>
                   {" "}
                   report to{" "}
-                  <a
+                  <Link
                     href="mailto:Support@freekaamaal.com"
                     style={{ color: "#f27935" }}
                   >
                     Support@freekaamaal.com
-                  </a>{" "}
+                  </Link>{" "}
                   within 7 days
                 </strong>{" "}
                 along with the following details
@@ -625,7 +630,7 @@ const faq = () => {
                 {" "}
                 Do not visit any other price comparison, coupon, or deal site in
                 between clicking out through FreeKaaMaal & placing the order on
-                the retailer's site.
+                the retailer&#39;s site.
               </li>{" "}
               <br />
               <li>
@@ -721,35 +726,39 @@ const faq = () => {
 
       <style jsx>
         {`
+        
           .faq-heading {
-            margin-block-start: 2em;
             padding: 30px;
-            position: relative;
-            left: -4.3%;
-            top: 0%;
-            width: 108.5%;
             background: #f1f1f1;
             text-align: center;
+
+          }
+          .faq-heading h1{
+            font-size: 25px;
+            color: #565252;
           }
           .faq-list-section {
             background-color: #fff;
             width: 100%;
-            margin-left: 10px;
+            padding: 0 7px 
+          
           }
           .faq-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 30px;
+            gap: 15px;
             justify-content: space-between;
-            margin-block-start: 20px;
+            
           }
+         
           .faq-list p {
             flex-basis: 46%;
             text-align: center;
             background: #f1f1f1;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             padding: 20px;
+            text-align:center;
             border-radius: 7px;
           }
           .faq-list p a {
@@ -759,6 +768,7 @@ const faq = () => {
           .h2-heading {
             padding: 10px;
             text-transform: capitalize;
+            font-size: 18px;
           }
           .tc-wrapper {
             margin: 10px 0;

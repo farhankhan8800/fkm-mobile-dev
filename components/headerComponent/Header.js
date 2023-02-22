@@ -76,7 +76,9 @@ const debounce = (func)=>{
 const optimizedFunction = useCallback(debounce(OnInputSearchText),[])
 
   useEffect(() => {
+    if(localStorage.getItem("user")){
     setuser(localStorage.getItem("user"));
+    }
   }, []);
 // console.log(searchSuggestion)
 

@@ -1,20 +1,26 @@
 import Image from "next/image";
 import React from "react";
-
+import Header from "../../components/headerComponent/Header";
+import HeadTag from "../../components/headTagComponent/HeadTag";
 const fkmTestimonial = () => {
   return (
     <>
-      <div className="fkm-heroes">
+    <Header/>
+      <div className="fkm-heroes fkm-testimonial" style={{paddingTop:"60px"}}>
         <div>
           <h1 className="main-title">
             <Image
               src="https://images.freekaamaal.com/common-images/herostar2021.png"
               alt="icon"
+              width={50}
+              height={50}
             />
             <span> Meet Freekaamaal Heroes</span>
             <Image
               src="https://images.freekaamaal.com/common-images/herostar2021.png"
               alt="icon"
+              width={50}
+              height={50}
             />
           </h1>
           <p className="pre-desc">
@@ -99,11 +105,13 @@ const fkmTestimonial = () => {
             If you also wanted to get featured as our superhero & wanted to tell
             your story then feel free to write us at Support@freekaamaal.com
           </p>
-          <h3 className="first-heading-title"> Freekaamaal Reviews </h3>
-          <h3 className="sec-heading-title">
+          <h3 className="first-heading-title" style={{textAlign:"center", fontSize:"28px"}}> Freekaamaal Reviews </h3>
+          <h3 className="sec-heading-title" s>
             <Image
               src="https://images.freekaamaal.com/common-images/newtrustpilotico.svg"
               alt="icon"
+              width={50}
+              height={50}
             />
             trustpilot
           </h3>
@@ -124,6 +132,8 @@ const fkmTestimonial = () => {
                     <Image
                       src="https://images.freekaamaal.com/common-images/mapsflags.png"
                       alt="nav-icon"
+                      width={17}
+                      height={16}
                     />
                     IN
                   </strong>
@@ -153,6 +163,8 @@ const fkmTestimonial = () => {
                     <Image
                       src="https://images.freekaamaal.com/common-images/mapsflags.png"
                       alt="nav-icon"
+                      width={17}
+                      height={16}
                     />
                     IN
                   </strong>
@@ -181,6 +193,8 @@ const fkmTestimonial = () => {
                     <Image
                       src="https://images.freekaamaal.com/common-images/mapsflags.png"
                       alt="nav-icon"
+                      width={17}
+                      height={16}
                     />
                     IN
                   </strong>
@@ -211,6 +225,8 @@ const fkmTestimonial = () => {
                     <Image
                       src="https://images.freekaamaal.com/common-images/mapsflags.png"
                       alt="nav-icon"
+                      width={17}
+                      height={16}
                     />
                     IN
                   </strong>
@@ -243,6 +259,8 @@ const fkmTestimonial = () => {
                     <Image
                       src="https://images.freekaamaal.com/common-images/mapsflags.png"
                       alt="nav-icon"
+                      width={17}
+                      height={16}
                     />
                     IN
                   </strong>
@@ -259,7 +277,9 @@ const fkmTestimonial = () => {
             </div>
             <div className="rate-btn">
               <a href="https://www.trustpilot.com/review/freekaamaal.com">
-                <img
+              <Image
+                    width={35}
+                    height={35}
                   src="https://images.freekaamaal.com/common-images/likeico9-17-21.png"
                   alt="thumb-icon"
                 />
@@ -269,7 +289,9 @@ const fkmTestimonial = () => {
             {/*-------- play store section ----- */}
             <div style={{ width: "100%" }}>
               <h3 className="sec-heading-title extra-space">
-                <img
+              <Image
+                    width={40}
+                    height={40}
                   src="https://images.freekaamaal.com/common-images/playstoreico2021.png"
                   alt="icon"
                 />
@@ -286,7 +308,9 @@ const fkmTestimonial = () => {
                 <p>
                   Avijit Biswas
                   <strong>
-                    <img
+                  <Image
+                   width={17}
+                   height={16}
                       src="https://images.freekaamaal.com/common-images/mapsflags.png"
                       alt="nav-icon"
                     />
@@ -313,7 +337,9 @@ const fkmTestimonial = () => {
                 <p>
                   Vimal Patel
                   <strong>
-                    <img
+                    <Image
+                    width={17}
+                    height={16}
                       src="https://images.freekaamaal.com/common-images/mapsflags.png"
                       alt="nav-icon"
                     />
@@ -342,7 +368,9 @@ const fkmTestimonial = () => {
                 <p>
                   Mr.Srinivas
                   <strong>
-                    <img
+                  <Image
+                   width={17}
+                   height={16}
                       src="https://images.freekaamaal.com/common-images/mapsflags.png"
                       alt="nav-icon"
                     />
@@ -368,7 +396,9 @@ const fkmTestimonial = () => {
                 <p>
                   Joginder Singh
                   <strong>
-                    <img
+                  <Image
+                     width={17}
+                     height={16}
                       src="https://images.freekaamaal.com/common-images/mapsflags.png"
                       alt="nav-icon"
                     />
@@ -386,8 +416,10 @@ const fkmTestimonial = () => {
               </div>
             </div>
             <div className="rate-btn">
-              <a href="https://play.google.com/store/apps/details?id=com.freekaamaalindia">
-                <img
+              <a  href="https://play.google.com/store/apps/details?id=com.freekaamaalindia">
+              <Image
+                    width={35}
+                    height={35}
                   src="https://images.freekaamaal.com/common-images/likeico9-17-21.png"
                   alt="thumb-icon"
                 />
@@ -479,13 +511,14 @@ const fkmTestimonial = () => {
             margin: 15px 0 0;
           }
           .sec-heading-title {
-            display: flex;
-            align-items: center;
-            margin: 30px 0;
+            padding: 7px 0;
             color: #000;
             font-weight: 700;
             font-size: 25px;
             text-transform: capitalize;
+            display: flex;
+    align-items: center;
+    justify-content: space-evenly;
           }
           .sec-heading-title img {
             width: 40px;
