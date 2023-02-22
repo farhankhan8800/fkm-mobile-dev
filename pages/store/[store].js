@@ -54,7 +54,7 @@ const StoreDetails = () => {
             });
        
        if(data.status == 0 && data.error == 0){
-        router.push(`/${store_slug}`);
+        router.push(`/category/${store_slug}`);
        } else{
         if (changeOption == "") {
           setStore_data(data.response.store_details);
