@@ -150,7 +150,7 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
                 borderRadius: "10px",
               }}
             >
-              <Link  href={userdata ? "/cashback-summary":"/login"}>
+              <Link  href={userdata ? "/cashback/home":"/login"}>
                 <Grid
                   container
                   justifyContent="space-between"
@@ -210,7 +210,7 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
                    <div>{
                      userdata ? (
                      <>
-                     <Link href="/cashback-summary">
+                     <Link href="/cashback/home">
                       <ListItemButton onClick={sidebarClose}>
                         <ListItemIcon>
                           <Image

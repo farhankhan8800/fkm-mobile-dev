@@ -16,7 +16,7 @@ const SearchPage = () => {
   const [store, setStore] = useState();
   const [noData, setNoData] = useState(false);
   const router = useRouter();
-  let searchText = router.query["name"];
+  let searchText = router.query["searchword"];
   const headeTitle = " Search | Freekaamaal";
 
   //  console.log(searchText)
@@ -141,25 +141,27 @@ const SearchPage = () => {
                             In Deals <Link href="">View All</Link>
                           </h5>
                           <div className="showing_deals_list">
-                            <div className="showing_deals_Item">
+                            {deals.map((item, i) => {
+                              return (
+                            <div key ={i} className="showing_deals_Item">
                               <span>
                                 <Image
                                   alt=""
-                                  src="https://images.freekaamaal.com/featured_images/medium_188444_B.png"
+                                  src={item.img_url}
                                   width={180}
                                   height={100}
                                 />
                               </span>
                               <div className="showing_deals_Item_contant">
                                 <p style={{ fontSize: "14px" }}>
-                                  Winter Essential sale chose Spred 220Gm
+                                  {item.title}
                                 </p>
                                 <div className="showing_deals_Item_details">
                                   <div style={{ paddingRight: "7px" }}>
-                                    <strong> &#8377; 499</strong>{" "}
-                                    <small> &#8377; 1000</small>{" "}
+                                    <strong> &#8377; {item.offer_price}</strong>{" "}
+                                    <small> &#8377; {item.price}</small>{" "}
                                   </div>
-                                  <Link href="">
+                                  <Link href={`/deals/${item.slug_url}`}>
                                     <Button
                                       sx={{
                                         whiteSpace: "pre",
@@ -175,6 +177,8 @@ const SearchPage = () => {
                                 </div>
                               </div>
                             </div>
+                              );
+                              })}
                           </div>
                         </div>
                       </>

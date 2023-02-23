@@ -35,16 +35,32 @@
         destination: '/category/automotive-offers', 
       },
       {
+        source: '/baby-kids-and-toys-offers',
+        destination: '/category/baby-kids-and-toys-offers', 
+      },
+      {
+        source: '/books-offers',
+        destination: '/category/baby-kids-and-toys-offers', 
+      },
+      {
         source: '/buying-guide',
         destination: '/category/buying-guide', 
       },
       {
-        source: '/camera-accessories-offers',
-        destination: '/category/camera-accessories-offers', 
+        source: '/cameras-accessories-offers',
+        destination: '/category/cameras-accessories-offers', 
+      },
+      {
+        source: '/computer-accessories-offers',
+        destination: '/category/computer-accessories-offers', 
       },
       {
         source: '/credit-cards-offers',
         destination: '/category/credit-cards-offers', 
+      },
+      {
+        source: '/customized-products-offers',
+        destination: '/category/customized-products-offers', 
       },
       {
         source: '/electronics-offers',
@@ -83,24 +99,20 @@
         destination: '/category/free-survey-earn-money',
       },
       {
-        source :'/free-survey-earn-money',
-        destination: '/category/free-survey-earn-money',
-      },
-      {
         source :'/gifts-offers',
         destination: '/category/gifts-offers',
       },
       {
         source :'/grocery-offers',
-        destination: '/category/gifts-offers',
+        destination: '/category/grocery-offers',
       },
       {
         source :'/health-beauty-personal-care-offers',
         destination: '/category/health-beauty-personal-care-offers',
       },
       {
-        source :'/home-kitchen-appliance-offers',
-        destination: '/category/home-kitchen-appliance-offerss',
+        source :'/home-kitchen-appliances-offers',
+        destination: '/category/home-kitchen-appliances-offers',
       },
       {
         source :'/home-decor-offers',
@@ -140,7 +152,11 @@
       },
       {
         source :'/mobile-recharge-offers',
-        destination: '/category/mobile-recharge-offers',
+        destination: '/category/mobile-reacharge-offers',
+      },
+      {
+        source :'/mobile-accessories-offers',
+        destination: '/category/mobile-accessories-offers',
       },
       {
         source :'/pet-care-offers',

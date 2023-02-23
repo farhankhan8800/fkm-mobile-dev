@@ -138,7 +138,7 @@ const UserProfile = () => {
                   &#8377; {user_summary ? user_summary.confirm_amount : ""}
                 </Typography>
                 <Typography component="p" textAlign="center" fontSize="10px">
-                  Confirmed Cashback{" "}
+                  Confirmed Cashback
                 </Typography>
               </Box>
             </Grid>

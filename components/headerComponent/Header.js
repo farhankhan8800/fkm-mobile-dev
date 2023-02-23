@@ -88,7 +88,7 @@ const handleKeyPress = (e)=>{
     if(e.key === "Enter"){
       e.preventDefault();
       router.push({pathname:"/search",
-      query: { name: getInputvalue }
+      query: { searchword: getInputvalue }
     })
     setSearchInput(false)
     setSearchSuggestion("")

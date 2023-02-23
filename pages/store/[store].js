@@ -54,7 +54,9 @@ const StoreDetails = () => {
             });
        
        if(data.status == 0 && data.error == 0){
-        router.push(`/category/${store_slug}`);
+        // router.push(`/category/${store_slug}`);
+        alert('no store found, kindly show 404 page');
+        console.log("no store found");
        } else{
         if (changeOption == "") {
           setStore_data(data.response.store_details);
