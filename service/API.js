@@ -58,4 +58,6 @@ export const searchSuggestionApi = "https://fkmdata.freekaamaal.com/search/sugge
 
  export const allArticleAPI = "https://fkmdata.freekaamaal.com/article/allArticle"
 
+ export const hindiArticleAPI = "https://fkmdata.freekaamaal.com/article/hindi-artilce"
+
  export const articleDetailsAPI = "https://fkmdata.freekaamaal.com/article/articleDetail"
