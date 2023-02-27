@@ -1,5 +1,3 @@
-
-
 export const registerApi = "https://fkmdata.freekaamaal.com/user/register";
 
 export const homeApi = "https://fkmdata.freekaamaal.com/home/home";
