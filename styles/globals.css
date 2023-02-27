@@ -78,11 +78,11 @@ span{
 }
 .carousel_component .swiper-slide a{
   width: 100%;
-  padding:2px 7px;
+  padding:8px 12px;
 }
 .carousel_component .swiper-slide img{
    width: 100%;
-    border-radius: 8px;
+    border-radius: 14px;
 }
 .swiper-pagination-bullet{
   background-color: #f27935 !important;
@@ -91,7 +91,7 @@ span{
 
  .deal_of_the_day_component .swiper-slide a img{
   width: 100%;
-  height: 68px;
+  height: 115px;
   border-radius: 6px;
  }
  .deal_of_the_day_component .swiper-slide a {
