@@ -46,16 +46,16 @@ export const menuList = [
     menuName: "Coupons",
     menuIcon: promoCodeIcon,
   },
-  // {
-  //   link: "/",
-  //   menuName: "Festival",
-  //   menuIcon: confettiIcon,
-  // },
-  // {
-  //   link: "/",
-  //   menuName: "100% Cashback",
-  //   menuIcon: cashbackIcon,
-  // },
+  {
+    link: "/freebies",
+    menuName: "Freebies",
+    menuIcon: "",
+  },
+  {
+    link: "/live-feed",
+    menuName: "Live Feed",
+    menuIcon: "",
+  },
   {
     link: "/articles",
     menuName: " Articles",

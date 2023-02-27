@@ -19,10 +19,10 @@ const Articels = () => {
   const [userToken, setUserToken] = useState();
   const [featured_article,setFeatured_article] = useState()
   const [mviewed_article,setMviewed_article]=useState()
-   const [all_articles, setAll_articles]= useState([])
-   const [page, setPage] = useState(1)
-   const [option, setOption] = useState("all")
-   const [nodata, setNoData] =  useState(false)
+  const [all_articles, setAll_articles]= useState([])
+  const [page, setPage] = useState(1)
+  const [option, setOption] = useState("all")
+  const [nodata, setNoData] =  useState(false)
 
    const lodeMoreData= ()=>{
     setPage(page + 1)

@@ -40,7 +40,7 @@ useEffect(()=>{
       </Grid>
       <Box sx={{padding:"2px 10px"}}>
       <Swiper className="deal_of_the_day_component" 
-       slidesPerView={3}
+       slidesPerView={1.8}
        spaceBetween={10}
       >
         {dealofday && dealofday.map((item, i) => {
@@ -49,7 +49,7 @@ useEffect(()=>{
           return (
             <SwiperSlide key={i}>
               <a href={link} >
-                <Image width={200} height={60} src={image} alt='deal of the day' />
+                <Image width={200} height={100} src={image} alt='deal of the day' />
               </a>
             </SwiperSlide>
           );
