@@ -6,9 +6,11 @@ import {
   CardActionArea,
   CardContent,
   Card,
+  Skeleton,
 } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
+import { Stack } from "@mui/system";
 
 
 const HotDealsCards = (props) => {
@@ -22,7 +24,9 @@ const HotDealsCards = (props) => {
     <>
      
       <div className="flex_div">
-        {hotDeals && hotDeals.map((item, i) => {
+        {
+          hotDeals ? <>
+           {hotDeals && hotDeals.map((item, i) => {
           const {is_cashback,deal_image,slug_url,deal_slug,title,store_img_url:store_image, deal_title, offer_price, price}= item;
 
          
@@ -99,6 +103,18 @@ const HotDealsCards = (props) => {
             </Box>
           );
         })}
+          </>:
+          <>
+    
+            <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+            <Skeleton variant="circular" width={40} height={40} />
+            <Skeleton variant="rectangular"  height={60} />
+            <Skeleton variant="rounded"  height={60} />
+       
+         {/* {alert("ok")} */}
+          </>
+        }
+       
       </div>
       <style jsx>{`
         .card_link {

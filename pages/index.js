@@ -9,7 +9,8 @@ import LiveDeals from "components/homeComponents/LiveDeals";
 import HotDeals from "components/homeComponents/HotDeals";
 import CashBackStore from "components/homeComponents/CashBackStore";
 import HowToEarnCashback from "components/HowToEarnCashback";
-import { homeApi } from "service/API";
+import { homeAPI1 } from "service/API";
+import { homeAPI2 } from "service/API";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -26,6 +27,7 @@ export default function Home() {
   const [noData, setNoData] = useState(false);
   const [sponsoredCount, setSponsoredCount] = useState();
   const [authToken, setAuthToken] = useState()
+  const [scroll, setScroll] = useState(false)
 
 
 
@@ -33,24 +35,20 @@ export default function Home() {
     if(JSON.parse(localStorage.getItem("user"))){
       setAuthToken(JSON.parse(localStorage.getItem("user")).token)
     }
-    
   },[])
 
   // console.log(authToken)
   const headeTitle =
     "Online Shopping India, Best Deals, Offers, Coupons & Free Stuff in India | Freekaamaal";
 
-
-
-    
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const GetData = async () => {
     try {
-      let {data} = await axios.post(homeApi, {
+      let {data} = await axios.post(homeAPI1, {
           apiAuth: apiAuth,
-          page: page,
+          // page: page,
           device_type:"4",
-          sponsored_count: sponsoredCount,
+          // sponsored_count: sponsoredCount,
       },
       { 
         headers:{
@@ -58,48 +56,83 @@ export default function Home() {
         }
       });
     
-      //  console.log(data.response.user_summary)
+      //  console.log(data)
        if(data.response.user_summary){
         // console.log(data.response.user_summary)
         localStorage.setItem("usersummary", JSON.stringify(data.response.user_summary));  
        }
-      setCbStore(data.response.cbstores);
+     
       setCarousel(data.response.slider);
       setLiveDeal(data.response.live_deals);
       setDealofday(data.response.sticky);
-      setHowtoearncashback(data.response.earn_cashback);
-      setSponsoredCount(data.response.sponsored_count);
-      if (data.response.hotdeals.length == 0) {
-        // console.log(`no data`)
-        setNoData(true);
-      } else {
-        setHotdeals([...hotdeals, ...data.response.hotdeals]);
-      }
+     
      
     } catch (error) {}
   };
 
+ const getAPI2 = async () =>{
+  try {
+    let {data} = await axios.post(homeAPI2, {
+      apiAuth: apiAuth,
+      page: page,
+      device_type:"4",
+      sponsored_count: sponsoredCount,
+  },
+  { 
+    headers:{
+      Authorization:authToken
+    }
+  })
+  console.log(data)
+  setCbStore(data.response.cbstores);
+  setHowtoearncashback(data.response.earn_cashback);
+  setSponsoredCount(data.response.sponsored_count);
+  if (data.response.hotdeals.length == 0) {
+    // console.log(`no data`)
+    setNoData(true);
+  } else {
+    setHotdeals([...hotdeals, ...data.response.hotdeals]);
+  }
+  } catch (error) {
+    
+  }
+
+ }
+  
   useEffect(() => {
     GetData();
-  }, [page,authToken]);
-  // console.log(hotdeals)
+  }, [authToken]);
+
+// console.log(page)
+// console.log(scroll)
+
+useEffect(()=>{
+  window.addEventListener('load', ()=> getAPI2());
+  if(page || authToken){
+    getAPI2()
+  }
+},[page, authToken])
+
   const pageFunction = () => {
     setPage(page + 1);
   };
   return (
     <>
-      <HeadTag headeTitle={headeTitle} />
-      <Header />
+    <HeadTag headeTitle={headeTitle} />
+    <Header />
+    <div >
       <Carousel bannerImg={carousel} />
       <DealOfTheDay dealofday={dealofday} />
       <LiveDeals liveDeal={liveDeal} />
       <HotDeals
+        
         hotdeals={hotdeals}
         pageFunction={pageFunction}
         noData={noData}
       />
       <CashBackStore cbStore={cbStore} />
       <HowToEarnCashback howtoearncashback={howtoearncashback} />
+    </div>
     </>
   );
 }

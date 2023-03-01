@@ -1,6 +1,9 @@
 export const registerApi = "https://fkmdata.freekaamaal.com/user/register";
 
-export const homeApi = "https://fkmdata.freekaamaal.com/home/home";
+// export const homeApi = "https://fkmdata.freekaamaal.com/home/home";
+export const homeAPI1 = "https://fkmdata.freekaamaal.com/home/part1";
+
+export const homeAPI2 = "https://fkmdata.freekaamaal.com/home/part2";
 
 export const allStores = " https://fkmdata.freekaamaal.com/store/allstores";
 
@@ -61,3 +64,6 @@ export const searchSuggestionApi = "https://fkmdata.freekaamaal.com/search/sugge
  export const articleDetailsAPI = "https://fkmdata.freekaamaal.com/article/articleDetail"
 
  export const livefeed_detailAPI = "https://fkmdata.freekaamaal.com/livefeed/livefeed-detail"
+
+ export const freebiesAPI = "https://fkmdata.freekaamaal.com/offer/offer-detail"
+ 

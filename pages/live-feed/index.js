@@ -67,7 +67,7 @@ const LiveFeed = () => {
  const lodeMoredata =  () =>{
   setPage(page + 1)
  }
- console.log(topStore)
+//  console.log(topStore)
   const headeTitle = "Live Feed | Freekaamaal";
   return (
     <>

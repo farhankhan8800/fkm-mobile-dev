@@ -61,11 +61,11 @@ export const menuList = [
     menuName: " Articles",
     menuIcon: contentWritingIcon,
   },
-  // {
-  //   link: "/",
-  //   menuName: "Carrer",
-  //   menuIcon: briefcaseIcon,
-  // },
+  {
+    link: "/fastivals/diwali-offers",
+    menuName: "Diwali Offers",
+    menuIcon: "",
+  },
   {
     link: "/contact-us",
     menuName: "Contact Us",

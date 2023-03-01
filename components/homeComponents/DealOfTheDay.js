@@ -10,9 +10,7 @@ import { useEffect, useState } from "react";
 
 
 const DealOfTheDay = (props) => {
-
   const [dealofday, setDealofday] = useState()
-
 useEffect(()=>{
   setDealofday(props.dealofday)
 },[props])
@@ -20,6 +18,8 @@ useEffect(()=>{
 //  console.log(dealofday)
   return (
     <>
+    {
+      dealofday ?.length > 0 ? <>
       <Grid container sx={{ padding: "13px 3px 3px" }}>
         <Grid item>
           <Box component="div" sx={{ width: "30px", marginRight: "10px" }}>
@@ -56,6 +56,9 @@ useEffect(()=>{
         })}
       </Swiper>
       </Box>
+      </>:<></>
+    }
+      
       
     </>
   );
