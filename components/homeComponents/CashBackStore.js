@@ -107,6 +107,14 @@ const CashBackStore = (props) => {
               alignItems="center"
             >
               {stores && stores.map((store, i) => {
+                if(store.rate_type==0)
+                {
+                var cashback_amount = ' Rs ' +parseInt(store.cashback_amount) ;
+                }
+                else if(store.rate_type==1)
+                {
+                  var cashback_amount = parseInt(store.cashback_amount) +' %';
+                }
                
                 return (
                   <Grid key={i} item xs={4}>
@@ -140,7 +148,7 @@ const CashBackStore = (props) => {
                           </Box>
                           <p className="cash_back_store_offer">
                             <span style={{ color: "red" }}>
-                              {store.name}
+                              {cashback_amount}
                             </span>{" "}
                             Cashback
                           </p>

@@ -2,10 +2,20 @@ import { IconButton, Typography, Grid, Box } from "@mui/material";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+
 import clickImage from "public/images/icon/click.png"
-
-
+import referalHistoryImage from "public/images/icon/referal-history.png"
+import referEarnImage from "public/images/icon/refer-earn.png"
+import cashbackHistoryImage from "public/images/icon/cashback-history.png"
+import reportIconImage from "public/images/icon/report-icon.png"
+import withdrawalHistoryImage from "public/images/icon/withdrawal-history.png"
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import withdrawalMoneyImage from "public/images/icon/withdrawal-money.png"
+import refrealMoneyImage from "public/images/icon/refreal-money.png"
+import climeFormImage from "public/images/icon/clime-form.png"
+import missingCashbackImage from "public/images/icon/missing-cashback.png"
+import addAccountImage from "public/images/icon/add-account.png"
+import bellImage from "public/images/icon/bell.png"
 
 const userManage = [
   {
@@ -17,75 +27,70 @@ const userManage = [
   {
     headingTag: "Cashback History",
     pTage: "List Of store your visited reacently",
-    icon:"",
+    icon:cashbackHistoryImage,
     link: "/cashback-summary/cashback-history",
   },
   {
     headingTag: "Withdrawal History",
     pTage: "List Of store your visited reacently",
-    icon: '',
+    icon: withdrawalHistoryImage,
     link: "/cashback-summary/withdraw-history",
   },
   {
     headingTag: "Report Missing",
     pTage: "List Of store your visited reacently",
-    icon: '',
+    icon:reportIconImage,
     link: "/cashback-summary/report-missing",
   },
   {
     headingTag: "Refer and earn",
     pTage: "List Of store your visited reacently",
-    icon: "",
+    icon: referEarnImage,
     link: "/cashback-summary/refer-earn",
   },
   {
     headingTag: "Referral History",
     pTage: "List Of store your visited reacently",
-    icon: "",
-    link: "/",
+    icon:referalHistoryImage,
+    link: "/cashback-summary/referral-history",
   },
   {
     headingTag: "Withdraw Money",
     pTage: "List Of store your visited reacently",
-    icon: "",
+    icon: withdrawalMoneyImage,
     link: "/cashback-summary/withdraw-money",
   },
   {
     headingTag: "Referal Money",
     pTage: "List Of store your visited reacently",
-    icon: "",
+    icon: refrealMoneyImage,
     link: "cashback-summary/referal-money",
   },
   {
     headingTag: "Cashback Claim Form",
     pTage: "List Of store your visited reacently",
-    icon: "",
-    link: "/cashback-summary/cashback-calimform",
+    icon: climeFormImage,
+    link: "/cashback-summary/cashback-claimform",
   },
   {
-    headingTag: "Missing CashbackHistory",
+    headingTag: "Missing Cashback History",
     pTage: "List Of store your visited reacently",
-    icon: "",
+    icon: missingCashbackImage,
     link: "/cashback-summary/missing-order",
   },
   {
     headingTag: "Add Account",
     pTage: "List Of store your visited reacently",
-    icon: "",
+    icon: addAccountImage,
     link: "/cashback-summary/add-account",
   },
   {
     headingTag: "Notification",
     pTage: "List Of store your visited reacently",
-    icon: "",
+    icon: bellImage,
     link: "/",
   },
-  {
-    headingTag: "Missing Cashback History",
-    pTage: "List Of store your visited reacently",
-    icon: "",
-    link: "/",
-  },
+  
 ];
 
 const UserSummary = () => {

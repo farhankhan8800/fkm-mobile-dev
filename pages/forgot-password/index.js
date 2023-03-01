@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import fPasswordImage from "../../public/assets/images/f-password.png";
+import fPasswordImage from "../../public/images/f-password.png";
 import { useRouter } from "next/router";
 import { Box, Button, Typography, TextField } from "@mui/material";
 import Header from "../../components/headerComponent/Header";

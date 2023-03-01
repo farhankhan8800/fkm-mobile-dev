@@ -12,10 +12,10 @@ const CouponsCade = (props) => {
 
   useEffect(()=>{
     setCoupons(props.couponCard)
-    // console.log(`couponsCard Component`, props.couponCard)
+  
   },[props])
 
- 
+//  console.log(coupons)
   return (
     <div>
       {
@@ -53,9 +53,6 @@ const CouponsCade = (props) => {
                      </span>
                     </Link>:""
                      }
-                        
-                      
-                     
                     </Grid>
                     <Grid item>
                       <Typography

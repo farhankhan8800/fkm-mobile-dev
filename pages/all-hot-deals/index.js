@@ -3,348 +3,185 @@ import {
   Box,
   Grid,
   Button,
-  Divider,
   Card,
   CardActionArea,
   CardContent,
   Typography,
-  List,
-  ListItem,
-  ListItemText,
-  IconButton,
 } from "@mui/material";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import dealsImage from "../../public/assets/images/img.jpg";
+
 import Link from "next/link";
 import Image from "next/image";
-import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
-import DealsFilterDrower from "../../components/allHotDealsComponent/DealsFilterDrower";
 
+import { homeApi } from "service/API";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
+import axios from "axios";
+import { useEffect } from "react";
 
-const HotDealmain = [
-  {
-    src: "https://images.freekaamaal.com/featured_images/large_185287_Untitleddesign-2022-10-21T110259.194.png",
-    alt: "banner",
-    mrp: 200,
-    text: " Lizards are a widespread group of squamate  ",
-    Viewers: 5,
-    category: "child",
-    store: "auric",
-    title: "AURIC",
-    producId: 1,
-  },
-  {
-    src: dealsImage,
-    alt: "banner",
-    mrp: 140,
-    category: "child",
-    store: "jokey",
-    text: " Lizards are a widespread group of squamate  ",
-    Viewers: 5,
-    title: "AURIC",
-    producId: 2,
-  },
-  {
-    src: dealsImage,
-    alt: "banner",
-    category: "man",
-    store: "yxyxx",
-    mrp: 300,
-    text: " Lizards are a widespread group of squamate  ",
-    Viewers: 5,
-    title: "AURIC",
-    producId: 2,
-  },
-  {
-    src: dealsImage,
-    alt: "banner",
-    mrp: 700,
-    category: "food",
-    store: "freshtohome",
-    text: " Lizards are a widespread group of squamate  ",
-    Viewers: 5,
-    title: "AURIC",
-    producId: 2,
-  },
-  {
-    src: dealsImage,
-    alt: "banner",
-    mrp: 30,
-    category: "food",
-    store: "freshtohome",
-    text: " Lizards are a widespread group of squamate  ",
-    Viewers: 5,
-    title: "AURIC",
-    producId: 2,
-  },
-  {
-    src: dealsImage,
-    alt: "banner",
-    mrp: 100,
-    category: "man",
-    store: "sery",
-    text: " Lizards are a widespread group of squamate  ",
-    Viewers: 5,
-    title: "AURIC",
-    producId: 2,
-  },
-  {
-    src: dealsImage,
-    alt: "banner",
-    mrp: 160,
-    category: "food",
-    store: "peesafe",
-    text: " Lizards are a widespread group of squamate  ",
-    Viewers: 5,
-    title: "AURIC",
-    producId: 2,
-  },
-  {
-    src: dealsImage,
-    alt: "banner",
-    mrp: 30,
-    category: "food",
-    store: "freshtohome",
-    text: " Lizards are a widespread group of squamate  ",
-    Viewers: 5,
-    title: "AURIC",
-    producId: 3,
-  },
-  {
-    src: dealsImage,
-    alt: "banner",
-    mrp: 80,
-    category: "food",
-    store: "peesafe",
-    text: " Lizards are a widespread group of squamate  ",
-    Viewers: 5,
-    title: "AURIC",
-    producId: 4,
-  },
-  {
-    src: dealsImage,
-    alt: "banner",
-    mrp: 900,
-    category: "chlid",
-    store: "jockey",
-    text: " Lizards are a widespread group of squamate  ",
-    Viewers: 5,
-    title: "AURIC",
-    producId: 4,
-  },
-  {
-    src: dealsImage,
-    alt: "banner",
-    mrp: 300,
-    category: "man",
-    store: "bage",
-    text: " Lizards are a widespread group of squamate  ",
-    Viewers: 5,
-    title: "AURIC",
-    producId: 4,
-  },
-  {
-    src: dealsImage,
-    alt: "banner",
-    mrp: 360,
-    category: "food",
-    store: "freshtohome",
-    text: " Lizards are a widespread group of squamate  ",
-    Viewers: 5,
-    title: "AURIC",
-    producId: 4,
-  },
-];
+const apiAuth = process.env.API_AUTH;
 
 const HotDealInternal = () => {
-  const [allHotDealsPopup, setAllHotDealsPopup] = useState(false);
-  const [drowerHotDealsPopup, setDrowerHotDealsPopup] = useState(false);
-  const [filter, setFilter] = useState(HotDealmain);
+  const [sponsoredCount, setSponsoredCount] = useState();
+  const [allHotDeals, setAllHotDeals] = useState([]);
+  const [page, setPage] = useState(1);
+  const [noDeals, setNoDeals] = useState(false);
 
-  const toggleClick = () => {
-    setAllHotDealsPopup(!allHotDealsPopup);
-  };
-  const FliterButtonClick = () => {
-    setTimeout(() => {
-      setAllHotDealsPopup(false);
-    }, 500);
-  };
-  const togalDrower = () => {
-    setTimeout(() => {
-      setDrowerHotDealsPopup(!drowerHotDealsPopup);
-    }, 500);
-  };
-  const lowPriceClick = () => {
-    setFilter(filter.sort((a, b) => a.mrp - b.mrp));
-  };
-  const style = {
-    width: "100%",
+  // get data in server
+  const getData = async () => {
+    try {
+      let { data } = await axios.post(
+        homeApi,
+        {
+          apiAuth: apiAuth,
+          page: page,
+          sponsored_count: sponsoredCount,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (data.response.hotdeals.length == 0) {
+        setNoDeals(true);
+      }
 
-    bgcolor: "background.paper",
+      setAllHotDeals([...allHotDeals, ...data.response.hotdeals]);
+      setSponsoredCount(data.response.sponsored_count);
+    } catch (error) {}
   };
-  const togalBox = {
-    position: "fixed",
-    width: "90%",
-    zIndex: 100,
-    top: "26%",
-    maxWidth: "360px",
-    background: "#fff",
-    left: " 19px",
-    borderRadius: "7px",
-    boxShadow: "0px 0px 19px -6px grey",
-    overflow: "hidden",
+
+  // console.log(allHotDeals)
+  useEffect(() => {
+    getData();
+  }, [page]);
+
+  const pageFunction = () => {
+    setPage(page + 1);
   };
+
   const headeTitle = "All Hot Deals | Freekaamaal";
   return (
     <>
       <HeadTag headeTitle={headeTitle}></HeadTag>
-      <Header></Header>
+      <Header />
       <div style={{ paddingTop: "56px" }}>
         <Box component="div" sx={{ p: 1, position: "relative" }}>
-          <Box
-            component="div"
-            sx={{ bgcolor: "#f1f1f1", p: 1, borderRadius: "4px", m: 2 }}
-          >
-            <Grid justifyContent="space-around" alignItems="center" container>
-              <Grid item>
-                <Button
-                  onClick={toggleClick}
-                  sx={{ color: "#000" }}
-                  variant="text"
-                  startIcon={<FilterListIcon />}
-                >
-                  Popularity
-                </Button>
-              </Grid>
-              <Divider orientation="vertical" variant="middle" flexItem />
-              <Grid item>
-                <Button
-                  onClick={togalDrower}
-                  sx={{ color: "#000" }}
-                  variant="text"
-                  startIcon={<FilterAltIcon />}
-                >
-                  Filter
-                </Button>
-              </Grid>
-            </Grid>
-          </Box>
           <Box component="div">
             <Grid container>
               <Grid>
                 <div className="flex_div">
-                  {filter.map((item, i) => {
-                    return (
-                      <Box
-                        sx={{ maxWidth: "167px", marginBottom: "10px " }}
-                        component="div"
-                        key={i}
-                      >
-                        <Card
-                          sx={{
-                            background: "rgb(248 248 248)",
-                            border: "1px solid #dfdbdb",
-                          }}
+                  {allHotDeals &&
+                    allHotDeals.map((item, i) => {
+                      return (
+                        <Box
+                          sx={{ maxWidth: "167px", marginBottom: "10px " }}
+                          component="div"
+                          key={i}
                         >
-                          <Link
-                            className="card_link"
-                            href={`/all-hot-deals/${item.producId}`}
+                          <Card
+                            sx={{
+                              background: "rgb(248 248 248)",
+                              border: "1px solid #dfdbdb",
+                            }}
                           >
-                            <CardActionArea>
-                              <Box
-                                component="div"
-                                sx={{ padding: "15px 21px 0px" }}
-                              >
-                                <Image
-                                  src={item.src}
-                                  alt={item.alt}
-                                  height={92}
-                                  width={120}
-                                  style={{ borderRadius: "7px" }}
-                                />
-                              </Box>
-                              <CardContent
-                                sx={{
-                                  background: "rgb(248 248 248)",
-                                  padding: "7px",
-                                }}
-                              >
-                                <Typography
-                                  gutterBottom
-                                  variant="h5"
+                            <Link
+                              className="card_link"
+                              href={`/deal/${item.slug_url}`}
+                            >
+                              <CardActionArea>
+                                <Box
                                   component="div"
-                                  sx={{ color: "#000", marginBottom: "0" }}
+                                  sx={{ padding: "15px 21px 0px" }}
                                 >
-                                  {item.title}{" "}
-                                </Typography>
-                                <Typography
-                                  variant="body2"
-                                  sx={{ color: "#000", padding: "4px 0" }}
-                                >
-                                  {item.text}{" "}
-                                </Typography>
-                                <Box component="div" sx={{ paddingTop: "4px" }}>
-                                  <strong className="card_amouunt">
-                                    &#8377;{item.mrp}
-                                  </strong>
-                                  <small className="card_small_amouunt">
-                                    &#8377;{item.mrp}
-                                  </small>
+                                  <Image
+                                    src={item.deal_image}
+                                    alt={item.title}
+                                    height={92}
+                                    width={120}
+                                    style={{ borderRadius: "7px" }}
+                                  />
                                 </Box>
-                              </CardContent>
-                            </CardActionArea>
-                          </Link>
-                        </Card>
-                      </Box>
-                    );
-                  })}
+                                <CardContent
+                                  sx={{
+                                    background: "rgb(248 248 248)",
+                                    padding: "7px",
+                                  }}
+                                >
+                                  <Typography
+                                    gutterBottom
+                                    variant="p"
+                                    component="div"
+                                    sx={{
+                                      color: "#000",
+                                      marginBottom: "0",
+                                      fontSize: "17px",
+                                    }}
+                                  >
+                                    {item.store_name}{" "}
+                                  </Typography>
+                                  <Typography
+                                    variant="body2"
+                                    sx={{
+                                      color: "#000",
+                                      padding: "4px 0",
+                                      fontSize: "13px",
+                                      textOverflow: "ellipsis",
+                                      overflow: "hidden",
+                                      whiteSpace: "wrap",
+                                      height: "62px",
+                                    }}
+                                  >
+                                    {item.title}{" "}
+                                  </Typography>
+                                  <Box
+                                    component="div"
+                                    sx={{ paddingTop: "4px" }}
+                                  >
+                                    <strong className="card_amouunt">
+                                      &#8377;{item.offer_price}
+                                    </strong>
+                                    <small className="card_small_amouunt">
+                                      &#8377;{item.price}
+                                    </small>
+                                  </Box>
+                                </CardContent>
+                              </CardActionArea>
+                            </Link>
+                          </Card>
+                        </Box>
+                      );
+                    })}
                 </div>
               </Grid>
             </Grid>
-          </Box>
-          {allHotDealsPopup ? (
-            <Box componnt="div" sx={togalBox}>
-              <List sx={style} component="nav" aria-label="mailbox folders">
-                <ListItem sx={{ position: "relative" }}>
-                  <Typography variant="h5" component="h5">
-                    Filter
-                  </Typography>
-                  <div
-                    onClick={toggleClick}
-                    style={{ position: "absolute", right: "18px" }}
-                  >
-                    <IconButton>
-                      <ClearOutlinedIcon color="warning" />
-                    </IconButton>
-                  </div>
-                </ListItem>
-                <Divider />
-                <ListItem button onClick={FliterButtonClick}>
-                  <ListItemText sx={{ margin: "0" }}>Popular</ListItemText>
-                </ListItem>
-                <ListItem button onClick={FliterButtonClick}>
-                  <ListItemText onClick={lowPriceClick} sx={{ margin: "0" }}>
-                    Low Prize
-                  </ListItemText>
-                </ListItem>
-                <ListItem button onClick={FliterButtonClick}>
-                  <ListItemText sx={{ margin: "0" }}>Discount</ListItemText>
-                </ListItem>
-                <ListItem button onClick={FliterButtonClick}>
-                  <ListItemText sx={{ margin: "0" }}>CashBack</ListItemText>
-                </ListItem>
-              </List>
+            <Box>
+              {noDeals ? (
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignContent: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {" "}
+                  No Data Found{" "}
+                </Box>
+              ) : (
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignContent: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Button onClick={pageFunction} variant="outlined">
+                    Lode More
+                  </Button>
+                </Box>
+              )}
             </Box>
-          ) : (
-            ""
-          )}
-          <DealsFilterDrower
-            sandClick={drowerHotDealsPopup}
-            togalDrower={togalDrower}
-          />
+          </Box>
         </Box>
       </div>
       <style jsx>

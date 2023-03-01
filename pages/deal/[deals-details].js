@@ -12,56 +12,70 @@ import { useRouter } from "next/router";
 import {useEffect, useState } from "react";
 import { deal_detail} from "service/API"
 import CircularProgress from '@mui/material/CircularProgress';
-
+import axios from "axios";
+import PageNotFound from "components/PageNotFound";
 const apiAuth = process.env.API_AUTH
 
 
 const DealsDetails = () => {
   const [deal, setDeal] = useState()
- const [similarDeal, setSimilarDeal] = useState()
+  const [similarDeal, setSimilarDeal] = useState()
+  const [myhtml , setMyHtml] = useState()
+  const [user,setUser]= useState()
+  const [DealNotFound, setDealNotFound] = useState(false);
   const router = useRouter()
   const dealSlug = router.query["deals-details"];
+
+  useEffect(()=>{
+    setUser(localStorage.getItem("user"));
+  },[])
  
 useEffect(()=>{
   const storeData = async () => {
     
     try {
-      let resp = await fetch(deal_detail, {
-        method: "Post",
-        body: JSON.stringify({
+      let {data} = await axios.post(deal_detail, {
           apiAuth: apiAuth,
           page: "1",
           deal_slug: dealSlug,
           device_type:"4"
-        }),
-        mode: "cors",
-        Headers: {
-          "Content-Type": "application/json",
         },
+        {  
+          headers: {
+          "Content-Type": "application/json",
+        }
       });
-      let result = await resp.json();
-
-      setDeal(result.response.deal)
-      setSimilarDeal(result.response.related_deals)
-  
+      if(data.status==1)
+      {
+      setMyHtml(data.response.deal.deal_description_url)
+      setDeal(data.response.deal)
+      setSimilarDeal(data.response.related_deals)
+      }
+      else if(data.status==2)
+      {
+        setDealNotFound(true);
+      }
     } catch (err) {
     
     }
-   
   }
+  
   storeData()
 },[dealSlug])
-
-
-// console.log(similarDeal)
-// console.log(setDeal)
-
-
-
+// console.log(myhtml)
+if(DealNotFound)
+{
+return(
+    <>
+    <Header />
+  <HeadTag headeTitle={`404 Page Not Found|| Freekaamaal`} />
+    <PageNotFound />
+    </> 
+  );
+}
   return (
     <>
-     
-      <Header />
+     <Header />
       <div style={{ paddingTop: "56px" }}>
         {
         deal? (<div>
@@ -79,15 +93,16 @@ useEffect(()=>{
                       overflow: "hidden",
                     }}
                   >
-                    <div className="product_offer">
-                      <Typography
+                    {/* <div className="product_offer"> */}
+                      {/* 50% off  */}
+                      {/* <Typography
                         variant="strong"
                         sx={{ color: "#fff" }}
                         component="strong"
                       >
                         50% OOF
-                      </Typography>
-                    </div>
+                      </Typography> */}
+                    {/* </div> */}
                     <Box sx={{ maxWidth: "350px", margin: "auto" }} component="div">
                       <Image
                         style={{ width: "100%" }}
@@ -103,13 +118,13 @@ useEffect(()=>{
                         sx={{ fontWeight: "400", marginTop: "10px" }}
                         component="p"
                       >
-                        Choose the best price and the rertailer
+                        {/* Choose the best price and the rertailer */}
                       </Typography>
                       <Link 
-                        href={`regtg${deal.deal_slug}`}
+                        href={`${deal.deal_slug}`}
                          className="shopNowbtn"
                       >
-                        Shope & Earn CashBack
+                        {/* Shop & Earn CashBack */}
                       </Link>
                     </Box>
                     <Box
@@ -130,7 +145,7 @@ useEffect(()=>{
                           <div className="card_mrp_box">
                             <strong>&#8377; {deal.offer_price} </strong> <span>&#8377; {deal.price}</span>
                           </div>
-                          <div className="card_cashback_tag">
+                          {/* <div className="card_cashback_tag">
                             <strong>&#8377; {deal.price - deal.offer_price} </strong> <span> cashback </span>
                             <InfoIcon
                               sx={{
@@ -139,14 +154,14 @@ useEffect(()=>{
                                 color: "#fd4d4d",
                               }}
                             ></InfoIcon>{" "}
-                          </div>
+                          </div> */}
                         </Grid>
                         <Grid item>
                           <Box component="div" sx={{ maxWidth: "100px" }}>
                             <Image
                               width={100}
                               height={25}
-                              src={brandImage}
+                              src={deal.store_image}
                               alt=""
                              />
                           </Box>
@@ -170,9 +185,9 @@ useEffect(()=>{
                      
                       About The Deals
                     </Typography>
-                    <div className="about_the_deals" id="about_the_deals">
+                    <div  >
                     {
-                      // deal.deal_description_url
+                        <div id="about_the_deals" className="about_the_deals" dangerouslySetInnerHTML={{__html: myhtml}} />
                     }
                     </div>
                   </Box>
@@ -181,8 +196,13 @@ useEffect(()=>{
                 {
                   similarDeal.length == 0 ?  "":<Box sx={{marginBottom:"25px"}}><SimilarMoreProducts similarDeal={similarDeal} /></Box>
                 }
-                <Box sx={{position:"fixed",bottom:"0",padding:"1px 4px",width:"100%", bgcolor:"#fff"}}>
-                <Button sx={{width:"100%", color:"#fff",fontWeight:"600"}} variant="contained">Shop & Earn Cashback</Button>
+
+                <Box sx={{position:"fixed",bottom:"0",padding:"1px 4px",width:"100%", maxWidth:"530px", bgcolor:"#fff"}}>
+                  {
+                user ? <Button sx={{width:"100%", color:"#fff",fontWeight:"600"}} variant="contained">Shop & Earn Cashback</Button>:
+                <Button sx={{width:"100%", color:"#fff",fontWeight:"600"}} variant="contained">Login Now & Earn Cashback</Button>
+                 }
+                
                 </Box>
                
               </div>):( <Box sx={{ display:"flex",width:"100%",height:"100vh",justifyContent:"center",alignItems:"center" }}>
@@ -220,6 +240,9 @@ useEffect(()=>{
           .about_the_deals {
             padding: 10px 0 !important;
           }
+          .about_the_deals p{
+           display :block
+          }
           .about_the_deals_tag strong {
             color: rgba(62, 62, 168, 0.521);
           }
@@ -234,7 +257,12 @@ useEffect(()=>{
             align-items: center;
             justify-content: space-between;
           }
-          
+          .about_the_deals p{
+           font-size:13px
+          }
+          .about_the_deals img{
+            width: 100% !important;
+          }
         `}</style>
       </div>
     </>

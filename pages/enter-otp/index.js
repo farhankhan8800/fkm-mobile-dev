@@ -1,76 +1,84 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import enterOtpImage from "../../public/images/enter-otp.png";
-// import OTPInput  from "otp-input-react";
-// import OTPInput, { ResendOTP } from "otp-input-react";
-import { Box, Button, Typography, TextField, Alert} from "@mui/material";
+
+import { Box, Button, Typography, TextField, Alert } from "@mui/material";
 import Image from "next/image";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import {verifyUser} from  "service/API.js"
-import axios from 'axios';
-
+import { verifyUser } from "service/API.js";
+import axios from "axios";
 
 const EnterOtp = () => {
   const [OTP, setOTP] = useState();
   const [OtpErr, setOtpErr] = useState(false);
-  const [serverErr, setServerErr] = useState()
-  const [registerToken, setRegisterToken] = useState()
+  const [serverErr, setServerErr] = useState();
+  const [registerToken, setRegisterToken] = useState();
+  const [time, setTime] = useState(90);
+  const [successAlert, setSuccessAlert] = useState(false);
+  const [checkVerified, setCheckVerified] = useState()
   const router = useRouter();
 
-  const apiAuth = process.env.API_AUTH
-  useEffect(()=>{
+  const apiAuth = process.env.API_AUTH;
+  useEffect(() => {
    
-  },[])
- 
-  // console.log(registerToken)
+    setRegisterToken(JSON.parse(localStorage.getItem("registerToken")).token);
   
-  const onSubmit = async (e) => {
-    e.preventDefault()
-      setRegisterToken(JSON.parse(localStorage.getItem("registerToken")).token)
-     if(OTP){
-      try {
-       
+    resendOTP();
+  }, []);
+  useEffect(()=>{
+    setCheckVerified(localStorage.getItem("verified"))
+    if(checkVerified){
+      router.push("/login");
+    }
+  },[checkVerified, router])
 
-        // let result = await fetch(verifyUser, {
-        //   method: "post",
-        //   headers:headers ,
-        //   mode: 'cors',
-        //   body: JSON.stringify({
-        //     apiAuth:apiAuth,
-        //     phoneotp:OTP
-        //   }),
-        // });
-        // result = await result.json();
-       
-        // if(result.status == 1){
+  const resendOTP = () => {};
   
-        //    setTimeout(() => {
-        //      localStorage.clear("registerToken")
-        //      setOTP("");
-        //       router.push("/login");
-        //     }, 1000);
-        // }else{
-        //   setServerErr(result)
-         
-        // }
-        let { result } = await axios.post(verifyUser, {
-              apiAuth:apiAuth,
-              phoneotp:OTP
-            },{
-              headers:{
-                Authorization:registerToken,
-                
-              }
-            })
-        console.log(result)
+  useEffect(() => {
+    if (time == 0) {
+      setTime(time);
+    } else {
+      const timer = setInterval(function () {
+        setTime(time - 1);
+      }, 1000);
+      return () => {
+        clearInterval(timer);
+      };
+    }
+  }, [time]);
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (OTP) {
+      try {
+        let { data } = await axios.post(
+          verifyUser,
+          {
+            apiAuth: apiAuth,
+            phoneotp: OTP,
+          },
+          {
+            headers: {
+              Authorization: registerToken,
+            },
+          }
+        );
+        if (data.status == 1) {
+          setTimeout(()=>{
+            setSuccessAlert(true)
+          },500);
+          setTimeout(()=>{
+            router.push("/login")
+            localStorage.setItem("verified", "successfully");
+          },1000);
+        }
       } catch (error) {
+        setServerErr(error.response.data);
       }
-     }
-     else{
-      setOtpErr(true)
+    } else {
+      setOtpErr(true);
+    }
   };
-  }
 
   const headeTitle = "Enter OTP | Freekaamaal";
   return (
@@ -107,45 +115,74 @@ const EnterOtp = () => {
             style={{ paddingTop: "10px" }}
             onSubmit={onSubmit}
           >
-             <TextField
+            <TextField
               sx={{ width: "100%", marginTop: "10px" }}
               size="small"
               id="otp"
               maxLength="6"
               value={OTP}
               label="Enter 6 digit OTP"
-              onChange={ (e) => setOTP(e.target.value)}
+              onChange={(e) => {
+                setOtpErr(false);
+                setOTP(e.target.value);
+              }}
               type="number"
               placeholder=" Enter 6 digit OTP "
               variant="outlined"
             />
-            {
-               OtpErr ?<Box sx={{paddingTop:"10px"}}><Alert severity="error">Please Enter Valid OTP</Alert></Box>:""
-            }
-              {
-                serverErr? <Box sx={{paddingTop:"10px"}}><Alert severity="error">{serverErr.message}</Alert></Box>:""
-            }
-           
-            {/* <OTPInput
-              value={OTP}
-              inputClassName="input_otp_box"
-              onChange={setOTP}
-              autoFocus
-              OTPLength={6}
-              timeInterval="120"
-              otpType="number"
-              disabled={false}
-            /> */}
-            {/* <ResendOTP
-              handelResendClick={() => console.log("Resend clicked")}
-            /> */}
+            {OtpErr ? (
+              <Box sx={{ paddingTop: "10px" }}>
+                <Alert severity="error">Please Enter Valid OTP</Alert>
+              </Box>
+            ) : (
+              ""
+            )}
+            {serverErr ? (
+              <Box sx={{ paddingTop: "10px" }}>
+                <Alert severity="error">{serverErr.message}</Alert>
+              </Box>
+            ) : (
+              ""
+            )}
+            {successAlert ? (
+              <Box sx={{ paddingTop: "10px" }}>
+                <Alert severity="success">You are verified Successfully</Alert>
+              </Box>
+            ) : (
+              ""
+            )}
+
+            <Box
+              sx={{
+                display: "flex",
+                padding: "10px",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Typography
+                fontSize={"21px"}
+                fontWeight={"600"}
+                color={"#f27935"}
+              >
+                00:{time}s
+              </Typography>
+              {time == 0 ? (
+                <Button variant="outlined">Re send OTP</Button>
+              ) : (
+                <Button disabled variant="outlined">
+                  Re send OTP
+                </Button>
+              )}
+            </Box>
+
             <Button
               variant="contained"
               sx={{
                 width: "100%",
                 color: "#fff",
                 fontWeight: "bold",
-                margin: "20px 0",
+                margin: "10px 0",
                 letterSpacing: "1px",
                 fontSize: "17px",
               }}
@@ -153,13 +190,11 @@ const EnterOtp = () => {
             >
               Submit
             </Button>
-          
           </form>
-          
         </Box>
       </div>
     </>
   );
-}
+};
 
-export default EnterOtp
+export default EnterOtp;

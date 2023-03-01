@@ -16,7 +16,6 @@ const HotDealsCards = (props) => {
   
   useEffect(()=>{
      SethotDeals(props.hotdeals)
-
   },[props])
 
   return (
@@ -24,11 +23,10 @@ const HotDealsCards = (props) => {
      
       <div className="flex_div">
         {hotDeals && hotDeals.map((item, i) => {
+          const {is_cashback,deal_image,slug_url,deal_slug,title,store_img_url:store_image, deal_title, offer_price, price}= item;
+
          
-          const {is_cashback,deal_image,slug_url, store_name, title, offer_price, price}= item;
-          // console.log(item)
          
-          
           return (
             <Box
               sx={{ maxWidth: "154px", margin: "7px" }}
@@ -45,7 +43,7 @@ const HotDealsCards = (props) => {
               >
                 <Link
                   className="card_link"
-                  href={`/deal/${slug_url}`}
+                  href={slug_url? `/deal/${slug_url}`:`/deal/${deal_slug}`}
                 >
                   <span>{is_cashback == "1" ? <span className="card_cashback">Cashback</span>:<span></span>}</span>
                 
@@ -68,7 +66,13 @@ const HotDealsCards = (props) => {
                         component="div"
                         sx={{ color: "#000", marginBottom: "0", fontSize:"15px"}}
                       >
-                        {store_name}{" "}
+                        <Image
+                        src={store_image}
+                        alt='FreeKaaMaal Product'
+                        height={17}
+                        width={50}
+                        style={{ borderRadius: "7px" }}
+                      />
                       </Typography>
                       <Typography
                         variant="body2"
@@ -78,7 +82,7 @@ const HotDealsCards = (props) => {
                           fontSize: "11px",
                         }}
                       >
-                        {title}{" "}
+                        {deal_title ? deal_title :  title }{" "}
                       </Typography>
                       <Box component="div" sx={{ paddingTop: "4px" }}>
                         <strong className="card_amouunt">

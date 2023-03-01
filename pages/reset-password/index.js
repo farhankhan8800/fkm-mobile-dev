@@ -14,9 +14,9 @@ const ResetPassword = () => {
   const router = useRouter();
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(
-      `New Password = ${newPassword}, Conform Password =${conformPassword}`
-    );
+    // console.log(
+    //   `New Password = ${newPassword}, Conform Password =${conformPassword}`
+    // );
     setTimeout(() => {
       setNewPassword("");
       setConformPassword("");

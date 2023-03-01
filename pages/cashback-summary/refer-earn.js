@@ -4,7 +4,7 @@ import { Typography, Box, Button } from "@mui/material";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 import Image from "next/image";
-import bannerImage from "../../public/assets/images/img.jpg";
+
 import FrequentlyQuestion from "../../components/FrequentlyQuestion";
 
 const referEarn = () => {
@@ -87,13 +87,13 @@ const referEarn = () => {
             Easy Process
           </Typography>
           <Box sx={{ padding: "10px 0" }}>
-            <Image
-              src={bannerImage}
+            {/* <Image
+              src={}
               width={100}
               style={{ width: "100%", borderRadius: "10px" }}
               alt=""
               height={200}
-            ></Image>
+            ></Image> */}
           </Box>
         </Box>
         <Box component="div" sx={{ p: 2, paddingTop: "0px" }}>

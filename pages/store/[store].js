@@ -7,6 +7,7 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import { useRouter } from "next/router";
 import CashBackClaimCard from "components/CashBackClaimCard";
 import Link from "next/link";
+import axios from "axios";
 import { StoreDetailApi } from "service/API";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Image from "next/image";
@@ -29,74 +30,78 @@ const StoreDetails = () => {
   const [Page, setPage] = useState(1);
   const [noCouponData, setNoCouponData] = useState(false)
   const [noDealData, setNoDealData] = useState(false)
+  const [user, setUser]= useState()
 
   const router = useRouter();
   const store_slug = router.query["store"];
 
+  useEffect(()=>{
+    setUser(localStorage.getItem("user"));
+  },[])
 
     const storeData = async () => {
       try {
-        let resp = await fetch(StoreDetailApi, {
-          method: "post",
-          body: JSON.stringify({
+        let {data} = await axios.post(StoreDetailApi, {
             apiAuth: apiAuth,
             page: Page,
             store_slug: store_slug,
-            opction: changeOption,
-          }),
-          mode: "cors",
-          Headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        let result = await resp.json();
-        setStore_data(result.response.store_details);
-        setStoreRate(result.response.store_rates);
+            option: changeOption,
+          }, 
+            {
+              headers: {
+                "Content-Type": "application/json",  
+              }
+            });
+       
         if (changeOption == "") {
-          if((result.response.deals).length  == 0){
+          setStore_data(data.response.store_details);
+          setStoreRate(data.response.store_rates);
+          if((data.response.deals).length  == 0){
             setNoDealData(true)
           }else{
-            setStoreDeals([...storeDeals, ...result.response.deals]);
+            setStoreDeals([...storeDeals, ...data.response.deals]);
           }
-          
         } else if (changeOption == "deals") {
-          if((result.response.deals).length   == 0){
+          if((data.response.deals).length   == 0){
             setNoDealData(true)
           }else{
-            setStoreDeals([...storeDeals, ...result.response.deals]);
+            setStoreDeals([...storeDeals, ...data.response.deals]);
           }
         } else if (changeOption == "coupons") {
-          if((result.response.coupons).length == 0){
+          if((data.response.coupons).length == 0){
             setNoCouponData(true)
           }else{
-            setStoreCoupons([...storeCoupons, ...result.response.coupons]);
+            setStoreCoupons([...storeCoupons, ...data.response.coupons]);
           }
           
         }
-      } catch (err) {}
+      } catch (err) {
+        console.log(err)
+      }
     };
-    useEffect(()=>{
-      storeData();
-    },[Page, changeOption])
-  
- 
 
+    useEffect(()=>{
+        storeData();
+    },[Page, changeOption,store_slug])
+    
+  const dealsTabCall = () => {
+      setNoCouponData(false)
+      setChangeOption("deals");
+      setPage(1)
+      setStoreCoupons([])
+  };
+
+  const couponsTabCall = () => {
+      setNoDealData(false)
+      setChangeOption("coupons");
+      setPage(1)
+      setStoreDeals([])
+  };
   const addDealPage = () => {
     setPage(Page + 1);
   };
   const addCouponPage = () => {
     setPage(Page + 1);
-  };
-  const dealsTabCall = () => {
-    setChangeOption("deals");
-    setPage(1)
-    setStoreCoupons([])
-    
-  };
-  const couponsTabCall = () => {
-    setChangeOption("coupons");
-    setPage(1)
-    setStoreDeals([])
   };
 
   const moreStoreHandel = () => {
@@ -107,8 +112,7 @@ const StoreDetails = () => {
     }
   };
 
-
-
+  // console.log(storeDeals,storeCoupons )
   return (
     <>
       <HeadTag headeTitle={headeTitle} />
@@ -188,6 +192,8 @@ const StoreDetails = () => {
                         spacing={1}
                         sx={{ padding: "10px 0" }}
                       >
+                        {store_data.is_cashback==1 ? (
+                          <div>
                         <Grid item>
                           <Typography
                             sx={{ color: "#ad2323", fontSize: "14px" }}
@@ -236,11 +242,14 @@ const StoreDetails = () => {
                             <small>{store_data.is_missing}</small>
                           </Typography>
                         </Grid>
+                        </div>
+                        ) : " " }
                       </Grid>
                     </Box>
                   </Box>
                 </Box>
               </Link>
+              {storeRate ?(
               <Box
                 component="div"
                 sx={{
@@ -324,7 +333,7 @@ const StoreDetails = () => {
                     })}
                 </div>
 
-                {storeRate.length > 1 ? (
+                {storeRate && storeRate.length > 1 ? (
                   <Box
                     component="div"
                     width="100%"
@@ -344,6 +353,7 @@ const StoreDetails = () => {
                   ""
                 )}
               </Box>
+               ): ""}
 
               {store_data.is_claim == 1 ? (
                 <CashBackClaimCard
@@ -357,16 +367,15 @@ const StoreDetails = () => {
             <DealsAndCoupons
               categoryCoupons={storeCoupons}
               categoryDeals={storeDeals}
-              dealsTabCall={dealsTabCall}
+              noCouponData = {noCouponData}
+              noDealData={noDealData}
               couponsTabCall={couponsTabCall}
+              dealsTabCall={dealsTabCall}
               addDealPage={addDealPage}
               addCouponPage={addCouponPage}
-                tabCountNumber ={store_data}
-                noCouponData = {noCouponData}
-                noDealData={noDealData}
             />
+
             </Box>
-           
             <Box
               component="div"
               sx={{
@@ -378,15 +387,24 @@ const StoreDetails = () => {
                 padding: "4px",
                 bgcolor: "#fff",
               }}
-            >
-              <Link href={store_data.store_landing_url}>
+            >{
+              user?(<Link href={store_data.store_landing_url}>
                 <Button
                   variant="contained"
                   sx={{ width: "100%", maxWidth: "600px", color: "#fff" }}
                 >
                   Shope & earn More
                 </Button>
-              </Link>
+              </Link>):(<Link href="/login">
+                <Button
+                  variant="contained"
+                  sx={{ width: "100%", maxWidth: "600px", color: "#fff" }}
+                >
+                  Login Now & Earn Cashback 
+                </Button>
+              </Link>)
+            }
+              
             </Box>
           </div>
         ) : (
