@@ -25,7 +25,6 @@ const PageNotFound = () => {
   </div>
   
   </div>
-
    <style  jsx>
     {`
     .error_page{
@@ -45,7 +44,6 @@ const PageNotFound = () => {
     .button_error_page{
         padding-top: 15px
     }
-   
     `}
    </style>
   </>

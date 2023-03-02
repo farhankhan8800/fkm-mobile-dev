@@ -70,11 +70,11 @@ const DealsDetails = () => {
   return (
     <>
       <Header />
-      <HeadTag headeTitle={`${deal.deal_title} || Freekaamaal`} />
+     
       <div style={{ paddingTop: "56px" }}>
         {deal ? (
           <div>
-          
+           <HeadTag headeTitle={`${deal.deal_title} || Freekaamaal`} />
             <Box component="div" sx={{ padding: 1 }}>
               <Typography
                 variant="h6"

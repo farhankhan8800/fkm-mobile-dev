@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
-import { Stack } from "@mui/system";
 
 
 const HotDealsCards = (props) => {

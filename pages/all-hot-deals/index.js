@@ -87,7 +87,7 @@ const HotDealInternal = () => {
                           >
                             <Link
                               className="card_link"
-                              href={`/deal/${item.slug_url}`}
+                              href={`/deals/${item.slug_url}`}
                             >
                               <CardActionArea>
                                 <Box
