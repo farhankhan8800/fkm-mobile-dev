@@ -78,7 +78,6 @@ import Link from 'next/link';
       setAll_articles_data(all_articles)
     },[all_articles])
 
-  //  console.log(all_articles_data)
 
   return (
     <>

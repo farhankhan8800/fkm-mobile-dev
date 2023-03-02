@@ -13,7 +13,6 @@ const ForgotPassword = () => {
   const router = useRouter();
   const onSubmit = (e) => {
     e.preventDefault();
-    // console.log(`email = ${forgotPassword}`)
     setTimeout(() => {
       setForgotPassword("");
       router.push("/enter-otp");

@@ -1,4 +1,3 @@
-
 import { Box, Typography, Grid, Button } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import StarIcon from "@mui/icons-material/Star";
@@ -28,83 +27,81 @@ const StoreDetails = () => {
   const [storeCoupons, setStoreCoupons] = useState([]);
   const [changeOption, setChangeOption] = useState("");
   const [Page, setPage] = useState(1);
-  const [noCouponData, setNoCouponData] = useState(false)
-  const [noDealData, setNoDealData] = useState(false)
-  const [user, setUser]= useState()
+  const [noCouponData, setNoCouponData] = useState(false);
+  const [noDealData, setNoDealData] = useState(false);
+  const [user, setUser] = useState();
 
   const router = useRouter();
   const store_slug = router.query["store"];
 
-  useEffect(()=>{
+  useEffect(() => {
     setUser(localStorage.getItem("user"));
-  },[])
+  }, []);
 
-    const storeData = async () => {
-      try {
-        let {data} = await axios.post(StoreDetailApi, {
-            apiAuth: apiAuth,
-            page: Page,
-            store_slug: store_slug,
-            option: changeOption,
-          }, 
-            {
-              headers: {
-                "Content-Type": "application/json",  
-              }
-            });
-       
-       if(data.status == 0 && data.error == 0){
-        // router.push(`/category/${store_slug}`);
-        alert('no store found, kindly show 404 page');
+  const storeData = async () => {
+    try {
+      let { data } = await axios.post(
+        StoreDetailApi,
+        {
+          apiAuth: apiAuth,
+          page: Page,
+          store_slug: store_slug,
+          option: changeOption,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (data.status == 0 && data.error == 0) {
+        router.push(`/404`);
         console.log("no store found");
-       } else{
+      } else {
         if (changeOption == "") {
           setStore_data(data.response.store_details);
           setStoreRate(data.response.store_rates);
-          if((data.response.deals).length  == 0){
-            setNoDealData(true)
-          }else{
+          if (data.response.deals.length == 0) {
+            setNoDealData(true);
+          } else {
             setStoreDeals([...storeDeals, ...data.response.deals]);
           }
         } else if (changeOption == "deals") {
-          if((data.response.deals).length   == 0){
-            setNoDealData(true)
-          }else{
+          if (data.response.deals.length == 0) {
+            setNoDealData(true);
+          } else {
             setStoreDeals([...storeDeals, ...data.response.deals]);
           }
         } else if (changeOption == "coupons") {
-          if((data.response.coupons).length == 0){
-            setNoCouponData(true)
-          }else{
+          if (data.response.coupons.length == 0) {
+            setNoCouponData(true);
+          } else {
             setStoreCoupons([...storeCoupons, ...data.response.coupons]);
           }
-          
         }
-       }
-
-       
-      } catch (err) {
-        console.log(err)
-        // console.log(err.response.data.message)
       }
-    };
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-    useEffect(()=>{
-        storeData();
-    },[Page, changeOption,store_slug])
-    
+  useEffect(() => {
+    storeData();
+  }, [Page, changeOption, store_slug]);
+
   const dealsTabCall = () => {
-      setNoCouponData(false)
-      setChangeOption("deals");
-      setPage(1)
-      setStoreCoupons([])
+    setNoCouponData(false);
+    setChangeOption("deals");
+    setPage(1);
+    setStoreCoupons([]);
   };
 
   const couponsTabCall = () => {
-      setNoDealData(false)
-      setChangeOption("coupons");
-      setPage(1)
-      setStoreDeals([])
+    setNoDealData(false);
+    setChangeOption("coupons");
+    setPage(1);
+    setStoreDeals([]);
   };
   const addDealPage = () => {
     setPage(Page + 1);
@@ -121,13 +118,11 @@ const StoreDetails = () => {
     }
   };
 
-  useEffect(()=>{
-    if(store_data){
-      
+  useEffect(() => {
+    if (store_data) {
     }
-    
-  },[store_data])
-  
+  }, [store_data]);
+
   return (
     <>
       <HeadTag headeTitle={headeTitle} />
@@ -185,7 +180,10 @@ const StoreDetails = () => {
                         component="p"
                       >
                         <strong>{store_data.cashback_amount} </strong>
-                        <InfoIcon fontSize="small" sx={{ color: "#000" }} />{" "}
+                        <InfoIcon
+                          fontSize="small"
+                          sx={{ color: "#000" }}
+                        />{" "}
                       </Typography>
                       <Box
                         component="div"
@@ -207,168 +205,172 @@ const StoreDetails = () => {
                         spacing={1}
                         sx={{ padding: "10px 0" }}
                       >
-                        {store_data.is_cashback==1 ? (
+                        {store_data.is_cashback == 1 ? (
                           <div>
-                        <Grid item>
-                          <Typography
-                            sx={{ color: "#ad2323", fontSize: "14px" }}
-                            variant="p"
-                            component="p"
-                          >
-                            <small>Confirmation Time</small>
-                          </Typography>
-                          <Typography
-                            variant="p"
-                            sx={{ textAlign: "center", fontSize: "12px" }}
-                            component="p"
-                          >
-                            <small>{store_data.confirmation}</small>
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <Typography
-                            variant="p"
-                            sx={{ color: "#ad2323", fontSize: "14px" }}
-                            component="p"
-                          >
-                            <small>Tracking Speed</small>
-                          </Typography>
-                          <Typography
-                            variant="p"
-                            sx={{ textAlign: "center", fontSize: "12px" }}
-                            component="p"
-                          >
-                            <small>{store_data.speed}</small>
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <Typography
-                            variant="p"
-                            sx={{ color: "#ad2323", fontSize: "14px" }}
-                            component="p"
-                          >
-                            <small>Missing Order</small>
-                          </Typography>
-                          <Typography
-                            variant="p"
-                            sx={{ textAlign: "center", fontSize: "12px" }}
-                            component="p"
-                          >
-                            <small>{store_data.is_missing}</small>
-                          </Typography>
-                        </Grid>
-                        </div>
-                        ) : " " }
+                            <Grid item>
+                              <Typography
+                                sx={{ color: "#ad2323", fontSize: "14px" }}
+                                variant="p"
+                                component="p"
+                              >
+                                <small>Confirmation Time</small>
+                              </Typography>
+                              <Typography
+                                variant="p"
+                                sx={{ textAlign: "center", fontSize: "12px" }}
+                                component="p"
+                              >
+                                <small>{store_data.confirmation}</small>
+                              </Typography>
+                            </Grid>
+                            <Grid item>
+                              <Typography
+                                variant="p"
+                                sx={{ color: "#ad2323", fontSize: "14px" }}
+                                component="p"
+                              >
+                                <small>Tracking Speed</small>
+                              </Typography>
+                              <Typography
+                                variant="p"
+                                sx={{ textAlign: "center", fontSize: "12px" }}
+                                component="p"
+                              >
+                                <small>{store_data.speed}</small>
+                              </Typography>
+                            </Grid>
+                            <Grid item>
+                              <Typography
+                                variant="p"
+                                sx={{ color: "#ad2323", fontSize: "14px" }}
+                                component="p"
+                              >
+                                <small>Missing Order</small>
+                              </Typography>
+                              <Typography
+                                variant="p"
+                                sx={{ textAlign: "center", fontSize: "12px" }}
+                                component="p"
+                              >
+                                <small>{store_data.is_missing}</small>
+                              </Typography>
+                            </Grid>
+                          </div>
+                        ) : (
+                          " "
+                        )}
                       </Grid>
                     </Box>
                   </Box>
                 </Box>
               </Link>
-              {storeRate ?(
-              <Box
-                component="div"
-                sx={{
-                  marginTop: "22px",
-                  padding: "20px 9px",
-                  background: "#fff",
-                  borderRadius: "5px",
-                }}
-              >
-                <Typography component="p">
-                  Cashback <strong>Rates</strong>{" "}
-                </Typography>
-
-                <div
-                  style={{
-                    height: storeRateMore ? "" : "92px",
-                    overflow: storeRateMore ? "" : "hidden",
+              {storeRate ? (
+                <Box
+                  component="div"
+                  sx={{
+                    marginTop: "22px",
+                    padding: "20px 9px",
+                    background: "#fff",
+                    borderRadius: "5px",
                   }}
                 >
-                  {storeRate &&
-                    storeRate.map((item, i) => {
-                      const { cashback_tag, rate, tag_desc } = item;
+                  <Typography component="p">
+                    Cashback <strong>Rates</strong>{" "}
+                  </Typography>
 
-                      return (
-                        <Box
-                          key={i + 1}
-                          component="div"
-                          sx={{ display: "flex" }}
-                        >
-                          <Box
-                            component="div"
-                            sx={{
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              borderTopLeftRadius: "7px",
-                              borderBottomLeftRadius: "7px",
-                              margin: " 10px 0",
-                              padding: "10px",
-                              color: "#fff",
-                              backgroundColor: "#f27935",
-                              flexBasis: "30%",
-                            }}
-                          >
-                            <Typography
-                              sx={{ textAlign: "center" }}
-                              component="small"
-                              varient="small"
-                            >
-                              {rate}
-                            </Typography>
-                          </Box>
-                          <Box
-                            component="div"
-                            sx={{
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                              justifyContent: "flex-start",
-                              borderTopRightRadius: "7px",
-                              borderBottomRightRadius: "7px",
-                              margin: " 10px 0",
-                              padding: "10px",
-                              flexBasis: "70%",
-                              border: "2px  dashed #f27935",
-                              borderLeft: "none",
-                            }}
-                          >
-                            <strong>{cashback_tag}</strong>
-                            <Typography
-                              component="small"
-                              fontSize="12px"
-                              varient="small"
-                            >
-                              {tag_desc}
-                            </Typography>
-                          </Box>
-                        </Box>
-                      );
-                    })}
-                </div>
-
-                {storeRate && storeRate.length > 1 ? (
-                  <Box
-                    component="div"
-                    width="100%"
-                    textAlign="center"
-                    justifyContent="center"
+                  <div
+                    style={{
+                      height: storeRateMore ? "" : "92px",
+                      overflow: storeRateMore ? "" : "hidden",
+                    }}
                   >
-                    <Button
-                      onClick={moreStoreHandel}
-                      variant="contained"
-                      sx={{ borderRadius: "70px", color: "#fff" }}
+                    {storeRate &&
+                      storeRate.map((item, i) => {
+                        const { cashback_tag, rate, tag_desc } = item;
+
+                        return (
+                          <Box
+                            key={i + 1}
+                            component="div"
+                            sx={{ display: "flex" }}
+                          >
+                            <Box
+                              component="div"
+                              sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                borderTopLeftRadius: "7px",
+                                borderBottomLeftRadius: "7px",
+                                margin: " 10px 0",
+                                padding: "10px",
+                                color: "#fff",
+                                backgroundColor: "#f27935",
+                                flexBasis: "30%",
+                              }}
+                            >
+                              <Typography
+                                sx={{ textAlign: "center" }}
+                                component="small"
+                                varient="small"
+                              >
+                                {rate}
+                              </Typography>
+                            </Box>
+                            <Box
+                              component="div"
+                              sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                justifyContent: "flex-start",
+                                borderTopRightRadius: "7px",
+                                borderBottomRightRadius: "7px",
+                                margin: " 10px 0",
+                                padding: "10px",
+                                flexBasis: "70%",
+                                border: "2px  dashed #f27935",
+                                borderLeft: "none",
+                              }}
+                            >
+                              <strong>{cashback_tag}</strong>
+                              <Typography
+                                component="small"
+                                fontSize="12px"
+                                varient="small"
+                              >
+                                {tag_desc}
+                              </Typography>
+                            </Box>
+                          </Box>
+                        );
+                      })}
+                  </div>
+
+                  {storeRate && storeRate.length > 1 ? (
+                    <Box
+                      component="div"
+                      width="100%"
+                      textAlign="center"
+                      justifyContent="center"
                     >
-                      {" "}
-                      <ExpandMoreIcon />
-                    </Button>
-                  </Box>
-                ) : (
-                  ""
-                )}
-              </Box>
-               ): ""}
+                      <Button
+                        onClick={moreStoreHandel}
+                        variant="contained"
+                        sx={{ borderRadius: "70px", color: "#fff" }}
+                      >
+                        {" "}
+                        <ExpandMoreIcon />
+                      </Button>
+                    </Box>
+                  ) : (
+                    ""
+                  )}
+                </Box>
+              ) : (
+                ""
+              )}
 
               {store_data.is_claim == 1 ? (
                 <CashBackClaimCard
@@ -378,18 +380,17 @@ const StoreDetails = () => {
                 ""
               )}
             </Box>
-            <Box sx={{paddingBottom:"25px"}}>
-            <DealsAndCoupons
-              categoryCoupons={storeCoupons}
-              categoryDeals={storeDeals}
-              noCouponData = {noCouponData}
-              noDealData={noDealData}
-              couponsTabCall={couponsTabCall}
-              dealsTabCall={dealsTabCall}
-              addDealPage={addDealPage}
-              addCouponPage={addCouponPage}
-            />
-
+            <Box sx={{ paddingBottom: "25px" }}>
+              <DealsAndCoupons
+                categoryCoupons={storeCoupons}
+                categoryDeals={storeDeals}
+                noCouponData={noCouponData}
+                noDealData={noDealData}
+                couponsTabCall={couponsTabCall}
+                dealsTabCall={dealsTabCall}
+                addDealPage={addDealPage}
+                addCouponPage={addCouponPage}
+              />
             </Box>
             <Box
               component="div"
@@ -402,24 +403,26 @@ const StoreDetails = () => {
                 padding: "4px",
                 bgcolor: "#fff",
               }}
-            >{
-              user?(<Link href={store_data.store_landing_url}>
-                <Button
-                  variant="contained"
-                  sx={{ width: "100%", maxWidth: "600px", color: "#fff" }}
-                >
-                  Shope & earn More
-                </Button>
-              </Link>):(<Link href="/login">
-                <Button
-                  variant="contained"
-                  sx={{ width: "100%", maxWidth: "600px", color: "#fff" }}
-                >
-                  Login Now & Earn Cashback 
-                </Button>
-              </Link>)
-            }
-              
+            >
+              {user ? (
+                <Link href={store_data.store_landing_url}>
+                  <Button
+                    variant="contained"
+                    sx={{ width: "100%", maxWidth: "600px", color: "#fff" }}
+                  >
+                    Shope & earn More
+                  </Button>
+                </Link>
+              ) : (
+                <Link href="/login">
+                  <Button
+                    variant="contained"
+                    sx={{ width: "100%", maxWidth: "600px", color: "#fff" }}
+                  >
+                    Login Now & Earn Cashback
+                  </Button>
+                </Link>
+              )}
             </Box>
           </div>
         ) : (

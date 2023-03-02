@@ -25,7 +25,7 @@ const referEarn = () => {
   return (
     <>
       <HeadTag headeTitle={headeTitle}></HeadTag>
-      <Header></Header>
+      <Header />
       <div style={{ paddingTop: "56px" }}>
         <Box component="div" sx={{ p: 2, paddingBottom: "10px" }}>
           <Typography component="h6" fontWeight="600">
@@ -86,15 +86,7 @@ const referEarn = () => {
             {" "}
             Easy Process
           </Typography>
-          <Box sx={{ padding: "10px 0" }}>
-            {/* <Image
-              src={}
-              width={100}
-              style={{ width: "100%", borderRadius: "10px" }}
-              alt=""
-              height={200}
-            ></Image> */}
-          </Box>
+          <Box sx={{ padding: "10px 0" }}></Box>
         </Box>
         <Box component="div" sx={{ p: 2, paddingTop: "0px" }}>
           <FrequentlyQuestion />

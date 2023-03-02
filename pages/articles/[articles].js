@@ -29,7 +29,6 @@ const Articels = () => {
   const paramId  = router.query
 
 
-  // console.log(articleDetails)
   const apiAuth = process.env.API_AUTH;
 
   useEffect(()=>{

@@ -70,7 +70,6 @@ const UserProfile = () => {
   }
 
 
-  // console.log(user_summary)
   return (
     <>
       <HeadTag headeTitle={headeTitle}></HeadTag>

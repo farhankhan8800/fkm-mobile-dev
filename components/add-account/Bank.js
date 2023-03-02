@@ -64,9 +64,7 @@ const Bank = () => {
                    }else{
                     setServerdata(data.message)
                    }
-                  // console.log(
-                  //  `${name},${phone},${accountnumber},${ifsc},${bankName}`
-                  // );
+                
                 } catch (error) {
                   console.log(error)
                 }
@@ -90,16 +88,6 @@ const Bank = () => {
       setNotValid("Fill the all details ");
     }
   };
-
-  // console.log(
-  //   `${name},${phone},${accountnumber},${ifsc},${bankName},${accountType}`
-  // );
-  //     setName("");
-  //     setPhone("");
-  //     setAccountNumber("");
-  //     setIfsc("");
-  //     setBankName("");
-  //     setAccountType("");
 
   const nameHandler = (e) => {
     setName(e.target.value);

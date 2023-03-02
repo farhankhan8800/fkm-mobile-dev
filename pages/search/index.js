@@ -19,7 +19,6 @@ const SearchPage = () => {
   let searchText = router.query["searchword"];
   const headeTitle = " Search | Freekaamaal";
 
-  //  console.log(searchText)
   useEffect(() => {
     const getData = async () => {
       try {
@@ -27,7 +26,6 @@ const SearchPage = () => {
           apiAuth: apiAuth,
           keyword: searchText,
         });
-        // console.log(data)
         console.log(data);
         if (data.status == 1) {
           setNoData(false);
@@ -38,16 +36,12 @@ const SearchPage = () => {
             setStore(data.response.store);
           }
         }
-        // console.log(data)
       } catch (error) {
-        // console.log(error)
       }
     };
     getData();
   }, [searchText]);
 
-  // console.log(deals)
-  // console.log(articles)
   console.log();
 
   return (

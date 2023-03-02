@@ -16,74 +16,67 @@ const MissingformStore = () => {
   const [userToken, setUserToken] = useState();
   const [serverError, setServerError] = useState();
   const [clientError, setClientError] = useState();
-  const [mess,setMessage] = useState();
-  const [formData, setFormData]= useState({
-    name:"",
-    click_id:"",
-    order_id:"",
-    amount:"",
-    order_date:"",
-    product_name:"",
-    invoice_1:"",
-    invoice_2:""
-  })
+  const [mess, setMessage] = useState();
+  const [formData, setFormData] = useState({
+    name: "",
+    click_id: "",
+    order_id: "",
+    amount: "",
+    order_date: "",
+    product_name: "",
+    invoice_1: "",
+    invoice_2: "",
+  });
 
-  const route =  useRouter()
+  const route = useRouter();
 
   useEffect(() => {
     let InputData = sessionStorage.getItem("missingStoreForm");
     setInputForm(JSON.parse(InputData));
-     setStore_id(sessionStorage.getItem("store_id"));
+    setStore_id(sessionStorage.getItem("store_id"));
     setUserToken(JSON.parse(localStorage.getItem("user")).token);
   }, []);
 
-
-
   const submitForm = async (e) => {
-    setClientError("")
+    setClientError("");
     e.preventDefault();
-    // console.log(formData)
-    if(formData.click_id){
+    if (formData.click_id) {
       try {
-        let {data} = await axios.post(saveMissingAPI,{
+        let { data } = await axios.post(
+          saveMissingAPI,
+          {
             apiAuth: apiAuth,
             device_type: "4",
-            name:formData.name,
-            store_id:store_id,
-            clickid:formData.click_id,
-            orderid:formData.order_id,
-            amount:formData.amount,
-            order_date:formData.order_date,
-            product:formData.product_name,
-            invoice:formData.invoice_1,
-            invoice2:formData.invoice_2,
-        },
-        {
+            name: formData.name,
+            store_id: store_id,
+            clickid: formData.click_id,
+            orderid: formData.order_id,
+            amount: formData.amount,
+            order_date: formData.order_date,
+            product: formData.product_name,
+            invoice: formData.invoice_1,
+            invoice2: formData.invoice_2,
+          },
+          {
             headers: {
               "Content-Type": "multipart/form-data",
               Authorization: userToken,
-              },
-        })
-        if(data.status == 1){
-          setMessage(data)
-          route.push("cashback-summary/missing-claimform")
-          sessionStorage.removeItem("missingStoreForm","store_id");
+            },
+          }
+        );
+        if (data.status == 1) {
+          setMessage(data);
+          route.push("cashback-summary/missing-claimform");
+          sessionStorage.removeItem("missingStoreForm", "store_id");
         }
-        if(data.status== 0){
-          setServerError(data)
-          //  console.log(data)
+        if (data.status == 0) {
+          setServerError(data);
         }
-        
-    } catch (error) {
-        
+      } catch (error) {}
+    } else {
+      setClientError(`Chosse Your Click Id`);
     }
-
-    }else{
-      setClientError(`Chosse Your Click Id`)
-    }
-
   };
-//  console.log(inputForm);
   const updateData = (e) => {
     setFormData({
       ...formData,
@@ -114,11 +107,10 @@ const MissingformStore = () => {
             <strong style={{ fontWeight: "800" }}>Missing Form</strong>
           </Typography>
           <div>
-            {
-                inputForm ? <form onSubmit={submitForm}>
-
-              <label htmlFor="click_id">Click Id *</label>
-              <select onChange={updateData} id="click_id"        name="click_id">
+            {inputForm ? (
+              <form onSubmit={submitForm}>
+                <label htmlFor="click_id">Click Id *</label>
+                <select onChange={updateData} id="click_id" name="click_id">
                   <option value="nodata">Your Click Id</option>
                   {inputForm.map((item, i) => {
                     return (
@@ -136,22 +128,19 @@ const MissingformStore = () => {
                   size="small"
                   name={"name"}
                   id="name"
-                
                   required={true}
                   onChange={updateData}
                   type="text"
                   placeholder="Your Name"
                   variant="outlined"
                 ></TextField>
-             
-                
+
                 <label htmlFor="order_id">Order Id *</label>
                 <TextField
                   sx={{ width: "100%", marginTop: "5px" }}
                   size="small"
                   name={"order_id"}
                   id="order_id"
-              
                   placeholder="Order Id"
                   required={true}
                   onChange={updateData}
@@ -162,7 +151,6 @@ const MissingformStore = () => {
                 <TextField
                   sx={{ width: "100%", marginTop: "5px" }}
                   size="small"
-              
                   name={"amount"}
                   id="amount"
                   placeholder="Order Amount"
@@ -176,7 +164,6 @@ const MissingformStore = () => {
                   sx={{ width: "100%", marginTop: "5px" }}
                   size="small"
                   name={"order_date"}
-               
                   id="order_date"
                   placeholder="Order Date"
                   required={true}
@@ -189,7 +176,6 @@ const MissingformStore = () => {
                   sx={{ width: "100%", marginTop: "5px" }}
                   size="small"
                   name={"product_name"}
-                 
                   id="product_name"
                   placeholder="Product Name"
                   required={true}
@@ -224,18 +210,16 @@ const MissingformStore = () => {
                     type="file"
                   ></input>
                 </div>
-    
+
                 <div>
-                  {
-                    mess ? (
-                      <Alert severity="success" sx={{ mt: 2 }}>
-                        {" "}
-                        {mess.message}!
-                      </Alert>
-                    ) : (
-                      ""
-                    )
-                  }
+                  {mess ? (
+                    <Alert severity="success" sx={{ mt: 2 }}>
+                      {" "}
+                      {mess.message}!
+                    </Alert>
+                  ) : (
+                    ""
+                  )}
                   {serverError ? (
                     <Alert severity="error" sx={{ mt: 2 }}>
                       {" "}
@@ -253,7 +237,7 @@ const MissingformStore = () => {
                     ""
                   )}
                 </div>
-    
+
                 <Button
                   variant="contained"
                   sx={{
@@ -268,10 +252,11 @@ const MissingformStore = () => {
                 >
                   Submit
                 </Button>
-              </form>:""
-            }
+              </form>
+            ) : (
+              ""
+            )}
           </div>
-          
         </Box>
       </div>
       <style jsx>{`

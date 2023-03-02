@@ -268,3 +268,26 @@ span {
 /* .css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root {
   align-items: flex-start !important;
 } */
+
+/* 100% cashback page  */
+.top_box .Shop__Start {
+  background: linear-gradient(to right, rgb(74, 55, 158) 29%, rgba(134,81,174,0.9) 100%);
+  font-size: 14px;
+  font-weight: bold;
+  margin: 4px 0 0 !important;
+  color: #fff;
+  border: none;
+  box-shadow: 0px 9px 11px 1px rgb(0 0 0 / 15%);
+
+  display: inline-block;
+  padding: 11px 29px;
+}
+.three_tabs_right_link{
+  color: #fff;
+background: url(https://images.freekaamaal.com/common-images/know-more-arrow-mb.png)no-repeat;
+background-size: 18px;
+background-position: 82px 1px;
+float: right;
+font-weight: 200;
+padding: 0 26px 0 0;
+}

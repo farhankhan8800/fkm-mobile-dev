@@ -34,7 +34,6 @@ const WithdrawOtherBank = ({userData}) => {
     },[userData])
 
   const SubmitFormHandal = async () => {
-    // e.prevent.default()
     if(account){
     if (amount) {
         if(account == "00"){
@@ -56,7 +55,6 @@ const WithdrawOtherBank = ({userData}) => {
                           Authorization:authToken
                         }
                   })
-                //  console.log(data)
                  if(data.status == 1){
                   setTimeout(()=>{
                     setServerdata(data.msg)
@@ -76,7 +74,6 @@ const WithdrawOtherBank = ({userData}) => {
                  }
                
               } catch (error) {
-                // console.log(error)
               }
 
         }
@@ -167,7 +164,6 @@ const WithdrawOtherBank = ({userData}) => {
           <div>
             {
               userPromocodes ? (<Box sx={{paddingTop:"10px"}}>{
-                // console.log(userPromocodes)
               }
                 <Typography fontWeight={"600"}>Your save Coupons</Typography>
                 <Box>
@@ -184,7 +180,6 @@ const WithdrawOtherBank = ({userData}) => {
                             )
                         }
                         
-                        //   <Typography fontSize={"13px"} component="p" key={i+1}>{item.usage_text}</Typography>
                         )
                     }
                 </Box>

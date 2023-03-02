@@ -28,7 +28,6 @@ const Category = () => {
       });
       let result = await data.json();
       setCategoryProduct(result.response.allcategory);
-      //  console.log(result.response)
     } catch (error) {
       return error;
     }
@@ -41,72 +40,73 @@ const Category = () => {
       <div style={{ paddingTop: "56px" }}>
         <Box component="div" sx={{ p: 1 }}>
           <Grid container spacing={2}>
-            {categoryProduct && categoryProduct.map((item,i) => {
-              return (
-                <Grid item xs={6} key={i}>
-                  <Box
-                    component="div"
-                    sx={{
-                      border: "1px solid #fff0f0",
-                      borderRadius: "10px",
-                      width: "100%",
-                      padding: "10px 20px",
-                      bgcolor: "#F7F7F7",
-                    }}
-                  >
+            {categoryProduct &&
+              categoryProduct.map((item, i) => {
+                return (
+                  <Grid item xs={6} key={i}>
                     <Box
                       component="div"
                       sx={{
-                        padding: "5px",
-                        bgcolor: "#fff",
-                        borderRadius: "7px",
+                        border: "1px solid #fff0f0",
+                        borderRadius: "10px",
+                        width: "100%",
+                        padding: "10px 20px",
+                        bgcolor: "#F7F7F7",
                       }}
                     >
-                      <Image
-                        width={100}
-                        height={140}
-                        style={{ width: "100%" }}
-                        src={item.img_url}
-                        alt="categoryProduct"
-                      ></Image>
-                    </Box>
-                    <Box>
-                      <Typography
-                        component="p"
-                        fontWeight="600"
-                        fontSize="14px"
-                        color="#000"
-                        padding="5px"
-                        textAlign="center"
+                      <Box
+                        component="div"
+                        sx={{
+                          padding: "5px",
+                          bgcolor: "#fff",
+                          borderRadius: "7px",
+                        }}
                       >
-                       {item.name}
-                      </Typography>
-                      <Typography
-                        component="p"
-                        color="#000"
-                        fontSize="12px"
-                        textAlign="center"
-                      >
-                        <span>Deals </span>
-                        <strong> {item.deals_count}</strong> 
-                        <span> Coupons </span>
-                        <strong>{item.coupons_count}</strong>
-                      </Typography>
-                    </Box>
-                    <Box sx={{ textAlign: "center", p: 1 }}>
-                      <Button variant="outlined">
-                        <Link
-                          href={`${item.cate_slug}`}
-                          style={{ color: "#f27935" }}
+                        <Image
+                          width={100}
+                          height={140}
+                          style={{ width: "100%" }}
+                          src={item.img_url}
+                          alt="categoryProduct"
+                        ></Image>
+                      </Box>
+                      <Box>
+                        <Typography
+                          component="p"
+                          fontWeight="600"
+                          fontSize="14px"
+                          color="#000"
+                          padding="5px"
+                          textAlign="center"
                         >
-                          View Deals
-                        </Link>
-                      </Button>
+                          {item.name}
+                        </Typography>
+                        <Typography
+                          component="p"
+                          color="#000"
+                          fontSize="12px"
+                          textAlign="center"
+                        >
+                          <span>Deals </span>
+                          <strong> {item.deals_count}</strong>
+                          <span> Coupons </span>
+                          <strong>{item.coupons_count}</strong>
+                        </Typography>
+                      </Box>
+                      <Box sx={{ textAlign: "center", p: 1 }}>
+                        <Button variant="outlined">
+                          <Link
+                            href={`${item.cate_slug}`}
+                            style={{ color: "#f27935" }}
+                          >
+                            View Deals
+                          </Link>
+                        </Button>
+                      </Box>
                     </Box>
-                  </Box>
-                </Grid>
-              );
-            })}
+                  </Grid>
+                );
+              })}
           </Grid>
         </Box>
       </div>

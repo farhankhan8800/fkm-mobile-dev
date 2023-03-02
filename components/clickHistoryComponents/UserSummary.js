@@ -3,19 +3,19 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import clickImage from "public/images/icon/click.png"
-import referalHistoryImage from "public/images/icon/referal-history.png"
-import referEarnImage from "public/images/icon/refer-earn.png"
-import cashbackHistoryImage from "public/images/icon/cashback-history.png"
-import reportIconImage from "public/images/icon/report-icon.png"
-import withdrawalHistoryImage from "public/images/icon/withdrawal-history.png"
+import clickImage from "public/images/icon/click.png";
+import referalHistoryImage from "public/images/icon/referal-history.png";
+import referEarnImage from "public/images/icon/refer-earn.png";
+import cashbackHistoryImage from "public/images/icon/cashback-history.png";
+import reportIconImage from "public/images/icon/report-icon.png";
+import withdrawalHistoryImage from "public/images/icon/withdrawal-history.png";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import withdrawalMoneyImage from "public/images/icon/withdrawal-money.png"
-import refrealMoneyImage from "public/images/icon/refreal-money.png"
-import climeFormImage from "public/images/icon/clime-form.png"
-import missingCashbackImage from "public/images/icon/missing-cashback.png"
-import addAccountImage from "public/images/icon/add-account.png"
-import bellImage from "public/images/icon/bell.png"
+import withdrawalMoneyImage from "public/images/icon/withdrawal-money.png";
+import refrealMoneyImage from "public/images/icon/refreal-money.png";
+import climeFormImage from "public/images/icon/clime-form.png";
+import missingCashbackImage from "public/images/icon/missing-cashback.png";
+import addAccountImage from "public/images/icon/add-account.png";
+import bellImage from "public/images/icon/bell.png";
 
 const userManage = [
   {
@@ -27,7 +27,7 @@ const userManage = [
   {
     headingTag: "Cashback History",
     pTage: "List Of store your visited reacently",
-    icon:cashbackHistoryImage,
+    icon: cashbackHistoryImage,
     link: "/cashback/cashback-history",
   },
   {
@@ -39,7 +39,7 @@ const userManage = [
   {
     headingTag: "Report Missing",
     pTage: "List Of store your visited reacently",
-    icon:reportIconImage,
+    icon: reportIconImage,
     link: "/cashback/missing-claimform",
   },
   {
@@ -51,7 +51,7 @@ const userManage = [
   {
     headingTag: "Referral History",
     pTage: "List Of store your visited reacently",
-    icon:referalHistoryImage,
+    icon: referalHistoryImage,
     link: "/cashback/referral-history",
   },
   {
@@ -78,7 +78,7 @@ const userManage = [
     icon: missingCashbackImage,
     link: "/cashback/missing-order",
   },
-  
+
   {
     headingTag: "Add Account",
     pTage: "List Of store your visited reacently",
@@ -91,7 +91,6 @@ const userManage = [
     icon: bellImage,
     link: "/",
   },
-  
 ];
 
 const UserSummary = () => {
@@ -106,8 +105,22 @@ const UserSummary = () => {
           >
             <Link href={item.link}>
               <Grid container>
-                <Grid item xs={2} sx={{display:"flex",alignItems:"center",justifyContent:"center"}}>
-                  <Image width={25} height={25} alt="icon" sx={{ color: "#000" }} src={item.icon}></Image>
+                <Grid
+                  item
+                  xs={2}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Image
+                    width={25}
+                    height={25}
+                    alt="icon"
+                    sx={{ color: "#000" }}
+                    src={item.icon}
+                  ></Image>
                 </Grid>
                 <Grid item xs={8}>
                   <Typography

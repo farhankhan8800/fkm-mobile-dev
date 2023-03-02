@@ -1,42 +1,34 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import {Box, Typography} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Bank from "components/add-account/Bank";
 import { useEffect } from "react";
 import OtherBank from "components/add-account/OtherBank";
 
 const AddAccount = () => {
-  
-  const [account,setAccount] = useState()
-   const [activeBank, setActiveBank]= useState(false)
-   const [activePaytm, setActivePaytm]= useState(false)
+  const [account, setAccount] = useState();
+  const [activeBank, setActiveBank] = useState(false);
+  const [activePaytm, setActivePaytm] = useState(false);
 
+  useEffect(() => {}, []);
 
+  const accountHandler = (e) => {
+    setAccount(e.target.value);
+  };
 
-  useEffect(()=>{
-    // setUser(json.parse(localStorage.getItem("user").token));
-  },[])
-
-  
-
-  const accountHandler = (e) =>{
-    setAccount(e.target.value)
-  }
-
-  useEffect(()=>{
-    if(account == "bank"){
-      setActiveBank(true)
-      setActivePaytm(false)
-    }else if(account == "paytm"){
-      setActiveBank(false)
-      setActivePaytm(true)
-    }else{
-      setActiveBank(false)
-      setActivePaytm(false)
+  useEffect(() => {
+    if (account == "bank") {
+      setActiveBank(true);
+      setActivePaytm(false);
+    } else if (account == "paytm") {
+      setActiveBank(false);
+      setActivePaytm(true);
+    } else {
+      setActiveBank(false);
+      setActivePaytm(false);
     }
-  },[account])
-  
+  }, [account]);
 
   const headeTitle = "Add Your bank Account | Freekaamaal";
   return (
@@ -54,27 +46,20 @@ const AddAccount = () => {
             </Typography>
           </Box>
           <Box>
-          <select className="select_tag"
-                onChange={accountHandler}
-                value={account}
-              >
-                <option value="Option">Select Your Payment mode</option>
-                <option value="bank">Bank</option>
-                <option value="paytm">Paytm</option>
-          </select>
+            <select
+              className="select_tag"
+              onChange={accountHandler}
+              value={account}
+            >
+              <option value="Option">Select Your Payment mode</option>
+              <option value="bank">Bank</option>
+              <option value="paytm">Paytm</option>
+            </select>
           </Box>
           <Box>
-            <div>
-            {
-              activeBank ? <Bank />:""
-            }
-            </div>
-            
-            <div>
-            {
-              activePaytm ? <OtherBank />:""
-            }
-            </div>
+            <div>{activeBank ? <Bank /> : ""}</div>
+
+            <div>{activePaytm ? <OtherBank /> : ""}</div>
           </Box>
         </Box>
       </div>

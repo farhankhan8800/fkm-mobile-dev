@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, Box, Typography } from "@mui/material";
 import cashbackImage from "../public/images/money.png";
 import Image from "next/image";
@@ -57,15 +57,15 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 const HowToEarnCashback = (props) => {
   const [expanded, setExpanded] = React.useState("panel1");
-  const [howtoearncashback, setHowtoearncashback] = useState()
+  const [howtoearncashback, setHowtoearncashback] = useState();
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
 
-  useEffect(()=>{
-    setHowtoearncashback(props.howtoearncashback)
-  },[props])
+  useEffect(() => {
+    setHowtoearncashback(props.howtoearncashback);
+  }, [props]);
 
   return (
     <>
@@ -101,14 +101,9 @@ const HowToEarnCashback = (props) => {
             height="200px"
             src="https://www.youtube.com/embed/hkStK-PBO_k?start=2"
             title="How to work free kaa maal cashback"
-           
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           ></iframe>
-          {/* <video  controls poster='' >
-                  <source src={cashBackwork} type="video/mp4"/>
-                   Your browser does not support the video tag.
-                </video> */}
         </Box>
         <Box
           component="div"
@@ -120,40 +115,34 @@ const HowToEarnCashback = (props) => {
           }}
         >
           <div>
-            {
-              howtoearncashback && howtoearncashback.map((item, i)=>
-                <Accordion key={i+1}
-                sx={{ borderRadius: "8px" }}
-                expanded={expanded === `panel${i+1}`}
-                onChange={handleChange(`panel${i+1}`)}
-              >
-                <AccordionSummary
-                  aria-controls={`panel${i+1}d-content`}
-                  id={`panel${i+1}d-header`}
+            {howtoearncashback &&
+              howtoearncashback.map((item, i) => (
+                <Accordion
+                  key={i + 1}
+                  sx={{ borderRadius: "8px" }}
+                  expanded={expanded === `panel${i + 1}`}
+                  onChange={handleChange(`panel${i + 1}`)}
                 >
-                  <span style={spanImage}>
-                    {" "}
-                    <Image
-                      width={20}
-                      height={20}
-                      src={cashbackImage}
-                      alt="explane image"
-                    ></Image>
-                  </span>
-                  <Typography fontSize="14px">
-                   {item.title}
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography fontSize="13px">
-                   {item.description}
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-
-              )
-            }
-          
+                  <AccordionSummary
+                    aria-controls={`panel${i + 1}d-content`}
+                    id={`panel${i + 1}d-header`}
+                  >
+                    <span style={spanImage}>
+                      {" "}
+                      <Image
+                        width={20}
+                        height={20}
+                        src={cashbackImage}
+                        alt="explane image"
+                      ></Image>
+                    </span>
+                    <Typography fontSize="14px">{item.title}</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography fontSize="13px">{item.description}</Typography>
+                  </AccordionDetails>
+                </Accordion>
+              ))}
           </div>
         </Box>
       </Box>

@@ -27,6 +27,10 @@
         source: '/fkm-testimonial',
         destination: '/common/fkm-testimonial/', 
       },
+      {
+        source: '/all-hot-deals',
+        destination: '/all-hot-deals', 
+      },
       // cutsom - Dynamic Routing //
       
       // category routing 
@@ -213,7 +217,8 @@
     domains: ['images.freekaamaal.com','m.freekaamaal.com']
    },
    env:{
-      API_AUTH : "u636a0295845eb68x"
+      API_AUTH : "u636a0295845eb68x",
+      DEVICE_TYPE : "4"
    },
    eslint: {
      // Warning: This allows production builds to successfully complete even if

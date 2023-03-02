@@ -1,24 +1,17 @@
 import React, { useEffect, useState } from "react";
 
 import hotDealsImage from "../../public/images/fire.png";
-import {
-  Grid,
-  Box,
-  Typography,
-  Button,
-} from "@mui/material";
+import { Grid, Box, Typography, Button } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
 import HotDealsCards from "../HotDealsCard";
 
-
 const HotDeals = (props) => {
   const [hotDeals, SethotDeals] = useState();
-  useEffect(()=>{
-     SethotDeals(props.hotdeals)
-  },[props])
+  useEffect(() => {
+    SethotDeals(props.hotdeals);
+  }, [props]);
 
-// console.log(hotDeals)
   return (
     <>
       <Grid
@@ -55,25 +48,30 @@ const HotDeals = (props) => {
           </Button>
         </Grid>
       </Grid>
-      <Box sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-      <HotDealsCards hotdeals={hotDeals} />
+      <Box
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
+        <HotDealsCards hotdeals={hotDeals} />
       </Box>
-      
+
       <Box component="div" sx={{ p: 1, textAlign: "center" }}>
-        { props.noData ? `No Data Found`:
+        {props.noData ? (
+          `No Data Found`
+        ) : (
           <>
-          {
-         hotDeals? (<Button
-          onClick={props.pageFunction}
-          sx={{ color: "#fff", fontWeight: "600" }}
-          variant="contained"
-        >
-          Lode More
-        </Button>):("No Data")
-         }
+            {hotDeals ? (
+              <Button
+                onClick={props.pageFunction}
+                sx={{ color: "#fff", fontWeight: "600" }}
+                variant="contained"
+              >
+                Lode More
+              </Button>
+            ) : (
+              "No Data"
+            )}
           </>
-        }
-        
+        )}
       </Box>
     </>
   );

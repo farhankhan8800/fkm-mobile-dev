@@ -51,7 +51,6 @@ const getData = async ()=>{
     setMissing_history([...missing_history,...data.response.missing_history])
    }
  } catch (error) {
-  //  console.log(error)
  }
  } 
 
@@ -132,15 +131,7 @@ const getData = async ()=>{
             <Button onClick={moreData} variant="outlined">More Data</Button>
          </Box> 
         }
-        {/* {
-          noMoreData ? <Box sx={{textAlign:"center"}}>No More Data...</Box>:<>
-          {
-          missing_history ?  <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
-          <Button onClick={moreData} variant="outlined">More Data</Button>
-        </Box> :""
-        }
-          </>
-        } */}
+        
       </div>
       <style jxs>{`
       .css-sli737-MuiTableCell-root{

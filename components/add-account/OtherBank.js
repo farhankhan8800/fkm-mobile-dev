@@ -16,8 +16,6 @@ const OtherBank = () => {
   useEffect(()=>{
     setAuthToken(JSON.parse(localStorage.getItem("user")).token)
   },[])
-
-
   const apiAuth = process.env.API_AUTH
 
   const onSubmit = async (e) => {
@@ -38,7 +36,6 @@ const OtherBank = () => {
                       Authorization:authToken
                     }
                    })
-                  //  console.log(data)
                    if(data.status == 1){
                     setTimeout(function(){
                       setName("")
@@ -63,16 +60,6 @@ const OtherBank = () => {
       setNotValid("Fill the all details ");
     }
   };
-
-  // console.log(
-  //   `${name},${phone},${accountnumber},${ifsc},${bankName},${accountType}`
-  // );
-  //     setName("");
-  //     setPhone("");
-  //     setAccountNumber("");
-  //     setIfsc("");
-  //     setBankName("");
-  //     setAccountType("");
 
   const nameHandler = (e) => {
     setName(e.target.value);

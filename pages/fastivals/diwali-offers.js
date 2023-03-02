@@ -212,7 +212,9 @@ const DiwaliOffers = () => {
                 height={30}
               />
               <Link href="">
-                <Typography color={"#000"} fontSize={13}>Amazon Diwali Sale 2022</Typography>
+                <Typography color={"#000"} fontSize={13}>
+                  Amazon Diwali Sale 2022
+                </Typography>
               </Link>
             </div>
             <div className="fastival_store_wrapper">
@@ -223,7 +225,9 @@ const DiwaliOffers = () => {
                 height={30}
               />
               <Link href="">
-                <Typography color={"#000"} fontSize={13}>Amazon Diwali Sale 2022</Typography>
+                <Typography color={"#000"} fontSize={13}>
+                  Amazon Diwali Sale 2022
+                </Typography>
               </Link>
             </div>
           </div>

@@ -11,7 +11,7 @@ const HeadTag = (props) => {
         />
         <meta
           name="keywords"
-          content="HTML, CSS, JavaScript,react.js, next.js"
+          content="HTML, CSS, JavaScript,react.js, next.js,php"
         />
         <meta name="author" content="Freekaamaal.com" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

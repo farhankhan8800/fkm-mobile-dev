@@ -40,8 +40,7 @@ const ReferalMoney = () => {
       );
 
       if (data.status == 1) {
-        //  console.log(data)
-         setuserData(data)
+        setuserData(data);
         if (account == "bank") {
           setActiveBank(true);
           setActivePaytm(false);
@@ -70,13 +69,12 @@ const ReferalMoney = () => {
   const callAccount = () => {
     setActiveBank(false);
     setActivePaytm(false);
-    if(account == "bank") {
+    if (account == "bank") {
       changeAccount(account);
-    }else if(account == "paytm") {
+    } else if (account == "paytm") {
       changeAccount(account);
     }
-
-  } 
+  };
 
   const headeTitle = "Add Your bank Account | Freekaamaal";
   return (
@@ -107,16 +105,10 @@ const ReferalMoney = () => {
           </Box>
           {serverdata ? <Alert severity="info">{serverdata}</Alert> : ""}
           <Box>
-            <div>
-              {activeBank ? <ReferalBank userData={userData} /> : ""}
-            </div>
+            <div>{activeBank ? <ReferalBank userData={userData} /> : ""}</div>
 
             <div>
-              {activePaytm ? (
-                <ReferalOtherBank userData={userData} />
-              ) : (
-                ""
-              )}
+              {activePaytm ? <ReferalOtherBank userData={userData} /> : ""}
             </div>
           </Box>
         </Box>

@@ -14,7 +14,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 
-import {motion} from "framer-motion"
+import { motion } from "framer-motion";
 import dashboardIcon from "../../public/images/icon/dashboard.png";
 import shopIcon from "../../public/images/icon/shop.png";
 import categoryIcon from "../../public/images/icon/category.png";
@@ -30,7 +30,6 @@ import loginIcon from "../../public/images/icon/login-account.png";
 import { useEffect, useState } from "react";
 
 export const menuList = [
-  
   {
     link: "/all-store",
     menuName: "Top Stores",
@@ -67,6 +66,11 @@ export const menuList = [
     menuIcon: "",
   },
   {
+    link: "/cashback-page/cashback",
+    menuName: "100% Cashback",
+    menuIcon: "",
+  },
+  {
     link: "/contact-us",
     menuName: "Contact Us",
     menuIcon: phoneCallIcon,
@@ -86,11 +90,6 @@ export const menuList = [
     menuName: "FAQ's",
     menuIcon: phoneCallIcon,
   },
-  // {
-  //   link: "/",
-  //   menuName: "Help & Support",
-  //   menuIcon: questionIcon,
-  // },
 ];
 
 const Sidebar = ({ togalButton, closeSidebar }) => {
@@ -99,8 +98,7 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
   useEffect(() => {
     setUserdata(localStorage.getItem("user"));
   }, []);
-  
- 
+
   const router = useRouter();
   const sidebarClose = () => {
     setTimeout(() => {
@@ -142,7 +140,6 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
             }}
           >
             <Box
-           
               component="div"
               style={{
                 backgroundColor: "#f5f3f3",
@@ -150,7 +147,7 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
                 borderRadius: "10px",
               }}
             >
-              <Link  href={userdata ? "/cashback/home":"/login"}>
+              <Link href={userdata ? "/cashback/home" : "/login"}>
                 <Grid
                   container
                   justifyContent="space-between"
@@ -158,10 +155,7 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
                   style={{ color: "#000" }}
                 >
                   <Grid item>
-                    <Avatar
-                      alt="Freekaamaal"
-                      src=""
-                    />
+                    <Avatar alt="Freekaamaal" src="" />
                   </Grid>
                   <Grid item>
                     <Typography variant="p" component="p">
@@ -186,17 +180,19 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
                       </Typography>
                     )}
                   </Grid>
-                  <Grid item>{
-                    userdata? <Button
-                    onClick={() => router.push("/user-edit-details")}
-                    variant="contained"
-                    sx={{ color: "#fff", borderRadius: "30px" }}
-                    size="small"
-                  >
-                    Edit
-                  </Button>:""
-                  }
-                    
+                  <Grid item>
+                    {userdata ? (
+                      <Button
+                        onClick={() => router.push("/user-edit-details")}
+                        variant="contained"
+                        sx={{ color: "#fff", borderRadius: "30px" }}
+                        size="small"
+                      >
+                        Edit
+                      </Button>
+                    ) : (
+                      ""
+                    )}
                   </Grid>
                 </Grid>
               </Link>
@@ -207,31 +203,31 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
                 aria-label="main mailbox folders"
                 sx={{ width: "100%" }}
               >
-                   <div>{
-                     userdata ? (
-                     <>
-                     <Link href="/cashback/home">
-                      <ListItemButton onClick={sidebarClose}>
-                        <ListItemIcon>
-                          <Image
-                            width={17}
-                            height={17}
-                            src={dashboardIcon}
-                            alt="menuIcon"
-                          ></Image>
-                        </ListItemIcon>
-                        <ListItemText
-                          sx={{ color: "#000" }}
-                          primary="Dashboard"
-                        />
-                      </ListItemButton>
-                    </Link>
-                    <Divider sx={{ opacity: "0.4" }} />
-                     </>
-                     ):("")
-                    }
-                    
-                  </div>
+                <div>
+                  {userdata ? (
+                    <>
+                      <Link href="/cashback/home">
+                        <ListItemButton onClick={sidebarClose}>
+                          <ListItemIcon>
+                            <Image
+                              width={17}
+                              height={17}
+                              src={dashboardIcon}
+                              alt="menuIcon"
+                            ></Image>
+                          </ListItemIcon>
+                          <ListItemText
+                            sx={{ color: "#000" }}
+                            primary="Dashboard"
+                          />
+                        </ListItemButton>
+                      </Link>
+                      <Divider sx={{ opacity: "0.4" }} />
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </div>
                 {menuList.map((item, i) => (
                   <div key={i + 1}>
                     <Link href={item.link}>
@@ -254,40 +250,44 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
                   </div>
                 ))}
                 <div>
-                  {
-                    userdata ?  <div onClick={logoutUser}>
-                    <ListItemButton onClick={sidebarClose}>
-                      <ListItemIcon>
-                        <Image
-                          width={17}
-                          height={17}
-                          src={powerOffIcon}
-                          alt="menuIcon"
-                        ></Image>
-                      </ListItemIcon>
-                      <ListItemText sx={{ color: "#000" }} primary="Logout" />
-                    </ListItemButton>
-                    <Divider sx={{ opacity: "0.4" }} />
-                  </div> :<div >
-                    <Link href="/login">
-                    <ListItemButton onClick={sidebarClose}>
-                      <ListItemIcon>
-                        <Image
-                          width={20}
-                          height={20}
-                          src={loginIcon}
-                          alt="menuIcon"
-                        ></Image>
-                      </ListItemIcon>
-                      <ListItemText sx={{ color: "#000" }} primary="Login" />
-                    </ListItemButton>
-                    </Link>
-                   
-                    <Divider sx={{ opacity: "0.4" }} />
-                  </div>
-                  }
+                  {userdata ? (
+                    <div onClick={logoutUser}>
+                      <ListItemButton onClick={sidebarClose}>
+                        <ListItemIcon>
+                          <Image
+                            width={17}
+                            height={17}
+                            src={powerOffIcon}
+                            alt="menuIcon"
+                          ></Image>
+                        </ListItemIcon>
+                        <ListItemText sx={{ color: "#000" }} primary="Logout" />
+                      </ListItemButton>
+                      <Divider sx={{ opacity: "0.4" }} />
+                    </div>
+                  ) : (
+                    <div>
+                      <Link href="/login">
+                        <ListItemButton onClick={sidebarClose}>
+                          <ListItemIcon>
+                            <Image
+                              width={20}
+                              height={20}
+                              src={loginIcon}
+                              alt="menuIcon"
+                            ></Image>
+                          </ListItemIcon>
+                          <ListItemText
+                            sx={{ color: "#000" }}
+                            primary="Login"
+                          />
+                        </ListItemButton>
+                      </Link>
+
+                      <Divider sx={{ opacity: "0.4" }} />
+                    </div>
+                  )}
                 </div>
-               
               </List>
             </Box>
           </Box>

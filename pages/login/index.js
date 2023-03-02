@@ -19,7 +19,7 @@ import Header from "components/headerComponent/Header";
 import HeadTag from "components/headTagComponent/HeadTag";
 import { loginUser } from "service/API";
 
-const apiAuth = process.env.API_AUTH
+const apiAuth = process.env.API_AUTH;
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -30,59 +30,53 @@ const Login = () => {
   const [emailErr, setEmailErr] = useState(false);
   const [passwordErr, setPasswordErr] = useState(false);
   const [userdata, setUserdata] = useState();
-  const [serverErr, setServerErr] =  useState("");
+  const [serverErr, setServerErr] = useState("");
   const headeTitle = "Login | Freekaamaal";
   const router = useRouter();
 
   useEffect(() => {
-   
     setUserdata(localStorage.getItem("user"));
     if (userdata) {
       router.push("/");
     }
-  },[router, userdata]);
+  }, [router, userdata]);
   const onSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (email.length < 4 || password.length < 6) {
       SetCallWarning(true);
     } else {
       try {
-        // console.log(`email = ${email} , password = ${password}`)
         let result = await fetch(loginUser, {
-          method: 'POST',
+          method: "POST",
           body: JSON.stringify({
-            apiAuth:apiAuth,
+            apiAuth: apiAuth,
             email: email,
-            password: password
+            password: password,
           }),
-          mode: 'cors', 
+          mode: "cors",
           headers: {
-             'Content-Type': 'application/json', 
-          }
-        })
+            "Content-Type": "application/json",
+          },
+        });
         result = await result.json({});
-        // console.log(result)
-          if (result.status == 1) {
-            localStorage.setItem("user", JSON.stringify(result));
-            setEmail("");
-            setPassword("");
-            setTimeout(() => {
-              router.push("/");
-            }, 300);
-          }else{
-            setServerErr(result)
-            console.log(result.message)
-          }
-      } catch (err) {
-       
-      }
+        if (result.status == 1) {
+          localStorage.setItem("user", JSON.stringify(result));
+          setEmail("");
+          setPassword("");
+          setTimeout(() => {
+            router.push("/");
+          }, 300);
+        } else {
+          setServerErr(result);
+          console.log(result.message);
+        }
+      } catch (err) {}
     }
   };
 
   const emailChangeHandler = (e) => {
     const item = e.target.value;
-    // let emailRegex =
-    //   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
     if (item.length < 4) {
       setEmailErr(true);
       setEmail("");
@@ -132,7 +126,7 @@ const Login = () => {
           </Typography>
           <form onSubmit={onSubmit}>
             <TextField
-             sx={{ width: "100%", marginTop: "10px" }}
+              sx={{ width: "100%", marginTop: "10px" }}
               size="small"
               id="email"
               value={email}
@@ -195,9 +189,11 @@ const Login = () => {
             ) : (
               ""
             )}
-            {
-              serverErr ?<Alert severity="warning">{serverErr.message}</Alert>:""
-            }
+            {serverErr ? (
+              <Alert severity="warning">{serverErr.message}</Alert>
+            ) : (
+              ""
+            )}
           </form>
           <Divider textAlign="center">OR</Divider>
           <Box component="div" sx={{ p: 1 }}>

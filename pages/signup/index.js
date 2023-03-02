@@ -11,7 +11,7 @@ import HeadTag from "../../components/headTagComponent/HeadTag";
 import { registerApi } from "../../service/API";
 import axios from "axios";
 
-const apiAuth = process.env.API_AUTH
+const apiAuth = process.env.API_AUTH;
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -23,24 +23,21 @@ const SignUp = () => {
   const [passwordErr, setPasswordErr] = useState(false);
   const [userNameErr, setUserNameErr] = useState(false);
   const [mobileErr, setMobileErr] = useState(false);
-  const [signupError, setSignupError] = useState("")
+  const [signupError, setSignupError] = useState("");
 
   const [callWarning, SetCallWarning] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
   const [userdata, setUserdata] = useState();
-  // const [user, setuser] = useState()
   const router = useRouter();
 
   useEffect(() => {
     localStorage.removeItem("verified");
-    setUserdata(localStorage.getItem("user"))
+    setUserdata(localStorage.getItem("user"));
     if (userdata) {
-      router.push("/")
+      router.push("/");
     }
-  },[router, userdata]);
-  
-  
-  // console.log(userdata);return false;
+  }, [router, userdata]);
+
   const onSubmit = async (e) => {
     e.preventDefault();
     setSignupError("");
@@ -53,43 +50,41 @@ const SignUp = () => {
       SetCallWarning(true);
     } else {
       try {
-        // console.log(`email = ${email} , password = ${password}, mobile = ${mobile} , mobile = ${userName}`)
-      let {data} = await axios.post(registerApi, {
-          apiAuth:apiAuth,
-          email: email,
-          pass: password,
-          phone: mobile,
-          device_type:"1",
-          name: userName,
-          referral_code:"",
-          app_device_id:""
-        },
-        {
-          headers:{
-            "Content-Type": "application/json",
+        let { data } = await axios.post(
+          registerApi,
+          {
+            apiAuth: apiAuth,
+            email: email,
+            pass: password,
+            phone: mobile,
+            device_type: "1",
+            name: userName,
+            referral_code: "",
+            app_device_id: "",
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
           }
-        }
-        )
-      if (data.status == "1") {
-         localStorage.setItem("registerToken", JSON.stringify(data));
+        );
+        if (data.status == "1") {
+          localStorage.setItem("registerToken", JSON.stringify(data));
           setTimeout(() => {
-          setEmail("");
-          setPassword("");
-          setUserName("");
-          setMobile("");
-          setShowSignUp(true);
-        }, 500);
-        setTimeout(() => {
-          router.push("/enter-otp");
-        }, 3000);
-      } else {
-       
-        
-      }
+            setEmail("");
+            setPassword("");
+            setUserName("");
+            setMobile("");
+            setShowSignUp(true);
+          }, 500);
+          setTimeout(() => {
+            router.push("/enter-otp");
+          }, 3000);
+        } else {
+        }
       } catch (error) {
-      // setSignupError(error.message);
-      console.log(error)
-      setSignupError(error.response.data.message)
+        console.log(error);
+        setSignupError(error.response.data.message);
       }
     }
   };
@@ -119,9 +114,7 @@ const SignUp = () => {
 
   const emailChangeHandler = (e) => {
     const item = e.target.value;
-    // let emailRegex =
-    //   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (item.length < 4 ) {
+    if (item.length < 4) {
       setEmailErr(true);
       setEmail("");
     } else {
@@ -264,7 +257,7 @@ const SignUp = () => {
           <Box component="div" sx={{ padding: "10px 0" }}>
             {showSignUp ? (
               <Alert sx={{ marginBottom: "10px" }} severity="success">
-               Kindly Verify Your OTP And Confirm
+                Kindly Verify Your OTP And Confirm
               </Alert>
             ) : (
               ""
@@ -274,9 +267,11 @@ const SignUp = () => {
             ) : (
               ""
             )}
-            { 
-               signupError? ( <Alert severity="warning">{signupError} </Alert>):("")
-            }
+            {signupError ? (
+              <Alert severity="warning">{signupError} </Alert>
+            ) : (
+              ""
+            )}
             <Button
               sx={{
                 width: "100%",

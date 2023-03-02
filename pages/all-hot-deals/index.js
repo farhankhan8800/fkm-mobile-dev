@@ -12,7 +12,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 
-import { homeApi } from "service/API";
+import { homeAPI2 } from "service/API";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 import axios from "axios";
@@ -30,10 +30,11 @@ const HotDealInternal = () => {
   const getData = async () => {
     try {
       let { data } = await axios.post(
-        homeApi,
+        homeAPI2,
         {
           apiAuth: apiAuth,
           page: page,
+          device_type: "4",
           sponsored_count: sponsoredCount,
         },
         {
@@ -44,14 +45,13 @@ const HotDealInternal = () => {
       );
       if (data.response.hotdeals.length == 0) {
         setNoDeals(true);
+      } else {
+        setAllHotDeals([...allHotDeals, ...data.response.hotdeals]);
+        setSponsoredCount(data.response.sponsored_count);
       }
-
-      setAllHotDeals([...allHotDeals, ...data.response.hotdeals]);
-      setSponsoredCount(data.response.sponsored_count);
     } catch (error) {}
   };
 
-  // console.log(allHotDeals)
   useEffect(() => {
     getData();
   }, [page]);

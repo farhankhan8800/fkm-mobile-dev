@@ -40,14 +40,11 @@ const ClaimformStore = () => {
       ...data2,
     };
 
-    // console.log(finnelData);
-
     if (finnelData.clickid) {
       if (finnelData.clickid === "nodata") {
         setClientError("Enter Valid Click Id");
       } else {
         try {
-          // console.log(finnelData)
           let responce = await axios.post(
             userclaimdataAPI,
             {
@@ -56,19 +53,15 @@ const ClaimformStore = () => {
             {
               headers: {
                 "Content-Type": "multipart/form-data",
-                 Authorization: userToken,
+                Authorization: userToken,
               },
             }
           );
-          // console.log(responce);
           if (responce.data.status == 0) {
             setServerError(responce.data);
           } else if (responce.data.status == 1) {
-                  
           }
-        } catch (error) {
-          //  console.log(error)
-        }
+        } catch (error) {}
       }
     } else {
       setClientError("Enter Click Id");

@@ -17,136 +17,140 @@ import TabPanelUnstyled from "@mui/base/TabPanelUnstyled";
 
 import TabUnstyled, { tabUnstyledClasses } from "@mui/base/TabUnstyled";
 import axios from "axios";
-import {withdrawal_historyAPI} from "service/API"
+import { withdrawal_historyAPI } from "service/API";
 import { useState } from "react";
 import { useEffect } from "react";
 
-const apiAuth = process.env.API_AUTH
-
+const apiAuth = process.env.API_AUTH;
 
 const CashbackHistory = () => {
+  const [page, setPage] = useState(1);
+  const [authToken, setAuthToken] = useState();
+  const [cashback_history_title, setCashback_history_title] = useState();
+  const [cashback_history_all, setCashback_history_all] = useState([]);
+  const [cashback_history_pending, setCashback_history_pending] = useState([]);
+  const [cashback_history_debit, setCashback_history_debit] = useState([]);
+  const [cashback_history_decline, setCashback_history_decline] = useState([]);
+  const [option, setOption] = useState("all");
+  const [noMoreData, setNoMoreData] = useState(false);
 
-  const [page, setPage] = useState(1)
-  const [authToken, setAuthToken] = useState()
-  const [cashback_history_title, setCashback_history_title] = useState()
-  const [cashback_history_all, setCashback_history_all] = useState([])
-  const [cashback_history_pending, setCashback_history_pending] = useState([])
-  const [cashback_history_debit, setCashback_history_debit] = useState([])
-  const [cashback_history_decline, setCashback_history_decline] = useState([])
-  const [option, setOption] = useState("all")
-  const [noMoreData,setNoMoreData] = useState(false)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getData = async () => {
+    try {
+      const { data } = await axios.post(
+        withdrawal_historyAPI,
+        {
+          apiAuth: apiAuth,
+          device_type: "4",
+          option: option,
+          page: page,
+        },
+        {
+          headers: {
+            Authorization: authToken,
+          },
+        }
+      );
 
+      setCashback_history_title(data.response.top_desc);
+      if (option == " ") {
+        if (data.response.all.length == 0) {
+          setNoMoreData(true);
+        } else {
+          setCashback_history_all([
+            ...cashback_history_all,
+            ...data.response.all,
+          ]);
+        }
+      } else if (option == "pending") {
+        if (data.response.pending.length == 0) {
+          setNoMoreData(true);
+        } else {
+          setCashback_history_pending([
+            ...cashback_history_pending,
+            ...data.response.pending,
+          ]);
+        }
+      } else if (option == "debit") {
+        if (data.response.debit.length == 0) {
+          setNoMoreData(true);
+        } else {
+          setCashback_history_debit([
+            ...cashback_history_debit,
+            ...data.response.debit,
+          ]);
+        }
+      } else if (option == "decline") {
+        if (data.response.decline.length == 0) {
+          setNoMoreData(true);
+        } else {
+          setCashback_history_decline([
+            ...cashback_history_decline,
+            ...data.response.decline,
+          ]);
+        }
+      } else {
+        if (data.response.all.length == 0) {
+          setNoMoreData(true);
+        } else {
+          setCashback_history_all([
+            ...cashback_history_all,
+            ...data.response.all,
+          ]);
+        }
+      }
+    } catch (error) {}
+  };
+  const moreData = () => {
+    setPage(page + 1);
+  };
 
+  useEffect(() => {
+    setAuthToken(JSON.parse(localStorage.getItem("user")).token);
+    getData();
+  }, [authToken]);
 
+  useEffect(() => {
+    getData();
+  }, [option, page]);
 
-// eslint-disable-next-line react-hooks/exhaustive-deps
-const getData = async () =>{
-  try {
-    const {data} = await axios.post(withdrawal_historyAPI,{
-      apiAuth:apiAuth,
-      device_type:"4",
-      option:option,
-      page:page
-    },
-    {
-      headers:{
-        Authorization:authToken
-    }
-  })
+  const allTab = () => {
+    setNoMoreData(false);
+    setOption("all");
+    setPage(1);
+    setCashback_history_pending("");
+    setCashback_history_debit("");
+    setCashback_history_decline("");
+  };
 
-  // console.log(data.response.debit)
-  setCashback_history_title(data.response.top_desc)
-  if(option == " "){
-    if((data.response.all).length == 0 ){
-      setNoMoreData(true)
-    }else{
-      setCashback_history_all([...cashback_history_all, ...data.response.all])
-    }
-    
-  }else if(option == "pending"){
-     if((data.response.pending).length == 0){
-      setNoMoreData(true)
-     }else{
-      setCashback_history_pending([...cashback_history_pending, ...data.response.pending])
-     }
-    
-  }else if(option == "debit"){
-    if((data.response.debit).length == 0){
-      setNoMoreData(true)
-    }else{
+  const pendingTab = () => {
+    setNoMoreData(false);
+    setOption("pending");
+    setPage(1);
+    setCashback_history_all("");
+    setCashback_history_debit("");
+    setCashback_history_decline("");
+  };
 
-      setCashback_history_debit([...cashback_history_debit, ...data.response.debit])
-    }
-   
-  }else if(option == "decline"){
-    if((data.response.decline).length == 0){
-      setNoMoreData(true)
-    }else{
-      setCashback_history_decline([...cashback_history_decline, ...data.response.decline])
-    }
-  }else{
-    if((data.response.all).length == 0 ){
-      setNoMoreData(true)
-    }else{
-      setCashback_history_all([...cashback_history_all, ...data.response.all])
-    }
-   
-  }
-  } catch (error) {
-  }
-} 
-const moreData = ()=>{
-  setPage(page + 1)
-}
+  const debitTab = () => {
+    setNoMoreData(false);
+    setOption("debit");
+    setPage(1);
+    setCashback_history_all("");
+    setCashback_history_pending("");
+    setCashback_history_decline("");
+  };
 
-useEffect(()=>{
-  setAuthToken(JSON.parse(localStorage.getItem("user")).token)
-  getData()
-},[authToken]) 
+  const declineTab = () => {
+    setNoMoreData(false);
+    setOption("decline");
+    setPage(1);
+    setCashback_history_all("");
+    setCashback_history_pending("");
+    setCashback_history_debit("");
+  };
 
-
-useEffect(()=>{
-  getData()
-},[option, page])
-
-const allTab = ()=>{
-  setNoMoreData(false)
-setOption("all")
-setPage(1)
-setCashback_history_pending("")
-setCashback_history_debit('')
-setCashback_history_decline('')
-}
-
-const pendingTab =()=>{
-  setNoMoreData(false)
-setOption("pending")
-setPage(1)
-setCashback_history_all("")
-setCashback_history_debit('')
-setCashback_history_decline('')
-}
-
-const debitTab = ()=>{
-  setNoMoreData(false)
- setOption("debit")
- setPage(1)
- setCashback_history_all("")
- setCashback_history_pending("")
- setCashback_history_decline('')
-}
-
-const declineTab =()=>{
-  setNoMoreData(false)
- setOption("decline")
- setPage(1)
- setCashback_history_all("")
- setCashback_history_pending("")
- setCashback_history_debit('')
-}
-// console.log(cashback_history_debit)
-  
-const Tab = styled(TabUnstyled)`
+  const Tab = styled(TabUnstyled)`
     font-family: IBM Plex Sans, sans-serif;
 
     cursor: pointer;
@@ -232,9 +236,7 @@ const Tab = styled(TabUnstyled)`
           }}
         >
           <Typography component="p" fontSize="13px" color="gray">
-           {
-             setCashback_history_title ? cashback_history_title : "Loding.."
-           }
+            {setCashback_history_title ? cashback_history_title : "Loding.."}
           </Typography>
         </Box>
         <Box sx={{ p: 2 }}>
@@ -248,9 +250,8 @@ const Tab = styled(TabUnstyled)`
               </TabsList>
               <TabPanel value={0}>
                 <TableContainer component={Paper}>
-                {
-                    cashback_history_all.length > 0 ? 
-                      <Table sx={{ minWidth: 300 }} aria-label="customized table">
+                  {cashback_history_all.length > 0 ? (
+                    <Table sx={{ minWidth: 300 }} aria-label="customized table">
                       <TableHead>
                         <TableRow>
                           <StyledTableCell>SN</StyledTableCell>
@@ -259,106 +260,137 @@ const Tab = styled(TabUnstyled)`
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        { cashback_history_all && cashback_history_all.map((item, i) => (
-                          <StyledTableRow key={i + 1}>
-                            <StyledTableCell>{i + 1}</StyledTableCell>
-                            <StyledTableCell> &#8377; {item.amount} </StyledTableCell>
-                            <StyledTableCell>{item.date}</StyledTableCell>
-                          </StyledTableRow>
-                        ))}
+                        {cashback_history_all &&
+                          cashback_history_all.map((item, i) => (
+                            <StyledTableRow key={i + 1}>
+                              <StyledTableCell>{i + 1}</StyledTableCell>
+                              <StyledTableCell>
+                                {" "}
+                                &#8377; {item.amount}{" "}
+                              </StyledTableCell>
+                              <StyledTableCell>{item.date}</StyledTableCell>
+                            </StyledTableRow>
+                          ))}
                       </TableBody>
                     </Table>
-                    :<Typography textAlign={"center"} fontSize={18}>No Data Available</Typography> 
-                  }
+                  ) : (
+                    <Typography textAlign={"center"} fontSize={18}>
+                      No Data Available
+                    </Typography>
+                  )}
                 </TableContainer>
                 <div>
-                  {
-                  noMoreData ? "No More Data..." : 
-                    <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
-                        <Button onClick={moreData} variant="outlined">More Data</Button>
-                    </Box> 
-                  }
-                  </div>
+                  {noMoreData ? (
+                    "No More Data..."
+                  ) : (
+                    <Box
+                      sx={{ p: 1, display: "flex", justifyContent: "center" }}
+                    >
+                      <Button onClick={moreData} variant="outlined">
+                        More Data
+                      </Button>
+                    </Box>
+                  )}
+                </div>
               </TabPanel>
               <TabPanel value={1}>
                 <TableContainer component={Paper}>
-                  {
-                    cashback_history_pending.length > 0 ? 
-                      <Table sx={{ minWidth: 300 }} aria-label="customized table">
+                  {cashback_history_pending.length > 0 ? (
+                    <Table sx={{ minWidth: 300 }} aria-label="customized table">
                       <TableHead>
                         <TableRow>
-                        <StyledTableCell>SN</StyledTableCell>
+                          <StyledTableCell>SN</StyledTableCell>
                           <StyledTableCell>Bank</StyledTableCell>
                           <StyledTableCell>Amount</StyledTableCell>
                           <StyledTableCell>Transaction Data</StyledTableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        { cashback_history_pending && cashback_history_pending.map((item, i) => (
-                          <StyledTableRow key={i + 1}>
-                            <StyledTableCell>{i + 1}</StyledTableCell>
-                            <StyledTableCell>{item.type}</StyledTableCell>
-                            <StyledTableCell> &#8377; {item.amount} </StyledTableCell>
-                            <StyledTableCell>{item.date}</StyledTableCell>
-                          </StyledTableRow>
-                        ))}
+                        {cashback_history_pending &&
+                          cashback_history_pending.map((item, i) => (
+                            <StyledTableRow key={i + 1}>
+                              <StyledTableCell>{i + 1}</StyledTableCell>
+                              <StyledTableCell>{item.type}</StyledTableCell>
+                              <StyledTableCell>
+                                {" "}
+                                &#8377; {item.amount}{" "}
+                              </StyledTableCell>
+                              <StyledTableCell>{item.date}</StyledTableCell>
+                            </StyledTableRow>
+                          ))}
                       </TableBody>
                     </Table>
-                    :<Typography textAlign={"center"} fontSize={18}>No Data Available</Typography> 
-                  }
-                 
+                  ) : (
+                    <Typography textAlign={"center"} fontSize={18}>
+                      No Data Available
+                    </Typography>
+                  )}
                 </TableContainer>
                 <div>
-                  {
-                  noMoreData ? "No More Data..." : 
-                    <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
-                        <Button onClick={moreData} variant="outlined">More Data</Button>
-                    </Box> 
-                  }
-                  </div>
+                  {noMoreData ? (
+                    "No More Data..."
+                  ) : (
+                    <Box
+                      sx={{ p: 1, display: "flex", justifyContent: "center" }}
+                    >
+                      <Button onClick={moreData} variant="outlined">
+                        More Data
+                      </Button>
+                    </Box>
+                  )}
+                </div>
               </TabPanel>
               <TabPanel value={2}>
                 <TableContainer component={Paper}>
-                  {
-                    cashback_history_debit.length > 0 ? 
-                      <Table sx={{ minWidth: 300 }} aria-label="customized table">
+                  {cashback_history_debit.length > 0 ? (
+                    <Table sx={{ minWidth: 300 }} aria-label="customized table">
                       <TableHead>
                         <TableRow>
-                        <StyledTableCell>SN</StyledTableCell>
+                          <StyledTableCell>SN</StyledTableCell>
                           <StyledTableCell>Bank</StyledTableCell>
                           <StyledTableCell>Amount</StyledTableCell>
                           <StyledTableCell>Transaction Data</StyledTableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        { cashback_history_debit && cashback_history_debit.map((item, i) => (
-                          <StyledTableRow key={i + 1}>
-                          <StyledTableCell>{i + 1}</StyledTableCell>
-                          <StyledTableCell>{item.type}</StyledTableCell>
-                          <StyledTableCell> &#8377; {item.amount} </StyledTableCell>
-                          <StyledTableCell>{item.date}</StyledTableCell>
-                        </StyledTableRow>
-                        ))}
+                        {cashback_history_debit &&
+                          cashback_history_debit.map((item, i) => (
+                            <StyledTableRow key={i + 1}>
+                              <StyledTableCell>{i + 1}</StyledTableCell>
+                              <StyledTableCell>{item.type}</StyledTableCell>
+                              <StyledTableCell>
+                                {" "}
+                                &#8377; {item.amount}{" "}
+                              </StyledTableCell>
+                              <StyledTableCell>{item.date}</StyledTableCell>
+                            </StyledTableRow>
+                          ))}
                       </TableBody>
                     </Table>
-                    :<Typography textAlign={"center"} fontSize={18}>No Data Available</Typography> 
-                  }
-                 
+                  ) : (
+                    <Typography textAlign={"center"} fontSize={18}>
+                      No Data Available
+                    </Typography>
+                  )}
                 </TableContainer>
                 <div>
-                  {
-                  noMoreData ? "No More Data..." : 
-                    <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
-                        <Button onClick={moreData} variant="outlined">More Data</Button>
-                    </Box> 
-                  }
-                  </div>
+                  {noMoreData ? (
+                    "No More Data..."
+                  ) : (
+                    <Box
+                      sx={{ p: 1, display: "flex", justifyContent: "center" }}
+                    >
+                      <Button onClick={moreData} variant="outlined">
+                        More Data
+                      </Button>
+                    </Box>
+                  )}
+                </div>
               </TabPanel>
               <TabPanel value={3}>
                 <TableContainer component={Paper}>
-                  {
-                    cashback_history_decline.length > 0 ? 
-                      <Table sx={{ minWidth: 300 }} aria-label="customized table">
+                  {cashback_history_decline.length > 0 ? (
+                    <Table sx={{ minWidth: 300 }} aria-label="customized table">
                       <TableHead>
                         <TableRow>
                           <StyledTableCell>SN</StyledTableCell>
@@ -369,29 +401,42 @@ const Tab = styled(TabUnstyled)`
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        { cashback_history_decline && cashback_history_decline.map((item, i) => (
-                          <StyledTableRow key={i + 1}>
-                            <StyledTableCell>{i + 1}</StyledTableCell>
-                            <StyledTableCell>{item.type}</StyledTableCell>
-                            <StyledTableCell> &#8377; {item.amount} </StyledTableCell>
-                            <StyledTableCell sx={{minWidth:"200px"}}>{item.reason}</StyledTableCell>
-                            <StyledTableCell>{item.date}</StyledTableCell>
-                          </StyledTableRow>
-                        ))}
+                        {cashback_history_decline &&
+                          cashback_history_decline.map((item, i) => (
+                            <StyledTableRow key={i + 1}>
+                              <StyledTableCell>{i + 1}</StyledTableCell>
+                              <StyledTableCell>{item.type}</StyledTableCell>
+                              <StyledTableCell>
+                                {" "}
+                                &#8377; {item.amount}{" "}
+                              </StyledTableCell>
+                              <StyledTableCell sx={{ minWidth: "200px" }}>
+                                {item.reason}
+                              </StyledTableCell>
+                              <StyledTableCell>{item.date}</StyledTableCell>
+                            </StyledTableRow>
+                          ))}
                       </TableBody>
                     </Table>
-                    :<Typography textAlign={"center"} fontSize={18}>No Data Available</Typography> 
-                  }
-                 
+                  ) : (
+                    <Typography textAlign={"center"} fontSize={18}>
+                      No Data Available
+                    </Typography>
+                  )}
                 </TableContainer>
                 <div>
-                  {
-                  noMoreData ? "No More Data..." : 
-                    <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
-                        <Button onClick={moreData} variant="outlined">More Data</Button>
-                    </Box> 
-                  }
-                  </div>
+                  {noMoreData ? (
+                    "No More Data..."
+                  ) : (
+                    <Box
+                      sx={{ p: 1, display: "flex", justifyContent: "center" }}
+                    >
+                      <Button onClick={moreData} variant="outlined">
+                        More Data
+                      </Button>
+                    </Box>
+                  )}
+                </div>
               </TabPanel>
             </TabsUnstyled>
           </Box>
@@ -423,4 +468,3 @@ const Tab = styled(TabUnstyled)`
 };
 
 export default CashbackHistory;
-// WithdrawHistory

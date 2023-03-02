@@ -1,106 +1,101 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 // import Image from "next/image";
-import {missingStoreAPI} from "service/API"
-import {missingStoreClickAPI} from "service/API"
-import { Box, Typography, Button, Alert,  } from "@mui/material";
+import { missingStoreAPI } from "service/API";
+import { missingStoreClickAPI } from "service/API";
+import { Box, Typography, Button, Alert } from "@mui/material";
 import axios from "axios";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 const apiAuth = process.env.API_AUTH;
 
 const MissingClaimForm = () => {
   const [storeType, setStoreType] = useState();
   const [authToken, setAuthToken] = useState();
-  const [store, setStore] = useState()
-  const [alert_message, setAlert_Message]= useState()
-  const [err, setErr] =useState()
-  // const [storeValue, setStoreValue] =  useState()
+  const [store, setStore] = useState();
+  const [alert_message, setAlert_Message] = useState();
+  const [err, setErr] = useState();
 
-  const router = useRouter()
+  const router = useRouter();
 
-
-  useEffect(()=>{
+  useEffect(() => {
     setAuthToken(JSON.parse(localStorage.getItem("user")).token);
-  },[])
+  }, []);
 
-  const getData = async ()=>{
+  const getData = async () => {
     try {
-       let {data}= await axios.post(missingStoreAPI,{
-        apiAuth: apiAuth,
-        device_type: "4"
-       },
-       {
-        headers: {
-          Authorization: authToken,
+      let { data } = await axios.post(
+        missingStoreAPI,
+        {
+          apiAuth: apiAuth,
+          device_type: "4",
         },
-      });
-    //    console.log(data)
-       setStore(data.response)
-    } catch (error) {
-     
-    }
-  }
+        {
+          headers: {
+            Authorization: authToken,
+          },
+        }
+      );
+      setStore(data.response);
+    } catch (error) {}
+  };
 
-  useEffect(()=>{
-   getData()
-  },[authToken])
+  useEffect(() => {
+    getData();
+  }, [authToken]);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if(storeType){
-      if(storeType == "nostore"){
-        setErr(`Please Select valid Store Name`)
-      }else{
-        // console.log(storeType)
-        const sendStoreData = async () =>{
+    if (storeType) {
+      if (storeType == "nostore") {
+        setErr(`Please Select valid Store Name`);
+      } else {
+        const sendStoreData = async () => {
           try {
-             let {data} = await axios.post(missingStoreClickAPI,{
-              apiAuth: apiAuth,
-              device_type: "4",
-              store_id:storeType
-             },
-             {
-              headers: {
-                Authorization: authToken,
+            let { data } = await axios.post(
+              missingStoreClickAPI,
+              {
+                apiAuth: apiAuth,
+                device_type: "4",
+                store_id: storeType,
               },
-             })
-            //  console.log(data)
-             if(data.status == 1){
-                setAlert_Message(data.message)
-              //  console.log(data.response)
-               if(data.response){
-                sessionStorage.setItem("store_id",storeType);
-                sessionStorage.setItem("missingStoreForm",JSON.stringify(data.response));
-              setTimeout(()=>{
-                router.push("missingform-store")
-              },1000)
-               }
-             }else if(data.status == 0){
-            //   setErr(data.message)
-             }
-          } catch (error) {
-            // console.log(error)
-          }
-        }
-        sendStoreData()
+              {
+                headers: {
+                  Authorization: authToken,
+                },
+              }
+            );
+            if (data.status == 1) {
+              setAlert_Message(data.message);
+              if (data.response) {
+                sessionStorage.setItem("store_id", storeType);
+                sessionStorage.setItem(
+                  "missingStoreForm",
+                  JSON.stringify(data.response)
+                );
+                setTimeout(() => {
+                  router.push("missingform-store");
+                }, 1000);
+              }
+            } else if (data.status == 0) {
+            }
+          } catch (error) {}
+        };
+        sendStoreData();
       }
-    }else{
-      setErr(`Select Store Name`)
+    } else {
+      setErr(`Select Store Name`);
     }
   };
-  
-  const storeHandler = (e) => {
-    let splitValue = e.target.value
-    let myArray =  splitValue.split(" ");
-    setStoreType(myArray[0]);
-    // sessionStorage.setItem("store_name",myArray[1]);
-    setErr("")
-    setAlert_Message("")
-  };
 
-// console.log(storeType)
+  const storeHandler = (e) => {
+    let splitValue = e.target.value;
+    let myArray = splitValue.split(" ");
+    setStoreType(myArray[0]);
+    setErr("");
+    setAlert_Message("");
+  };
 
   const headeTitle = "Cashback CalimForm | Freekaamaal";
   return (
@@ -116,25 +111,27 @@ const MissingClaimForm = () => {
             </Typography>
             <Typography component="p" fontSize="13px">
               {" "}
-             
             </Typography>
           </Box>
-          <Box sx={{paddingTop:"10px"}}>
-            
-            <form  onSubmit={onSubmit}>
+          <Box sx={{ paddingTop: "10px" }}>
+            <form onSubmit={onSubmit}>
               <select
                 onChange={storeHandler}
                 name="account-type"
                 id="account-type"
               >
                 <option value="nostore">Store Name</option>
-                {
-                 store && store.map((item,i)=>{
-                    return(
-                      <option key={item.store_id} value={`${item.store_id} ${item.store}`}>{item.store}</option>
-                    )
-                  }) 
-                }
+                {store &&
+                  store.map((item, i) => {
+                    return (
+                      <option
+                        key={item.store_id}
+                        value={`${item.store_id} ${item.store}`}
+                      >
+                        {item.store}
+                      </option>
+                    );
+                  })}
               </select>
               <Box sx={{ padding: "10px 0" }}>
                 <Button
@@ -147,12 +144,19 @@ const MissingClaimForm = () => {
                 </Button>
               </Box>
               <Box>
-                {
-                  err ?<Box sx={{paddingTop:"10px"}}>  <Alert severity="error">{err}</Alert></Box> :""
-                }
-                {
-                    alert_message ?  <Alert severity="info">{alert_message}</Alert> :""
-                }
+                {err ? (
+                  <Box sx={{ paddingTop: "10px" }}>
+                    {" "}
+                    <Alert severity="error">{err}</Alert>
+                  </Box>
+                ) : (
+                  ""
+                )}
+                {alert_message ? (
+                  <Alert severity="info">{alert_message}</Alert>
+                ) : (
+                  ""
+                )}
               </Box>
             </form>
           </Box>
@@ -166,7 +170,6 @@ const MissingClaimForm = () => {
           font-size: 15px;
           border: 1px solid #c1c1c1;
         }
-        
       `}</style>
     </>
   );

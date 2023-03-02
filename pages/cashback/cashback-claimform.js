@@ -1,105 +1,98 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 // import Image from "next/image";
-import {claimformStoreAPI} from "service/API"
-import {userClaimformAPI} from "service/API"
-import { Box, Typography, Button, Alert,  } from "@mui/material";
+import { claimformStoreAPI } from "service/API";
+import { userClaimformAPI } from "service/API";
+import { Box, Typography, Button, Alert } from "@mui/material";
 import axios from "axios";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 const apiAuth = process.env.API_AUTH;
 
 const CashbackClaimform = () => {
   const [storeType, setStoreType] = useState();
   const [authToken, setAuthToken] = useState();
-  const [store, setStore] = useState()
-  const [err, setErr] =useState()
-  // const [storeValue, setStoreValue] =  useState()
+  const [store, setStore] = useState();
+  const [err, setErr] = useState();
 
-  const router = useRouter()
+  const router = useRouter();
 
-
-  useEffect(()=>{
+  useEffect(() => {
     setAuthToken(JSON.parse(localStorage.getItem("user")).token);
-  },[])
+  }, []);
 
-  const getData = async ()=>{
+  const getData = async () => {
     try {
-       let {data}= await axios.post(claimformStoreAPI,{
-        apiAuth: apiAuth,
-        device_type: "4"
-       },
-       {
-        headers: {
-          Authorization: authToken,
+      let { data } = await axios.post(
+        claimformStoreAPI,
+        {
+          apiAuth: apiAuth,
+          device_type: "4",
         },
-      });
-      // console.log(data.response)
-      setStore(data.response)
-      // console.log(data)
-    } catch (error) {
-      // console.log(error)
-    }
-  }
+        {
+          headers: {
+            Authorization: authToken,
+          },
+        }
+      );
+      setStore(data.response);
+    } catch (error) {}
+  };
 
-  useEffect(()=>{
-   getData()
-  },[authToken])
+  useEffect(() => {
+    getData();
+  }, [authToken]);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if(storeType){
-      if(storeType == "nostore"){
-        setErr(`Please Select valid Store Name`)
-      }else{
-        // console.log(storeType)
-        const sendStoreData = async () =>{
+    if (storeType) {
+      if (storeType == "nostore") {
+        setErr(`Please Select valid Store Name`);
+      } else {
+        const sendStoreData = async () => {
           try {
-             let {data} = await axios.post(userClaimformAPI,{
-              apiAuth: apiAuth,
-              device_type: "4",
-              store_id:storeType
-             },
-             {
-              headers: {
-                Authorization: authToken,
+            let { data } = await axios.post(
+              userClaimformAPI,
+              {
+                apiAuth: apiAuth,
+                device_type: "4",
+                store_id: storeType,
               },
-             })
-             if(data.status == 1){
-              // console.log(data)
-              sessionStorage.setItem("store_id",storeType);
-              sessionStorage.setItem("claimStoreForm",JSON.stringify(data));
-              setTimeout(()=>{
-                router.push("claimform-store")
-              },500)
-             
-             }else if(data.status == 0){
-              setErr(data.message)
-             }
+              {
+                headers: {
+                  Authorization: authToken,
+                },
+              }
+            );
+            if (data.status == 1) {
+              sessionStorage.setItem("store_id", storeType);
+              sessionStorage.setItem("claimStoreForm", JSON.stringify(data));
+              setTimeout(() => {
+                router.push("claimform-store");
+              }, 500);
+            } else if (data.status == 0) {
+              setErr(data.message);
+            }
           } catch (error) {
-            console.log(error)
+            console.log(error);
           }
-        }
-        sendStoreData()
+        };
+        sendStoreData();
       }
-    }else{
-      setErr(`Select Store Name`)
+    } else {
+      setErr(`Select Store Name`);
     }
   };
-  
+
   const storeHandler = (e) => {
-    // (e.target.value
-    let splitValue = e.target.value
-    // console.log(splitValue)
-    let myArray =  splitValue.split(" ");
+    let splitValue = e.target.value;
+    let myArray = splitValue.split(" ");
     setStoreType(myArray[0]);
-    sessionStorage.setItem("store_name",myArray[1]);
-    // setStoreValue(myArray[1])
-    setErr("")
+    sessionStorage.setItem("store_name", myArray[1]);
+    setErr("");
   };
 
-  // console.log( "store click" , storeValue)
   const headeTitle = "Cashback CalimForm | Freekaamaal";
   return (
     <>
@@ -114,25 +107,27 @@ const CashbackClaimform = () => {
             </Typography>
             <Typography component="p" fontSize="13px">
               {" "}
-             
             </Typography>
           </Box>
-          <Box sx={{paddingTop:"10px"}}>
-            
-            <form  onSubmit={onSubmit}>
+          <Box sx={{ paddingTop: "10px" }}>
+            <form onSubmit={onSubmit}>
               <select
                 onChange={storeHandler}
                 name="account-type"
                 id="account-type"
               >
                 <option value="nostore">Store Name</option>
-                {
-                 store && store.map((item,i)=>{
-                    return(
-                      <option key={item.id} value={`${item.store_id} ${item.name}`}>{item.name}</option>
-                    )
-                  }) 
-                }
+                {store &&
+                  store.map((item, i) => {
+                    return (
+                      <option
+                        key={item.id}
+                        value={`${item.store_id} ${item.name}`}
+                      >
+                        {item.name}
+                      </option>
+                    );
+                  })}
               </select>
               <Box sx={{ padding: "10px 0" }}>
                 <Button
@@ -145,9 +140,14 @@ const CashbackClaimform = () => {
                 </Button>
               </Box>
               <Box>
-                {
-                  err ?<Box sx={{paddingTop:"10px"}}>  <Alert severity="error">{err}</Alert></Box> :""
-                }
+                {err ? (
+                  <Box sx={{ paddingTop: "10px" }}>
+                    {" "}
+                    <Alert severity="error">{err}</Alert>
+                  </Box>
+                ) : (
+                  ""
+                )}
               </Box>
             </form>
           </Box>
@@ -161,7 +161,6 @@ const CashbackClaimform = () => {
           font-size: 15px;
           border: 1px solid #c1c1c1;
         }
-        
       `}</style>
     </>
   );

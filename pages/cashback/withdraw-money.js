@@ -40,7 +40,6 @@ const WithdrawMoney = () => {
       );
 
       if (data.status == 1) {
-        //  console.log(data)
          setuserData(data)
         if (account == "bank") {
           setActiveBank(true);

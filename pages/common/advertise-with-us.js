@@ -8,89 +8,86 @@ import HeadTag from "../../components/headTagComponent/HeadTag";
 
 const imageLink = [
   {
-    "imgsrc": "https://images.freekaamaal.com/store-images/4209.jpg",
-    "imgalt": "icon"
+    imgsrc: "https://images.freekaamaal.com/store-images/4209.jpg",
+    imgalt: "icon",
   },
   {
-    "imgsrc": "https://images.freekaamaal.com/store-images/4209.jpg",
-    "imgalt": "icon"
+    imgsrc: "https://images.freekaamaal.com/store-images/4209.jpg",
+    imgalt: "icon",
   },
   {
-    "imgsrc": "https://images.freekaamaal.com/store-images/4209.jpg",
-    "imgalt": "icon"
+    imgsrc: "https://images.freekaamaal.com/store-images/4209.jpg",
+    imgalt: "icon",
   },
   {
-    "imgsrc": "https://images.freekaamaal.com/store-images/4209.jpg",
-    "imgalt": "icon"
+    imgsrc: "https://images.freekaamaal.com/store-images/4209.jpg",
+    imgalt: "icon",
   },
   {
-    "imgsrc": "https://images.freekaamaal.com/store-images/4209.jpg",
-    "imgalt": "icon"
+    imgsrc: "https://images.freekaamaal.com/store-images/4209.jpg",
+    imgalt: "icon",
   },
   {
-    "imgsrc": "https://images.freekaamaal.com/store-images/4209.jpg",
-    "imgalt": "icon"
-  },
-   {
-    "imgsrc": "https://images.freekaamaal.com/store-images/4209.jpg",
-    "imgalt": "icon"
+    imgsrc: "https://images.freekaamaal.com/store-images/4209.jpg",
+    imgalt: "icon",
   },
   {
-    "imgsrc": "https://images.freekaamaal.com/store-images/4209.jpg",
-    "imgalt": "icon"
+    imgsrc: "https://images.freekaamaal.com/store-images/4209.jpg",
+    imgalt: "icon",
   },
-  
-  
+  {
+    imgsrc: "https://images.freekaamaal.com/store-images/4209.jpg",
+    imgalt: "icon",
+  },
 ];
 
 const MetroCity = [
   {
-    "imgsrc":"https://images.freekaamaal.com/store-images/4209.jpg",
-    "city":"noida",
-    "count":"7857657"
+    imgsrc: "https://images.freekaamaal.com/store-images/4209.jpg",
+    city: "noida",
+    count: "7857657",
   },
   {
-    "imgsrc":"https://images.freekaamaal.com/store-images/4209.jpg",
-    "city":"noida",
-    "count":"7857657"
+    imgsrc: "https://images.freekaamaal.com/store-images/4209.jpg",
+    city: "noida",
+    count: "7857657",
   },
   {
-    "imgsrc":"https://images.freekaamaal.com/store-images/4209.jpg",
-    "city":"noida",
-    "count":"7857657"
+    imgsrc: "https://images.freekaamaal.com/store-images/4209.jpg",
+    city: "noida",
+    count: "7857657",
   },
   {
-    "imgsrc":"https://images.freekaamaal.com/store-images/4209.jpg",
-    "city":"noida",
-    "count":"7857657"
+    imgsrc: "https://images.freekaamaal.com/store-images/4209.jpg",
+    city: "noida",
+    count: "7857657",
   },
   {
-    "imgsrc":"https://images.freekaamaal.com/store-images/4209.jpg",
-    "city":"noida",
-    "count":"7857657"
+    imgsrc: "https://images.freekaamaal.com/store-images/4209.jpg",
+    city: "noida",
+    count: "7857657",
   },
   {
-    "imgsrc":"https://images.freekaamaal.com/store-images/4209.jpg",
-    "city":"noida",
-    "count":"7857657"
+    imgsrc: "https://images.freekaamaal.com/store-images/4209.jpg",
+    city: "noida",
+    count: "7857657",
   },
   {
-    "imgsrc":"https://images.freekaamaal.com/store-images/4209.jpg",
-    "city":"noida",
-    "count":"7857657"
+    imgsrc: "https://images.freekaamaal.com/store-images/4209.jpg",
+    city: "noida",
+    count: "7857657",
   },
   {
-    "imgsrc":"https://images.freekaamaal.com/store-images/4209.jpg",
-    "city":"noida",
-    "count":"7857657"
+    imgsrc: "https://images.freekaamaal.com/store-images/4209.jpg",
+    city: "noida",
+    count: "7857657",
   },
   {
-    "imgsrc":"https://images.freekaamaal.com/store-images/4209.jpg",
-    "city":"noida",
-    "count":"7857657"
+    imgsrc: "https://images.freekaamaal.com/store-images/4209.jpg",
+    city: "noida",
+    count: "7857657",
   },
-
-]
+];
 const advertiseWithUs = () => {
   return (
     <>
@@ -123,18 +120,18 @@ const advertiseWithUs = () => {
                 slidesPerView={3}
                 spaceBetween={10}
               >
-                {imageLink.map((item,i) => 
-                      <SwiperSlide key={i}>
-                        <div className="slider-card">
-                          <Image
-                            width={50}
-                            height={50}
-                            src={item.imgsrc}
-                            alt={item.imgalt}
-                          />
-                        </div>
-                      </SwiperSlide>
-               )}
+                {imageLink.map((item, i) => (
+                  <SwiperSlide key={i}>
+                    <div className="slider-card">
+                      <Image
+                        width={50}
+                        height={50}
+                        src={item.imgsrc}
+                        alt={item.imgalt}
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
               </Swiper>
             </div>
           </div>
@@ -228,46 +225,28 @@ const advertiseWithUs = () => {
                 <div className="slider responsive slick-initialized slick-slider slick-dotted">
                   <div className="slick-list draggable">
                     <div className="slick-track">
-
-
-                    <Swiper
-                className="deal_of_the_day_component"
-                slidesPerView={1}
-              >
-                {MetroCity.map((item,i) => 
-                      <SwiperSlide key={i}>
-                       <div className="top-cities slick-slide slick-current slick-active">
-                        <span>
-                          <Image
-                            width={70}
-                            height={70}
-                            src={item.imgsrc}
-                            alt={item.imgalt}
-                          />
-                        </span>
-                        <p>{item.count} + Happy Customers</p>
-                        <span className="city-name">{item.city}</span>
-                      </div>
-                      </SwiperSlide>
-               )}
-              </Swiper>
-                      
-                      
+                      <Swiper
+                        className="deal_of_the_day_component"
+                        slidesPerView={1}
+                      >
+                        {MetroCity.map((item, i) => (
+                          <SwiperSlide key={i}>
+                            <div className="top-cities slick-slide slick-current slick-active">
+                              <span>
+                                <Image
+                                  width={70}
+                                  height={70}
+                                  src={item.imgsrc}
+                                  alt={item.imgalt}
+                                />
+                              </span>
+                              <p>{item.count} + Happy Customers</p>
+                              <span className="city-name">{item.city}</span>
+                            </div>
+                          </SwiperSlide>
+                        ))}
+                      </Swiper>
                     </div>
-                    {/* <ul className="slick-dots">
-                      <li className="slick-active">
-                        <button>1</button>
-                      </li>
-                      <li className="slick-dots">
-                        <button>2</button>
-                      </li>
-                      <li className="slick-dots">
-                        <button>3</button>
-                      </li>
-                      <li className="slick-dots">
-                        <button>4</button>
-                      </li>
-                    </ul> */}
                   </div>
                 </div>
               </div>
@@ -653,18 +632,7 @@ const advertiseWithUs = () => {
             color: #30364e;
             font-size: 18px;
           }
-           {
-            /* .section-title h2:after {
-            content: "";
-            display: inline-block;
-            width: 48%;
-            height: 1px;
-            background-color: #30364e;
-            position: absolute;
-            top: 11px;
-            right: 6px;
-          } */
-          }
+
           .slider {
             position: relative;
             height: 83px;
@@ -1111,14 +1079,6 @@ const advertiseWithUs = () => {
           }
           .google_map {
             margin-top: 20px;
-          }
-          .google_auto_placed {
-             {
-              /* width: 100%;
-            height: 400px;
-            clear: both;
-            text-align: center; */
-            }
           }
         `}
       </style>

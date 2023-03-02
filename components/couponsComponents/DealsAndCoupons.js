@@ -49,10 +49,18 @@ const TabPanel = styled(TabPanelUnstyled)(
     `
 );
 
-const DealsAndCoupons = ({categoryCoupons, noCouponData, noDealData , categoryDeals, dealsTabCall, couponsTabCall, addDealPage, addCouponPage}) => {
+const DealsAndCoupons = ({
+  categoryCoupons,
+  noCouponData,
+  noDealData,
+  categoryDeals,
+  dealsTabCall,
+  couponsTabCall,
+  addDealPage,
+  addCouponPage,
+}) => {
   const [deals, setDeals] = useState();
   const [coupons, setCoupons] = useState();
-
 
   useEffect(() => {
     setDeals(categoryDeals);
@@ -69,47 +77,46 @@ const DealsAndCoupons = ({categoryCoupons, noCouponData, noDealData , categoryDe
           </TabsList>
           <TabPanel value={0}>
             <HotDealsCards hotdeals={deals} />
-            <Box component="div" sx={{ p:1, textAlign: "center" }}>
-              {
-                noDealData ? `No Data Found`:
-                <>
-                 {deals ? (
-                <Button
-                  onClick={addDealPage}
-                  sx={{ color: "#fff", fontWeight: "600" }}
-                  variant="contained"
-                >
-                  Lode More
-                </Button>
+            <Box component="div" sx={{ p: 1, textAlign: "center" }}>
+              {noDealData ? (
+                `No Data Found`
               ) : (
-                ""
-              )}
+                <>
+                  {deals ? (
+                    <Button
+                      onClick={addDealPage}
+                      sx={{ color: "#fff", fontWeight: "600" }}
+                      variant="contained"
+                    >
+                      Lode More
+                    </Button>
+                  ) : (
+                    ""
+                  )}
                 </>
-                }
+              )}
             </Box>
           </TabPanel>
           <TabPanel value={1}>
-            {
-            // console.log(coupons)
-            }
             <CouponsCade couponCard={coupons} />
-            <Box component="div" sx={{ p: 1, textAlign: "center" }}>{
-              noCouponData ? `No Data Found`:
-              <>
-               {coupons ? (
-                <Button
-                  onClick={addCouponPage}
-                  sx={{ color: "#fff", fontWeight: "600" }}
-                  variant="contained"
-                >
-                  Lode More
-                </Button>
+            <Box component="div" sx={{ p: 1, textAlign: "center" }}>
+              {noCouponData ? (
+                `No Data Found`
               ) : (
-                ""
+                <>
+                  {coupons ? (
+                    <Button
+                      onClick={addCouponPage}
+                      sx={{ color: "#fff", fontWeight: "600" }}
+                      variant="contained"
+                    >
+                      Lode More
+                    </Button>
+                  ) : (
+                    ""
+                  )}
+                </>
               )}
-              </>
-            }
-             
             </Box>
           </TabPanel>
         </TabsUnstyled>

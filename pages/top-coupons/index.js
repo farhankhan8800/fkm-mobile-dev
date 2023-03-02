@@ -13,16 +13,13 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-
-
 const TopCoupons = (props) => {
   const [countBanner, SetCountBanner] = useState(10);
-  const [top_coupons, setTop_coupons] = useState()
-  // const slice = top_coupons.slice(0, countBanner);
+  const [top_coupons, setTop_coupons] = useState();
 
-  useEffect(()=>{
-    setTop_coupons(props.top_coupons)
-  },[props])
+  useEffect(() => {
+    setTop_coupons(props.top_coupons);
+  }, [props]);
   const lodeMore = () => {
     SetCountBanner(countBanner + 4);
   };
@@ -48,51 +45,53 @@ const TopCoupons = (props) => {
         </Grid>
       </Grid>
       <div className="flex_div">
-        {top_coupons && top_coupons.map((item, i) => {
-          const {img_url,couponid,description}=item
-          return (
-            <Box
-              sx={{ maxWidth: "167px", margin: "0px 5px 10px 5px", }}
-              component="div"
-              key={i}
-            >
-              <Card
-                sx={{
-                  display:"flex",alignItems:"center",justifyContent:"center",
-                  height:"140px",
-                  padding: "5px",
-                  border: "1px solid #a19b9b",
-                  borderRadius: "8px",
-                }}
+        {top_coupons &&
+          top_coupons.map((item, i) => {
+            const { img_url, couponid, description } = item;
+            return (
+              <Box
+                sx={{ maxWidth: "167px", margin: "0px 5px 10px 5px" }}
+                component="div"
+                key={i}
               >
-                <Link
-                  style={{ borderRadius: "0" }}
-                  className="card_link"
-                  href={`/coupon-code/${couponid}`}
+                <Card
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: "140px",
+                    padding: "5px",
+                    border: "1px solid #a19b9b",
+                    borderRadius: "8px",
+                  }}
                 >
-                  <CardActionArea 
-                  sx={{textAlign:"center"}}>
-                    <Image
-                      height={40}
-                      width={90}
-                      style={{ borderRadius: "0"}}
-                      src={img_url}
-                      alt=""
-                    />
-                    <CardContent sx={{ padding: "5px 5px 0" }}>
-                      <Typography
-                        variant="body2"
-                        sx={{ color: "#000", padding: "4px 0" }}
-                      >
-                        {description}{" "}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Link>
-              </Card>
-            </Box>
-          );
-        })}
+                  <Link
+                    style={{ borderRadius: "0" }}
+                    className="card_link"
+                    href={`/coupon-code/${couponid}`}
+                  >
+                    <CardActionArea sx={{ textAlign: "center" }}>
+                      <Image
+                        height={40}
+                        width={90}
+                        style={{ borderRadius: "0" }}
+                        src={img_url}
+                        alt=""
+                      />
+                      <CardContent sx={{ padding: "5px 5px 0" }}>
+                        <Typography
+                          variant="body2"
+                          sx={{ color: "#000", padding: "4px 0" }}
+                        >
+                          {description}{" "}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Link>
+                </Card>
+              </Box>
+            );
+          })}
       </div>
       <Box component="div" sx={{ p: 1, textAlign: "center" }}>
         <Button
@@ -104,13 +103,12 @@ const TopCoupons = (props) => {
         </Button>
       </Box>
       <style jsx>
-        
         {`
           .card_link {
             text-decoration: none;
             border-radius: 10px;
             width: 100%;
-           
+
             display: inline-block;
             position: relative;
           }

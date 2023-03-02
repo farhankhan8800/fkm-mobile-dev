@@ -6,6 +6,7 @@ const fkmTestimonial = () => {
   return (
     <>
     <Header/>
+    <HeadTag title={"Testimonial | Freekaamaal"} />
       <div className="fkm-heroes fkm-testimonial" style={{paddingTop:"60px"}}>
         <div>
           <h1 className="main-title">

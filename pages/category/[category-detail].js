@@ -15,71 +15,65 @@ const CategoryDetail = () => {
   const [categoryDeals, setCategoryDeals] = useState([]);
   const [categoryCoupons, setCategoryCoupons] = useState([]);
   const [categoryProduct, setCategoryProduct] = useState();
-  const [ categoryProductTitle, setCategoryProductTitle] = useState()
+  const [categoryProductTitle, setCategoryProductTitle] = useState();
   const [Page, setPage] = useState(1);
   const [changeOption, setChangeOption] = useState("");
-  const [noDealData, setNoDealData]= useState(false)
-  const [noCouponData, setNoCouponData]= useState(false)
-
+  const [noDealData, setNoDealData] = useState(false);
+  const [noCouponData, setNoCouponData] = useState(false);
 
   const router = useRouter();
   const cate_slug = router.query["category-detail"];
 
-  // console.log("Component agya",cate_slug);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  
   const GetData = async () => {
-
     try {
-      let {data} = await axios.post(categoryDetailApi, {
+      let { data } = await axios.post(
+        categoryDetailApi,
+        {
           apiAuth: apiAuth,
           page: Page,
           cate_slug: cate_slug,
           option: changeOption,
         },
-        { headers: {
-          "Content-Type": "application/json",
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      },
       );
-       
-      if(changeOption == ""){
-         setCategoryProduct(data.response.category);
-         setCategoryProductTitle(data.response.category.description)
-          if(data.response.deals.length == 0){
-            setNoDealData(true)
-          }else{
-            setCategoryDeals([...categoryDeals, ...data.response.deals]);
-          }
-          
-      }else if( changeOption =="deals") {
-        if(data.response.deals.length == 0 ){
-          setNoDealData(true)
-        }else{
+
+      if (changeOption == "") {
+        setCategoryProduct(data.response.category);
+        setCategoryProductTitle(data.response.category.description);
+        if (data.response.deals.length == 0) {
+          setNoDealData(true);
+        } else {
           setCategoryDeals([...categoryDeals, ...data.response.deals]);
         }
-      }else if(changeOption =="coupons"){
-        if(data.response.coupons.length == 0){
-          setNoCouponData(true)
-        }else{
+      } else if (changeOption == "deals") {
+        if (data.response.deals.length == 0) {
+          setNoDealData(true);
+        } else {
+          setCategoryDeals([...categoryDeals, ...data.response.deals]);
+        }
+      } else if (changeOption == "coupons") {
+        if (data.response.coupons.length == 0) {
+          setNoCouponData(true);
+        } else {
           setCategoryCoupons([...categoryCoupons, ...data.response.coupons]);
         }
       }
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   };
-  
 
   const dealsTabCall = () => {
-    setNoDealData(false)
+    setNoDealData(false);
     setChangeOption("deals");
     setPage(1);
     setCategoryCoupons([]);
-
   };
   const couponsTabCall = () => {
-    setNoCouponData(false)
+    setNoCouponData(false);
     setChangeOption("coupons");
     setPage(1);
     setCategoryDeals([]);
@@ -87,12 +81,7 @@ const CategoryDetail = () => {
 
   useEffect(() => {
     GetData();
-  },[Page, changeOption,cate_slug]);
-
-  //  console.log( "changeOption == ", changeOption)
-  //  console.log( "deals == ", categoryDeals)
-  //  console.log( "coupons == ", categoryCoupons)
-
+  }, [Page, changeOption, cate_slug]);
 
   const addDealPage = () => {
     setPage(Page + 1);
@@ -100,10 +89,10 @@ const CategoryDetail = () => {
   const addCouponPage = () => {
     setPage(Page + 1);
   };
-  
+
   return (
     <>
-      {categoryProduct? (
+      {categoryProduct ? (
         <HeadTag headeTitle={` ${categoryProduct.name} | Freekaamaal `} />
       ) : (
         ""
@@ -112,7 +101,7 @@ const CategoryDetail = () => {
       <Header />
       <div style={{ paddingTop: "56px" }}>
         <Box component="div" sx={{ paddingTop: "80px", bgcolor: "#F7F7F7" }}>
-          {categoryProduct? (
+          {categoryProduct ? (
             <Box
               component="div"
               sx={{
@@ -142,7 +131,7 @@ const CategoryDetail = () => {
                   height={70}
                   src={categoryProduct.cate_img_url}
                   alt="taddy bear"
-                 />
+                />
               </Box>
               <Box component="div" sx={{ paddingTop: "50px" }}>
                 <Typography
@@ -162,7 +151,9 @@ const CategoryDetail = () => {
                   textAlign="center"
                 >
                   {
-                    <div dangerouslySetInnerHTML={{__html: categoryProductTitle}} />
+                    <div
+                      dangerouslySetInnerHTML={{ __html: categoryProductTitle }}
+                    />
                   }
                 </Typography>
               </Box>
@@ -182,8 +173,7 @@ const CategoryDetail = () => {
           <DealsAndCoupons
             categoryDeals={categoryDeals}
             categoryCoupons={categoryCoupons}
-            // categoryProduct={categoryProduct}
-            noCouponData = {noCouponData}
+            noCouponData={noCouponData}
             noDealData={noDealData}
             addDealPage={addDealPage}
             addCouponPage={addCouponPage}

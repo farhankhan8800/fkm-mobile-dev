@@ -56,7 +56,6 @@ const ReferalBank = ({userData}) => {
                           Authorization:authToken
                         }
                   })
-                //  console.log(data)
                  if(data.status == 1){
                   setTimeout(()=>{
                     setServerdata(data.msg)
@@ -76,7 +75,6 @@ const ReferalBank = ({userData}) => {
                  }
                
               } catch (error) {
-                // console.log(error)
               }
 
         }
@@ -167,7 +165,6 @@ const ReferalBank = ({userData}) => {
           <div>
             {
               userPromocodes ? (<Box sx={{paddingTop:"10px"}}>{
-                // console.log(userPromocodes)
               }
                 <Typography fontWeight={"600"}>Your save Coupons</Typography>
                 <Box>
@@ -184,7 +181,6 @@ const ReferalBank = ({userData}) => {
                             )
                         }
                         
-                        //   <Typography fontSize={"13px"} component="p" key={i+1}>{item.usage_text}</Typography>
                         )
                     }
                 </Box>

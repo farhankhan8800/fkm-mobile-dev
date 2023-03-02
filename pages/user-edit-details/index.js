@@ -32,8 +32,6 @@ const UserEditDetails = () => {
     if (password.length < 6 || userName.length < 3 || mobile.length < 9) {
       SetCallWarning(true);
     } else {
-      //  console.log(`, password = ${password} , name = ${userName}, mobile = ${mobile}`)
-
       setPassword("");
       setUserName("");
       setMobile("");

@@ -4,7 +4,6 @@ import {
   FormControl,
   Input,
   InputLabel,
-  FormHelperText,
   Select,
   MenuItem,
   Button,
@@ -38,9 +37,6 @@ const contactUs = () => {
           <FormControl sx={{ width: "100%", marginBlock: "20px" }}>
             <InputLabel htmlFor="my-input">Name</InputLabel>
             <Input id="my-input" aria-describedby="my-helper-text" />
-            {/* <FormHelperText id="my-helper-text">
-              We'll never share your email.
-            </FormHelperText> */}
           </FormControl>
           <FormControl sx={{ width: "100%", marginBlockEnd: "20px" }}>
             <InputLabel htmlFor="my-input">Email</InputLabel>
@@ -52,9 +48,7 @@ const contactUs = () => {
               sx={{ border: "none", outline: "none", marginBlock: "10px" }}
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              //   value={age}
               label="Select One"
-              //   onChange={handleChange}
             >
               <MenuItem value={10}>Advertising / Partnership Query</MenuItem>
               <MenuItem value={20}>General</MenuItem>

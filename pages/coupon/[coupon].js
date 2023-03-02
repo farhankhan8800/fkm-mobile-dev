@@ -36,8 +36,6 @@ const CouponCodeCopy = () => {
   const router = useRouter();
   const couponid = router.query["coupon"];
 
-  // alert(couponid);
-
   const GetData = async () => {
     try {
       let { data } = await axios.post(
@@ -52,7 +50,6 @@ const CouponCodeCopy = () => {
           },
         }
       );
-      // console.log(data);
       if (data.status == 1) {
         setCouponCode(data.response.coupon);
       } else if (data.status == 2) {
@@ -64,7 +61,6 @@ const CouponCodeCopy = () => {
   };
 
   useEffect(() => {
-    // alert('okay');
     if (couponid) {
       GetData();
     }

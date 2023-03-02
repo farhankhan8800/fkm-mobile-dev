@@ -1,5 +1,5 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 import { useEffect } from "react";
 import { useState } from "react";
-
 
 const LiveDeals = (props) => {
   const [deal, setDeal] = useState();
@@ -42,68 +41,70 @@ const LiveDeals = (props) => {
           </Typography>
         </Grid>
       </Grid>
-      <Box  sx={{padding:"2px 10px"}}>
-      <Swiper className="live_deals_component" 
-       slidesPerView={2}
-       spaceBetween={10}
-      >
-        {deal &&
-          deal.map((item, i) => {
-            const {slug_url, views, img_hp_url, title, offer_price, price} = item;
-         
-            return (
-              <SwiperSlide key={i}>
-                <Card sx={{ height: "190px" }}>
-                  <Link
-                    className="card_link"
-                    href={`deals/${slug_url}`}
-                    rel="noopener"
-                  >
-                    <div className="view_count">
-                      <p>{views} </p>
-                    </div>
-                    <CardActionArea>
-                      <div className="image_box">
-                        <Image
-                          className="image_box_image"
-                          height={70}
-                          width={100}
-                          src={img_hp_url}
-                          alt="live deals"
-                        />
-                      </div>
+      <Box sx={{ padding: "2px 10px" }}>
+        <Swiper
+          className="live_deals_component"
+          slidesPerView={2}
+          spaceBetween={10}
+        >
+          {deal &&
+            deal.map((item, i) => {
+              const { slug_url, views, img_hp_url, title, offer_price, price } =
+                item;
 
-                      <CardContent
-                        sx={{ background: "#f1f1f16b", padding: "7px" }}
-                      >
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            color: "#000",
-                            padding: "4px 0",
-                            fontSize: "11px",
-                          }}
+              return (
+                <SwiperSlide key={i}>
+                  <Card sx={{ height: "190px" }}>
+                    <Link
+                      className="card_link"
+                      href={`deals/${slug_url}`}
+                      rel="noopener"
+                    >
+                      <div className="view_count">
+                        <p>{views} </p>
+                      </div>
+                      <CardActionArea>
+                        <div className="image_box">
+                          <Image
+                            className="image_box_image"
+                            height={70}
+                            width={100}
+                            src={img_hp_url}
+                            alt="live deals"
+                          />
+                        </div>
+
+                        <CardContent
+                          sx={{ background: "#f1f1f16b", padding: "7px" }}
                         >
-                          {title}
-                        </Typography>
-                        <Box component="div" sx={{ paddingTop: "4px" }}>
-                          <strong className="card_amouunt">
-                            &#8377;{offer_price}
-                          </strong>
-                          <small className="card_small_amouunt">
-                            &#8377;{price}
-                          </small>
-                        </Box>
-                      </CardContent>
-                    </CardActionArea>
-                  </Link>
-                </Card>
-              </SwiperSlide>
-            );
-          })}
-      </Swiper>
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              color: "#000",
+                              padding: "4px 0",
+                              fontSize: "11px",
+                            }}
+                          >
+                            {title}
+                          </Typography>
+                          <Box component="div" sx={{ paddingTop: "4px" }}>
+                            <strong className="card_amouunt">
+                              &#8377;{offer_price}
+                            </strong>
+                            <small className="card_small_amouunt">
+                              &#8377;{price}
+                            </small>
+                          </Box>
+                        </CardContent>
+                      </CardActionArea>
+                    </Link>
+                  </Card>
+                </SwiperSlide>
+              );
+            })}
+        </Swiper>
       </Box>
-      
+
       <style jsx>
         {`
           .card_link {
@@ -124,8 +125,6 @@ const LiveDeals = (props) => {
           }
           .image_box {
             width: 100%;
-
-            /* height: 60px; */
             display: flex;
             align-items: center;
             justify-content: center;

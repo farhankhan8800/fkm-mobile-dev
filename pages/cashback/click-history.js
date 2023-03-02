@@ -44,7 +44,6 @@ const getData = async ()=>{
         Authorization:authToken
       }
     })
-    // console.log(data.response.click_history)
   setClick_history_title(data.response.top_desc)
   if((data.response.click_history).length == 0){
     setNoMoreData(true)
