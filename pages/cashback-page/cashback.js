@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
@@ -6,11 +6,53 @@ import axios from "axios";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 import { Button, Typography, Box } from "@mui/material";
-
+import CashbackDealPageCard from "components/cashback-page-components/CashbackPageDealCard";
+import{cashbackpageAPI} from "service/API"
 const headeTitle = "100% Cashback | Freekaamaal";
+
 const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.API_AUTH;
 
 const Cashback = () => {
+  const [cahsbackstore, setCahsbackstore] = useState()
+  const [cahsbackDeal, setCahsbackDeal] = useState()
+  const [authToken, setAuthToken] = useState();
+
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem("user"))) {
+      setAuthToken(JSON.parse(localStorage.getItem("user")).token);
+    }
+  }, []);
+
+  const getdata = async ()=>{
+    try {
+      let {data} = await axios.post(
+        cashbackpageAPI,
+        {
+          apiAuth: apiAuth,
+          device_type: DEVICE_TYPE,
+        },
+        {
+          headers: {
+            Authorization: authToken,
+          },
+        }
+      )
+      console.log(data.response)
+      setCahsbackstore(data.response.cahsbackstore)
+     setCahsbackDeal(data.response.cashbackdeal)
+      // console.log(data.response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+useEffect(()=>{
+   getdata()
+},[authToken])
+
+
+
   return (
     <>
       <HeadTag headeTitle={headeTitle}></HeadTag>
@@ -42,37 +84,32 @@ const Cashback = () => {
           <h4>Top CashBack Stores</h4>
           <hr />
           <div className="stroes_box">
-            <div className="store_wrapper">
-              <Link href="">
-                <Image
-                  alt=""
-                  src="https://images.freekaamaal.com/store-images/4264.jpg"
-                  width={92}
-                  height={32}
-                />
-                <div className="prize_tag_ab">
-                  {" "}
-                  <strong>&#8377;3000</strong> &nbsp;Cashback
+            {
+              // console.log(cahsbackstore)
+
+               cahsbackstore && cahsbackstore.map((item ,i)=>{
+                return(
+                  // eslint-disable-next-line react/jsx-key
+                  <div className="store_wrapper" key={i}>
+                  <Link href="cashback-store">
+                    <Image
+                      alt=""
+                      src={item.img_url}
+                      width={92}
+                      height={32}
+                    />
+                    <div className="prize_tag_ab">
+                      {" "}
+                      <strong>{item.cahsback}</strong> 
+                    </div>
+                  </Link>
                 </div>
-              </Link>
-            </div>
-            <div className="store_wrapper">
-              <Link href="">
-                <Image
-                  alt=""
-                  src="https://images.freekaamaal.com/store-images/4264.jpg"
-                  width={92}
-                  height={32}
-                />
-                <div className="prize_tag_ab">
-                  {" "}
-                  <strong>&#8377;3000</strong> &nbsp;Cashback
-                </div>
-              </Link>
-            </div>
+                )
+               })
+            }
           </div>
           <div style={{ textAlign: "center" }}>
-            <Link href="">
+            <Link href="cashback-store">
               <Button variant="contained" size="small" sx={{ color: "#fff" }}>
                 View All Store
               </Button>
@@ -83,67 +120,12 @@ const Cashback = () => {
           <h4>Top Cashback Deals</h4>
           <hr />
           <div className="stroes_box ">
-            <div className="store_wrapper deal_wrapper">
-              <Link href="">
-                <div className="deal_img">
-                  <Image
-                    alt=""
-                    src="https://images.freekaamaal.com/featured_images/large_188866_k.png"
-                    width={112}
-                    height={100}
-                  />
-                </div>
-                <Image
-                  alt=""
-                  src="https://images.freekaamaal.com/store-images/4264.jpg"
-                  width={92}
-                  height={32}
-                />
-                <div className="prize_tag_ab">
-                  {" "}
-                  <strong>&#8377;3000</strong> &nbsp;Cashback
-                </div>
-              </Link>
-              <Typography
-                fontSize={12}
-                sx={{ margin: "7px 0", overflow: "hidden", height: "43px" }}
-              >
-                Holi 99 Stores - Free Gift On Every Order + 45% FKM CB Sitewide
-                !!
-              </Typography>
-            </div>
-            <div className="store_wrapper deal_wrapper">
-              <Link href="">
-                <div className="deal_img">
-                  <Image
-                    alt=""
-                    src="https://images.freekaamaal.com/featured_images/large_188866_k.png"
-                    width={112}
-                    height={100}
-                  />
-                </div>
-                <Image
-                  alt=""
-                  src="https://images.freekaamaal.com/store-images/4264.jpg"
-                  width={92}
-                  height={32}
-                />
-                <div className="prize_tag_ab">
-                  {" "}
-                  <strong>&#8377;3000</strong> &nbsp;Cashback
-                </div>
-              </Link>
-              <Typography
-                fontSize={12}
-                sx={{ margin: "7px 0", overflow: "hidden", height: "43px" }}
-              >
-                Holi 99 Stores - Free Gift On Every Order + 45% FKM CB Sitewide
-                !!
-              </Typography>
-            </div>
+            {
+              cahsbackDeal ?  <CashbackDealPageCard cahsbackDeal={cahsbackDeal} />:""
+            }
           </div>
           <div style={{ textAlign: "center" }}>
-            <Link href="">
+            <Link href="cashback-deals">
               <Button variant="contained" size="small" sx={{ color: "#fff" }}>
                 View All Deals
               </Button>
@@ -366,11 +348,7 @@ const Cashback = () => {
           box-shadow: 0px 2px 12px 6px #dfdfdf;
           transform: translate(-50%, 0);
         }
-        .store_wrapper.deal_wrapper {
-          height: auto;
-          flex-direction: column;
-          padding: 10px;
-        }
+      
         .three_tabs_btn {
           border-radius: 6px;
           padding: 18px;

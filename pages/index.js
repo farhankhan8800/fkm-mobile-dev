@@ -1,16 +1,20 @@
 // home page  -------------------
-
+import React, { useEffect, useState }  from "react";
+import dynamic from 'next/dynamic'
 import Header from "components/headerComponent/Header";
 import HeadTag from "components/headTagComponent/HeadTag";
 import Carousel from "components/homeComponents/Carousel";
 import DealOfTheDay from "components/homeComponents/DealOfTheDay";
 import LiveDeals from "components/homeComponents/LiveDeals";
-import HotDeals from "components/homeComponents/HotDeals";
-import CashBackStore from "components/homeComponents/CashBackStore";
-import HowToEarnCashback from "components/HowToEarnCashback";
+// import HotDeals from "components/homeComponents/HotDeals";
+const  HotDeals = dynamic(() => import('components/homeComponents/HotDeals'))
+// import CashBackStore from "components/homeComponents/CashBackStore";
+// import HowToEarnCashback from "components/HowToEarnCashback";
+const HowToEarnCashback = dynamic(() => import('components/HowToEarnCashback'))
+const CashBackStore = dynamic(() => import('components/homeComponents/CashBackStore'))
 import { homeAPI1 } from "service/API";
 import { homeAPI2 } from "service/API";
-import { useEffect, useState } from "react";
+
 import axios from "axios";
 
 const apiAuth = process.env.API_AUTH;
@@ -26,13 +30,13 @@ export default function Home() {
   const [noData, setNoData] = useState(false);
   const [sponsoredCount, setSponsoredCount] = useState();
   const [authToken, setAuthToken] = useState();
-  const [scroll, setScroll] = useState(false);
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("user"))) {
       setAuthToken(JSON.parse(localStorage.getItem("user")).token);
     }
   }, []);
+
 
   // console.log(authToken)
   const headeTitle =
@@ -123,8 +127,8 @@ export default function Home() {
           pageFunction={pageFunction}
           noData={noData}
         />
-        <CashBackStore cbStore={cbStore} />
-        <HowToEarnCashback howtoearncashback={howtoearncashback} />
+          <CashBackStore cbStore={cbStore} />
+          <HowToEarnCashback howtoearncashback={howtoearncashback} />
       </div>
     </>
   );
