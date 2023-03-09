@@ -117,12 +117,11 @@ const Header = () => {
         <Toolbar
           sx={{ alignItems: "center", justifyContent: "space-between", p: 0 }}
         >
-          <IconButton size="large" aria-label="MenuIcon" sx={{ color: "#fff" }}>
+          <IconButton onClick={toggleClick} size="large" aria-label="MenuIcon" sx={{ color: "#fff" }}>
             <Image
               width={24}
               height={24}
               src={menuButton}
-              onClick={toggleClick}
               alt="menuButton"
             />
           </IconButton>

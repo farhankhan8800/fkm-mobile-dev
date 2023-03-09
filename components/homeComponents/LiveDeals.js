@@ -11,6 +11,7 @@ import {
   CardActionArea,
   CardContent,
   Card,
+  Skeleton,
 } from "@mui/material";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -102,6 +103,28 @@ const LiveDeals = (props) => {
                 </SwiperSlide>
               );
             })}
+          {!deal && (<>
+            <SwiperSlide>
+              <Skeleton
+                variant="rectangular"
+                sx={{ borderRadius: "7px" }}
+                height={100}
+              />
+              <Skeleton variant="text" sx={{ fontSize: '3rem' }} />
+              <Skeleton variant="text" sx={{ fontSize: '2rem' }} />
+            </SwiperSlide>
+            <SwiperSlide>
+              <Skeleton
+                variant="rectangular"
+                sx={{ borderRadius: "7px" }}
+                height={100}
+              />
+              <Skeleton variant="text" sx={{ fontSize: '3rem' }} />
+              <Skeleton variant="text" sx={{ fontSize: '2rem' }} />
+            </SwiperSlide>
+          </>
+          
+          )}
         </Swiper>
       </Box>
 

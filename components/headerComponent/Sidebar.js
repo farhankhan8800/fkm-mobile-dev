@@ -14,7 +14,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 
-import { motion } from "framer-motion";
+
 import dashboardIcon from "../../public/images/icon/dashboard.png";
 import shopIcon from "../../public/images/icon/shop.png";
 import categoryIcon from "../../public/images/icon/category.png";
@@ -61,7 +61,7 @@ export const menuList = [
     menuIcon: contentWritingIcon,
   },
   {
-    link: "/fastivals/diwali-offers",
+    link: "/fastivals",
     menuName: "Diwali Offers",
     menuIcon: "",
   },

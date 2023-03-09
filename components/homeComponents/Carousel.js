@@ -7,6 +7,7 @@ import "swiper/css/autoplay";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Skeleton } from "@mui/material";
 
 const Carousel = (props) => {
   const [banner, setBanner] = useState();
@@ -41,6 +42,11 @@ const Carousel = (props) => {
             );
           })}
       </Swiper>
+      {
+       !banner && <>
+       <Skeleton variant="rectangular"  sx={{width:"100%",mt:"15px", borderRadius:"7px"}} height={140} />
+       </>
+      }
     </div>
   );
 };

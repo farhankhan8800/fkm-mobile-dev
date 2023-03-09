@@ -13,10 +13,10 @@ import Image from "next/image";
 
 
 const HotDealsCards = (props) => {
-  const [hotDeals, SethotDeals] = useState([]);
+  const [hotDeals, SethotDeals] = useState(null);
   
   useEffect(()=>{
-     SethotDeals(props.hotdeals)
+    //  SethotDeals(props.hotdeals)
   },[props])
 
   return (
@@ -102,19 +102,32 @@ const HotDealsCards = (props) => {
             </Box>
           );
         })}
-          </>:
-          <>
-    
-            <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-            <Skeleton variant="circular" width={40} height={40} />
-            <Skeleton variant="rectangular"  height={60} />
-            <Skeleton variant="rounded"  height={60} />
-       
-         {/* {alert("ok")} */}
-          </>
+          </>:""
         }
-       
       </div>
+      {
+          !hotDeals && 
+              <div className="Skeleton_hotDeal_card"> 
+                <div className="Skeleton_hotDeal_card_wrapper">
+                <Skeleton
+                  variant="rectangular"
+                  sx={{ borderRadius: "7px",}}
+                  height={120}   />
+                 <Skeleton variant="text"  sx={{ fontSize: '3rem' }} />
+                 <Skeleton variant="text"   sx={{ fontSize: '2rem' }} />
+                </div>
+              
+                <div className="Skeleton_hotDeal_card_wrapper">
+                <Skeleton
+                  variant="rectangular"
+                  sx={{ borderRadius: "7px", }}
+                   height={120} />
+                 <Skeleton   variant="text" sx={{ fontSize: '3rem' }} />
+                 <Skeleton   variant="text" sx={{ fontSize: '2rem' }} />
+                </div>
+
+              </div>
+        }
       <style jsx>{`
         .card_link {
           text-decoration: none;
@@ -164,6 +177,16 @@ const HotDealsCards = (props) => {
           color: #fff;
           font-size: 10px;
           background-color: #f27932;
+        }
+        .Skeleton_hotDeal_card{
+          display:flex;
+          width:100%;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+        .Skeleton_hotDeal_card_wrapper{
+          width:45%;
+          padding:5px;
         }
       `}</style>
     </>

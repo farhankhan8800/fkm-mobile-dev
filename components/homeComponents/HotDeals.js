@@ -21,7 +21,9 @@ const HotDeals = (props) => {
         sx={{ padding: "13px 3px 3px" }}
       >
         <Grid item>
+          
           <Grid container>
+           
             <Grid item>
               <Box component="div" sx={{ width: "30px", marginRight: "10px" }}>
                 <Image

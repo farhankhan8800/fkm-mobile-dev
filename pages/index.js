@@ -14,12 +14,16 @@ const HowToEarnCashback = dynamic(() => import('components/HowToEarnCashback'))
 const CashBackStore = dynamic(() => import('components/homeComponents/CashBackStore'))
 import { homeAPI1 } from "service/API";
 import { homeAPI2 } from "service/API";
+import { useDispatch, useSelector } from "react-redux";
+
 
 import axios from "axios";
 
 const apiAuth = process.env.API_AUTH;
 const DEVICE_TYPE = process.env.DEVICE_TYPE
 export default function Home() {
+// const myState = useSelector((state)=>state.getHomeApi_1)
+
   const [cbStore, setCbStore] = useState();
   const [carousel, setCarousel] = useState();
   const [liveDeal, setLiveDeal] = useState();
@@ -65,8 +69,7 @@ export default function Home() {
           "usersummary",
           JSON.stringify(data.response.user_summary)
         );
-      }
-
+      } 
       setCarousel(data.response.slider);
       setLiveDeal(data.response.live_deals);
       setDealofday(data.response.sticky);
