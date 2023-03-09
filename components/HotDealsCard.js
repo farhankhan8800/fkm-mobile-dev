@@ -16,7 +16,7 @@ const HotDealsCards = (props) => {
   const [hotDeals, SethotDeals] = useState(null);
   
   useEffect(()=>{
-    //  SethotDeals(props.hotdeals)
+     SethotDeals(props.hotdeals)
   },[props])
 
   return (
