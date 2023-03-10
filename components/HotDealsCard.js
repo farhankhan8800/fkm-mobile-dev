@@ -14,10 +14,10 @@ import Image from "next/image";
 
 const HotDealsCards = (props) => {
   const [hotDeals, SethotDeals] = useState(null);
-
-  useEffect(() => {
-    SethotDeals(props.hotdeals);
-  }, [props]);
+  
+  useEffect(()=>{
+      SethotDeals(props.hotdeals)
+  },[props])
 
   return (
     <>
