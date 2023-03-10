@@ -111,7 +111,14 @@ const LiveDeals = (props) => {
                 height={100}
               />
               <Skeleton variant="text" sx={{ fontSize: '3rem' }} />
-              <Skeleton variant="text" sx={{ fontSize: '2rem' }} />
+              <Grid container columnSpacing={1}>
+                  <Grid item xs={7}>
+                  <Skeleton   variant="text" sx={{ fontSize: '2rem' }} />
+                  </Grid>
+                  <Grid  xs={5}item>
+                  <Skeleton   variant="text" sx={{ fontSize: '2rem' }} />
+                  </Grid>
+                 </Grid>
             </SwiperSlide>
             <SwiperSlide>
               <Skeleton
@@ -120,7 +127,14 @@ const LiveDeals = (props) => {
                 height={100}
               />
               <Skeleton variant="text" sx={{ fontSize: '3rem' }} />
-              <Skeleton variant="text" sx={{ fontSize: '2rem' }} />
+              <Grid container columnSpacing={1}>
+                  <Grid item xs={7}>
+                  <Skeleton   variant="text" sx={{ fontSize: '2rem' }} />
+                  </Grid>
+                  <Grid  xs={5}item>
+                  <Skeleton   variant="text" sx={{ fontSize: '2rem' }} />
+                  </Grid>
+                 </Grid>
             </SwiperSlide>
           </>
           

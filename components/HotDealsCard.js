@@ -7,127 +7,200 @@ import {
   CardContent,
   Card,
   Skeleton,
+  Grid,
 } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
 
-
 const HotDealsCards = (props) => {
   const [hotDeals, SethotDeals] = useState(null);
-  
-  useEffect(()=>{
-    //  SethotDeals(props.hotdeals)
-  },[props])
+
+  useEffect(() => {
+    SethotDeals(props.hotdeals);
+  }, [props]);
 
   return (
     <>
-     
       <div className="flex_div">
-        {
-          hotDeals ? <>
-           {hotDeals && hotDeals.map((item, i) => {
-          const {is_cashback,deal_image,slug_url,deal_slug,title,store_img_url:store_image, deal_title, offer_price, price}= item;
+        {hotDeals ? (
+          <>
+            {hotDeals &&
+              hotDeals.map((item, i) => {
+                const {
+                  is_cashback,
+                  deal_image,
+                  slug_url,
+                  deal_slug,
+                  title,
+                  store_img_url: store_image,
+                  deal_title,
+                  offer_price,
+                  price,
+                } = item;
 
-         
-         
-          return (
-            <Box
-              sx={{ maxWidth: "154px", margin: "7px" }}
-              component="div"
-              key={i}
-            >
-              <Card
-                sx={{
-                  background: "#f1f1f16b",
-                  border: "1px solid #f1f1f16b",
-                  position: "relative",
-                  boxShadow: "none",
-                }}
-              >
-                <Link
-                  className="card_link"
-                  href={slug_url? `/deals/${slug_url}`:`/deals/${deal_slug}`}
-                >
-                  <span>{is_cashback == "1" ? <span className="card_cashback">Cashback</span>:<span></span>}</span>
-                
-                  <CardActionArea>
-                    <Box component="div" sx={{ padding: "23px 21px 0px" }}>
-                      <Image
-                        src={deal_image}
-                        alt='FreeKaaMaal Product'
-                        height={92}
-                        width={120}
-                        style={{ borderRadius: "7px" }}
-                      />
-                    </Box>
-                    <CardContent
-                      sx={{ background: "#f1f1f16b", padding: "7px" }}
+                return (
+                  <Box
+                    sx={{ maxWidth: "154px", margin: "7px" }}
+                    component="div"
+                    key={i}
+                  >
+                    <Card
+                      sx={{
+                        background: "#f1f1f16b",
+                        border: "1px solid #f1f1f16b",
+                        position: "relative",
+                        boxShadow: "none",
+                      }}
                     >
-                      <Typography
-                        gutterBottom
-                        variant="h6"
-                        component="div"
-                        sx={{ color: "#000", marginBottom: "0", fontSize:"15px"}}
+                      <Link
+                        className="card_link"
+                        href={
+                          slug_url
+                            ? `/deals/${slug_url}`
+                            : `/deals/${deal_slug}`
+                        }
                       >
-                        <Image
-                        src={store_image}
-                        alt='FreeKaaMaal Product'
-                        height={17}
-                        width={50}
-                        style={{ borderRadius: "7px" }}
-                      />
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          color: "#000",
-                          padding: "4px 0",
-                          fontSize: "11px",
-                        }}
-                      >
-                        {deal_title ? deal_title :  title }{" "}
-                      </Typography>
-                      <Box component="div" sx={{ paddingTop: "4px" }}>
-                        <strong className="card_amouunt">
-                          &#8377;{offer_price}
-                        </strong>
-                        <small className="card_small_amouunt">
-                          &#8377;{price}
-                        </small>
-                      </Box>
-                    </CardContent>
-                  </CardActionArea>
-                </Link>
-              </Card>
-            </Box>
-          );
-        })}
-          </>:""
-        }
-      </div>
-      {
-          !hotDeals && 
-              <div className="Skeleton_hotDeal_card"> 
-                <div className="Skeleton_hotDeal_card_wrapper">
-                <Skeleton
-                  variant="rectangular"
-                  sx={{ borderRadius: "7px",}}
-                  height={120}   />
-                 <Skeleton variant="text"  sx={{ fontSize: '3rem' }} />
-                 <Skeleton variant="text"   sx={{ fontSize: '2rem' }} />
-                </div>
-              
-                <div className="Skeleton_hotDeal_card_wrapper">
-                <Skeleton
-                  variant="rectangular"
-                  sx={{ borderRadius: "7px", }}
-                   height={120} />
-                 <Skeleton   variant="text" sx={{ fontSize: '3rem' }} />
-                 <Skeleton   variant="text" sx={{ fontSize: '2rem' }} />
-                </div>
+                        <span>
+                          {is_cashback == "1" ? (
+                            <span className="card_cashback">Cashback</span>
+                          ) : (
+                            <span></span>
+                          )}
+                        </span>
 
-              </div>
-        }
+                        <CardActionArea>
+                          <Box
+                            component="div"
+                            sx={{ padding: "23px 21px 0px" }}
+                          >
+                            <Image
+                              src={deal_image}
+                              alt="FreeKaaMaal Product"
+                              height={92}
+                              width={120}
+                              style={{ borderRadius: "7px" }}
+                            />
+                          </Box>
+                          <CardContent
+                            sx={{ background: "#f1f1f16b", padding: "7px" }}
+                          >
+                            <Typography
+                              gutterBottom
+                              variant="h6"
+                              component="div"
+                              sx={{
+                                color: "#000",
+                                marginBottom: "0",
+                                fontSize: "15px",
+                              }}
+                            >
+                              <Image
+                                src={store_image}
+                                alt="FreeKaaMaal Product"
+                                height={17}
+                                width={50}
+                                style={{ borderRadius: "7px" }}
+                              />
+                            </Typography>
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                color: "#000",
+                                padding: "4px 0",
+                                fontSize: "11px",
+                              }}
+                            >
+                              {deal_title ? deal_title : title}{" "}
+                            </Typography>
+                            <Box component="div" sx={{ paddingTop: "4px" }}>
+                              <strong className="card_amouunt">
+                                &#8377;{offer_price}
+                              </strong>
+                              <small className="card_small_amouunt">
+                                &#8377;{price}
+                              </small>
+                            </Box>
+                          </CardContent>
+                        </CardActionArea>
+                      </Link>
+                    </Card>
+                  </Box>
+                );
+              })}
+          </>
+        ) : (
+          ""
+        )}
+      </div>
+      {!hotDeals && (
+        <div className="Skeleton_hotDeal_card">
+          <div className="Skeleton_hotDeal_card_wrapper">
+            <Skeleton
+              variant="rectangular"
+              sx={{ borderRadius: "7px" }}
+              height={120}
+            />
+            <Skeleton variant="text" sx={{ fontSize: "3rem" }} />
+            <Grid container columnSpacing={1}>
+              <Grid item xs={7}>
+                <Skeleton variant="text" sx={{ fontSize: "2rem" }} />
+              </Grid>
+              <Grid xs={5} item>
+                <Skeleton variant="text" sx={{ fontSize: "2rem" }} />
+              </Grid>
+            </Grid>
+          </div>
+
+          <div className="Skeleton_hotDeal_card_wrapper">
+            <Skeleton
+              variant="rectangular"
+              sx={{ borderRadius: "7px" }}
+              height={120}
+            />
+            <Skeleton variant="text" sx={{ fontSize: "3rem" }} />
+            <Grid container columnSpacing={1}>
+              <Grid item xs={7}>
+                <Skeleton variant="text" sx={{ fontSize: "2rem" }} />
+              </Grid>
+              <Grid xs={5} item>
+                <Skeleton variant="text" sx={{ fontSize: "2rem" }} />
+              </Grid>
+            </Grid>
+          </div>
+          <div className="Skeleton_hotDeal_card_wrapper">
+            <Skeleton
+              variant="rectangular"
+              sx={{ borderRadius: "7px" }}
+              height={120}
+            />
+            <Skeleton variant="text" sx={{ fontSize: "3rem" }} />
+            <Grid container columnSpacing={1}>
+              <Grid item xs={7}>
+                <Skeleton variant="text" sx={{ fontSize: "2rem" }} />
+              </Grid>
+              <Grid xs={5} item>
+                <Skeleton variant="text" sx={{ fontSize: "2rem" }} />
+              </Grid>
+            </Grid>
+          </div>
+          <div className="Skeleton_hotDeal_card_wrapper">
+            <Skeleton
+              variant="rectangular"
+              sx={{ borderRadius: "7px" }}
+              height={120}
+            />
+            <Skeleton variant="text" sx={{ fontSize: "3rem" }} />
+            <Grid container columnSpacing={1}>
+              <Grid item xs={7}>
+                <Skeleton variant="text" sx={{ fontSize: "2rem" }} />
+              </Grid>
+              <Grid xs={5} item>
+                <Skeleton variant="text" sx={{ fontSize: "2rem" }} />
+              </Grid>
+            </Grid>
+          </div>
+        </div>
+      )}
       <style jsx>{`
         .card_link {
           text-decoration: none;
@@ -178,15 +251,16 @@ const HotDealsCards = (props) => {
           font-size: 10px;
           background-color: #f27932;
         }
-        .Skeleton_hotDeal_card{
-          display:flex;
-          width:100%;
+        .Skeleton_hotDeal_card {
+          display: flex;
+          width: 100%;
           justify-content: center;
           flex-wrap: wrap;
         }
-        .Skeleton_hotDeal_card_wrapper{
-          width:45%;
-          padding:5px;
+        .Skeleton_hotDeal_card_wrapper {
+          width: 45%;
+          padding: 5px;
+          padding-bottom: 15px;
         }
       `}</style>
     </>

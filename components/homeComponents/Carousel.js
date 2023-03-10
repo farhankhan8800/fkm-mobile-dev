@@ -44,7 +44,7 @@ const Carousel = (props) => {
       </Swiper>
       {
        !banner && <>
-       <Skeleton variant="rectangular"  sx={{width:"100%",mt:"15px", borderRadius:"7px"}} height={140} />
+       <Skeleton variant="rectangular"  sx={{width:"95%",m:"10px", borderRadius:"7px"}} height={140} />
        </>
       }
     </div>
