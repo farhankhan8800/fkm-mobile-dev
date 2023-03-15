@@ -96,7 +96,7 @@ const HowToEarnCashback = (props) => {
             boxShadow: " 0px 0px 6px -2px grey",
           }}
         >
-          {/* <iframe width="100%" loading="lazy" height="200px" src="https://www.youtube.com/embed/hkStK-PBO_k" title="How to Earn Cashback"  frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe> */}
+          <iframe width="100%" loading="lazy" height="200px" src="https://www.youtube.com/embed/hkStK-PBO_k" title="How to Earn Cashback"  frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
         </Box>
         <Box
           component="div"

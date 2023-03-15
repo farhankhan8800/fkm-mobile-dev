@@ -10,7 +10,7 @@ import LiveDeals from "components/homeComponents/LiveDeals";
 const  HotDeals = dynamic(() => import('components/homeComponents/HotDeals'))
 // import CashBackStore from "components/homeComponents/CashBackStore";
 // import HowToEarnCashback from "components/HowToEarnCashback";
-const HowToEarnCashback = dynamic(() => import('components/HowToEarnCashback'))
+// const HowToEarnCashback = dynamic(() => import('components/HowToEarnCashback'))
 const CashBackStore = dynamic(() => import('components/homeComponents/CashBackStore'))
 import { homeAPI1 } from "service/API";
 import { homeAPI2 } from "service/API";
@@ -138,7 +138,7 @@ console.log(homeData)
           noData={noData}
         />
           <CashBackStore cbStore={cbStore} />
-          <HowToEarnCashback howtoearncashback={howtoearncashback} />
+          {/* <HowToEarnCashback howtoearncashback={howtoearncashback} /> */}
       </div>
     </>
   );
