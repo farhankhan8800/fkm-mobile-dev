@@ -69,7 +69,7 @@ const DealsAndCoupons = ({
 
   return (
     <>
-      <Box sx={{ width: "100%", padding: "10px 17px" }}>
+      <Box sx={{ width: "100%", padding: "10px 5px" }}>
         <TabsUnstyled defaultValue={0}>
           <TabsList className="tabsList" sx={{ bgcolor: "#f27935" }}>
             <Tab onClick={dealsTabCall}> Deals </Tab>

@@ -40,7 +40,7 @@ const HotDealsCards = (props) => {
 
                 return (
                   <Box
-                    sx={{ maxWidth: "154px", margin: "7px" }}
+                    sx={{ maxWidth: "154px", margin: "13px" }}
                     component="div"
                     key={i}
                   >
@@ -109,6 +109,8 @@ const HotDealsCards = (props) => {
                                 color: "#000",
                                 padding: "4px 0",
                                 fontSize: "11px",
+                                overflow:"hidden",
+                                height:"51px"
                               }}
                             >
                               {deal_title ? deal_title : title}{" "}
@@ -237,7 +239,7 @@ const HotDealsCards = (props) => {
         .flex_div {
           padding: 6px;
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
           flex-wrap: wrap;
         }
         .flex_div img {
@@ -249,7 +251,7 @@ const HotDealsCards = (props) => {
           right: 0;
           padding: 2px 5px;
           color: #fff;
-          font-size: 10px;
+          font-size: 11px;
           background-color: #f27932;
         }
         .Skeleton_hotDeal_card {

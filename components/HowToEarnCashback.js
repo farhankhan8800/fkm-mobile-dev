@@ -103,7 +103,7 @@ const HowToEarnCashback = (props) => {
           sx={{
             borderRadius: "10px",
             bgcolor: "#fff5efv  ",
-            padding: "20px 17px",
+            padding: "0px 0px",
             marginTop: "20px",
           }}
         >

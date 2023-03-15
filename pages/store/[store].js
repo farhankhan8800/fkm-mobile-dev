@@ -87,7 +87,9 @@ const StoreDetails = () => {
   };
 
   useEffect(() => {
+    if (store_slug) {
     storeData();
+    }
   }, [Page, changeOption, store_slug]);
 
   const dealsTabCall = () => {

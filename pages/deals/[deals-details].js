@@ -98,7 +98,7 @@ const DealsDetails = () => {
                 <Box sx={{ maxWidth: "350px", margin: "auto" }} component="div">
                   <Image
                     style={{ width: "100%" }}
-                    height={400}
+                    height={250}
                     width={350}
                     src={deal.deal_img_url}
                     alt=""

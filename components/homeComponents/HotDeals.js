@@ -51,7 +51,7 @@ const HotDeals = (props) => {
         </Grid>
       </Grid>
       <Box
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+        sx={{ }}
       >
         <HotDealsCards hotdeals={hotDeals} />
       </Box>

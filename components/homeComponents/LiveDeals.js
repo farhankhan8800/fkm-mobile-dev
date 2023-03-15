@@ -45,8 +45,8 @@ const LiveDeals = (props) => {
       <Box sx={{ padding: "2px 10px" }}>
         <Swiper
           className="live_deals_component"
-          slidesPerView={2}
-          spaceBetween={10}
+          slidesPerView={1.9}
+          spaceBetween={12}
         >
           {deal &&
             deal.map((item, i) => {
@@ -176,10 +176,10 @@ const LiveDeals = (props) => {
             font-size: 18px;
           }
           .card_small_amouunt {
-            color: gray;
+            color: #222020;
             margin-left: 15px;
             position: relative;
-            font-size: 16px;
+            font-size: 15px;
           }
           .card_small_amouunt::after {
             content: "";
@@ -187,9 +187,9 @@ const LiveDeals = (props) => {
             width: 100%;
             height: 1px;
             position: absolute;
-            bottom: 9px;
+            bottom: 8px;
             left: 0;
-            transform: rotate(-10deg);
+            transform: rotate(359deg);
             border-radius: 10px;
           }
           .view_count {
@@ -202,7 +202,7 @@ const LiveDeals = (props) => {
             border-radius: 3px;
           }
           .view_count p {
-            font-size: 10px;
+            font-size: 11px;
             color: #fff;
           }
         `}
