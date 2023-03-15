@@ -18,15 +18,16 @@ import Image from "next/image";
 import Header from "components/headerComponent/Header";
 import HeadTag from "components/headTagComponent/HeadTag";
 import { loginUser } from "service/API";
+import { useDispatch } from "react-redux";
+import { loginFun } from "store/slices/UserSlice"; 
+
 
 const apiAuth = process.env.API_AUTH;
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [callWarning, SetCallWarning] = useState(false);
-
   const [emailErr, setEmailErr] = useState(false);
   const [passwordErr, setPasswordErr] = useState(false);
   const [userdata, setUserdata] = useState();
@@ -34,6 +35,7 @@ const Login = () => {
   const headeTitle = "Login | Freekaamaal";
   const router = useRouter();
 
+  const dispatch = useDispatch()
   useEffect(() => {
     setUserdata(localStorage.getItem("user"));
     if (userdata) {
@@ -61,6 +63,7 @@ const Login = () => {
         result = await result.json({});
         if (result.status == 1) {
           localStorage.setItem("user", JSON.stringify(result));
+          dispatch(loginFun(result))
           setEmail("");
           setPassword("");
           setTimeout(() => {

@@ -10,6 +10,8 @@ import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 import { registerApi } from "../../service/API";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { registerToken } from "store/slices/authSlice";
 
 const apiAuth = process.env.API_AUTH;
 
@@ -29,6 +31,8 @@ const SignUp = () => {
   const [showSignUp, setShowSignUp] = useState(false);
   const [userdata, setUserdata] = useState();
   const router = useRouter();
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     localStorage.removeItem("verified");
@@ -70,6 +74,7 @@ const SignUp = () => {
         );
         if (data.status == "1") {
           localStorage.setItem("registerToken", JSON.stringify(data));
+          dispatch(registerToken(data))
           setTimeout(() => {
             setEmail("");
             setPassword("");
@@ -81,10 +86,11 @@ const SignUp = () => {
             router.push("/enter-otp");
           }, 3000);
         } else {
+          setSignupError(data.message);
         }
       } catch (error) {
         console.log(error);
-        setSignupError(error.response.data.message);
+        setSignupError(error.response?.data.message);
       }
     }
   };

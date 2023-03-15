@@ -31,12 +31,15 @@ const Carousel = (props) => {
             return (
               <SwiperSlide key={slider_id}>
                 <Link href={`deals/${app_landing_url}`}>
-                  <Image
+                   <Image
+                   priority
                     src={app_slider_image}
                     alt="banner product"
                     width={335}
                     height={140}
                   />
+
+                 
                 </Link>
               </SwiperSlide>
             );

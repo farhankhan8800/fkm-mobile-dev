@@ -77,6 +77,7 @@ const HotDealsCards = (props) => {
                               src={deal_image}
                               alt="FreeKaaMaal Product"
                               height={92}
+                              priority={true}
                               width={120}
                               style={{ borderRadius: "7px" }}
                             />

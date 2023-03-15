@@ -4,9 +4,8 @@ import "styles/globals.css";
 import theme from "public/theme";
 import { ThemeProvider } from "@mui/material/styles";
 import Container from "@mui/material/Container";
-import store from "../redux/store.js"
 import { Provider } from "react-redux";
-
+import Store from "../store/index.js";
 
 const roboto = Roboto({
   weight: ["400", "700", "900", "900"],
@@ -14,17 +13,16 @@ const roboto = Roboto({
   subsets: ["latin"],
 });
 
-
-
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
       <main className={roboto.className}>
+        <Provider store={Store}>
         <Container maxWidth="sm" sx={{ p: "0px" }}>
-          <Provider store={store}>
           <Component {...pageProps} />
-          </Provider>
         </Container>
+        </Provider>
+       
       </main>
     </ThemeProvider>
   );

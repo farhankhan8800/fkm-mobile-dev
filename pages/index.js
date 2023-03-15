@@ -14,6 +14,9 @@ const HowToEarnCashback = dynamic(() => import('components/HowToEarnCashback'))
 const CashBackStore = dynamic(() => import('components/homeComponents/CashBackStore'))
 import { homeAPI1 } from "service/API";
 import { homeAPI2 } from "service/API";
+import { useDispatch, useSelector } from "react-redux";
+import { addData } from "store/slices/HomeSlice";
+
 
 import axios from "axios";
 
@@ -30,6 +33,8 @@ export default function Home() {
   const [noData, setNoData] = useState(false);
   const [sponsoredCount, setSponsoredCount] = useState();
   const [authToken, setAuthToken] = useState();
+
+const dispatch = useDispatch()
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("user"))) {
@@ -66,7 +71,8 @@ export default function Home() {
           JSON.stringify(data.response.user_summary)
         );
       }
-
+      dispatch(addData(data.response))
+      console.log(data.response)
       setCarousel(data.response.slider);
       setLiveDeal(data.response.live_deals);
       setDealofday(data.response.sticky);
@@ -104,6 +110,10 @@ export default function Home() {
     GetData();
   }, [authToken]);
 
+  const homeData = useSelector((store)=>{
+    return  store.homeSlice
+  })
+console.log(homeData)
   useEffect(() => {
     window.addEventListener("load", () => getAPI2());
     if (page || authToken) {
