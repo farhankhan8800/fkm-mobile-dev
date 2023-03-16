@@ -75,6 +75,7 @@ const SignUp = () => {
         if (data.status == "1") {
           localStorage.setItem("registerToken", JSON.stringify(data));
           dispatch(registerToken(data))
+          // console.log(data)
           setTimeout(() => {
             setEmail("");
             setPassword("");

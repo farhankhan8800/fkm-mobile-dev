@@ -1,21 +1,16 @@
 // home page  -------------------
-import React, { useEffect, useState }  from "react";
+import React, { useEffect, useState, useCallback }  from "react";
 import dynamic from 'next/dynamic'
 import Header from "components/headerComponent/Header";
 import HeadTag from "components/headTagComponent/HeadTag";
 import Carousel from "components/homeComponents/Carousel";
 import DealOfTheDay from "components/homeComponents/DealOfTheDay";
 import LiveDeals from "components/homeComponents/LiveDeals";
-// import HotDeals from "components/homeComponents/HotDeals";
 const  HotDeals = dynamic(() => import('components/homeComponents/HotDeals'))
-// import CashBackStore from "components/homeComponents/CashBackStore";
-// import HowToEarnCashback from "components/HowToEarnCashback";
-// const HowToEarnCashback = dynamic(() => import('components/HowToEarnCashback'))
+const HowToEarnCashback = dynamic(() => import('components/HowToEarnCashback'))
 const CashBackStore = dynamic(() => import('components/homeComponents/CashBackStore'))
 import { homeAPI1 } from "service/API";
 import { homeAPI2 } from "service/API";
-import { useDispatch, useSelector } from "react-redux";
-import { addData } from "store/slices/HomeSlice";
 
 
 import axios from "axios";
@@ -35,7 +30,6 @@ export default function Home() {
   const [authToken, setAuthToken] = useState();
 
 
-const dispatch = useDispatch()
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("user"))) {
@@ -44,7 +38,6 @@ const dispatch = useDispatch()
   }, []);
 
 
-  // console.log(authToken)
   const headeTitle =
     "Online Shopping India, Best Deals, Offers, Coupons & Free Stuff in India | Freekaamaal";
 
@@ -64,22 +57,19 @@ const dispatch = useDispatch()
         }
       );
 
-      //  console.log(data)
+      console.log("callapi1");
       if (data.response.user_summary) {
-        // console.log(data.response.user_summary)
         localStorage.setItem(
           "usersummary",
           JSON.stringify(data.response.user_summary)
         );
       }
-      dispatch(addData(data.response))
-      console.log(data.response)
       setCarousel(data.response.slider);
       setLiveDeal(data.response.live_deals);
       setDealofday(data.response.sticky);
     } catch (error) {}
   };
-
+  const fistApiCallback = useCallback(GetData,[authToken])
   const getAPI2 = async () => {
     try {
       let { data } = await axios.post(
@@ -96,6 +86,7 @@ const dispatch = useDispatch()
           },
         }
       );
+      console.log("callapi2");
       setCbStore(data.response.cbstores);
       setHowtoearncashback(data.response.earn_cashback);
       setSponsoredCount(data.response.sponsored_count);
@@ -108,19 +99,13 @@ const dispatch = useDispatch()
   };
 
   useEffect(() => {
-    GetData();
-  }, [authToken]);
+    fistApiCallback()
+  }, []);
 
-  const homeData = useSelector((store)=>{
-    return  store.homeSlice
-  })
-console.log(homeData)
+const secondApiCallback = useCallback( getAPI2 ,[authToken, page])
   useEffect(() => {
-    window.addEventListener("load", () => getAPI2());
-    if (page || authToken) {
-      getAPI2();
-    }
-  }, [page, authToken]);
+    secondApiCallback()
+  }, [page]);
 
   const pageFunction = () => {
     setPage(page + 1);
@@ -138,8 +123,8 @@ console.log(homeData)
           pageFunction={pageFunction}
           noData={noData}
         />
-          <CashBackStore cbStore={cbStore} />
-          {/* <HowToEarnCashback howtoearncashback={howtoearncashback} /> */}
+        <CashBackStore cbStore={cbStore} />
+        <HowToEarnCashback howtoearncashback={howtoearncashback} />
       </div>
     </>
   );

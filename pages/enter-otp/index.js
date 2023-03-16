@@ -8,6 +8,8 @@ import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 import { verifyUser } from "service/API.js";
 import axios from "axios";
+import { useSelector,useDispatch } from "react-redux";
+import { clearToken, loginVarifid } from "store/slices/authSlice";
 
 const EnterOtp = () => {
   const [OTP, setOTP] = useState();
@@ -19,34 +21,36 @@ const EnterOtp = () => {
   const [checkVerified, setCheckVerified] = useState()
   const router = useRouter();
 
+  const token=  useSelector((state)=>{return state.authSlice})
+   console.log(registerToken)
+  const dispatch = useDispatch()
   const apiAuth = process.env.API_AUTH;
+
   useEffect(() => {
-   
-    setRegisterToken(JSON.parse(localStorage.getItem("registerToken")).token);
-  
+    setRegisterToken(token.data?.token);
     resendOTP();
-  }, []);
+  },[token]);
   useEffect(()=>{
-    setCheckVerified(localStorage.getItem("verified"))
+    setCheckVerified(token.verified == "successfully")
     if(checkVerified){
       router.push("/login");
     }
-  },[checkVerified, router])
+  },[checkVerified,token, router])
 
   const resendOTP = () => {};
   
-  useEffect(() => {
-    if (time == 0) {
-      setTime(time);
-    } else {
-      const timer = setInterval(function () {
-        setTime(time - 1);
-      }, 1000);
-      return () => {
-        clearInterval(timer);
-      };
-    }
-  }, [time]);
+  // useEffect(() => {
+  //   if (time == 0) {
+  //     setTime(time);
+  //   } else {
+  //     const timer = setInterval(function () {
+  //       setTime(time - 1);
+  //     }, 1000);
+  //     return () => {
+  //       clearInterval(timer);
+  //     };
+  //   }
+  // }, [time]);
   const onSubmit = async (e) => {
     e.preventDefault();
     if (OTP) {
@@ -69,7 +73,9 @@ const EnterOtp = () => {
           },500);
           setTimeout(()=>{
             router.push("/login")
-            localStorage.setItem("verified", "successfully");
+            // localStorage.setItem("verified", "successfully");
+            dispatch(loginVarifid("successfully"))
+            dispatch(clearToken(null))
           },1000);
         }
       } catch (error) {
