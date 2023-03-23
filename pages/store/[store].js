@@ -57,7 +57,7 @@ const StoreDetails = () => {
 
       if (data.status == 0 && data.error == 0) {
         router.push(`/404`);
-        console.log("no store found");
+        // console.log("no store found");
       } else {
         if (changeOption == "") {
           setStore_data(data.response.store_details);
@@ -82,7 +82,7 @@ const StoreDetails = () => {
         }
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -91,6 +91,8 @@ const StoreDetails = () => {
     storeData();
     }
   }, [Page, changeOption, store_slug]);
+
+// console.log(store_data)
 
   const dealsTabCall = () => {
     setNoCouponData(false);
@@ -412,7 +414,9 @@ const StoreDetails = () => {
                     variant="contained"
                     sx={{ width: "100%", maxWidth: "600px", color: "#fff" }}
                   >
-                    Shope & earn More
+                    {
+                      store_data.is_claim == '1' ? "Shope & earn More":"Shope Now"
+                    }
                   </Button>
                 </Link>
               ) : (

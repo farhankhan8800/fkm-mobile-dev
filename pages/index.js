@@ -7,16 +7,20 @@ import Carousel from "components/homeComponents/Carousel";
 import DealOfTheDay from "components/homeComponents/DealOfTheDay";
 import LiveDeals from "components/homeComponents/LiveDeals";
 const  HotDeals = dynamic(() => import('components/homeComponents/HotDeals'))
-const HowToEarnCashback = dynamic(() => import('components/HowToEarnCashback'))
-const CashBackStore = dynamic(() => import('components/homeComponents/CashBackStore'))
+const  HowToEarnCashback = dynamic(() => import('components/HowToEarnCashback'))
+const  CashBackStore = dynamic(() => import('components/homeComponents/CashBackStore'))
 import { homeAPI1 } from "service/API";
 import { homeAPI2 } from "service/API";
-
+import { useRouter } from 'next/router'
+import OpenExpireSectionDialog from "components/session-expired";
 
 import axios from "axios";
+import {isTokenExpired} from "service/helper.js";
+
 
 const apiAuth = process.env.API_AUTH;
 const DEVICE_TYPE = process.env.DEVICE_TYPE
+
 export default function Home() {
   const [cbStore, setCbStore] = useState();
   const [carousel, setCarousel] = useState();
@@ -28,8 +32,9 @@ export default function Home() {
   const [noData, setNoData] = useState(false);
   const [sponsoredCount, setSponsoredCount] = useState();
   const [authToken, setAuthToken] = useState();
+  const [sessionExpired,setSessionExpired] =  useState(false)
 
-
+  const router = useRouter()
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("user"))) {
@@ -37,9 +42,13 @@ export default function Home() {
     }
   }, []);
 
+  useEffect(()=>{
+    if(isTokenExpired(authToken)){
+      setSessionExpired(true)
+    } 
+  },[authToken])
 
-  const headeTitle =
-    "Online Shopping India, Best Deals, Offers, Coupons & Free Stuff in India | Freekaamaal";
+  const headeTitle = "Online Shopping India, Best Deals, Offers, Coupons & Free Stuff in India | Freekaamaal";
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const GetData = async () => {
@@ -57,7 +66,7 @@ export default function Home() {
         }
       );
 
-      console.log("callapi1");
+      // console.log("callapi1");
       if (data.response.user_summary) {
         localStorage.setItem(
           "usersummary",
@@ -86,7 +95,7 @@ export default function Home() {
           },
         }
       );
-      console.log("callapi2");
+      // console.log("callapi2");
       setCbStore(data.response.cbstores);
       setHowtoearncashback(data.response.earn_cashback);
       setSponsoredCount(data.response.sponsored_count);
@@ -112,6 +121,9 @@ const secondApiCallback = useCallback( getAPI2 ,[authToken, page])
   };
   return (
     <>
+    {
+      sessionExpired ?<OpenExpireSectionDialog setSessionExpired={setSessionExpired} />:""
+    }
       <HeadTag headeTitle={headeTitle} />
       <Header />
       <div>

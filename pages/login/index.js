@@ -19,7 +19,7 @@ import Header from "components/headerComponent/Header";
 import HeadTag from "components/headTagComponent/HeadTag";
 import { loginUser } from "service/API";
 import { useDispatch } from "react-redux";
-import { loginFun } from "store/slices/UserSlice"; 
+import { loginFun } from "redux-store/slices/UserSlice"; 
 
 
 const apiAuth = process.env.API_AUTH;
@@ -71,7 +71,7 @@ const Login = () => {
           }, 300);
         } else {
           setServerErr(result);
-          console.log(result.message);
+          // console.log(result.message);
         }
       } catch (err) {}
     }
@@ -79,7 +79,6 @@ const Login = () => {
 
   const emailChangeHandler = (e) => {
     const item = e.target.value;
-
     if (item.length < 4) {
       setEmailErr(true);
       setEmail("");

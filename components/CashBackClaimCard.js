@@ -6,7 +6,7 @@ const CashBackClaimCard = (props) => {
   const router = useRouter()
   return (
     <>
-    <Link href="">
+    
       <Box
         component="div"
         sx={{
@@ -30,18 +30,20 @@ const CashBackClaimCard = (props) => {
           </Grid>
           <Grid item md={4}>
             <Box component="div">
+              <Link href="/cashback/missing-claimform">
               <Button
-                onClick={()=>router.push("")}
                 variant="contained"
                 sx={{ color: "#fff", bgcolor: "gray" }}
               >
                 submit
               </Button>
+              </Link>
+              
             </Box>
           </Grid>
         </Grid>
       </Box>
-      </Link>
+    
     </>
   );
 };

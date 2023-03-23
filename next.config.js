@@ -199,11 +199,16 @@
         source: '/:id',
         destination: '/store/:id', 
       },
-      
+      {
+        source: 'festivals/:id',
+        destination: '/festivals/:id',
+      },
+     
       {
         source: '/:id/:id',
         destination: '/articles/:id',
       },
+     
     ]
   },
 

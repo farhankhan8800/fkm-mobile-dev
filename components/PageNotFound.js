@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 
 
 const headeTitle = " Error 404 | Freekaamaal";
-const PageNotFound = () => {
+const PageNotFound = ({page}) => {
    const router = useRouter()
 
   return (
@@ -19,7 +19,7 @@ const PageNotFound = () => {
     <Image src='https://images.freekaamaal.com/common-images/page-error-info.png' width={300} height={300} alt="Error"></Image>
     </div>
   <h1>404</h1>
-  <h3>Page Not Found</h3>
+  <h3> {page} Not Found </h3>
   <div className='button_error_page'>
    <Button type='button'  onClick={()=>{router.push("/")}}  sx={{color:"#fff",fontWeight:500}} variant="contained">Go To Home Page</Button>
   </div>

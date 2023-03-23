@@ -61,7 +61,7 @@ export const menuList = [
     menuIcon: contentWritingIcon,
   },
   {
-    link: "/fastivals",
+    link: "/festivals",
     menuName: "Diwali Offers",
     menuIcon: "",
   },

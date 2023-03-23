@@ -4,8 +4,6 @@ import { Box, Typography, Grid, Button } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
 import SimilarMoreProducts from "components/SimilarMoreProducts";
-import brandImage from "public/images/fkm_cover.png";
-import InfoIcon from "@mui/icons-material/Info";
 import Header from "components/headerComponent/Header";
 import HeadTag from "components/headTagComponent/HeadTag";
 import { useRouter } from "next/router";
@@ -14,6 +12,9 @@ import { deal_detail } from "service/API";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
 import PageNotFound from "components/PageNotFound";
+import { isTokenExpired } from "service/helper";
+import OpenExpireSectionDialog from "components/session-expired";
+
 const apiAuth = process.env.API_AUTH;
 
 const DealsDetails = () => {
@@ -22,12 +23,28 @@ const DealsDetails = () => {
   const [myhtml, setMyHtml] = useState();
   const [user, setUser] = useState();
   const [DealNotFound, setDealNotFound] = useState(false);
+  const [sessionExpired,setSessionExpired] =  useState(false)
   const router = useRouter();
   const dealSlug = router.query["deals-details"];
 
   useEffect(() => {
-    setUser(localStorage.getItem("user"));
+   
+    if (JSON.parse(localStorage.getItem("user"))) {
+      setUser(JSON.parse(localStorage.getItem("user")));
+    }
   }, []);
+
+ 
+
+  useEffect(()=>{
+    if(user){
+      // console.log( "deals",user.token)
+      if(isTokenExpired(user.token)){
+        setSessionExpired(true)
+      } 
+    }
+  },[user])
+
 
   useEffect(() => {
     const storeData = async () => {
@@ -47,7 +64,7 @@ const DealsDetails = () => {
           }
         );
         if (data.status == 1) {
-          setMyHtml(data.response.deal.deal_description_url);
+          setMyHtml(data.response.deal.description);
           setDeal(data.response.deal);
           setSimilarDeal(data.response.related_deals);
         } else if (data.status == 2) {
@@ -67,10 +84,13 @@ const DealsDetails = () => {
       </>
     );
   }
+
   return (
     <>
       <Header />
-     
+      {
+        sessionExpired ? <OpenExpireSectionDialog setSessionExpired={setSessionExpired} />:""
+      }
       <div style={{ paddingTop: "56px" }}>
         {deal ? (
           <div>
@@ -198,19 +218,27 @@ const DealsDetails = () => {
               }}
             >
               {user ? (
-                <Button
+                <Link href={deal.landing_url}>
+                  <Button
                   sx={{ width: "100%", color: "#fff", fontWeight: "600" }}
                   variant="contained"
                 >
-                  Shop & Earn Cashback
+                  {
+                  deal.is_cashback == 1?  "Shop & Earn Cashback":"Shop Now"
+                  }
                 </Button>
+                </Link>
+              
               ) : (
-                <Button
+                <Link href="/login">
+                 <Button
                   sx={{ width: "100%", color: "#fff", fontWeight: "600" }}
                   variant="contained"
                 >
                   Login Now & Earn Cashback
                 </Button>
+                </Link>
+              
               )}
             </Box>
           </div>

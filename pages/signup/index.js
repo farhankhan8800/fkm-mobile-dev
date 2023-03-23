@@ -11,7 +11,7 @@ import HeadTag from "../../components/headTagComponent/HeadTag";
 import { registerApi } from "../../service/API";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { registerToken } from "store/slices/authSlice";
+import { registerToken } from "redux-store/slices/authSlice";
 
 const apiAuth = process.env.API_AUTH;
 

@@ -68,8 +68,8 @@ const Articels = () => {
 return(
     <>
     <Header />
-  <HeadTag headeTitle={`404 Page Not Found|| Freekaamaal`} />
-    <PageNotFound />
+      <HeadTag headeTitle={`404 Page Not Found|| Freekaamaal`} />
+    <PageNotFound page="article" />
     </> 
   );
 }

@@ -24,7 +24,7 @@ const Error404 = () => {
           ></Image>
         </div>
         <h1>404</h1>
-        <h3>Page Not Found</h3>
+        <h3> Page Not Found...</h3>
         <div className="button_error_page">
           <Button
             type="button"

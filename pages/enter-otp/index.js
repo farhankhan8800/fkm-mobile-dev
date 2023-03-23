@@ -9,7 +9,7 @@ import HeadTag from "../../components/headTagComponent/HeadTag";
 import { verifyUser } from "service/API.js";
 import axios from "axios";
 import { useSelector,useDispatch } from "react-redux";
-import { clearToken, loginVarifid } from "store/slices/authSlice";
+import { clearToken, loginVarifid } from "redux-store/slices/authSlice";
 
 const EnterOtp = () => {
   const [OTP, setOTP] = useState();

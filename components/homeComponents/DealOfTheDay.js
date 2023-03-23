@@ -13,6 +13,8 @@ const DealOfTheDay = (props) => {
     setDealofday(props.dealofday);
   }, [props]);
 
+
+  // console.log(dealofday)
   return (
     <>
       {dealofday?.length > 0 ? (
@@ -43,17 +45,18 @@ const DealOfTheDay = (props) => {
             >
               {dealofday &&
                 dealofday.map((item, i) => {
-                  const { count, image, inventry_id, is_active, link } = item;
+                  const {  image, option, slug_url
+                  } = item;
                   return (
                     <SwiperSlide key={i}>
-                      <a href={link}>
+                      <Link href={option =="deal"? `/deals/${slug_url}`:slug_url}>
                         <Image
                           width={200}
                           height={100}
                           src={image}
                           alt="deal of the day"
                         />
-                      </a>
+                      </Link>
                     </SwiperSlide>
                   );
                 })}
