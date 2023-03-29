@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import {
-  Box,
-  Typography,
-  CardActionArea,
-  CardContent,
-  Card,
-  Skeleton,
-  Grid,
-} from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -19,6 +10,30 @@ const HotDealsCards = (props) => {
       SethotDeals(props.hotdeals)
   },[props])
 
+  const Skeleton = []
+   for (let input = 1; input <= 10; input++) {
+    Skeleton.push( <div className="Skeleton_hotDeal_card_wrapper" style={{width:"45%",marginBottom:"25px"}}>
+    <div class="sk_livedeals_card">
+      <p></p>
+    </div>
+    <div class="sk_livedeals_card_text">
+     <p></p>
+    </div>
+    <div class="sk_livedeals_card_text">
+     <p></p>
+    </div>
+    <div style={{display:"flex",justifyContent:"flex-start",alignItems:"center"}}>
+    <div class="sk_livedeals_card_button">
+     <p></p>
+    </div>
+    <div class="sk_livedeals_card_button">
+     <p></p>
+    </div>
+    </div>
+    </div>
+    )
+   }
+  
   return (
     <>
       <div className="flex_div">
@@ -39,13 +54,13 @@ const HotDealsCards = (props) => {
                 } = item;
 
                 return (
-                  <Box
-                    sx={{ maxWidth: "154px", margin: "13px" }}
-                    component="div"
+                  <div
+                    style={{ maxWidth: "154px", margin: "13px" }}
+                   
                     key={i}
                   >
-                    <Card
-                      sx={{
+                    <div
+                      style={{
                         background: "#f1f1f16b",
                         border: "1px solid #f1f1f16b",
                         position: "relative",
@@ -68,10 +83,10 @@ const HotDealsCards = (props) => {
                           )}
                         </span>
 
-                        <CardActionArea>
-                          <Box
-                            component="div"
-                            sx={{ padding: "23px 21px 0px" }}
+                        <div>
+                          <div
+                            
+                            style={{ padding: "23px 21px 0px" }}
                           >
                             <Image
                               src={deal_image}
@@ -81,15 +96,12 @@ const HotDealsCards = (props) => {
                               width={120}
                               style={{ borderRadius: "7px" }}
                             />
-                          </Box>
-                          <CardContent
-                            sx={{ background: "#f1f1f16b", padding: "7px" }}
+                          </div>
+                          <div
+                            style={{ background: "#f1f1f16b", padding: "7px" }}
                           >
-                            <Typography
-                              gutterBottom
-                              variant="h6"
-                              component="div"
-                              sx={{
+                            <div
+                              style={{
                                 color: "#000",
                                 marginBottom: "0",
                                 fontSize: "15px",
@@ -102,10 +114,9 @@ const HotDealsCards = (props) => {
                                 width={50}
                                 style={{ borderRadius: "7px" }}
                               />
-                            </Typography>
-                            <Typography
-                              variant="body2"
-                              sx={{
+                            </div>
+                            <div
+                              style={{
                                 color: "#000",
                                 padding: "4px 0",
                                 fontSize: "11px",
@@ -114,20 +125,20 @@ const HotDealsCards = (props) => {
                               }}
                             >
                               {deal_title ? deal_title : title}{" "}
-                            </Typography>
-                            <Box component="div" sx={{ paddingTop: "4px" }}>
+                            </div>
+                            <div  style={{ paddingTop: "4px" }}>
                               <strong className="card_amouunt">
                                 &#8377;{offer_price}
                               </strong>
                               <small className="card_small_amouunt">
                                 &#8377;{price}
                               </small>
-                            </Box>
-                          </CardContent>
-                        </CardActionArea>
+                            </div>
+                          </div>
+                        </div>
                       </Link>
-                    </Card>
-                  </Box>
+                    </div>
+                  </div>
                 );
               })}
           </>
@@ -137,71 +148,7 @@ const HotDealsCards = (props) => {
       </div>
       {!hotDeals && (
         <div className="Skeleton_hotDeal_card">
-          <div className="Skeleton_hotDeal_card_wrapper">
-            <Skeleton
-              variant="rectangular"
-              sx={{ borderRadius: "7px" }}
-              height={120}
-            />
-            <Skeleton variant="text" sx={{ fontSize: "3rem" }} />
-            <Grid container columnSpacing={1}>
-              <Grid item xs={7}>
-                <Skeleton variant="text" sx={{ fontSize: "2rem" }} />
-              </Grid>
-              <Grid xs={5} item>
-                <Skeleton variant="text" sx={{ fontSize: "2rem" }} />
-              </Grid>
-            </Grid>
-          </div>
-
-          <div className="Skeleton_hotDeal_card_wrapper">
-            <Skeleton
-              variant="rectangular"
-              sx={{ borderRadius: "7px" }}
-              height={120}
-            />
-            <Skeleton variant="text" sx={{ fontSize: "3rem" }} />
-            <Grid container columnSpacing={1}>
-              <Grid item xs={7}>
-                <Skeleton variant="text" sx={{ fontSize: "2rem" }} />
-              </Grid>
-              <Grid xs={5} item>
-                <Skeleton variant="text" sx={{ fontSize: "2rem" }} />
-              </Grid>
-            </Grid>
-          </div>
-          <div className="Skeleton_hotDeal_card_wrapper">
-            <Skeleton
-              variant="rectangular"
-              sx={{ borderRadius: "7px" }}
-              height={120}
-            />
-            <Skeleton variant="text" sx={{ fontSize: "3rem" }} />
-            <Grid container columnSpacing={1}>
-              <Grid item xs={7}>
-                <Skeleton variant="text" sx={{ fontSize: "2rem" }} />
-              </Grid>
-              <Grid xs={5} item>
-                <Skeleton variant="text" sx={{ fontSize: "2rem" }} />
-              </Grid>
-            </Grid>
-          </div>
-          <div className="Skeleton_hotDeal_card_wrapper">
-            <Skeleton
-              variant="rectangular"
-              sx={{ borderRadius: "7px" }}
-              height={120}
-            />
-            <Skeleton variant="text" sx={{ fontSize: "3rem" }} />
-            <Grid container columnSpacing={1}>
-              <Grid item xs={7}>
-                <Skeleton variant="text" sx={{ fontSize: "2rem" }} />
-              </Grid>
-              <Grid xs={5} item>
-                <Skeleton variant="text" sx={{ fontSize: "2rem" }} />
-              </Grid>
-            </Grid>
-          </div>
+          { Skeleton }
         </div>
       )}
       <style jsx>{`
@@ -257,7 +204,7 @@ const HotDealsCards = (props) => {
         .Skeleton_hotDeal_card {
           display: flex;
           width: 100%;
-          justify-content: center;
+          justify-content: space-evenly;
           flex-wrap: wrap;
         }
         .Skeleton_hotDeal_card_wrapper {

@@ -4,15 +4,13 @@ import HeadTag from "../../components/headTagComponent/HeadTag";
 import Image from "next/image";
 import { Breadcrumbs, Button, Typography } from "@mui/material";
 import Link from "next/link";
-import axios from "axios";
-import StarIcon from "@mui/icons-material/Star";
 import { useRouter } from "next/router";
-import Spinner from "components/Spinner";
-import Error404 from "pages/404";
 
-const Diwali = () => {
+const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE; 
+
+const FestivalDetail = () => {
   const [userToken, setUserToken] = useState();
-  const [noData, setNoData] = useState(false);
   const [readMore, setReadMore] = useState(false);
 
   useEffect(() => {
@@ -21,9 +19,37 @@ const Diwali = () => {
     }
   }, []);
  
+
+
   const router = useRouter();
-  const dealSlug = router.query["id"];
+  const dealSlug = router.query["festival-detail"];
+
   console.log(dealSlug)
+
+  useEffect(() => {
+    const getFestival = async () => {
+      try {
+        const { data } = await axios.post(
+          festivalAPI,
+          {
+            apiAuth: apiAuth,
+            device_type: DEVICE_TYPE,
+          },
+          {
+            headers: {
+              Authorization: userToken,
+            },
+          }
+        );
+       
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+   
+  }, [userToken]);
+
   const readmoreFunction = () => {
     if (readMore == true) {
       setReadMore(false);
@@ -32,7 +58,7 @@ const Diwali = () => {
     }
   };
 
-  const headeTitle = "Diwali Offers | Freekaamaal";
+  const headeTitle = "Festivals Offer | Freekaamaal";
 
   return (
     <>
@@ -61,7 +87,7 @@ const Diwali = () => {
             <Link underline="hover" color="inherit" href="/">
               Home
             </Link>
-            <Link color="inherit" href="">
+            <Link underline="hover" color="inherit" href="/festivals">
               Fastivals
             </Link>
             <Typography sx={{ fontSize: "13px" }} color="text.primary">
@@ -135,65 +161,6 @@ const Diwali = () => {
             </div>
           </div>
         </div>
-        <div className="fastivals_Couppon_section">
-          <Typography
-            variant="h4"
-            fontSize={19}
-            fontWeight={"bolder"}
-            component="h6"
-            marginBottom={1}
-          >
-            Diwali Coupons
-          </Typography>
-          <div className="fastival_Couppon_box">
-            <div className="fastival_Couppon_wrapper">
-              <div className="fastival_Couppon_div1">
-                <Typography
-                  variant="h2"
-                  fontWeight={"bolder"}
-                  component="h4"
-                  fontSize={25}
-                  color={"red"}
-                  sx={{ height: "82px" }}
-                  textTransform={"capitalize"}
-                >
-                  Lab Test New Offer
-                </Typography>
-                <Typography>
-                  Flat Rs.499 off on Swift Health Checkup (45+ Tests) worth
-                  Rs.999
-                </Typography>
-              </div>
-              <div className="fastival_Couppon_div2">
-                <Image
-                  src="https://images.freekaamaal.com/store-images/4111.jpg"
-                  width={50}
-                  height={30}
-                  alt=""
-                ></Image>
-              </div>
-              <div className="fastival_Couppon_div3">
-                <span>
-                  <StarIcon sx={{ fontSize: "12px" }} />
-                </span>
-                <span>
-                  <StarIcon sx={{ fontSize: "12px" }} />
-                </span>{" "}
-                <span>
-                  <StarIcon sx={{ fontSize: "12px" }} />
-                </span>
-                <span>
-                  <StarIcon sx={{ fontSize: "12px" }} />
-                </span>
-              </div>
-            </div>
-          </div>
-          <div style={{ textAlign: "center" }}>
-            <Button variant="contained" sx={{ color: "#fff" }} size="small">
-              View More Coupons
-            </Button>
-          </div>
-        </div>
         <div className="fastival_store_section">
           <Typography
             variant="h4"
@@ -250,7 +217,7 @@ const Diwali = () => {
             padding: 10px;
             border-radius: 5px;
           }
-          .fastivals_Couppon_section,
+         
           .fastivals_articles_box {
             max-width: 95%;
             padding: 10px 0;
@@ -266,82 +233,9 @@ const Diwali = () => {
           .fastival_article_wrapper .fastival_article_contant {
             margin-left: 10px;
           }
-          .fastival_Couppon_wrapper {
-            background: #fff;
-            text-align: center;
-            border-radius: 6px;
-            box-shadow: 0px 4px 7px -3px #d9d9d9;
-          }
-          .fastival_Couppon_div1 {
-            position: relative;
-            padding: 38px 10px;
-            border-bottom: 3px dotted #d0cdcd;
-          }
-          .fastival_Couppon_div1::after {
-            content: "";
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #edf4fb;
-            left: -20px;
-            bottom: -27px;
-          }
-          .fastival_Couppon_div1::before {
-            content: "";
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #edf4fb;
-            right: -20px;
-            bottom: -27px;
-          }
-          .fastival_Couppon_div2 {
-            padding: 26px;
-          }
-          .fastival_Couppon_div3 {
-            position: absolute;
-            background: #edf4fb;
-            width: 150px;
-            height: 48px;
-            bottom: -30px;
-            overflow: hidden;
-            border: 1px solid #c6c5c5;
-            left: 50%;
-            transform: translate(-50%, 0);
-            border-radius: 3px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            padding-left: 15px;
-          }
-          .fastival_Couppon_div3 span {
-            color: #fff;
-            z-index: 1;
-          }
-          .fastival_Couppon_div3:after {
-            background: green;
-            content: "";
-            position: absolute;
-            height: 100%;
-            width: 50%;
-            left: 0px;
-          }
-          .fastival_Couppon_div3:before {
-            background: green;
-            content: "";
-            position: absolute;
-            height: 100%;
-            width: 74%;
-            transform: rotate(45deg);
-            left: 10px;
-            bottom: 0;
-          }
-          .fastival_Couppon_box {
-            position: relative;
-            margin-bottom: 60px;
-          }
+          
+          
+         
           .fastival_store_section {
             background: #697988 !important;
             margin: 20px 0 30px;
@@ -366,4 +260,4 @@ const Diwali = () => {
   );
 };
 
-export default Diwali;
+export default FestivalDetail;

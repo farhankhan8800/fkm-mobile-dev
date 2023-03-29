@@ -1,5 +1,4 @@
 import CashBackClimeCard from "components/CashBackClaimCard";
-import { Box, Typography, Grid, Button } from "@mui/material";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -9,13 +8,14 @@ import HeadTag from "components/headTagComponent/HeadTag";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { deal_detail } from "service/API";
-import CircularProgress from "@mui/material/CircularProgress";
+import Spinner from "components/Spinner";
 import axios from "axios";
 import PageNotFound from "components/PageNotFound";
 import { isTokenExpired } from "service/helper";
 import OpenExpireSectionDialog from "components/session-expired";
 
 const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE;
 
 const DealsDetails = () => {
   const [deal, setDeal] = useState();
@@ -23,28 +23,25 @@ const DealsDetails = () => {
   const [myhtml, setMyHtml] = useState();
   const [user, setUser] = useState();
   const [DealNotFound, setDealNotFound] = useState(false);
-  const [sessionExpired,setSessionExpired] =  useState(false)
+  const [sessionExpired, setSessionExpired] = useState(false);
   const router = useRouter();
+  
   const dealSlug = router.query["deals-details"];
 
   useEffect(() => {
-   
     if (JSON.parse(localStorage.getItem("user"))) {
       setUser(JSON.parse(localStorage.getItem("user")));
     }
   }, []);
 
- 
-
-  useEffect(()=>{
-    if(user){
+  useEffect(() => {
+    if (user) {
       // console.log( "deals",user.token)
-      if(isTokenExpired(user.token)){
-        setSessionExpired(true)
-      } 
+      if (isTokenExpired(user.token)) {
+        setSessionExpired(true);
+      }
     }
-  },[user])
-
+  }, [user]);
 
   useEffect(() => {
     const storeData = async () => {
@@ -55,7 +52,7 @@ const DealsDetails = () => {
             apiAuth: apiAuth,
             page: "1",
             deal_slug: dealSlug,
-            device_type: "4",
+            device_type: DEVICE_TYPE,
           },
           {
             headers: {
@@ -75,38 +72,29 @@ const DealsDetails = () => {
 
     storeData();
   }, [dealSlug]);
+
   if (DealNotFound) {
-    return (
-      <>
-        <Header />
-        <HeadTag headeTitle={`404 Page Not Found|| Freekaamaal`} />
-        <PageNotFound />
-      </>
-    );
+   router.push("/404")
   }
 
   return (
     <>
       <Header />
-      {
-        sessionExpired ? <OpenExpireSectionDialog setSessionExpired={setSessionExpired} />:""
-      }
+      {sessionExpired ? (
+        <OpenExpireSectionDialog setSessionExpired={setSessionExpired} />
+      ) : (
+        ""
+      )}
       <div style={{ paddingTop: "56px" }}>
         {deal ? (
           <div>
-           <HeadTag headeTitle={`${deal.deal_title} || Freekaamaal`} />
-            <Box component="div" sx={{ padding: 1 }}>
-              <Typography
-                variant="h6"
-                sx={{ fontWeight: "600" }}
-                component="h6"
-              >
-                {" "}
+            <HeadTag headeTitle={`${deal.deal_title} || Freekaamaal`} />
+            <div style={{ padding: "10px" }}>
+              <h3 style={{ fontWeight: "600", color: "#4a4a4a" }}>
                 {deal.deal_title}
-              </Typography>
-              <Box
-                component="div"
-                sx={{
+              </h3>
+              <div
+                style={{
                   padding: "20px 0 20px ",
                   margin: "10px 7px 10px ",
                   border: "1px solid #e1dadab3",
@@ -115,7 +103,7 @@ const DealsDetails = () => {
                   overflow: "hidden",
                 }}
               >
-                <Box sx={{ maxWidth: "350px", margin: "auto" }} component="div">
+                <div style={{ maxWidth: "350px", margin: "auto" }}>
                   <Image
                     style={{ width: "100%" }}
                     height={250}
@@ -123,70 +111,57 @@ const DealsDetails = () => {
                     src={deal.deal_img_url}
                     alt=""
                   />
-                </Box>
-                <Box sx={{ maxWidth: "350px", margin: "auto" }} component="div">
-                  <Typography
-                    variant="p"
-                    sx={{ fontWeight: "400", marginTop: "10px" }}
-                    component="p"
-                  ></Typography>
+                </div>
+                <div sx={{ maxWidth: "350px", margin: "auto" }}>
+                  <p style={{ fontWeight: "400", marginTop: "10px" }}></p>
                   <Link
                     href={`${deal.deal_slug}`}
                     className="shopNowbtn"
                   ></Link>
-                </Box>
-                <Box
-                  sx={{
+                </div>
+                <div
+                  style={{
                     maxWidth: "350px",
                     margin: "auto",
                     marginTop: "15px",
                     padding: "5px 10px",
                   }}
-                  component="div"
                 >
-                  <Grid
-                    container
-                    justifyContent="space-between"
-                    alignItems="center"
+                  <div
+                    className="flex_space_between"
+                    style={{ alignItems: "center" }}
                   >
-                    <Grid item>
+                    <div>
                       <div className="card_mrp_box">
                         <strong>&#8377; {deal.offer_price} </strong>{" "}
                         <span>&#8377; {deal.price}</span>
                       </div>
-                    </Grid>
-                    <Grid item>
-                      <Box component="div" sx={{ maxWidth: "100px" }}>
+                    </div>
+                    <div>
+                      <div style={{ maxWidth: "100px" }}>
                         <Image
                           width={100}
                           height={25}
                           src={deal.store_image}
                           alt=""
                         />
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Box>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               {/* cash backclaim card start  */}
               <CashBackClimeCard />
               {/* cash backclaim card end  */}
-              <Box
-                component="div"
-                sx={{
+              <div
+                style={{
                   padding: "13px 14px ",
                   margin: "10px 7px 10px ",
                   border: "1px solid #e1dadab3",
                   borderRadius: "10px",
                 }}
               >
-                <Typography
-                  variant="h5"
-                  sx={{ fontWeight: "600" }}
-                  component="h5"
-                >
-                  About The Deals
-                </Typography>
+                <h3 style={{ fontWeight: "600" }}>About The Deals</h3>
                 <div>
                   {
                     <div
@@ -196,55 +171,47 @@ const DealsDetails = () => {
                     />
                   }
                 </div>
-              </Box>
-            </Box>
+              </div>
+            </div>
 
             {similarDeal.length == 0 ? (
               ""
             ) : (
-              <Box sx={{ marginBottom: "25px" }}>
+              <div style={{ marginBottom: "25px" }}>
                 <SimilarMoreProducts similarDeal={similarDeal} />
-              </Box>
+              </div>
             )}
 
-            <Box
-              sx={{
+            <div
+              style={{
                 position: "fixed",
                 bottom: "0",
                 padding: "1px 4px",
                 width: "100%",
                 maxWidth: "548px",
-                bgcolor: "#fff",
+                background: "#fff",
               }}
             >
               {user ? (
                 <Link href={deal.landing_url}>
-                  <Button
-                  sx={{ width: "100%", color: "#fff", fontWeight: "600" }}
-                  variant="contained"
-                >
-                  {
-                  deal.is_cashback == 1?  "Shop & Earn Cashback":"Shop Now"
-                  }
-                </Button>
+                  <button className="full_with_button">
+                    {deal.is_cashback == 1
+                      ? "Shop & Earn Cashback"
+                      : "Shop Now"}
+                  </button>
                 </Link>
-              
               ) : (
                 <Link href="/login">
-                 <Button
-                  sx={{ width: "100%", color: "#fff", fontWeight: "600" }}
-                  variant="contained"
-                >
-                  Login Now & Earn Cashback
-                </Button>
+                  <button className="full_with_button">
+                    Login Now & Earn Cashback
+                  </button>
                 </Link>
-              
               )}
-            </Box>
+            </div>
           </div>
         ) : (
-          <Box
-            sx={{
+          <div
+            style={{
               display: "flex",
               width: "100%",
               height: "100vh",
@@ -252,8 +219,8 @@ const DealsDetails = () => {
               alignItems: "center",
             }}
           >
-            <CircularProgress />
-          </Box>
+            <Spinner />
+          </div>
         )}
 
         <style jsx>{`

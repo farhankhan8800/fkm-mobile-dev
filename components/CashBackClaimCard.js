@@ -7,42 +7,40 @@ const CashBackClaimCard = (props) => {
   return (
     <>
     
-      <Box
-        component="div"
-        sx={{
+      <div
+        style={{
           color:"#000",
           margin: "20px 7px",
           padding: "10px 15px",
           borderRadius: "10px",
-          bgcolor: "#dddddd",
+          background: "#dddddd",
         }}
       >
-        <Grid container justifyContent="space-around" alignItems="center">
-          <Grid item md={8}>
-            <Box component="div">
-              <Typography variant="h6" component="h6">
+        <div className="d_flex" style={{justifyContent:"space-around",alignItems:"center"}}>
+          <div  style={{flexBasis:"70%"}}>
+            <div >
+              <h3 >
                 Cashback claim form
-              </Typography>
-              <Typography variant="p" component="p">
+              </h3>
+              <p className="p_tag_small">
                 fill up this form within 24 hrs
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item md={4}>
-            <Box component="div">
+              </p>
+            </div>
+          </div>
+          <div  style={{flexBasis:"30%"}}>
+            <div component="div">
               <Link href="/cashback/missing-claimform">
-              <Button
-                variant="contained"
-                sx={{ color: "#fff", bgcolor: "gray" }}
+              <button
+                 className="contain_button"
+                style={{ color: "var(--second-color)", background: "gray" }}
               >
                 submit
-              </Button>
+              </button>
               </Link>
-              
-            </Box>
-          </Grid>
-        </Grid>
-      </Box>
+            </div>
+          </div>
+        </div>
+      </div>
     
     </>
   );

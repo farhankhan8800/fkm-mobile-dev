@@ -3,17 +3,17 @@ import { Pagination, Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
-
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Skeleton } from "@mui/material";
+
+
 
 const Carousel = (props) => {
   const [banner, setBanner] = useState();
 
   useEffect(() => {
-    setBanner(props.bannerImg);
+  setBanner(props.bannerImg);
   }, [props, banner]);
 
   return (
@@ -32,14 +32,12 @@ const Carousel = (props) => {
               <SwiperSlide key={slider_id}>
                 <Link href={`deals/${app_landing_url}`}>
                    <Image
-                   priority
+                    priority
                     src={app_slider_image}
                     alt="banner product"
                     width={335}
                     height={140}
                   />
-
-                 
                 </Link>
               </SwiperSlide>
             );
@@ -47,9 +45,31 @@ const Carousel = (props) => {
       </Swiper>
       {
        !banner && <>
-       <Skeleton variant="rectangular"  sx={{width:"95%",m:"10px", borderRadius:"7px"}} height={140} />
+        <div class="sk_carousel_card">
+          <p></p>
+        </div>
        </>
       }
+      <style>{`
+     .sk_carousel_card{
+        height: 9rem;
+        box-shadow: 0 0 5px rgba(0,0,0,0.4);
+        position: relative;
+        margin: 10px 7px;
+        border-radius: 7px;
+        overflow: hidden;
+      }
+      .sk_carousel_card p:empty{
+        width: 100%;
+        height: 9rem;
+        background-color: rgba(0,0,0,0.2);
+        animation: skeleton-anim 1s infinite alternate;
+      }
+      @keyframes skeleton-anim{
+        0%{opacity: 0.3}
+        100%{opacity: 0.8}
+      }
+      `}</style>
     </div>
   );
 };

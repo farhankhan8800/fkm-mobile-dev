@@ -4,23 +4,51 @@ import HeadTag from "../../components/headTagComponent/HeadTag";
 import Image from "next/image";
 import { Breadcrumbs, Button, Typography } from "@mui/material";
 import Link from "next/link";
-import axios from "axios";
 import StarIcon from "@mui/icons-material/Star";
 import { useRouter } from "next/router";
-import Spinner from "components/Spinner";
-import Error404 from "pages/404";
 
-const DiwaliOffers = () => {
-  const [userToken, setUserToken] = useState();
-  const [noData, setNoData] = useState(false);
+import { festivalAPI } from "service/API";
+import axios from "axios";
+
+const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE;
+
+const Festivals = () => {
   const [readMore, setReadMore] = useState(false);
-
+  const [authToken, setUserToken] = useState();
+  const [Festivaldata, setFestivaldata] = useState();
+  const [Festivalstore, setFestivalstore] = useState();
   useEffect(() => {
     if (localStorage.getItem("user")) {
       setUserToken(JSON.parse(localStorage.getItem("user")).token);
     }
   }, []);
   const router = useRouter();
+
+  useEffect(() => {
+    const getFestival = async () => {
+      try {
+        const { data } = await axios.post(
+          festivalAPI,
+          {
+            apiAuth: apiAuth,
+            device_type: DEVICE_TYPE,
+          },
+          {
+            headers: {
+              Authorization: authToken,
+            },
+          }
+        );
+        setFestivaldata(data);
+        setFestivalstore(data.response.festivals)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getFestival();
+  }, [authToken]);
   const readmoreFunction = () => {
     if (readMore == true) {
       setReadMore(false);
@@ -50,7 +78,7 @@ const DiwaliOffers = () => {
             height={97}
             style={{ width: "100%" }}
             alt="fastivals_offer"
-            src="https://images.freekaamaal.com/common-images/M-headerBanner10-9-19.jpg"
+            src="https://images.freekaamaal.com/common-images/all_festival_offer_mobile.jpg"
           />
         </div>
         <div className="breadcrumb_fastivals_offer_page">
@@ -58,11 +86,8 @@ const DiwaliOffers = () => {
             <Link underline="hover" color="inherit" href="/">
               Home
             </Link>
-            <Link color="inherit" href="">
-              Fastivals
-            </Link>
             <Typography sx={{ fontSize: "13px" }} color="text.primary">
-              Diwali Offers
+              Fastivals
             </Typography>
           </Breadcrumbs>
         </div>
@@ -73,23 +98,13 @@ const DiwaliOffers = () => {
             fontWeight={"bolder"}
             component="h6"
           >
-            Diwali Offers
+            {Festivaldata ? Festivaldata.response.topheading : ""}
           </Typography>
           <Typography
             sx={{ height: readMore ? "100%" : "140px", overflow: "hidden" }}
             fontSize={14}
           >
-            The festive season has begun, and it is time to shop and save with
-            Diwali offers. People eagerly wait for the Diwali sale to start
-            their festive shopping. With the Diwali offers of top online stores,
-            you get discounts on everything - electronics, appliances, fashion,
-            daily essentials etc. If you are looking for the best deals this
-            festive season, your search ends with FreeKaaMaal. Here on this
-            page, you will get Diwali offers across all categories such as
-            mobiles, electronics, fashion, accessories and more. We handpick the
-            top offers from leading stores to ensure you pay the lowest price.
-            The handpicked deals make your festive shopping more affordable. Get
-            up to 80% off across all categories with Diwali offers online.
+            {Festivaldata ? Festivaldata.response.topdesc : ""}
           </Typography>
           <div style={{ textAlign: "right" }}>
             <Button
@@ -102,6 +117,7 @@ const DiwaliOffers = () => {
             </Button>
           </div>
         </div>
+
         <div className="fastivals_articles_box">
           <Typography
             variant="h4"
@@ -110,127 +126,45 @@ const DiwaliOffers = () => {
             component="h6"
             marginBottom={1}
           >
-            Diwali Article
+            Popular Festival Sales of 2021
           </Typography>
-          <div className="fastival_article_wrapper">
-            <Link href="/">
-              <Image
-                src="https://images.freekaamaal.com/common-images/M-topCoupons14-10-19.jpg"
-                width={200}
-                height={100}
-                alt=""
-              ></Image>
-            </Link>
-
-            <div className="fastival_article_contant">
-              <Typography fontSize={14}>
-                Top 10 Diwali Coupons for Gifts, Travel and More
-              </Typography>
-              <Link style={{ fontSize: "12px" }} href="">
-                Read Article
-              </Link>
-            </div>
+          <div className="fastival_article_store_box_wraper">
+            {
+              Festivalstore && Festivalstore.map((item,i)=>{
+                 return (
+                  <div className="fastival_article_store_box" key={i}>
+                  <Link href={`/festivals/${item.slug}`}>
+                    <Image
+                      src={item.image}
+                      width={200}
+                      height={100}
+                      style={{width:"100%"}}
+                      alt=""
+                    ></Image>
+                  </Link>
+                  <p className="store_title" fontSize={14}>
+                   {item.title}
+                  </p>
+                </div>
+                 )
+              })
+            }
+          
           </div>
         </div>
-        <div className="fastivals_Couppon_section">
+
+        <div className="fastival_top_content_box">
           <Typography
             variant="h4"
-            fontSize={19}
+            fontSize={18}
             fontWeight={"bolder"}
             component="h6"
-            marginBottom={1}
           >
-            Diwali Coupons
+            {Festivaldata ? Festivaldata.response.bottomheading : ""}
           </Typography>
-          <div className="fastival_Couppon_box">
-            <div className="fastival_Couppon_wrapper">
-              <div className="fastival_Couppon_div1">
-                <Typography
-                  variant="h2"
-                  fontWeight={"bolder"}
-                  component="h4"
-                  fontSize={25}
-                  color={"red"}
-                  sx={{ height: "82px" }}
-                  textTransform={"capitalize"}
-                >
-                  Lab Test New Offer
-                </Typography>
-                <Typography>
-                  Flat Rs.499 off on Swift Health Checkup (45+ Tests) worth
-                  Rs.999
-                </Typography>
-              </div>
-              <div className="fastival_Couppon_div2">
-                <Image
-                  src="https://images.freekaamaal.com/store-images/4111.jpg"
-                  width={50}
-                  height={30}
-                  alt=""
-                ></Image>
-              </div>
-              <div className="fastival_Couppon_div3">
-                <span>
-                  <StarIcon sx={{ fontSize: "12px" }} />
-                </span>
-                <span>
-                  <StarIcon sx={{ fontSize: "12px" }} />
-                </span>{" "}
-                <span>
-                  <StarIcon sx={{ fontSize: "12px" }} />
-                </span>
-                <span>
-                  <StarIcon sx={{ fontSize: "12px" }} />
-                </span>
-              </div>
-            </div>
-          </div>
-          <div style={{ textAlign: "center" }}>
-            <Button variant="contained" sx={{ color: "#fff" }} size="small">
-              View More Coupons
-            </Button>
-          </div>
-        </div>
-        <div className="fastival_store_section">
-          <Typography
-            variant="h4"
-            fontWeight={"bolder"}
-            component="h4"
-            color={"#fff"}
-            letterSpacing={1}
-            fontSize={19}
-            style={{ padding: "10px 0" }}
-          >
-            Diwali Sale 2021
+          <Typography fontSize={14}>
+            {Festivaldata ? Festivaldata.response.bottomdesc : ""}
           </Typography>
-          <div className="fastival_store_box">
-            <div className="fastival_store_wrapper">
-              <Image
-                alt=""
-                src="	https://images.freekaamaal.com/store-images/1.jpg"
-                width={92}
-                height={30}
-              />
-              <Link href="">
-                <Typography color={"#000"} fontSize={13}>
-                  Amazon Diwali Sale 2022
-                </Typography>
-              </Link>
-            </div>
-            <div className="fastival_store_wrapper">
-              <Image
-                alt=""
-                src="	https://images.freekaamaal.com/store-images/1.jpg"
-                width={92}
-                height={30}
-              />
-              <Link href="">
-                <Typography color={"#000"} fontSize={13}>
-                  Amazon Diwali Sale 2022
-                </Typography>
-              </Link>
-            </div>
-          </div>
         </div>
       </div>
       <style jsx>
@@ -247,7 +181,7 @@ const DiwaliOffers = () => {
             padding: 10px;
             border-radius: 5px;
           }
-          .fastivals_Couppon_section,
+
           .fastivals_articles_box {
             max-width: 95%;
             padding: 10px 0;
@@ -256,106 +190,50 @@ const DiwaliOffers = () => {
           .fastival_article_wrapper {
             background: #fff;
             padding: 9px;
-
             box-shadow: 0px 2px 12px 2px #e6e6e6;
-            display: flex;
           }
-          .fastival_article_wrapper .fastival_article_contant {
-            margin-left: 10px;
-          }
-          .fastival_Couppon_wrapper {
-            background: #fff;
-            text-align: center;
-            border-radius: 6px;
-            box-shadow: 0px 4px 7px -3px #d9d9d9;
-          }
-          .fastival_Couppon_div1 {
+          .fastival_article_store_box_wraper .fastival_article_store_box {
             position: relative;
-            padding: 38px 10px;
-            border-bottom: 3px dotted #d0cdcd;
-          }
-          .fastival_Couppon_div1::after {
-            content: "";
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #edf4fb;
-            left: -20px;
-            bottom: -27px;
-          }
-          .fastival_Couppon_div1::before {
-            content: "";
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #edf4fb;
-            right: -20px;
-            bottom: -27px;
-          }
-          .fastival_Couppon_div2 {
-            padding: 26px;
-          }
-          .fastival_Couppon_div3 {
-            position: absolute;
-            background: #edf4fb;
-            width: 150px;
-            height: 48px;
-            bottom: -30px;
-            overflow: hidden;
-            border: 1px solid #c6c5c5;
-            left: 50%;
-            transform: translate(-50%, 0);
-            border-radius: 3px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            padding-left: 15px;
-          }
-          .fastival_Couppon_div3 span {
-            color: #fff;
-            z-index: 1;
-          }
-          .fastival_Couppon_div3:after {
-            background: green;
-            content: "";
-            position: absolute;
-            height: 100%;
-            width: 50%;
-            left: 0px;
-          }
-          .fastival_Couppon_div3:before {
-            background: green;
-            content: "";
-            position: absolute;
-            height: 100%;
-            width: 74%;
-            transform: rotate(45deg);
-            left: 10px;
-            bottom: 0;
-          }
-          .fastival_Couppon_box {
-            position: relative;
-            margin-bottom: 60px;
-          }
-          .fastival_store_section {
-            background: #697988 !important;
-            margin: 20px 0 30px;
-            width: 100%;
-            padding: 0 15px !important;
-          }
-          .fastival_store_box {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-evenly;
             text-align: center;
-          }
-          .fastival_store_wrapper {
-            background: #fff;
-            padding: 16px 19px;
+            border: 1px solid#d1ccccbd;
+            padding: 10px;
             margin: 10px;
-            border-radius: 6px;
+            padding-bottom: 40px;
+            margin-bottom: 33px;
+            flex-basis: 45%;
+            margin-top: 15px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            -webkit-box-shadow: 0px 4px 17px -4px#bdbdbd;
+            -moz-box-shadow: 0px 4px 17px -4px#bdbdbd;
+            box-shadow: 0px 4px 17px -4px#bdbdbd;
+          }
+          .fastival_article_store_box_wraper
+            .fastival_article_store_box
+            .store_title {
+            position: absolute;
+            width: 80%;
+            padding: 10px;
+            -webkit-box-shadow: 1px 2px 16px -3px gray;
+            -moz-box-shadow: 1px 2px 16px -3px gray;
+            box-shadow: 1px 2px 16px -3px gray;
+            z-index: 1;
+            background: #fff;
+            bottom: -17px;
+            left: 50%;
+            font-size:13px;
+            transform: translate(-50%, 0px);
+          }
+          .fastival_article_store_box_wraper{
+            justify-content: center;
+            display: flex;
+            flex-wrap: wrap;
+          }
+          @media screen and (max-width: 420px){
+            .fastival_article_store_box_wraper .fastival_article_store_box {
+              flex-basis: 100%;
+            }
           }
         `}
       </style>
@@ -363,4 +241,4 @@ const DiwaliOffers = () => {
   );
 };
 
-export default DiwaliOffers;
+export default Festivals;

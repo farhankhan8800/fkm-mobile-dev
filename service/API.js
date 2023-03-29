@@ -72,3 +72,5 @@ export const searchSuggestionApi = "https://fkmdata.freekaamaal.com/search/sugge
  export const cashbackdealAPI =  "https://fkmdata.freekaamaal.com/cashback/cashbackdeal"
 
  export const cashbackstoreAPI =  "https://fkmdata.freekaamaal.com/cashback/cashbackstore"
+ 
+ export const festivalAPI =  "https://fkmdata.freekaamaal.com/festival/allfestivals"

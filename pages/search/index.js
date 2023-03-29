@@ -279,6 +279,7 @@ const SearchPage = () => {
             display: flex;
             text-align: center;
             justify-content: flex-start;
+            flex-wrap: wrap;
             align-items: flex-start;
             padding: 14px 0;
           }
@@ -292,6 +293,7 @@ const SearchPage = () => {
             border: 1px solid #eceaea;
             margin-right: 22px;
             border-radius: 8px;
+            
           }
           .showing_store_item p:first-of-type {
             padding-top: 8px;
@@ -302,15 +304,11 @@ const SearchPage = () => {
           .showing_store_item a {
             font-size: 12px;
           }
-           {
-            /* .showing_store_item:hover {
-            box-shadow: 3px 2px 32px 1px#e2dede;
-          } */
-          }
           .showing_deals_Item {
             border-radius: 7px;
-            width: 180px;
+            width: 170px;
             overflow: hidden;
+            margin: 7px 7px;
           }
           .showing_deals_Item_contant {
             padding: 5px;

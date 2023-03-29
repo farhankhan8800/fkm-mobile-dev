@@ -2,14 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import {
-  Toolbar,
-  AppBar,
-  Box,
-  IconButton,
-  Grid,
-  TextField,
-} from "@mui/material";
+
 import menuButton from "public/images/icon/menu-button.png";
 import searchButton from "public/images/icon/search.png";
 import accountButton from "public/images/icon/account.png";
@@ -102,72 +95,57 @@ const Header = () => {
   };
 
   return (
-    <Box sx={{ position: "relative" }}>
-      <AppBar
-        sx={{
-          flexGrow: 1,
-          maxWidth: "600px",
-          position: "fixed",
-          width: "100%",
-          zIndex: "9999",
-          margin: "auto",
-          left: "0",
-        }}
+    <>
+      <div className="app_bar d_flex"
       >
-        <Toolbar
-          sx={{ alignItems: "center", justifyContent: "space-between", p: 0 }}
+        <div 
+          className="app_tool_bar d_flex"
         >
-          <IconButton onClick={toggleClick} size="large" aria-label="MenuIcon" sx={{ color: "#fff" }}>
+          <button onClick={toggleClick} >
             <Image
               width={24}
               height={24}
+              onClick={toggleClick}
               src={menuButton}
               alt="menuButton"
             />
-          </IconButton>
+          </button>
           <Link
             style={{
               width: "300px",
-              alignItems: "center",
-              justifyContent: "center",
+              alignItems: "centr",
+              justifyContent: "flex-start",
               display: "flex",
             }}
             href="/"
           >
             <Image width={130} height={28} src={fkmLogo} alt="fkm-Logo"></Image>
           </Link>
-          <Grid container justifyContent="flex-end" alignItems="center">
-            <Grid item>
+          <div className="flex_center">
+            <div >
               {searchInput ? (
-                <IconButton
+                <button
                   onClick={searchInputToggal}
-                  size="large"
-                  aria-label="SearchIcon"
-                  sx={{ color: "#fff" }}
                 >
                   <RxCross2 style={{ height: "20px", width: "20px" }} />
-                </IconButton>
+                </button>
               ) : (
-                <IconButton
+                <button
                   onClick={searchInputToggal}
-                  size="large"
-                  aria-label="SearchIcon"
-                  sx={{ color: "#fff" }}
                 >
                   <Image
-                    width={18}
-                    height={18}
+                    width={19}
+                    height={19}
                     src={searchButton}
                     alt="search button"
                   />
-                </IconButton>
+                </button>
               )}
-            </Grid>
+            </div>
             {user ? (
               ""
             ) : (
-              <Grid item>
-                <IconButton size="large" aria-label="PersonOutlineIcon">
+              <button >
                   <Link
                     style={{
                       color: "#fff",
@@ -184,22 +162,15 @@ const Header = () => {
                       alt="account Button"
                     />
                   </Link>
-                </IconButton>
-              </Grid>
+              </button>
             )}
-          </Grid>
-        </Toolbar>
-        <Box sx={{ position: "relative" }}>
+          </div>
+        </div>
+        <div className="input_box_ab">
           {searchInput ? (
-            <Box
-              sx={{
-                alignItems: "center",
-                display: "flex",
-                justifyContent: "center",
-                padding: "10px",
-                width: "100%",
-                position: "relative",
-              }}
+            <div className="flex_center"
+              style={{padding: "10px",
+              width: "100%",}}
             >
               <input
                 onKeyDown={(e) => {
@@ -210,11 +181,11 @@ const Header = () => {
                 className="header_input_search"
               ></input>
               <button className="header_input_button"></button>
-            </Box>
+            </div>
           ) : (
             ""
           )}
-          <Box sx={{ width: "100%" }}>
+          <div style={{ width: "100%" }}>
             {searchSuggestion ? (
               <div>
                 {searchSuggestion.length >= 1 ? (
@@ -254,11 +225,28 @@ const Header = () => {
             ) : (
               ""
             )}
-          </Box>
-        </Box>
-      </AppBar>
+          </div>
+        </div>
+      </div>
       <Sidebar closeSidebar={toggleClick} togalButton={sidebarToggle} />
       <style jsx>{`
+        .app_bar{
+          max-width: 600px;
+          position: fixed;
+          width: 100%;
+          z-index: 9999;
+          margin: auto;
+          background: var(--main-color);
+          box-shadow: 0px 3px 13px -5px #a7a2a2;
+        }
+        .app_tool_bar{
+          padding: 5px;
+          width: 100%;
+          justify-content: space-between;
+          position: relative;
+          align-items: center;
+        }
+        {/* button:focus{background-color:red;} */}
         .header_input_search {
           width: 100%;
           padding: 8px 22px;
@@ -270,6 +258,22 @@ const Header = () => {
           font-size: 15px;
           letter-spacing: 1px;
           font-weight: 500;
+        }
+        .input_box_ab{
+          position: absolute;
+          top: 64px;
+          background: var(--main-color);
+          width: 100%;
+        }
+        button{
+          color: var(--second-color);
+          padding: 10px;
+          transition: auto;
+          border-radius: 50px;
+        }
+        button:hover{
+          background: #e7834a;
+   
         }
         .header_input_button {
           position: absolute;
@@ -306,7 +310,7 @@ const Header = () => {
           background: #f27935;
         }
       `}</style>
-    </Box>
+    </>
   );
 };
 

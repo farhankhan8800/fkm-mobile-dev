@@ -1,23 +1,23 @@
-import { Box, Typography, Grid, Button } from "@mui/material";
-import InfoIcon from "@mui/icons-material/Info";
-import StarIcon from "@mui/icons-material/Star";
-import StarHalfIcon from "@mui/icons-material/StarHalf";
-import StarOutlineIcon from "@mui/icons-material/StarOutline";
+
 import { useRouter } from "next/router";
 import CashBackClaimCard from "components/CashBackClaimCard";
 import Link from "next/link";
 import axios from "axios";
 import { StoreDetailApi } from "service/API";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Image from "next/image";
 
 import Header from "components/headerComponent/Header";
 import HeadTag from "components/headTagComponent/HeadTag";
 import DealsAndCoupons from "components/couponsComponents/DealsAndCoupons";
 import { useEffect, useState } from "react";
+import { BsInfoCircle } from "react-icons/bs";
+
+
+
 
 const headeTitle = " Store | Freekaamaal";
 const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE;
 
 const StoreDetails = () => {
   const [store_data, setStore_data] = useState();
@@ -30,7 +30,8 @@ const StoreDetails = () => {
   const [noCouponData, setNoCouponData] = useState(false);
   const [noDealData, setNoDealData] = useState(false);
   const [user, setUser] = useState();
-
+  const [topDescState, setTopDescState] = useState(false);
+  const [tcOpenState, setTcOpenState] = useState(false);
   const router = useRouter();
   const store_slug = router.query["store"];
 
@@ -47,6 +48,7 @@ const StoreDetails = () => {
           page: Page,
           store_slug: store_slug,
           option: changeOption,
+          device_type: DEVICE_TYPE,
         },
         {
           headers: {
@@ -57,7 +59,6 @@ const StoreDetails = () => {
 
       if (data.status == 0 && data.error == 0) {
         router.push(`/404`);
-        // console.log("no store found");
       } else {
         if (changeOption == "") {
           setStore_data(data.response.store_details);
@@ -86,13 +87,14 @@ const StoreDetails = () => {
     }
   };
 
+  // console.log(store_data)
   useEffect(() => {
     if (store_slug) {
-    storeData();
+      storeData();
     }
   }, [Page, changeOption, store_slug]);
 
-// console.log(store_data)
+  console.log(store_data);
 
   const dealsTabCall = () => {
     setNoCouponData(false);
@@ -127,6 +129,12 @@ const StoreDetails = () => {
     }
   }, [store_data]);
 
+  const topDescClick = () => {
+    setTopDescState(!topDescState);
+  };
+  const tcOpenFun = () => {
+    setTcOpenState(!tcOpenState);
+  };
   return (
     <>
       <HeadTag headeTitle={headeTitle} />
@@ -134,38 +142,33 @@ const StoreDetails = () => {
       <div style={{ paddingTop: "56px", position: "relative" }}>
         {store_data ? (
           <div>
-            <Box
-              component="div"
-              sx={{ bgcolor: "#f1f1f1", padding: "70px 20px 20px" }}
-            >
-              <Link href={store_data.store_landing_url}>
-                <Box
-                  component="div"
-                  sx={{
-                    borderRadius: "10px",
-                    width: "100%",
-                    color: "#000",
-                    padding: "32px 24px 24px",
-                    bgcolor: "#fff",
-                    position: "relative",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    display: "flex",
-                    boxShadow: "1px 2px 29px -19px #000",
+            <div style={{ background: "#f1f1f1", padding: "70px 20px 20px" }}>
+              <div
+                style={{
+                  borderRadius: "10px",
+                  width: "100%",
+                  color: "#000",
+                  padding: "32px 24px 24px",
+                  background: "#fff",
+                  position: "relative",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  display: "flex",
+                  boxShadow: "1px 2px 29px -19px #000",
+                }}
+              >
+                <div
+                  style={{
+                    width: "150px",
+                    background: "#fff",
+                    position: "absolute",
+                    top: "-42px",
+                    padding: "16px",
+                    borderRadius: "8px",
+                    boxShadow: "4px 1px 36px 10px #f1f1f1",
                   }}
                 >
-                  <Box
-                    component="div"
-                    sx={{
-                      width: "150px",
-                      bgcolor: "#fff",
-                      position: "absolute",
-                      top: "-42px",
-                      padding: "16px",
-                      borderRadius: "8px",
-                      boxShadow: "4px 1px 36px 10px #f1f1f1",
-                    }}
-                  >
+                  <Link href={store_data.store_landing_url}>
                     <Image
                       width={100}
                       height={30}
@@ -173,115 +176,127 @@ const StoreDetails = () => {
                       src={store_data.store_img}
                       alt="store image"
                     />
-                  </Box>
-                  <Box component="div" sx={{}}>
-                    <Box component="div">
-                      <Typography
-                        variant="p"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                        component="p"
-                      >
-                        <strong>{store_data.cashback_amount} </strong>
-                        <InfoIcon
-                          fontSize="small"
-                          sx={{ color: "#000" }}
-                        />{" "}
-                      </Typography>
-                      <Box
-                        component="div"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                      >
-                        <StarIcon fontSize="small" />
-                        <StarIcon fontSize="small" />
-                        <StarIcon fontSize="small" />
-                        <StarHalfIcon fontSize="small" />
-                        <StarOutlineIcon fontSize="small" />
-                      </Box>
-                    </Box>
-                    <Box component="div" sx={{}}>
-                      <Grid
-                        container
-                        justifyContent="space-around"
-                        spacing={1}
-                        sx={{ padding: "10px 0" }}
-                      >
-                        {store_data.is_cashback == 1 ? (
-                          <div>
-                            <Grid item>
-                              <Typography
-                                sx={{ color: "#ad2323", fontSize: "14px" }}
-                                variant="p"
-                                component="p"
-                              >
-                                <small>Confirmation Time</small>
-                              </Typography>
-                              <Typography
-                                variant="p"
-                                sx={{ textAlign: "center", fontSize: "12px" }}
-                                component="p"
-                              >
-                                <small>{store_data.confirmation}</small>
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              <Typography
-                                variant="p"
-                                sx={{ color: "#ad2323", fontSize: "14px" }}
-                                component="p"
-                              >
-                                <small>Tracking Speed</small>
-                              </Typography>
-                              <Typography
-                                variant="p"
-                                sx={{ textAlign: "center", fontSize: "12px" }}
-                                component="p"
-                              >
-                                <small>{store_data.speed}</small>
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              <Typography
-                                variant="p"
-                                sx={{ color: "#ad2323", fontSize: "14px" }}
-                                component="p"
-                              >
-                                <small>Missing Order</small>
-                              </Typography>
-                              <Typography
-                                variant="p"
-                                sx={{ textAlign: "center", fontSize: "12px" }}
-                                component="p"
-                              >
-                                <small>{store_data.is_missing}</small>
-                              </Typography>
-                            </Grid>
-                          </div>
-                        ) : (
-                          " "
-                        )}
-                      </Grid>
-                    </Box>
-                  </Box>
-                </Box>
-              </Link>
+                  </Link>
+                </div>
+                <div>
+                  <div>
+                    <p
+                      className="p_tag_small top_desc_class "
+                      style={{ height: topDescState ? "100%" : "113px" }}
+                      dangerouslySetInnerHTML={{ __html: store_data.top_desc }}
+                    ></p>
+                    <p className="top_desc_class_bottom_p">
+                      <button onClick={topDescClick} className="text_button">
+                        {topDescState ? "Close" : "Read More"}{" "}
+                      </button>
+                    </p>
+                  </div>
+                  <div className="flex_center ">
+                    <strong>{store_data.cashback_amount} </strong>
+                    <BsInfoCircle
+                      style={{
+                        color: "#000",
+                        fontSize: "13px",
+                        marginLeft: "10px",
+                      }}
+                    />
+                  </div>
+
+                  <div
+                    style={{
+                      padding: "10px 0",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    {store_data.is_cashback == 1 ? (
+                      <>
+                        <div>
+                          <p
+                            style={{ color: "#ad2323", fontSize: "14px" }}
+                            className="p_tag_small"
+                          >
+                            <small>Confirmation Time</small>
+                          </p>
+                          <p
+                            className="p_tag_small"
+                            style={{ textAlign: "center", fontSize: "12px" }}
+                          >
+                            <small>{store_data.confirmation}</small>
+                          </p>
+                        </div>
+                        <div>
+                          <p
+                            className="p_tag_small"
+                            style={{ color: "#ad2323", fontSize: "14px" }}
+                          >
+                            <small>Tracking Speed</small>
+                          </p>
+                          <p
+                            className="p_tag_small"
+                            style={{ textAlign: "center", fontSize: "12px" }}
+                          >
+                            <small>{store_data.speed}</small>
+                          </p>
+                        </div>
+                        <div>
+                          <p
+                            className="p_tag_small"
+                            style={{ color: "#ad2323", fontSize: "14px" }}
+                          >
+                            <small>Missing Order</small>
+                          </p>
+                          <p
+                            className="p_tag_small"
+                            style={{ textAlign: "center", fontSize: "12px" }}
+                          >
+                            <small>{store_data.is_missing}</small>
+                          </p>
+                        </div>
+                      </>
+                    ) : (
+                      " "
+                    )}
+                  </div>
+                </div>
+              </div>
+
               {storeRate ? (
-                <Box
-                  component="div"
-                  sx={{
+                <div
+                  style={{
                     marginTop: "22px",
                     padding: "20px 9px",
                     background: "#fff",
                     borderRadius: "5px",
+                    position: "relative",
                   }}
                 >
-                  <Typography component="p">
-                    Cashback <strong>Rates</strong>{" "}
-                  </Typography>
-
+                  <div
+                    style={{ textAlign: "center", position: "relative" }}
+                    className="flex_space_between"
+                  >
+                    <p>
+                      Cashback <strong>Rates</strong>
+                    </p>
+                    <button
+                      onClick={tcOpenFun}
+                      style={{ padding: "5px 15px" }}
+                      className="contain_button"
+                    >
+                      {tcOpenState ? "Close" : "T & C"}
+                    </button>
+                    <div
+                      style={{ display: tcOpenState ? "block" : "none" }}
+                      className="tandc_box"
+                    >
+                      <div
+                        className="tandc_contant"
+                        dangerouslySetInnerHTML={{ __html: store_data.toc }}
+                      ></div>
+                    </div>
+                  </div>
                   <div
                     style={{
                       height: storeRateMore ? "" : "92px",
@@ -293,14 +308,9 @@ const StoreDetails = () => {
                         const { cashback_tag, rate, tag_desc } = item;
 
                         return (
-                          <Box
-                            key={i + 1}
-                            component="div"
-                            sx={{ display: "flex" }}
-                          >
-                            <Box
-                              component="div"
-                              sx={{
+                          <div key={i + 1} style={{ display: "flex" }}>
+                            <div
+                              style={{
                                 display: "flex",
                                 flexDirection: "column",
                                 alignItems: "center",
@@ -314,17 +324,17 @@ const StoreDetails = () => {
                                 flexBasis: "30%",
                               }}
                             >
-                              <Typography
-                                sx={{ textAlign: "center" }}
-                                component="small"
-                                varient="small"
+                              <small
+                                style={{
+                                  textAlign: "center",
+                                  textTransform: "capitalize",
+                                }}
                               >
                                 {rate}
-                              </Typography>
-                            </Box>
-                            <Box
-                              component="div"
-                              sx={{
+                              </small>
+                            </div>
+                            <div
+                              style={{
                                 display: "flex",
                                 flexDirection: "column",
                                 alignItems: "center",
@@ -339,39 +349,38 @@ const StoreDetails = () => {
                               }}
                             >
                               <strong>{cashback_tag}</strong>
-                              <Typography
-                                component="small"
-                                fontSize="12px"
-                                varient="small"
+                              <small
+                                className="p_tag_small"
+                                style={{ textTransform: "capitalize" }}
                               >
                                 {tag_desc}
-                              </Typography>
-                            </Box>
-                          </Box>
+                              </small>
+                            </div>
+                          </div>
                         );
                       })}
                   </div>
 
                   {storeRate && storeRate.length > 1 ? (
-                    <Box
-                      component="div"
-                      width="100%"
-                      textAlign="center"
-                      justifyContent="center"
+                    <div
+                    className="flex_center"
+                      style={{width:'100%'}}
+                      
                     >
-                      <Button
+                      <button
                         onClick={moreStoreHandel}
-                        variant="contained"
-                        sx={{ borderRadius: "70px", color: "#fff" }}
+                        className="text_button"
                       >
-                        {" "}
-                        <ExpandMoreIcon />
-                      </Button>
-                    </Box>
+                        { 
+                          storeRateMore ? "Close" :"More"
+                        }
+                      
+                      </button>
+                    </div>
                   ) : (
                     ""
                   )}
-                </Box>
+                </div>
               ) : (
                 ""
               )}
@@ -383,8 +392,8 @@ const StoreDetails = () => {
               ) : (
                 ""
               )}
-            </Box>
-            <Box sx={{ paddingBottom: "25px" }}>
+            </div>
+            <div style={{ paddingBottom: "25px" }}>
               <DealsAndCoupons
                 categoryCoupons={storeCoupons}
                 categoryDeals={storeDeals}
@@ -395,46 +404,91 @@ const StoreDetails = () => {
                 addDealPage={addDealPage}
                 addCouponPage={addCouponPage}
               />
-            </Box>
-            <Box
-              component="div"
-              sx={{
+            </div>
+            <div
+              style={{
                 position: "Fixed",
                 width: "100%",
                 textAlign: "center",
                 bottom: "0",
                 left: "0",
                 padding: "4px",
-                bgcolor: "#fff",
+                background: "#fff",
               }}
             >
               {user ? (
                 <Link href={store_data.store_landing_url}>
-                  <Button
-                    variant="contained"
-                    sx={{ width: "100%", maxWidth: "600px", color: "#fff" }}
+                  <button
+                    className="full_with_button"
+                    style={{ width: "100%", maxWidth: "600px", color: "#fff" }}
                   >
-                    {
-                      store_data.is_claim == '1' ? "Shope & earn More":"Shope Now"
-                    }
-                  </Button>
+                    {store_data.is_claim == "1"
+                      ? "Shope & earn More"
+                      : "Shope Now"}
+                  </button>
                 </Link>
               ) : (
                 <Link href="/login">
-                  <Button
-                    variant="contained"
-                    sx={{ width: "100%", maxWidth: "600px", color: "#fff" }}
+                  <button
+                    className="full_with_button"
+                    style={{ width: "100%", maxWidth: "600px", color: "#fff" }}
                   >
                     Login Now & Earn Cashback
-                  </Button>
+                  </button>
                 </Link>
               )}
-            </Box>
+            </div>
           </div>
         ) : (
           ""
         )}
       </div>
+      <style jsx>
+        {`
+          .top_desc_class {
+            line-height: 22px;
+            overflow: hidden;
+            border: 1px solid #e2e2e2;
+            padding: 5px;
+            border-radius: 5px;
+          }
+          .top_desc_class_bottom_p {
+            text-align: right;
+          }
+          .tandc_box {
+            position: absolute;
+            background: #fff;
+            z-index: 2;
+            box-shadow: 0px 2px 15px -1px gray;
+            padding: 16px 10px;
+            border-radius: 3px;
+            overflow: hidden;
+            top: 40px;
+            border-bottom: 6px solid var(--main-color);
+          }
+          .tandc_contant {
+            line-height: 23px;
+            text-align: left;
+          }
+          
+        `}
+      </style>
+      <style>
+        {`
+      
+      .tandc_contant ol li{
+        font-size: 13px;
+      margin-bottom: 4px;
+      }
+      .tandc_contant ol{
+        margin-left: 14px;
+      }
+      .tandc_contant p{
+        font-size: 14px;
+        margin-bottom: 6px;
+      }
+      `}
+      </style>
     </>
   );
 };

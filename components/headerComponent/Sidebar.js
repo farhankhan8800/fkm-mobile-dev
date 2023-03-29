@@ -1,34 +1,17 @@
-import {
-  Box,
-  Grid,
-  Divider,
-  Typography,
-  Avatar,
-  Button,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  List,
-} from "@mui/material";
+
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
-
-
 import dashboardIcon from "../../public/images/icon/dashboard.png";
 import shopIcon from "../../public/images/icon/shop.png";
 import categoryIcon from "../../public/images/icon/category.png";
 import promoCodeIcon from "../../public/images/icon/promo-code.png";
-import confettiIcon from "../../public/images/icon/confetti.png";
-import cashbackIcon from "../../public/images/icon/cashback.png";
 import contentWritingIcon from "../../public/images/icon/content-writing.png";
-import briefcaseIcon from "../../public/images/icon/briefcase.png";
 import phoneCallIcon from "../../public/images/icon/phone-call.png";
-import questionIcon from "../../public/images/icon/question.png";
 import powerOffIcon from "../../public/images/icon/power-off.png";
 import loginIcon from "../../public/images/icon/login-account.png";
 import { useEffect, useState } from "react";
-
+import { FaUser } from "react-icons/fa";
 export const menuList = [
   {
     link: "/all-store",
@@ -62,7 +45,7 @@ export const menuList = [
   },
   {
     link: "/festivals",
-    menuName: "Diwali Offers",
+    menuName: "Festivals",
     menuIcon: "",
   },
   {
@@ -112,14 +95,14 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
   };
 
   return (
-    <Box>
+    <div>
       {togalButton ? (
-        <Box
+        <div
+          className=""
           onClick={sidebarClose}
-          component="div"
           style={{
             width: "100%",
-            backgroundColor: "transparent",
+            backgroundColor: "#e7e7e778",
             top: "55px",
             position: "fixed",
             zIndex: "9981",
@@ -127,8 +110,7 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
             overflow: "auto",
           }}
         >
-          <Box
-            component="div"
+          <div className="sidebar_class"
             style={{
               width: "83%",
               minWidth: "250px",
@@ -136,93 +118,91 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
               backgroundColor: "#fff",
               padding: "20px 10px",
               minHeight: "94vh",
-              boxShadow: "0px 0px 28px -3px",
+              boxShadow: "0px 2px 13px 3px #cecece",
             }}
           >
-            <Box
-              component="div"
+            <div
               style={{
-                backgroundColor: "#f5f3f3",
                 padding: "10px 13px",
                 borderRadius: "10px",
               }}
             >
               <Link href={userdata ? "/cashback/home" : "/login"}>
-                <Grid
-                  container
-                  justifyContent="space-between"
-                  alignItems="center"
-                  style={{ color: "#000" }}
+                <div
+                  className="d_flex"
+                  style={{
+                    color: "#000",
+                    justifyContent: "space-evenly",
+                    alignItems: "center",
+                  }}
                 >
-                  <Grid item>
-                    <Avatar alt="Freekaamaal" src="" />
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="p" component="p">
+                  <div className="avatar_div">
+                    <FaUser />
+                  </div>
+                  <div>
+                    <p className="p_tag_big" style={{ fontSize: "16px" }}>
                       Hello{" "}
-                    </Typography>
+                    </p>
                     {userdata ? (
-                      <Typography
-                        variant="h6"
-                        component="h6"
-                        sx={{ fontWeight: "600" }}
+                      <p
+                        className="p_tag_big"
+                        style={{
+                          fontWeight: "600",
+                          fontSize: "19px",
+                          letterSpacing: "1px",
+                        }}
                       >
                         {" "}
                         {JSON.parse(userdata).data.username}
-                      </Typography>
+                      </p>
                     ) : (
-                      <Typography
-                        variant="h6"
-                        component="h6"
-                        sx={{ fontWeight: "600" }}
+                      <p
+                        className="p_tag_big"
+                        style={{
+                          fontWeight: "600",
+                          fontSize: "19px",
+                          letterSpacing: "1px",
+                        }}
                       >
                         Guest
-                      </Typography>
+                      </p>
                     )}
-                  </Grid>
-                  <Grid item>
+                  </div>
+                  <div>
                     {userdata ? (
-                      <Button
+                      <button
                         onClick={() => router.push("/user-edit-details")}
-                        variant="contained"
-                        sx={{ color: "#fff", borderRadius: "30px" }}
-                        size="small"
+                        className="text_button"
                       >
                         Edit
-                      </Button>
+                      </button>
                     ) : (
                       ""
                     )}
-                  </Grid>
-                </Grid>
+                  </div>
+                </div>
               </Link>
-            </Box>
-            <Box component="div">
-              <List
-                component="nav"
-                aria-label="main mailbox folders"
-                sx={{ width: "100%" }}
+            </div>
+            
+              <ul
+              className="sidebar_list_ul"
+                style={{ width: "100%" }}
               >
                 <div>
                   {userdata ? (
                     <>
                       <Link href="/cashback/home">
-                        <ListItemButton onClick={sidebarClose}>
-                          <ListItemIcon>
+                        <div style={{padding:"14px 18px"}} className="d_flex" onClick={sidebarClose}>
                             <Image
                               width={17}
                               height={17}
                               src={dashboardIcon}
                               alt="menuIcon"
                             ></Image>
-                          </ListItemIcon>
-                          <ListItemText
-                            sx={{ color: "#000" }}
-                            primary="Dashboard"
-                          />
-                        </ListItemButton>
+                          <p className="list_item_text" style={{ color: "#646161",paddingLeft:"35px"}}>Dashboard</p>
+                        </div>
                       </Link>
-                      <Divider sx={{ opacity: "0.4" }} />
+                      <hr className="divider_class" />
                     </>
                   ) : (
                     ""
@@ -231,71 +211,85 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
                 {menuList.map((item, i) => (
                   <div key={i + 1}>
                     <Link href={item.link}>
-                      <ListItemButton onClick={sidebarClose}>
-                        <ListItemIcon>
+                      <div style={{padding:"14px 18px"}} className="d_flex" onClick={sidebarClose}>
                           <Image
                             width={17}
                             height={17}
                             src={item.menuIcon}
                             alt="menuIcon"
-                          ></Image>
-                        </ListItemIcon>
-                        <ListItemText
-                          sx={{ color: "#000" }}
-                          primary={item.menuName}
-                        />
-                      </ListItemButton>
+                          />
+                        <p className="list_item_text" style={{ color: "#646161",paddingLeft:"35px"}}
+                        >{item.menuName}</p>
+                      </div>
                     </Link>
-                    <Divider sx={{ opacity: "0.4" }} />
+                    <hr className="divider_class" />
                   </div>
                 ))}
                 <div>
                   {userdata ? (
-                    <div onClick={logoutUser}>
-                      <ListItemButton onClick={sidebarClose}>
-                        <ListItemIcon>
+                    <div  onClick={logoutUser}>
+                      <div style={{padding:"14px 18px" ,cursor:"pointer"}} className="d_flex"  onClick={sidebarClose}>
                           <Image
                             width={17}
                             height={17}
                             src={powerOffIcon}
                             alt="menuIcon"
                           ></Image>
-                        </ListItemIcon>
-                        <ListItemText sx={{ color: "#000" }} primary="Logout" />
-                      </ListItemButton>
-                      <Divider sx={{ opacity: "0.4" }} />
+                     
+                        <p  className="list_item_text" style={{ color: "#646161",paddingLeft:"35px",}} >Logout</p>
+                      </div>
+                      <hr className="divider_class" />
                     </div>
                   ) : (
                     <div>
                       <Link href="/login">
-                        <ListItemButton onClick={sidebarClose}>
-                          <ListItemIcon>
+                        <div style={{padding:"14px 18px"}} className="d_flex" onClick={sidebarClose}>
                             <Image
                               width={20}
                               height={20}
                               src={loginIcon}
                               alt="menuIcon"
                             ></Image>
-                          </ListItemIcon>
-                          <ListItemText
-                            sx={{ color: "#000" }}
-                            primary="Login"
-                          />
-                        </ListItemButton>
+                         <p className="list_item_text" style={{ color: "#646161",paddingLeft:"35px"}} >Login</p>
+                        </div>
                       </Link>
-
-                      <Divider sx={{ opacity: "0.4" }} />
+                      <hr className="divider_class" />
                     </div>
                   )}
                 </div>
-              </List>
-            </Box>
-          </Box>
-        </Box>
+              </ul>
+            
+          </div>
+        </div>
       ) : (
         ""
       )}
-    </Box>
+      <style>{`
+      .avatar_div{
+        padding: 10px;
+        border: none;
+        background: #cac3c3;
+        border-radius: 32px;
+        width: 45px;
+        height: 45px;
+        /* text-align: center; */
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        color: #fff;
+        font-size: 21px;
+      }
+      @media screen and (max-width:420px) {
+        .sidebar_class{
+           width:95% !important;
+        }
+      }
+      .divider_class{
+        opacity: 0.1;
+      }
+     
+      `}</style>
+    </div>
   );
 };
 

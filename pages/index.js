@@ -8,7 +8,7 @@ import DealOfTheDay from "components/homeComponents/DealOfTheDay";
 import LiveDeals from "components/homeComponents/LiveDeals";
 const  HotDeals = dynamic(() => import('components/homeComponents/HotDeals'))
 const  HowToEarnCashback = dynamic(() => import('components/HowToEarnCashback'))
-const  CashBackStore = dynamic(() => import('components/homeComponents/CashBackStore'))
+import  CashBackStore from 'components/homeComponents/CashBackStore'
 import { homeAPI1 } from "service/API";
 import { homeAPI2 } from "service/API";
 import { useRouter } from 'next/router'
@@ -22,7 +22,7 @@ const apiAuth = process.env.API_AUTH;
 const DEVICE_TYPE = process.env.DEVICE_TYPE
 
 export default function Home() {
-  const [cbStore, setCbStore] = useState();
+ 
   const [carousel, setCarousel] = useState();
   const [liveDeal, setLiveDeal] = useState();
   const [dealofday, setDealofday] = useState();
@@ -79,6 +79,7 @@ export default function Home() {
     } catch (error) {}
   };
   const fistApiCallback = useCallback(GetData,[authToken])
+
   const getAPI2 = async () => {
     try {
       let { data } = await axios.post(
@@ -96,7 +97,7 @@ export default function Home() {
         }
       );
       // console.log("callapi2");
-      setCbStore(data.response.cbstores);
+     
       setHowtoearncashback(data.response.earn_cashback);
       setSponsoredCount(data.response.sponsored_count);
       if (data.response.hotdeals.length == 0) {
@@ -114,7 +115,7 @@ export default function Home() {
 const secondApiCallback = useCallback( getAPI2 ,[authToken, page])
   useEffect(() => {
     secondApiCallback()
-  }, [page]);
+  }, [page,authToken]);
 
   const pageFunction = () => {
     setPage(page + 1);
@@ -135,7 +136,7 @@ const secondApiCallback = useCallback( getAPI2 ,[authToken, page])
           pageFunction={pageFunction}
           noData={noData}
         />
-        <CashBackStore cbStore={cbStore} />
+        <CashBackStore />
         <HowToEarnCashback howtoearncashback={howtoearncashback} />
       </div>
     </>

@@ -19,9 +19,9 @@ const DealOfTheDay = (props) => {
     <>
       {dealofday?.length > 0 ? (
         <>
-          <Grid container sx={{ padding: "13px 3px 3px" }}>
-            <Grid item>
-              <Box component="div" sx={{ width: "30px", marginRight: "10px" }}>
+          <div className="flex_start" style={{ padding: "13px 3px 3px"}}>
+            <div >
+              <div  style={{ width: "30px", marginRight: "10px" }}>
                 <Image
                   src={hotdealImage}
                   alt="Hot Deal Of the Day"
@@ -29,14 +29,14 @@ const DealOfTheDay = (props) => {
                   height={29}
                   style={{}}
                 />
-              </Box>
-            </Grid>
-            <Grid item>
-              <Typography variant="h6" component="h6">
+              </div>
+            </div>
+            <div  >
+              <h6 className="heading" >
                 Deal <strong>Of The Day</strong>
-              </Typography>
-            </Grid>
-          </Grid>
+              </h6>
+            </div>
+          </div>
           <Box sx={{ padding: "2px 10px" }}>
             <Swiper
               className="deal_of_the_day_component"
@@ -60,24 +60,7 @@ const DealOfTheDay = (props) => {
                     </SwiperSlide>
                   );
                 })}
-                {/* {
-                  !dealofday && <>
-                  <SwiperSlide>
-                    <Skeleton
-                      variant="rectangular"
-                      sx={{ borderRadius: "7px" }}
-                      height={100}
-                    />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <Skeleton
-                      variant="rectangular"
-                      sx={{ borderRadius: "7px" }}
-                      height={100}
-                    />
-                  </SwiperSlide>
-                </>
-                } */}
+              
             </Swiper>
             
           </Box>
@@ -85,6 +68,7 @@ const DealOfTheDay = (props) => {
       ) : (
         <></>
       )}
+     
     </>
   );
 };

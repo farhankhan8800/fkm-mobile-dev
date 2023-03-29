@@ -1,144 +1,129 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Box, Typography } from "@mui/material";
 import cashbackImage from "../public/images/money.png";
 import Image from "next/image";
 
-import { styled } from "@mui/material/styles";
-import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
-import MuiAccordion from "@mui/material/Accordion";
-import MuiAccordionSummary from "@mui/material/AccordionSummary";
-import MuiAccordionDetails from "@mui/material/AccordionDetails";
-
-const spanImage = {
-  width: "15px",
-  float: "right",
-  display: "inline-block",
-  margin: " 0 5px",
-  paddingTop: "2px",
-};
-
-const Accordion = styled((props) => (
-  <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-  border: `1px solid ${theme.palette.divider}`,
-  "&:not(:last-child)": {
-    borderBottom: 0,
-    marginBottom: 10,
-    borderRadius: 8,
-  },
-  "&:before": {
-    display: "none",
-  },
-}));
-
-const AccordionSummary = styled((props) => (
-  <MuiAccordionSummary
-    expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
-    {...props}
-  />
-))(({ theme }) => ({
-  backgroundColor:
-    theme.palette.mode === "dark"
-      ? "rgba(255, 255, 255, .05)"
-      : "rgba(0, 0, 0, .03)",
-  flexDirection: "row-reverse",
-  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-    transform: "rotate(90deg)",
-  },
-  "& .MuiAccordionSummary-content": {
-    marginLeft: theme.spacing(1),
-  },
-}));
-
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-  padding: theme.spacing(2),
-  borderTop: "1px solid rgba(0, 0, 0, .125)",
-}));
-
 const HowToEarnCashback = (props) => {
-  const [expanded, setExpanded] = React.useState("panel1");
   const [howtoearncashback, setHowtoearncashback] = useState();
-
-  const handleChange = (panel) => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
-  };
 
   useEffect(() => {
     setHowtoearncashback(props.howtoearncashback);
   }, [props]);
 
+  const accordionFun = (id) => {
+    const panel = document.getElementById(`panel${id}`).classList;
+    const accordion = document.getElementById(`accordion${id}`).classList;
+    panel.toggle("activeTab");
+    accordion.toggle("accordionActive");
+  };
+
   return (
     <>
-      <Grid container sx={{ padding: "13px 3px 3px" }}>
-        <Grid item>
-          <Box component="div" sx={{ width: "30px", marginRight: "10px" }}>
+      <div className="d_flex" style={{ padding: "13px 3px 3px" }}>
+        <div>
+          <div style={{ width: "30px", marginRight: "10px" }}>
             <Image
               src={cashbackImage}
               alt="cash back image"
               height={29}
               width={29}
             />
-          </Box>
-        </Grid>
-        <Grid item>
-          <Typography variant="h6" component="h6">
+          </div>
+        </div>
+        <div>
+          <h6 className="heading">
             {" "}
             How To Earn <strong>Cashback?</strong>
-          </Typography>
-        </Grid>
-      </Grid>
-      <Box component="div" sx={{ padding: "5px 17px" }}>
-        <Box
-          component="div"
-          sx={{
+          </h6>
+        </div>
+      </div>
+      <div style={{ padding: "5px 17px" }}>
+        <div
+          style={{
             borderRadius: "10px",
             overflow: "hidden",
             boxShadow: " 0px 0px 6px -2px grey",
           }}
         >
-          <iframe width="100%" loading="lazy" height="200px" src="https://www.youtube.com/embed/hkStK-PBO_k" title="How to Earn Cashback"  frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-        </Box>
-        <Box
-          component="div"
-          sx={{
+          <iframe
+            width="100%"
+            loading="lazy"
+            height="200px"
+            src="https://www.youtube.com/embed/hkStK-PBO_k"
+            title="How to Earn Cashback"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          ></iframe>
+        </div>
+        <div
+          style={{
             borderRadius: "10px",
-            bgcolor: "#fff5efv  ",
+            bgcolor: "#fff5efv",
             padding: "0px 0px",
-            marginTop: "20px",
+            marginTop: "30px",
           }}
         >
-          <div>
-            {howtoearncashback &&
-              howtoearncashback.map((item, i) => (
-                <Accordion
-                  key={i + 1}
-                  sx={{ borderRadius: "8px" }}
-                  expanded={expanded === `panel${i + 1}`}
-                  onChange={handleChange(`panel${i + 1}`)}
-                >
-                  <AccordionSummary
-                    aria-controls={`panel${i + 1}d-content`}
-                    id={`panel${i + 1}d-header`}
+          {howtoearncashback &&
+            howtoearncashback.map((item, i) => {
+              return (
+                <div key={i}>
+                  <button
+                    className={`accordion `}
+                    id={`accordion${i}`}
+                    onClick={() => accordionFun(i)}
                   >
-                    <span style={spanImage}>
-                      {" "}
-                      <Image
-                        width={20}
-                        height={20}
-                        src={cashbackImage}
-                        alt="explane image"
-                      ></Image>
-                    </span>
-                    <Typography fontSize="14px">{item.title}</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography fontSize="13px">{item.description}</Typography>
-                  </AccordionDetails>
-                </Accordion>
-              ))}
-          </div>
-        </Box>
-      </Box>
+                    {" "}
+                    <Image
+                      src={cashbackImage}
+                      alt=""
+                      width={20}
+                      height={20}
+                    />{" "}
+                    &nbsp; &nbsp; {item.title}{" "}
+                  </button>
+                  <div className="panel" id={`panel${i}`}>
+                    <p>{item.description}</p>
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+      </div>
+      <style jsx>{`
+        .accordion {
+          background-color: #eee;
+          color: #444;
+          cursor: pointer;
+          border-radius: 3px;
+          padding: 13px;
+          width: 100%;
+          border: none;
+          text-align: left;
+          outline: none;
+          border-bottom: 1px solid #e0dddd;
+          font-size: 15px;
+          transition: 0.4s;
+          margin-bottom: 2px;
+        }
+        .panel.activeTab {
+          display: block;
+        }
+        .accordion.active {
+          background-color: #cdc6c6;
+        }
+        .panel {
+          padding: 0 11px;
+          background-color: #f5f4f4;
+          font-size: 14px;
+          line-height: 21px;
+          display: none;
+          margin-bottom: 10px;
+        }
+        .accordion.accordionActive {
+          background: #080808e0;
+          color: #fff;
+        }
+      `}</style>
     </>
   );
 };
