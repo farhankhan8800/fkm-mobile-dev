@@ -21,9 +21,9 @@ const TrendingCoupons = (props) => {
 
   return (
     <>
-      <Grid container sx={{ padding: "13px 3px 2px" }}>
-        <Grid item>
-          <Box component="div" sx={{ width: "30px", marginRight: "10px" }}>
+      <div  className="d_flex" style={{ padding: "13px 3px 2px" }}>
+       
+          <div style={{ width: "30px", marginRight: "10px" }}>
             <Image
               width={29}
               height={29}
@@ -31,15 +31,17 @@ const TrendingCoupons = (props) => {
               alt="Hot Deal Of the Day"
               style={{ width: "100%" }}
             />
-          </Box>
-        </Grid>
-        <Grid item>
-          <Typography variant="h6" component="h6">
+          </div>
+    
+        <div >
+        <h6 className="heading" style={{fontWeight:"400"}} >
+            {" "}
             Trending <strong>Coupons</strong>
-          </Typography>
-        </Grid>
-      </Grid>
-      <Box sx={{ padding: "2px 10px" }}>
+          </h6>
+          
+        </div>
+      </div>
+      <div style={{ padding: "2px 10px" }}>
         <Swiper
           className="deal_of_the_day_component"
           slidesPerView={3}
@@ -51,8 +53,8 @@ const TrendingCoupons = (props) => {
 
               return (
                 <SwiperSlide key={i}>
-                  <Card
-                    sx={{
+                  <div
+                    style={{
                       height: "100px",
                       padding: "5px",
                       border: "1px solid #a19b9b",
@@ -64,7 +66,7 @@ const TrendingCoupons = (props) => {
                       style={{ borderRadius: "0" }}
                       href={`/coupon-code/${couponid}`}
                     >
-                      <CardActionArea sx={{ textAlign: "center" }}>
+                      <div style={{ textAlign: "center" }}>
                         <Image
                           width={90}
                           height={30}
@@ -76,26 +78,26 @@ const TrendingCoupons = (props) => {
                           src={img_url}
                           alt="tranding Coupons"
                         />
-                        <CardContent sx={{ padding: "5px 0 0" }}>
-                          <Typography
-                            variant="body2"
-                            sx={{
+                        <div style={{ padding: "5px 0 0" }}>
+                          <p
+                            className="p_tag_small"
+                            style={{
                               color: "#000",
                               padding: "4px 0 0",
                               fontSize: "12px",
                             }}
                           >
                             {description}
-                          </Typography>
-                        </CardContent>
-                      </CardActionArea>
+                          </p>
+                        </div>
+                      </div>
                     </Link>
-                  </Card>
+                  </div>
                 </SwiperSlide>
               );
             })}
         </Swiper>
-      </Box>
+      </div>
 
       <style jsx>{`
         .card_link {

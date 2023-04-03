@@ -12,7 +12,7 @@ import  CashBackStore from 'components/homeComponents/CashBackStore'
 import { homeAPI1 } from "service/API";
 import { homeAPI2 } from "service/API";
 import { useRouter } from 'next/router'
-import OpenExpireSectionDialog from "components/session-expired";
+import OpenExpireSectionDialog from "components/utilites/session-expired";
 
 import axios from "axios";
 import {isTokenExpired} from "service/helper.js";
@@ -67,12 +67,7 @@ export default function Home() {
       );
 
       // console.log("callapi1");
-      if (data.response.user_summary) {
-        localStorage.setItem(
-          "usersummary",
-          JSON.stringify(data.response.user_summary)
-        );
-      }
+      
       setCarousel(data.response.slider);
       setLiveDeal(data.response.live_deals);
       setDealofday(data.response.sticky);
@@ -96,8 +91,15 @@ export default function Home() {
           },
         }
       );
-      // console.log("callapi2");
-     
+
+
+      // console.log(data.response.user_summary)
+      if (data.response.user_summary) {
+        localStorage.setItem(
+          "usersummary",
+          JSON.stringify(data.response.user_summary)
+        );
+      }
       setHowtoearncashback(data.response.earn_cashback);
       setSponsoredCount(data.response.sponsored_count);
       if (data.response.hotdeals.length == 0) {

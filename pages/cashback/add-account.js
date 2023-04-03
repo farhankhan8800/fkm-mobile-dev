@@ -36,16 +36,16 @@ const AddAccount = () => {
       <HeadTag headeTitle={headeTitle}></HeadTag>
       <Header></Header>
       <div style={{ paddingTop: "56px" }}>
-        <Box
-          component="div"
-          sx={{ p: 2, m: 2, mt: 0, background: "#f7f7f7", borderRadius: "5px" }}
+        <div
+          
+          style={{ padding:"15px",margin:"15px", marginTop: 0, background: "#f7f7f7", borderRadius: "5px" }}
         >
-          <Box sx={{}}>
-            <Typography variant="p" fontWeight={400} color="initial">
+          
+            <h6 className="heading">
               Add Your Account to withdraw Cashback
-            </Typography>
-          </Box>
-          <Box>
+            </h6>
+         
+          <div>
             <select
               className="select_tag"
               onChange={accountHandler}
@@ -55,13 +55,13 @@ const AddAccount = () => {
               <option value="bank">Bank</option>
               <option value="paytm">Paytm</option>
             </select>
-          </Box>
-          <Box>
+          </div>
+          <div>
             <div>{activeBank ? <Bank /> : ""}</div>
 
             <div>{activePaytm ? <OtherBank /> : ""}</div>
-          </Box>
-        </Box>
+          </div>
+        </div>
       </div>
       <style jxs>{`
  .select_tag{

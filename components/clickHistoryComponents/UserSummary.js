@@ -1,15 +1,14 @@
-import { IconButton, Typography, Grid, Box } from "@mui/material";
+
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-
+import { MdKeyboardArrowRight } from "react-icons/md";
 import clickImage from "public/images/icon/click.png";
 import referalHistoryImage from "public/images/icon/referal-history.png";
 import referEarnImage from "public/images/icon/refer-earn.png";
 import cashbackHistoryImage from "public/images/icon/cashback-history.png";
 import reportIconImage from "public/images/icon/report-icon.png";
 import withdrawalHistoryImage from "public/images/icon/withdrawal-history.png";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import withdrawalMoneyImage from "public/images/icon/withdrawal-money.png";
 import refrealMoneyImage from "public/images/icon/refreal-money.png";
 import climeFormImage from "public/images/icon/clime-form.png";
@@ -96,19 +95,18 @@ const userManage = [
 const UserSummary = () => {
   return (
     <>
-      <Box>
+      <div>
         {userManage.map((item, i) => (
-          <Box
+          <div
             key={i}
-            component="div"
-            sx={{ bgcolor: "#fff7f7", m: 1, p: 1, borderRadius: "5px" }}
+           
+            style={{ background: "#fff7f7",margin:"8px", padding:"9px", borderRadius: "5px" }}
           >
             <Link href={item.link}>
-              <Grid container>
-                <Grid
-                  item
-                  xs={2}
-                  sx={{
+              <div className="d_grid" style={{gridTemplateColumns:"20% auto 20%"}}>
+                <div
+                 
+                  style={{
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -121,32 +119,32 @@ const UserSummary = () => {
                     sx={{ color: "#000" }}
                     src={item.icon}
                   ></Image>
-                </Grid>
-                <Grid item xs={8}>
-                  <Typography
-                    sx={{ color: "#000", fontSize: "14px" }}
-                    component="p"
-                    fontWeight="600"
+                </div>
+                <div >
+                  <p
+                    style={{ color: "#000", fontSize: "14px" , fontWeight:"600"}}
+                    
+                   
                   >
                     {item.headingTag}
-                  </Typography>
-                  <Typography
-                    sx={{ color: "#000", fontSize: "11px" }}
-                    component="p"
+                  </p>
+                  <p
+                    style={{ color: "#000", fontSize: "11px" }}
+                    
                   >
                     {item.pTage}
-                  </Typography>
-                </Grid>
-                <Grid item sx={2}>
-                  <IconButton sx={{ color: "#bbb7b7" }}>
-                    <KeyboardArrowRightIcon></KeyboardArrowRightIcon>
-                  </IconButton>
-                </Grid>
-              </Grid>
+                  </p>
+                </div>
+                <div >
+                  <button className="text_button" style={{ color: "#bbb7b7",minWidth:"65px" }}>
+                    <MdKeyboardArrowRight style={{fontSize:"25px"}} />
+                  </button>
+                </div>
+              </div>
             </Link>
-          </Box>
+          </div>
         ))}
-      </Box>
+      </div>
     </>
   );
 };

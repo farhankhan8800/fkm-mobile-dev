@@ -18,9 +18,9 @@ const FeaturedStore = (props) => {
 
   return (
     <>
-      <Grid container sx={{ padding: "13px 3px 2px" }}>
-        <Grid item>
-          <Box component="div" sx={{ width: "30px", marginRight: "10px" }}>
+      <div className="d_flex"  style={{ padding: "13px 3px 2px", alignItems: "center" }}>
+        <div >
+          <div style={{ width: "30px", marginRight: "10px" }}>
             <Image
               src={shopImage}
               alt="Hot Deal Of the Day"
@@ -28,23 +28,22 @@ const FeaturedStore = (props) => {
               height={29}
               
             />
-          </Box>
-        </Grid>
-        <Grid item>
-          <Typography variant="h6" component="h6">
+          </div>
+        </div>
+        <div >
+          <h6 className="heading" style={{fontWeight:"400"}} >
             {" "}
             Featured <strong>Store</strong>
-          </Typography>
-        </Grid>
-      </Grid>
-      <Box sx={{padding:"2px 10px"}}>
+          </h6>
+        </div>
+      </div>
+      <div style={{ padding:"2px 10px" }}>
       <Swiper className="deal_of_the_day_component" 
       slidesPerView={4}
       spaceBetween={5}
       >
         { storeCard && storeCard.map((item, i) => {
           const {store_image,name} = item
-        
           return (
             <SwiperSlide key={i}>
               <Link  href={`/${name}`} style={{height:"70px",display:"flex",justifyContent:"center",alignItems:"center" }}>
@@ -54,8 +53,7 @@ const FeaturedStore = (props) => {
           );
         })}
       </Swiper>
-      </Box>
-      
+      </div>
     </>
   );
 };

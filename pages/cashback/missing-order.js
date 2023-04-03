@@ -2,11 +2,11 @@ import React from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 import Image from "next/image";
-import { Box, Button, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
+
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -58,99 +58,86 @@ const getData = async ()=>{
  const moreData = ()=>{
   setPage(page + 1)
 }
-
-
   useEffect(()=>{
     getData()
   },[page,authToken])
 
   
-
-
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
-
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    "&:nth-of-type(odd)": {
-      backgroundColor: theme.palette.action.hover,
-    },
-    "&:last-child td, &:last-child th": {
-      border: 0,
-    },
-  }));
-
   const headeTitle = "Click History | Freekaamaal";
   return (
     <>
       <HeadTag headeTitle={headeTitle}></HeadTag>
       <Header></Header>
       <div style={{ paddingTop: "56px" }}>
-        <Box sx={{ m: 2 }}>
-          <TableContainer component={Paper}>
-         
-            <Table sx={{minWidth:"350px"}}  aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell>SN</StyledTableCell>
-                  <StyledTableCell>Store</StyledTableCell>
-                  <StyledTableCell>Amount</StyledTableCell>
-                  <StyledTableCell>Reported Date</StyledTableCell>
-                  <StyledTableCell>Order Date</StyledTableCell>
-                  <StyledTableCell>Status</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
+        <div style={{ margin:"15px" }}>
+          <div className="overflow_div">
+          <table id="click_id"   >
+              <thead>
+                <tr>
+                  <th>SN</th>
+                  <th>Store</th>
+                  <th>Amount</th>
+                  <th>Reported  Date</th>
+                  <th>Order  Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
                 {
                 missing_history  &&  missing_history.map((item, i) => (
-                  <StyledTableRow key={i + 1}>
-                    <StyledTableCell>{i + 1}</StyledTableCell>
-                    <StyledTableCell>{item.store}</StyledTableCell>
-                    <StyledTableCell>{item.amount}</StyledTableCell>
-                    <StyledTableCell>{item.reported_date}</StyledTableCell>
-                    <StyledTableCell>{item.order_date}</StyledTableCell>
-                    <StyledTableCell>{item.status}</StyledTableCell>
-                  </StyledTableRow>
+                  <tr key={i + 1}>
+                    <td>{i + 1}</td>
+                    <td>{item.store}</td>
+                    <td>{item.amount}</td>
+                    <td>{item.reported_date}</td>
+                    <td>{item.order_date}</td>
+                    <td>{item.status}</td>
+                  </tr>
                 ))
 
                 }
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
+              </tbody>
+            </table>
+          </div>
+      
+        </div>
         
         {
-          noMoreData ?  <Box sx={{textAlign:"center"}}>No More Data...</Box> :
-          <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
-            <Button onClick={moreData} variant="outlined">More Data</Button>
-         </Box> 
+          noMoreData ?  <div style={{textAlign:"center"}}>No More Data...</div> :
+          <div style={{padding:"10px", display:"flex",justifyContent:"center"}}>
+            <button className="border_button" onClick={moreData} >More Data</button>
+         </div> 
         }
         
       </div>
       <style jxs>{`
-      .css-sli737-MuiTableCell-root{
-        padding: 12px 6px;
+       #click_id {
+        border-collapse: collapse;
+        width: 100%;
       }
-      .css-sli737-MuiTableCell-root.MuiTableCell-body{
-        font-size: 13px;
+      
+      #click_id td, #click_id th {
+        border: 1px solid #ddd;
+        padding: 8px;
       }
-      .css-1f97x3w-MuiTableCell-root{
-        padding: 11px 10px;
+      
+      #click_id tr:nth-child(even){background-color: #f2f2f2;}
+      
+      #click_id tr:hover {background-color: #ddd;}
+      
+      #click_id th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: center;
+        min-width: 166px;
+        background-color: var(--main-color);
+        color: white;
       }
-      .tabsList::-webkit-scrollbar {
+      .overflow_div{
+        overflow: auto;
+      }
+      .overflow_div::-webkit-scrollbar {
         display: none;
-    }
-    .MuiPaper-root.MuiPaper-elevation::-webkit-scrollbar{
-      display: none;
-    }
-    .MuiTableCell-root{
-      min-width:130px;
     }
     `}</style>
    

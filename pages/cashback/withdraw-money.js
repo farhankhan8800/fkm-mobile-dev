@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import WithdrawOtherBank from "components/withdraw-money/withdrawOtherBank";
 import { withdrawPaymentModeAPI } from "service/API";
 import axios from "axios";
+import { AiFillInfoCircle } from "react-icons/ai";
 
 const apiAuth = process.env.API_AUTH;
 
@@ -83,16 +84,16 @@ const WithdrawMoney = () => {
       <HeadTag headeTitle={headeTitle}></HeadTag>
       <Header></Header>
       <div style={{ paddingTop: "56px" }}>
-        <Box
+        <div
           component="div"
-          sx={{ p: 2, m: 2, mt: 0, background: "#f7f7f7", borderRadius: "5px" }}
+          style={{ padding:"15px",margin:"15px", marginTop:"0", background: "#f7f7f7", borderRadius: "5px" }}
         >
-          <Box sx={{}}>
-            <Typography variant="p" fontWeight={400} color="initial">
+         
+            <h6 className="heading">
               Select Your Payment Mode
-            </Typography>
-          </Box>
-          <Box>
+            </h6>
+        
+          <div>
             <select
               className="select_tag"
               onChange={accountHandler}
@@ -103,9 +104,9 @@ const WithdrawMoney = () => {
               <option value="bank">Bank</option>
               <option value="paytm">Paytm</option>
             </select>
-          </Box>
-          {serverdata ? <Alert severity="info">{serverdata}</Alert> : ""}
-          <Box>
+          </div>
+          {serverdata ? <div  className="alert_info_class"> <span><AiFillInfoCircle /></span> <p>{serverdata}</p> </div>: ""}
+          <div>
             <div>
               {activeBank ? <WithdrawBank userData={userData} /> : ""}
             </div>
@@ -117,8 +118,8 @@ const WithdrawMoney = () => {
                 ""
               )}
             </div>
-          </Box>
-        </Box>
+          </div>
+        </div>
       </div>
       <style jxs>{`
       .select_tag{

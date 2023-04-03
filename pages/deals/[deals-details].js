@@ -8,11 +8,11 @@ import HeadTag from "components/headTagComponent/HeadTag";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { deal_detail } from "service/API";
-import Spinner from "components/Spinner";
+import Spinner from "components/utilites/Spinner";
 import axios from "axios";
 import PageNotFound from "components/PageNotFound";
 import { isTokenExpired } from "service/helper";
-import OpenExpireSectionDialog from "components/session-expired";
+import OpenExpireSectionDialog from "components/utilites/session-expired";
 
 const apiAuth = process.env.API_AUTH;
 const DEVICE_TYPE = process.env.DEVICE_TYPE;

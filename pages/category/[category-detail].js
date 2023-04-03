@@ -2,24 +2,19 @@ import Image from "next/image";
 import { Box, Typography } from "@mui/material";
 import Header from "components/headerComponent/Header";
 import HeadTag from "components/headTagComponent/HeadTag";
-import DealsAndCoupons from "components/couponsComponents/DealsAndCoupons";
+
 import { useEffect, useState } from "react";
 import { categoryDetailApi } from "service/API";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useRouter } from "next/router";
 import axios from "axios";
+import DealsAndCouponsCategory from "components/couponsComponents/DealsAndCouponsCategory";
 
 const apiAuth = process.env.API_AUTH;
 
 const CategoryDetail = () => {
-  const [categoryDeals, setCategoryDeals] = useState([]);
-  const [categoryCoupons, setCategoryCoupons] = useState([]);
   const [categoryProduct, setCategoryProduct] = useState();
   const [categoryProductTitle, setCategoryProductTitle] = useState();
-  const [Page, setPage] = useState(1);
-  const [changeOption, setChangeOption] = useState("");
-  const [noDealData, setNoDealData] = useState(false);
-  const [noCouponData, setNoCouponData] = useState(false);
 
   const router = useRouter();
   const cate_slug = router.query["category-detail"];
@@ -31,9 +26,9 @@ const CategoryDetail = () => {
         categoryDetailApi,
         {
           apiAuth: apiAuth,
-          page: Page,
+          page: "1",
           cate_slug: cate_slug,
-          option: changeOption,
+          option: "",
         },
         {
           headers: {
@@ -41,55 +36,16 @@ const CategoryDetail = () => {
           },
         }
       );
-
-      if (changeOption == "") {
+        console.log(data.response.category)
         setCategoryProduct(data.response.category);
         setCategoryProductTitle(data.response.category.description);
-        if (data.response.deals.length == 0) {
-          setNoDealData(true);
-        } else {
-          setCategoryDeals([...categoryDeals, ...data.response.deals]);
-        }
-      } else if (changeOption == "deals") {
-        if (data.response.deals.length == 0) {
-          setNoDealData(true);
-        } else {
-          setCategoryDeals([...categoryDeals, ...data.response.deals]);
-        }
-      } else if (changeOption == "coupons") {
-        if (data.response.coupons.length == 0) {
-          setNoCouponData(true);
-        } else {
-          setCategoryCoupons([...categoryCoupons, ...data.response.coupons]);
-        }
-      }
     } catch (error) {}
   };
-
-  const dealsTabCall = () => {
-    setNoDealData(false);
-    setChangeOption("deals");
-    setPage(1);
-    setCategoryCoupons([]);
-  };
-  const couponsTabCall = () => {
-    setNoCouponData(false);
-    setChangeOption("coupons");
-    setPage(1);
-    setCategoryDeals([]);
-  };
-
   useEffect(() => {
     GetData();
-  }, [Page, changeOption, cate_slug]);
+  }, [cate_slug]);
 
-  const addDealPage = () => {
-    setPage(Page + 1);
-  };
-  const addCouponPage = () => {
-    setPage(Page + 1);
-  };
-
+ 
   return (
     <>
       {categoryProduct ? (
@@ -133,7 +89,7 @@ const CategoryDetail = () => {
                   alt="taddy bear"
                 />
               </Box>
-              <Box component="div" sx={{ paddingTop: "50px" }}>
+              <Box component="div" sx={{ padding: "50px 0" }}>
                 <Typography
                   component="p"
                   fontWeight="600"
@@ -170,15 +126,8 @@ const CategoryDetail = () => {
               <CircularProgress />
             </Box>
           )}
-          <DealsAndCoupons
-            categoryDeals={categoryDeals}
-            categoryCoupons={categoryCoupons}
-            noCouponData={noCouponData}
-            noDealData={noDealData}
-            addDealPage={addDealPage}
-            addCouponPage={addCouponPage}
-            dealsTabCall={dealsTabCall}
-            couponsTabCall={couponsTabCall}
+          <DealsAndCouponsCategory
+           cate_slug={cate_slug}
           />
         </Box>
       </div>

@@ -3,6 +3,8 @@ import { Alert, Box, Button, TextField } from "@mui/material";
 import axios from "axios";
 import {add_accountAPI} from "service/API"
 import { useEffect } from "react";
+import { ImWarning } from "react-icons/im";
+import { AiFillInfoCircle } from "react-icons/ai";
 
 
 const OtherBank = () => {
@@ -75,46 +77,45 @@ const OtherBank = () => {
     <>
      <div style={{paddingTop:"20px"}}>
         <hr></hr>
-     <Box sx={{paddingTop:"10px"}}>
+     <div sx={{paddingTop:"10px"}}>
             <form onSubmit={onSubmit}>
               <label>Paytm Account Holder Name</label>
-              <TextField
-                size="small"
-                fullWidth
+              <input
                 value={name}
                 onChange={nameHandler}
                 type="text"
                 id="outlined-basic"
                 placeholder="Name"
-                variant="outlined"
+                className="input_style" 
+                style={{width:"100%",padding: "6px 10px"}}
               />
               <label>Phone Number</label>
-              <TextField
-                size="small"
-                fullWidth
+              <input
+                className="input_style" 
+                style={{width:"100%",padding: "6px 10px"}}
                 onChange={phoneHandler}
                 type="number"
                 value={phone}
                 id="outlined-basic"
                 placeholder="Phone Number"
-                variant="outlined"
+              
               />
-              <Box sx={{ padding: "10px 0" }}>
-                <Button
+              <div style={{ padding: "10px 0" }}>
+                <button
                   type="submit"
-                  variant="contained"
-                  sx={{ width: "100%", color: "#fff", fontWeight: "600" }}
+                  className="full_with_button"
+                  style={{ width: "100%", color: "#fff", fontWeight: "600" }}
                 >
                   {" "}
                   Save
-                </Button>
-              </Box>
-              {notValid ? <Alert severity="warning">{notValid}</Alert> : ""}
+                </button>
+              </div>
+              {notValid ? <div  className="alert_warning_class"> <span><ImWarning /></span> <p>{notValid}</p> </div> : ""}
               {
-                serverdata ? <Alert severity="info">{serverdata}</Alert>:""
+                serverdata ? <div  className="alert_info_class"> <span><AiFillInfoCircle /></span> <p>{serverdata}</p> </div>:""
               }
             </form>
-          </Box>
+          </div>
      </div>
      
       <style jxs>{`

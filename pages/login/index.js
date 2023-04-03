@@ -3,14 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import logInImage from "../../public/images/login.png";
-import {
-  Box,
-  Button,
-  Typography,
-  TextField,
-  Divider,
-  Alert,
-} from "@mui/material";
+
 import Link from "next/link";
 import googleImage from "public/images/google.png";
 import facebookImage from "public/images/facebook.png";
@@ -20,6 +13,9 @@ import HeadTag from "components/headTagComponent/HeadTag";
 import { loginUser } from "service/API";
 import { useDispatch } from "react-redux";
 import { loginFun } from "redux-store/slices/UserSlice"; 
+import axios from "axios";
+import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+import { ImWarning } from "react-icons/im";
 
 
 const apiAuth = process.env.API_AUTH;
@@ -32,10 +28,17 @@ const Login = () => {
   const [passwordErr, setPasswordErr] = useState(false);
   const [userdata, setUserdata] = useState();
   const [serverErr, setServerErr] = useState("");
+  const [showPass, setShowPass] = useState(true)
   const headeTitle = "Login | Freekaamaal";
+
   const router = useRouter();
 
+  const showPassFun = ()=>{
+    setShowPass(!showPass)
+  }
+
   const dispatch = useDispatch()
+  
   useEffect(() => {
     setUserdata(localStorage.getItem("user"));
     if (userdata) {
@@ -48,30 +51,30 @@ const Login = () => {
       SetCallWarning(true);
     } else {
       try {
-        let result = await fetch(loginUser, {
-          method: "POST",
-          body: JSON.stringify({
+        let {data} = await axios.post(loginUser, {
             apiAuth: apiAuth,
             email: email,
             password: password,
-          }),
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        result = await result.json({});
-        if (result.status == 1) {
-          localStorage.setItem("user", JSON.stringify(result));
-          dispatch(loginFun(result))
+           },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+        );
+
+        // console.log(data.data)
+        if (data.status == 1) {
+          localStorage.setItem("user", JSON.stringify(data));
+          dispatch(loginFun(data))
           setEmail("");
           setPassword("");
           setTimeout(() => {
             router.push("/");
           }, 300);
         } else {
-          setServerErr(result);
-          // console.log(result.message);
+          setServerErr(data);
+        
         }
       } catch (err) {}
     }
@@ -100,13 +103,13 @@ const Login = () => {
     SetCallWarning(false);
   };
 
+
   return (
     <>
       <HeadTag headeTitle={headeTitle} />
       <Header />
       <div style={{ paddingTop: "56px" }}>
-        <Box
-          component="div"
+        <div
           style={{
             width: "100%",
             display: "flex",
@@ -119,45 +122,44 @@ const Login = () => {
             alt="LogIn "
             width={300}
             height={300}
-            style={{}}
           ></Image>
-        </Box>
-        <Box component="div" style={{ width: "100%", padding: " 5px 20px" }}>
-          <Typography variant="h5" component="h5">
-            <strong style={{ fontWeight: "800" }}>LogIn</strong>
-          </Typography>
+        </div>
+        <div  style={{ width: "100%", padding: " 5px 20px" }}>
+          <h1 >
+            <strong style={{ fontWeight: "400",fontSize: "29px",color: "rgb(65, 61, 61)" }}>LogIn</strong>
+          </h1>
           <form onSubmit={onSubmit}>
-            <TextField
-              sx={{ width: "100%", marginTop: "10px" }}
-              size="small"
+            <input
+              style={{ width: "100%", marginTop: "10px" }}
               id="email"
+              className="input_style"
               value={email}
               onChange={emailChangeHandler}
               type="text"
-              label="Email/User ID"
+              name="email"
               placeholder="Email/User ID"
-              variant="outlined"
-            ></TextField>
+             />
             <p style={{ color: "#f27935", paddingLeft: "5px" }}>
               {emailErr ? "Please Enter Valid Email" : ""}
             </p>
-            <TextField
-              sx={{ width: "100%", marginTop: "10px" }}
+            <div style={{position:"relative"}}>
+            <input
+              style={{ width: "100%", marginTop: "10px" }}
               id="password"
               value={password}
+              className="input_style"
               onChange={passwordChangeHandler}
-              type="current-password"
-              size="small"
+              type={showPass? "password":"text"}
               name="password"
-              label="Password"
               placeholder="Password"
-              variant="outlined"
-            ></TextField>
+            />
+             <span className="eye_span_box_ab" onClick={showPassFun}>{showPass? <BsEyeFill  /> : <BsEyeSlashFill />}</span>
+            </div>
+           
             <p style={{ color: "#f27935", paddingLeft: "5px" }}>
               {passwordErr ? "Please Enter Strong Password" : ""}
             </p>
-            <Box
-              component="div"
+            <div
               style={{ width: "100%", padding: " 10px 0", textAlign: "right" }}
             >
               {" "}
@@ -171,37 +173,39 @@ const Login = () => {
               >
                 Forgot Password ?
               </Link>
-            </Box>
-            <Button
-              variant="contained"
-              sx={{
-                width: "100%",
-                color: "#fff",
-                fontWeight: "bold",
+            </div>
+            <button
+              className="full_with_button"
+              style={{
+                padding: "6px 15px",
                 margin: "10px 0",
                 fontSize: "17px",
-                letterSpacing: "1px",
               }}
               type="submit"
             >
               LogIn
-            </Button>
+            </button>
+
+           
             {callWarning ? (
-              <Alert severity="warning">Please fill out the form </Alert>
+               <div  className="alert_warning_class"> <span><ImWarning /></span> <p>Please fill out the form</p> </div>
+             
             ) : (
               ""
             )}
             {serverErr ? (
-              <Alert severity="warning">{serverErr.message}</Alert>
+              <div  className="alert_warning_class"> <span><ImWarning /></span> <p>{serverErr.data.message}</p> </div>
             ) : (
               ""
             )}
           </form>
-          <Divider textAlign="center">OR</Divider>
-          <Box component="div" sx={{ p: 1 }}>
-            <Button
-              variant="contained"
-              sx={{ width: "100%", bgcolor: "#f2793552", marginBottom: "15px" }}
+          <div className="divider_line_class">
+            <span className="divider_ab_text">OR</span>
+          </div>
+          <div  style={{ padding: "8px" }}>
+            <button
+             className="full_with_button"
+              style={{padding: "8px 15px", width: "100%", background: "#f2793552", marginBottom: "15px" }}
             >
               {" "}
               <Link
@@ -223,10 +227,10 @@ const Login = () => {
                 ></Image>{" "}
                 <span>Login With Google</span>
               </Link>{" "}
-            </Button>
-            <Button
-              variant="contained"
-              sx={{ width: "100%", bgcolor: "#f2793552", marginBottom: "15px" }}
+            </button>
+            <button
+              className="full_with_button"
+              style={{ padding: "8px 15px", width: "100%", background: "#f2793552", marginBottom: "15px" }}
             >
               {" "}
               <Link
@@ -248,11 +252,12 @@ const Login = () => {
                 ></Image>{" "}
                 <span>Login With Facebook</span>
               </Link>{" "}
-            </Button>
-          </Box>
-          <Box component="div" sx={{ p: 1 }}>
-            <Button
-              sx={{
+            </button>
+          </div>
+          <div  style={{ padding: "10px" }}>
+            <button
+           
+              style={{
                 width: "100%",
                 marginBottom: "5px",
                 color: "gray",
@@ -261,19 +266,44 @@ const Login = () => {
             >
               New To FreeKaaMaal ?{" "}
               <Link
+              className="text_button"
                 href="/signup"
                 style={{
                   color: "#4343e9",
                   textDecoration: "none",
-                  fontWeight: "500",
+                  
                 }}
               >
                 &nbsp; Register
               </Link>
-            </Button>
-          </Box>
-        </Box>
+            </button>
+          </div>
+        </div>
       </div>
+      <style jsx>
+        {`
+
+        .divider_line_class{
+          position: relative;
+          width: 100%;
+          height: 1px;
+          background: #b0acac;
+          margin: 23px 0;
+          opacity: .7;
+        }
+        .divider_ab_text{
+          position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: var(--second-color);
+    display: inline-block;
+    padding: 2px;
+    opacity: 1;
+        }
+       
+        `}
+      </style>
     </>
   );
 };

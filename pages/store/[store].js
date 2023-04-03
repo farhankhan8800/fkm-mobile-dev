@@ -8,9 +8,11 @@ import Image from "next/image";
 
 import Header from "components/headerComponent/Header";
 import HeadTag from "components/headTagComponent/HeadTag";
-import DealsAndCoupons from "components/couponsComponents/DealsAndCoupons";
+
 import { useEffect, useState } from "react";
 import { BsInfoCircle } from "react-icons/bs";
+
+import DealsAndCouponsStore from "components/couponsComponents/DealsAndCouponsStore";
 
 
 
@@ -23,12 +25,6 @@ const StoreDetails = () => {
   const [store_data, setStore_data] = useState();
   const [storeRate, setStoreRate] = useState();
   const [storeRateMore, setStoreRateMore] = useState(false);
-  const [storeDeals, setStoreDeals] = useState([]);
-  const [storeCoupons, setStoreCoupons] = useState([]);
-  const [changeOption, setChangeOption] = useState("");
-  const [Page, setPage] = useState(1);
-  const [noCouponData, setNoCouponData] = useState(false);
-  const [noDealData, setNoDealData] = useState(false);
   const [user, setUser] = useState();
   const [topDescState, setTopDescState] = useState(false);
   const [tcOpenState, setTcOpenState] = useState(false);
@@ -45,9 +41,9 @@ const StoreDetails = () => {
         StoreDetailApi,
         {
           apiAuth: apiAuth,
-          page: Page,
+          page: "1",
           store_slug: store_slug,
-          option: changeOption,
+          option: "",
           device_type: DEVICE_TYPE,
         },
         {
@@ -57,64 +53,24 @@ const StoreDetails = () => {
         }
       );
 
+
+
+      console.log(data)
       if (data.status == 0 && data.error == 0) {
         router.push(`/404`);
       } else {
-        if (changeOption == "") {
           setStore_data(data.response.store_details);
           setStoreRate(data.response.store_rates);
-          if (data.response.deals.length == 0) {
-            setNoDealData(true);
-          } else {
-            setStoreDeals([...storeDeals, ...data.response.deals]);
-          }
-        } else if (changeOption == "deals") {
-          if (data.response.deals.length == 0) {
-            setNoDealData(true);
-          } else {
-            setStoreDeals([...storeDeals, ...data.response.deals]);
-          }
-        } else if (changeOption == "coupons") {
-          if (data.response.coupons.length == 0) {
-            setNoCouponData(true);
-          } else {
-            setStoreCoupons([...storeCoupons, ...data.response.coupons]);
-          }
-        }
       }
     } catch (err) {
-      // console.log(err);
     }
   };
 
-  // console.log(store_data)
   useEffect(() => {
     if (store_slug) {
       storeData();
     }
-  }, [Page, changeOption, store_slug]);
-
-  console.log(store_data);
-
-  const dealsTabCall = () => {
-    setNoCouponData(false);
-    setChangeOption("deals");
-    setPage(1);
-    setStoreCoupons([]);
-  };
-
-  const couponsTabCall = () => {
-    setNoDealData(false);
-    setChangeOption("coupons");
-    setPage(1);
-    setStoreDeals([]);
-  };
-  const addDealPage = () => {
-    setPage(Page + 1);
-  };
-  const addCouponPage = () => {
-    setPage(Page + 1);
-  };
+  }, [store_slug]);
 
   const moreStoreHandel = () => {
     if (storeRateMore == true) {
@@ -394,16 +350,7 @@ const StoreDetails = () => {
               )}
             </div>
             <div style={{ paddingBottom: "25px" }}>
-              <DealsAndCoupons
-                categoryCoupons={storeCoupons}
-                categoryDeals={storeDeals}
-                noCouponData={noCouponData}
-                noDealData={noDealData}
-                couponsTabCall={couponsTabCall}
-                dealsTabCall={dealsTabCall}
-                addDealPage={addDealPage}
-                addCouponPage={addCouponPage}
-              />
+              <DealsAndCouponsStore  store_slug={store_slug}/>
             </div>
             <div
               style={{

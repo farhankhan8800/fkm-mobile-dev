@@ -15,6 +15,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import {clickHistoryAPI} from "service/API"
+import { useUserToken } from "service/customHooks";
 
 
 const apiAuth = process.env.API_AUTH
@@ -27,9 +28,11 @@ const [page, setPage] = useState(1)
 const [noMoreData,setNoMoreData] = useState(false)
 const [click_history_title , setClick_history_title] = useState()
 
+const token = useUserToken()
+
 useEffect(()=>{
-  setAuthToken(JSON.parse(localStorage.getItem("user")).token)
-},[])
+  setAuthToken(token)
+},[token])
 
 // eslint-disable-next-line react-hooks/exhaustive-deps
 const getData = async ()=>{
@@ -67,24 +70,7 @@ const getData = async ()=>{
   
 
 
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
 
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    "&:nth-of-type(odd)": {
-      backgroundColor: theme.palette.action.hover,
-    },
-    "&:last-child td, &:last-child th": {
-      border: 0,
-    },
-  }));
 
   const headeTitle = "Click History | Freekaamaal";
   return (
@@ -92,60 +78,70 @@ const getData = async ()=>{
       <HeadTag headeTitle={headeTitle}></HeadTag>
       <Header></Header>
       <div style={{ paddingTop: "56px" }}>
-        <Box sx={{ p: 2, m: 2, bgcolor: "#f1f1f1", borderRadius: "5px" }}>
-          <Typography component="p" fontSize="13px" color="gray">
+        <div style={{ padding:"15px",margin:"15px", background: "#f1f1f1", borderRadius: "5px" }}>
+          <p  style={{fontSize:"13px", color:"gray"}}>
            {
             click_history_title ? click_history_title :"Loding..."
            }
-          </Typography>
-        </Box>
-        <Box sx={{ m: 2 }}>
-          <TableContainer component={Paper}>
+          </p>
+        </div>
+        <div style={{ margin:"15px",overflow: "auto" }}>
+        <table id="click_id">
+          <thead>
+          <tr>
+            <th>SN</th>
+            <th>Store</th>
+            <th>Clicks</th>
+            <th>Last&nbsp;Click</th>
+          </tr>
+          </thead>
+          <tbody>
+            {
+               click_History  &&  click_History.map((item, i) =>{
+               return(
+                <tr key={i}>
+                <td>{i+1}</td>
+                <td>{item.store}</td>
+                <td>{item.num_of_time}</td>
+                <td>{item.last_click}</td>
+                </tr>
+               )
+               })
+            }
          
-            <Table sx={{minWidth:"350px"}}  aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell>SN</StyledTableCell>
-                  <StyledTableCell>Store</StyledTableCell>
-                  <StyledTableCell>Clicks</StyledTableCell>
-                  <StyledTableCell>Last Click</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {
-                click_History  &&  click_History.map((item, i) => (
-                  <StyledTableRow key={i + 1}>
-                    <StyledTableCell>{i + 1}</StyledTableCell>
-                    <StyledTableCell>{item.store}</StyledTableCell>
-                    <StyledTableCell>{item.num_of_time}</StyledTableCell>
-                    <StyledTableCell>{item.last_click}</StyledTableCell>
-                  </StyledTableRow>
-                ))
+          </tbody>
+ 
+</table>
 
-                }
-             
-              </TableBody>
-            </Table>
-           
-            
-          </TableContainer>
-        </Box>{
-          noMoreData ? " No More Data..." : <Box sx={{p:1, display:"flex",justifyContent:"center"}}>
-            <Button onClick={moreData} variant="outlined">More Data</Button>
-          </Box>
+        </div>{
+          noMoreData ? " No More Data..." : <div style={{padding:"10px", display:"flex",justifyContent:"center"}}>
+            <button onClick={moreData} className="border_button">More Data</button>
+          </div>
           
         }
       </div>
       <style jxs>{`
-      .css-sli737-MuiTableCell-root{
-        padding: 12px 6px;
-      }
-      .css-sli737-MuiTableCell-root.MuiTableCell-body{
-        font-size: 13px;
-      }
-      .css-1f97x3w-MuiTableCell-root{
-        padding: 11px 10px;
-      }
+     #click_id {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    #click_id td, #click_id th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    
+    #click_id tr:nth-child(even){background-color: #f2f2f2;}
+    
+    #click_id tr:hover {background-color: #ddd;}
+    
+    #click_id th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: var(--main-color);
+      color: white;
+    }
     `}</style>
    
     </>

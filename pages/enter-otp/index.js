@@ -10,6 +10,8 @@ import { verifyUser } from "service/API.js";
 import axios from "axios";
 import { useSelector,useDispatch } from "react-redux";
 import { clearToken, loginVarifid } from "redux-store/slices/authSlice";
+import { BiErrorCircle } from "react-icons/bi";
+import { BsCheckCircle } from "react-icons/bs";
 
 const EnterOtp = () => {
   const [OTP, setOTP] = useState();
@@ -92,8 +94,8 @@ const EnterOtp = () => {
       <HeadTag headeTitle={headeTitle}></HeadTag>
       <Header />
       <div style={{ paddingTop: "56px" }}>
-        <Box
-          component="div"
+        <div
+        
           style={{
             width: "100%",
             display: "flex",
@@ -108,83 +110,83 @@ const EnterOtp = () => {
             width={300}
             style={{}}
           ></Image>
-        </Box>
-        <Box component="div" style={{ width: "100%", padding: " 5px 20px" }}>
-          <Typography variant="h5" component="h5">
-            <strong style={{ fontWeight: "800" }}>Enter OTP</strong>
-          </Typography>
-          <Typography variant="body1" component="p" sx={{ padding: "5px 0" }}>
-            An 6 digit code has been sand to
-          </Typography>
+        </div>
+        <div component="div" style={{ width: "100%", padding: " 5px 20px" }}>
+           <h1>
+              <strong style={{ fontWeight: "400",fontSize: "29px",color: "rgb(65, 61, 61)" }}>Enter OTP </strong>
+           </h1>
+           <h4 className="heading_text"  >  An 6 digit code has been sand to</h4> 
           <form
             className="enter_otp_component"
             style={{ paddingTop: "10px" }}
             onSubmit={onSubmit}
           >
-            <TextField
-              sx={{ width: "100%", marginTop: "10px" }}
-              size="small"
+            <input
+              style={{ width: "100%", marginTop: "10px" }}
               id="otp"
               maxLength="6"
               value={OTP}
-              label="Enter 6 digit OTP"
               onChange={(e) => {
                 setOtpErr(false);
                 setOTP(e.target.value);
               }}
               type="number"
               placeholder=" Enter 6 digit OTP "
-              variant="outlined"
+              className="input_style"
             />
+            
             {OtpErr ? (
-              <Box sx={{ paddingTop: "10px" }}>
-                <Alert severity="error">Please Enter Valid OTP</Alert>
-              </Box>
+              <div style={{ paddingTop: "10px" }}>
+                <div  className="alert_warning_class" style={{background:" #f0462b4f"}}> <span><BiErrorCircle /></span> <p>Please Enter Valid OTP</p> </div>
+               
+              </div>
             ) : (
               ""
             )}
             {serverErr ? (
-              <Box sx={{ paddingTop: "10px" }}>
-                <Alert severity="error">{serverErr.message}</Alert>
-              </Box>
+              <div style={{ paddingTop: "10px" }}>
+                <div  className="alert_warning_class" style={{background:" #f0462b4f"}}> <span><BiErrorCircle /></span> <p>{serverErr.message}</p> </div>
+                
+              </div>
             ) : (
               ""
             )}
             {successAlert ? (
-              <Box sx={{ paddingTop: "10px" }}>
-                <Alert severity="success">You are verified Successfully</Alert>
-              </Box>
+              <div style={{ paddingTop: "10px" }}>
+                 <div  className="alert_warning_class" style={{background:"#5cc64a4f",color:"green"}}> <span><BsCheckCircle /></span> <p> Kindly You are verified Successfully</p> </div>
+               
+              </div>
             ) : (
               ""
             )}
 
-            <Box
-              sx={{
+            <div
+              style={{
                 display: "flex",
                 padding: "10px",
                 justifyContent: "space-between",
                 alignItems: "center",
               }}
             >
-              <Typography
-                fontSize={"21px"}
-                fontWeight={"600"}
-                color={"#f27935"}
+              <h3
+              className=""
+              style={{fontSize:"21px", fontWeight:"600",color:"#f27935"}}
+                
               >
                 00:{time}s
-              </Typography>
+              </h3>
               {time == 0 ? (
-                <Button variant="outlined">Re send OTP</Button>
+                <button className="border_button">Re send OTP</button>
               ) : (
-                <Button disabled variant="outlined">
+                <button disabled className="border_button">
                   Re send OTP
-                </Button>
+                </button>
               )}
-            </Box>
+            </div>
 
-            <Button
-              variant="contained"
-              sx={{
+            <button
+              className="contain_button"
+              style={{
                 width: "100%",
                 color: "#fff",
                 fontWeight: "bold",
@@ -195,9 +197,9 @@ const EnterOtp = () => {
               type="submit"
             >
               Submit
-            </Button>
+            </button>
           </form>
-        </Box>
+        </div>
       </div>
     </>
   );

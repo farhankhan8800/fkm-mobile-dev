@@ -4,6 +4,8 @@ import axios from "axios";
 import {withdrawMoneyAPI} from "service/API"
 import { useEffect } from "react";
 import { useRouter } from 'next/router'
+import { ImWarning } from "react-icons/im";
+import { AiFillInfoCircle } from "react-icons/ai";
 
 const apiAuth = process.env.API_AUTH
 
@@ -113,7 +115,7 @@ const WithdrawOtherBank = ({userData}) => {
     userAccountData ?  <Typography fontSize={"13px"} fontWeight={600}> {userAccountData.label_msg}</Typography> :""
    }
    
-     <Box sx={{paddingTop:"10px"}}>
+     <div style={{paddingTop:"10px"}}>
             <div >
             <label>Select Account</label>
               <select  className="select_tag_account"
@@ -133,40 +135,40 @@ const WithdrawOtherBank = ({userData}) => {
                }
               </select>
               <label>Enter Amount</label>
-              <TextField
-                size="small"
-                fullWidth
+              <input
+                className="input_style" 
+                style={{width:"100%",padding: "6px 10px"}}
                 value={amount}
                 onChange={amountHandler}
                 type="Number"
                 id="outlined-basic"
                 placeholder="Enter Amount"
-                variant="outlined"
+               
               />
             
-              <Box sx={{ padding: "10px 0" }}>
-                <Button
+              <div style={{ padding: "10px 0" }}>
+                <button
                   type="button"
                   onClick={SubmitFormHandal}
-                  variant="contained"
-                  sx={{ width: "100%", color: "#fff", fontWeight: "600" }}
+                 className="contain_button"
+                  style={{ width: "100%", color: "#fff", fontWeight: "600" }}
                 >
                   {" "}
                  Withdraw
-                </Button>
-              </Box>
-              {notValid ? <Alert severity="warning">{notValid}</Alert> : ""}
+                </button>
+              </div>
+              {notValid ? <div  className="alert_warning_class"> <span><ImWarning /></span> <p>{notValid}</p> </div>: ""}
               {
-                serverdata ? <Alert severity="info">{serverdata}</Alert>:""
+                serverdata ?<div  className="alert_info_class"> <span><AiFillInfoCircle /></span> <p>{serverdata}</p> </div>:""
               }
             </div>
-          </Box>
+          </div>
           <div>
             {
-              userPromocodes ? (<Box sx={{paddingTop:"10px"}}>{
+              userPromocodes ? (<div style={{paddingTop:"10px"}}>{
               }
-                <Typography fontWeight={"600"}>Your save Coupons</Typography>
-                <Box>
+                <h6  className="heading">Your save Coupons</h6>
+                <div>
                     {
                         userPromocodes.map((item ,i)=>{
                             return(
@@ -182,8 +184,8 @@ const WithdrawOtherBank = ({userData}) => {
                         
                         )
                     }
-                </Box>
-              </Box>):""
+                </div>
+              </div>):""
             }
           </div>
           

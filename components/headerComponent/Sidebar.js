@@ -125,6 +125,7 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
               style={{
                 padding: "10px 13px",
                 borderRadius: "10px",
+               background: "#ff00000d"
               }}
             >
               <Link href={userdata ? "/cashback/home" : "/login"}>
@@ -183,7 +184,6 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
                 </div>
               </Link>
             </div>
-            
               <ul
               className="sidebar_list_ul"
                 style={{ width: "100%" }}

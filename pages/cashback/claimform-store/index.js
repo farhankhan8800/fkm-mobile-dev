@@ -7,6 +7,7 @@ import { Box, Button, Typography, TextField, Alert } from "@mui/material";
 import Header from "components/headerComponent/Header";
 import HeadTag from "components/headTagComponent/HeadTag";
 import axios from "axios";
+import { ImWarning } from "react-icons/im";
 
 const apiAuth = process.env.API_AUTH;
 
@@ -98,13 +99,12 @@ const ClaimformStore = () => {
       <HeadTag headeTitle={headeTitle} />
       <Header />
       <div style={{ paddingTop: "56px" }}>
-        <Box
-          component="div"
+        <div
           style={{ width: "100%", padding: " 5px 20px", paddingTop: "20px" }}
         >
-          <Typography variant="h5" component="h5">
+          <h4>
             <strong style={{ fontWeight: "800" }}>Claim Form</strong>
-          </Typography>
+          </h4>
           <form onSubmit={submitForm}>
             <div>
               <label htmlFor="userClicks">
@@ -165,16 +165,16 @@ const ClaimformStore = () => {
                           ) : (
                             <label htmlFor={item.id}>{item.title}</label>
                           )}
-                          <TextField
-                            sx={{ width: "100%", marginTop: "5px" }}
-                            size="small"
+                          <input
+                            style={{ width: "100%", marginTop: "5px" }}
+                            className="input_style"
                             name={item.field_name}
                             id={item.id}
                             required={item.is_mandatory == 1 ? true : false}
                             onChange={updateData}
                             type={item.type}
-                            variant="outlined"
-                          ></TextField>
+                          
+                          ></input>
                         </React.Fragment>
                       );
                     } else {
@@ -187,17 +187,16 @@ const ClaimformStore = () => {
                           ) : (
                             <label htmlFor={item.id}>{item.title}</label>
                           )}
-                          <TextField
-                            sx={{ width: "100%", marginTop: "5px" }}
-                            size="small"
+                          <input
+                            style={{ width: "100%", marginTop: "5px" }}
+                            className="input_style"
                             id={item.id}
                             required={item.is_mandatory == 1 ? true : false}
                             onChange={updateData}
                             name={item.field_name}
                             type={item.type}
                             placeholder={item.placeholder}
-                            variant="outlined"
-                          ></TextField>
+                          ></input>
                         </React.Fragment>
                       );
                     }
@@ -206,26 +205,20 @@ const ClaimformStore = () => {
             </div>
             <div>
               {serverError ? (
-                <Alert severity="error" sx={{ mt: 2 }}>
-                  {" "}
-                  {serverError.message}!
-                </Alert>
+                  <div  className="alert_warning_class"> <span><ImWarning /></span> <p> {serverError.message}!</p></div>
               ) : (
                 ""
               )}
               {clientError ? (
-                <Alert severity="error" sx={{ mt: 2 }}>
-                  {" "}
-                  {clientError}!
-                </Alert>
+                <div  className="alert_warning_class"> <span><ImWarning /></span> <p>{clientError}!</p></div>
               ) : (
                 ""
               )}
             </div>
 
-            <Button
-              variant="contained"
-              sx={{
+            <button
+             className="contain_button"
+              style={{
                 width: "100%",
                 color: "#fff",
                 fontWeight: "bold",
@@ -236,9 +229,9 @@ const ClaimformStore = () => {
               type="Submit"
             >
               Submit
-            </Button>
+            </button>
           </form>
-        </Box>
+        </div>
       </div>
       <style jsx>{`
         select {

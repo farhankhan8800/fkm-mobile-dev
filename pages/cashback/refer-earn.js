@@ -3,7 +3,6 @@ import { Typography, Box, Button } from "@mui/material";
 
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import Image from "next/image";
 
 import FrequentlyQuestion from "../../components/FrequentlyQuestion";
 
@@ -27,70 +26,72 @@ const referEarn = () => {
       <HeadTag headeTitle={headeTitle}></HeadTag>
       <Header />
       <div style={{ paddingTop: "56px" }}>
-        <Box component="div" sx={{ p: 2, paddingBottom: "10px" }}>
-          <Typography component="h6" fontWeight="600">
+        <div  style={{ padding:"15px", paddingBottom: "10px" }}>
+          <div  style={{fontWeight:"600"}}>
             {" "}
             Let&apos;s Grow Together With Our Refer And Earn Program
-          </Typography>
-          <Box
-            component="div"
-            sx={{ bgcolor: "#fff0f0", margin: "10px 0", p: 2 }}
+          </div>
+          <div
+            
+            style={{ background: "#fff0f0", margin: "10px 0",padding:"15px" }}
           >
-            <Box sx={{ position: "relative", marginBottom: "10px" }}>
-              <Typography component="p"> Referral Link</Typography>
+            <div style={{ position: "relative", marginBottom: "10px" }}>
+              <h6 className="heading" > Referral Link</h6>
               <input
                 id="couponLink"
                 readOnly
                 value="freekaamaal.com/576345723DGFG/6456"
-              ></input>
-              <Button
+               />
+              <button
                 onClick={copyLink}
                 id="copyLinkButton"
-                size="small"
-                sx={{
+                style={{
                   position: "absolute",
                   color: "#fff",
                   right: "4px",
                   top: "27px",
+                  padding:"4px",
+                  minWidth:"85px"
                 }}
-                variant="contained"
+               className="contain_button"
               >
                 Copy
-              </Button>
-            </Box>
-            <Box sx={{ position: "relative" }}>
-              <Typography component="p"> Referral Code</Typography>
+              </button>
+            </div>
+            <div style={{ position: "relative" }}>
+              <h6 className="heading" > Referral Code</h6>
               <input id="couponCode" readOnly value="6456"></input>
-              <Button
+              <button
                 onClick={copyCode}
                 id="copyCodeButton"
-                size="small"
-                sx={{
+                style={{
                   position: "absolute",
                   color: "#fff",
                   right: "4px",
                   top: "27px",
+                  padding:"4px",
+                  minWidth:"85px"
                 }}
-                variant="contained"
+                className="contain_button"
               >
                 Copy
-              </Button>
-            </Box>
-          </Box>
-        </Box>
-        <Box
-          component="div"
-          sx={{ p: 2, paddingTop: "0px", paddingBottom: "10px" }}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+         
+          style={{ padding:"15px", paddingTop: "0px", paddingBottom: "10px" }}
         >
-          <Typography component="h6" fontWeight="600">
+          <h6 className="heading"  >
             {" "}
             Easy Process
-          </Typography>
-          <Box sx={{ padding: "10px 0" }}></Box>
-        </Box>
-        <Box component="div" sx={{ p: 2, paddingTop: "0px" }}>
+          </h6>
+          <div style={{ padding: "10px 0" }}></div>
+        </div>
+        <div  style={{padding:"15px", paddingTop: "0px" }}>
           <FrequentlyQuestion />
-        </Box>
+        </div>
       </div>
       <style jsx>{`
         input {

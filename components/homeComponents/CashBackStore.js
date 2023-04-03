@@ -57,6 +57,7 @@ const CashBackStore = () => {
     setActiveTab(false)
   }
 
+  // console.log(stores)
   return (
     <>
       <div className="d_flex" style={{ padding: "13px 3px 3px" }}>
@@ -105,9 +106,9 @@ const CashBackStore = () => {
                       boxShadow: "0 0 0 ",
                     }}
                   >
-                    <a
+                    <Link
                       className="cash_back_store_link"
-                      href="https://freekaamaal.com/"
+                      href={`/${store.store_slug}`}
                     >
                       <div>
                         <div
@@ -133,7 +134,7 @@ const CashBackStore = () => {
                           Cashback
                         </p>
                       </div>
-                    </a>
+                    </Link>
                   </div>
                   );
                 })}

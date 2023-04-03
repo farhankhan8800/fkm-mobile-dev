@@ -9,7 +9,7 @@ import Link from "next/link";
 import axios from "axios";
 import { livefeed_detailAPI } from "service/API";
 import { useRouter } from "next/router";
-import Spinner from "components/Spinner";
+import Spinner from "components/utilites/Spinner";
 import Error404 from "pages/404";
 
 const apiAuth = process.env.API_AUTH;

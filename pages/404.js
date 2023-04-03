@@ -26,16 +26,16 @@ const Error404 = () => {
         <h1>404</h1>
         <h3> Page Not Found...</h3>
         <div className="button_error_page">
-          <Button
+          <button
             type="button"
             onClick={() => {
               router.push("/");
             }}
-            sx={{ color: "#fff", fontWeight: 500 }}
-            variant="contained"
+            style={{ color: "#fff", fontWeight: 500 }}
+            className="contain_button"
           >
             Go To Home Page
-          </Button>
+          </button>
         </div>
       </div>
 

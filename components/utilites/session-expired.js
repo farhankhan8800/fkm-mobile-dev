@@ -1,4 +1,4 @@
-import { Button,  } from "@mui/material";
+
 import { useRouter } from 'next/router'
 
 const OpenExpireSectionDialog = ({setSessionExpired})=>{
@@ -7,6 +7,7 @@ const OpenExpireSectionDialog = ({setSessionExpired})=>{
       setSessionExpired(false)
       localStorage.clear();
       sessionStorage.clear();
+      window.location.reload(true)
     };
     const loginAgain = ()=>{
       setSessionExpired(false)
@@ -24,12 +25,12 @@ const OpenExpireSectionDialog = ({setSessionExpired})=>{
               location data to Google, even when no apps are running.
             </div>
             <div className="model_class_btn"> 
-            <Button sx={{marginRight:"10px", color:"#fff"}} variant="contained" size="small" onClick={loginAgain} autoFocus>
-            Login Again
-            </Button>
-            <Button size="small" variant="outlined" onClick={handleClose}>
-              Ok
-            </Button>
+            <button className="contain_button" style={{marginRight:"10px", color:"#fff"}} onClick={loginAgain} autoFocus>
+              Login Again
+            </button>
+            <button  className="contain_button" style={{ color:"#fff"}}  onClick={handleClose}>
+               Ok
+            </button>
           </div>
       </div>
       </div>
