@@ -1,23 +1,10 @@
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { referral_summaryAPI } from "service/API";
 import React from "react";
-import Image from "next/image";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { styled } from "@mui/system";
-import TabsUnstyled from "@mui/base/TabsUnstyled";
-import TabsListUnstyled from "@mui/base/TabsListUnstyled";
-import TabPanelUnstyled from "@mui/base/TabPanelUnstyled";
-import TabUnstyled, { tabUnstyledClasses } from "@mui/base/TabUnstyled";
 import { cashbackHistoryAPI } from "service/API";
 
 const apiAuth = process.env.API_AUTH;
@@ -36,6 +23,8 @@ const ReferralHistory = () => {
   );
   const [option, setOption] = useState("all");
   const [noMoreData, setNoMoreData] = useState(false);
+  const [ToggleState, setToggleState] = useState(1);
+
 
   useEffect(() => {
     setAuthToken(JSON.parse(localStorage.getItem("user")).token);
@@ -144,6 +133,7 @@ const ReferralHistory = () => {
   }, [page, authToken, option]);
 
   const allTab = () => {
+    toggleTab(1)
     setNoMoreData(false);
     setOption("all");
     setPage(1);
@@ -152,6 +142,7 @@ const ReferralHistory = () => {
     setCashback_history_declined("");
   };
   const pendingTab = () => {
+    toggleTab(2)
     setNoMoreData(false);
     setOption("pending");
     setPage(1);
@@ -160,6 +151,7 @@ const ReferralHistory = () => {
     setCashback_history_declined("");
   };
   const confirmedTab = () => {
+    toggleTab(3)
     setNoMoreData(false);
     setOption("confirmed");
     setPage(1);
@@ -168,6 +160,7 @@ const ReferralHistory = () => {
     setCashback_history_declined("");
   };
   const declinedTab = () => {
+    toggleTab(4)
     setNoMoreData(false);
     setOption("declined");
     setPage(1);
@@ -176,518 +169,440 @@ const ReferralHistory = () => {
     setCashback_history_confirmed("");
   };
 
-  const Tab = styled(TabUnstyled)`
-    font-family: IBM Plex Sans, sans-serif;
+  const toggleTab = (index) => {
+    setToggleState(index);
+  };
 
-    cursor: pointer;
-    font-size: 0.875rem;
-    font-weight: 600;
-    background-color: transparent;
-    min-width: 130px;
-    padding: 10px 5px;
-
-    border: none;
-    border-radius: 7px;
-    display: flex;
-    justify-content: center;
-
-    &:hover {
-      background-color: #f27935;
-    }
-
-    &:focus {
-      color: #fff;
-    }
-
-    &.${tabUnstyledClasses.selected} {
-      background-color: #fff;
-      color: #f27935;
-    }
-  `;
-
-  const TabsList = styled(TabsListUnstyled)(
-    ({ theme }) => `
-   
-    display: flex;
-    overflow-x: scroll;
-    align-items: center;
-    justify-content: space-between;
-    align-content: space-between;
-    box-shadow: 0px 4px 30px ${theme.palette.mode === "dark" ? "#fff" : "#fff"};
-    `
-  );
-  const TabPanel = styled(TabPanelUnstyled)(
-    ({ theme }) => `
-    font-family: IBM Plex Sans, sans-serif;
-    font-size: 0.875rem;
-    overflow:auto;
-    padding: 20px 12px;
-   
-    border-radius: 7px;
-    `
-  );
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
-
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    "&:nth-of-type(odd)": {
-      backgroundColor: theme.palette.action.hover,
-    },
-    "&:last-child td, &:last-child th": {
-      border: 0,
-    },
-  }));
+  const getActiveClass = (index, className) =>
+    ToggleState === index ? className : "";
 
   const headeTitle = "Referral History | Freekaamaal";
   return (
     <>
       <HeadTag headeTitle={headeTitle}></HeadTag>
-      <Header></Header>
+      <Header />
       <div style={{ paddingTop: "56px" }}>
-        <Box
-          sx={{ m: 2, bgcolor: "#f9f9f9", borderRadius: "3px" }}
-          component="div"
+        <div
+          style={{ margin: "15px", background: "#f9f9f9", borderRadius: "3px" }}
         >
-          <Box>
-            <Typography variant="h6" fontWeight={600} color="initial">
-              Referral History
-            </Typography>
-          </Box>
-          <Grid container spacing={1}>
-            {" "}
-            {referral ? (
-              <>
-                <Grid item xs={6}>
-                  <Box
-                    sx={{ p: 1, bgcolor: "#fff", borderRadius: "5px" }}
-                    component="div"
+          <div>
+            <h6 className="heading">Referral History</h6>
+
+            <div className="d_grid d_grid_6 grid_gap_ten">
+              {referral ? (
+                <>
+                  <div
+                    style={{
+                      padding: "10px",
+                      background: "#fff",
+                      borderRadius: "5px",
+                    }}
                   >
-                    <Typography
-                      component="p"
-                      textAlign="center"
-                      fontWeight="600"
-                    >
+                    <p style={{ textAlign: "center", fontWeight: "600" }}>
                       &#8377; {referral.confirm_ref_amount}
-                    </Typography>
-                    <Typography
-                      component="p"
-                      textAlign="center"
-                      fontSize="10px"
-                    >
+                    </p>
+                    <p style={{ textAlign: "center", fontSize: "10px" }}>
                       Confirm Ref Amount
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={6}>
-                  <Box
-                    sx={{ p: 1, bgcolor: "#fff", borderRadius: "5px" }}
-                    component="div"
+                    </p>
+                  </div>
+
+                  <div
+                    style={{
+                      padding: "10px",
+                      background: "#fff",
+                      borderRadius: "5px",
+                    }}
                   >
-                    <Typography
-                      component="p"
-                      textAlign="center"
-                      fontWeight="600"
-                    >
+                    <p style={{ textAlign: "center", fontWeight: "600" }}>
                       &#8377; {referral.pending_ref_amount}
-                    </Typography>
-                    <Typography
-                      component="p"
-                      textAlign="center"
-                      fontSize="10px"
-                    >
+                    </p>
+                    <p style={{ textAlign: "center", fontSize: "10px" }}>
                       Pending Ref Amount{" "}
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={6}>
-                  <Box
-                    sx={{ p: 1, bgcolor: "#fff", borderRadius: "5px" }}
-                    component="div"
+                    </p>
+                  </div>
+
+                  <div
+                    style={{
+                      padding: "10px",
+                      background: "#fff",
+                      borderRadius: "5px",
+                    }}
                   >
-                    <Typography
-                      component="p"
-                      textAlign="center"
-                      fontWeight="600"
-                    >
+                    <p style={{ textAlign: "center", fontWeight: "600" }}>
                       &#8377; {referral.declined_ref_amount}
-                    </Typography>
-                    <Typography
-                      component="p"
-                      textAlign="center"
-                      fontSize="10px"
-                    >
+                    </p>
+                    <p style={{ textAlign: "center", fontSize: "10px" }}>
                       Declined Ref Amount
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={6}>
-                  <Box
-                    sx={{ p: 1, bgcolor: "#fff", borderRadius: "5px" }}
-                    component="div"
+                    </p>
+                  </div>
+
+                  <div
+                    style={{
+                      padding: "10px",
+                      background: "#fff",
+                      borderRadius: "5px",
+                    }}
                   >
-                    <Typography
-                      component="p"
-                      textAlign="center"
-                      fontWeight="600"
-                    >
+                    <p style={{ textAlign: "center", fontWeight: "600" }}>
                       &#8377; {referral.withdrawal_ref_amount}
-                    </Typography>
-                    <Typography
-                      component="p"
-                      textAlign="center"
-                      fontSize="10px"
-                    >
+                    </p>
+                    <p style={{ textAlign: "center", fontSize: "10px" }}>
                       Withdrawal Ref Amount
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={6}>
-                  <Box
-                    sx={{ p: 1, bgcolor: "#fff", borderRadius: "5px" }}
-                    component="div"
+                    </p>
+                  </div>
+
+                  <div
+                    style={{
+                      padding: "10px",
+                      background: "#fff",
+                      borderRadius: "5px",
+                    }}
                   >
-                    <Typography
-                      component="p"
-                      textAlign="center"
-                      fontWeight="600"
-                    >
+                    <p style={{ textAlign: "center", fontWeight: "600" }}>
                       &#8377; {referral.withdrawal_request_amount}
-                    </Typography>
-                    <Typography
-                      component="p"
-                      textAlign="center"
-                      fontSize="10px"
-                    >
+                    </p>
+                    <p style={{ textAlign: "center", fontSize: "10px" }}>
                       Withdrawal Request Amount
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={6}>
-                  <Box
-                    sx={{ p: 1, bgcolor: "#fff", borderRadius: "5px" }}
-                    component="div"
+                    </p>
+                  </div>
+
+                  <div
+                    style={{
+                      padding: "10px",
+                      background: "#fff",
+                      borderRadius: "5px",
+                    }}
                   >
-                    <Typography
-                      component="p"
-                      textAlign="center"
-                      fontWeight="600"
-                    >
+                    <p style={{ textAlign: "center", fontWeight: "600" }}>
                       &#8377; {referral.withdrawal_declined_amount}
-                    </Typography>
-                    <Typography
-                      component="p"
-                      textAlign="center"
-                      fontSize="10px"
-                    >
+                    </p>
+                    <p style={{ textAlign: "center", fontSize: "10px" }}>
                       Withdrawal Declined Amount
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={6}>
-                  <Box
-                    sx={{ p: 1, bgcolor: "#fff", borderRadius: "5px" }}
-                    component="div"
+                    </p>
+                  </div>
+
+                  <div
+                    style={{
+                      padding: "10px",
+                      background: "#fff",
+                      borderRadius: "5px",
+                    }}
                   >
-                    <Typography
-                      component="p"
-                      textAlign="center"
-                      fontWeight="600"
-                    >
+                    <p style={{ textAlign: "center", fontWeight: "600" }}>
                       &#8377; {referral.available_ref_amount}
-                    </Typography>
-                    <Typography
-                      component="p"
-                      textAlign="center"
-                      fontSize="10px"
-                    >
+                    </p>
+                    <p style={{ textAlign: "center", fontSize: "10px" }}>
                       Available Ref Amount
-                    </Typography>
-                  </Box>
-                </Grid>
-              </>
-            ) : (
-              "Loding.."
-            )}
-          </Grid>
-          <Box sx={{ pt: 2 }}>
-            <Typography variant="h6" fontWeight={600} color="initial">
-              Cashback History
-            </Typography>
-          </Box>
-          <Box sx={{ pt: 1 }}>
-            <Box sx={{ width: "100%" }}>
-              <TabsUnstyled defaultValue={0}>
-                <TabsList className="tabsList">
-                  <Tab onClick={allTab}>All</Tab>
-                  <Tab onClick={pendingTab}>Pending</Tab>
-                  <Tab onClick={confirmedTab}>Confirmed</Tab>
-                  <Tab onClick={declinedTab}>Declined</Tab>
-                </TabsList>
-                <TabPanel value={0}>
-                  <TableContainer component={Paper}>
-                    {cashback_history_all.length > 0 ? (
-                      <Table
-                        sx={{ minWidth: 300 }}
-                        aria-label="customized table"
-                      >
-                        <TableHead>
-                          <TableRow>
-                            <StyledTableCell>SN</StyledTableCell>
-                            <StyledTableCell>Store</StyledTableCell>
-                            <StyledTableCell>Amount</StyledTableCell>
-                            <StyledTableCell>Order Id</StyledTableCell>
-                            <StyledTableCell>Transaction Data</StyledTableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {cashback_history_all &&
-                            cashback_history_all.map((item, i) => (
-                              <StyledTableRow key={i + 1}>
-                                <StyledTableCell>{i + 1}</StyledTableCell>
-                                <StyledTableCell>
-                                  {item.store_name}
-                                </StyledTableCell>
-                                <StyledTableCell>
-                                  {" "}
-                                  &#8377; {item.amount}{" "}
-                                </StyledTableCell>
-                                <StyledTableCell>
-                                  {item.orderid}
-                                </StyledTableCell>
-                                <StyledTableCell>
-                                  {item.transaction_date}
-                                </StyledTableCell>
-                              </StyledTableRow>
-                            ))}
-                        </TableBody>
-                      </Table>
-                    ) : (
-                      <Typography textAlign={"center"} fontSize={18}>
-                        No Data Available
-                      </Typography>
-                    )}
-                  </TableContainer>
-                  <div>
-                    {noMoreData ? (
-                      "No More Data..."
-                    ) : (
-                      <Box
-                        sx={{ p: 1, display: "flex", justifyContent: "center" }}
-                      >
-                        <Button onClick={moreData} variant="outlined">
-                          More Data
-                        </Button>
-                      </Box>
-                    )}
+                    </p>
                   </div>
-                </TabPanel>
+                </>
+              ) : (
+                "Loding..."
+              )}
+            </div>
+          </div>
 
-                <TabPanel value={1}>
-                  <TableContainer component={Paper}>
-                    {cashback_history_pending.length > 0 ? (
-                      <Table
-                        sx={{ minWidth: 300 }}
-                        aria-label="customized table"
-                      >
-                        <TableHead>
-                          <TableRow>
-                            <StyledTableCell>SN</StyledTableCell>
-                            <StyledTableCell>Store</StyledTableCell>
-                            <StyledTableCell>Amount</StyledTableCell>
-                            <StyledTableCell>Order Id</StyledTableCell>
-                            <StyledTableCell>Transaction Data</StyledTableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {cashback_history_pending &&
-                            cashback_history_pending.map((item, i) => (
-                              <StyledTableRow key={i + 1}>
-                                <StyledTableCell>{i + 1}</StyledTableCell>
-                                <StyledTableCell>
-                                  {item.store_name}
-                                </StyledTableCell>
-                                <StyledTableCell>
-                                  {" "}
-                                  &#8377; {item.amount}{" "}
-                                </StyledTableCell>
-                                <StyledTableCell>
-                                  {item.orderid}
-                                </StyledTableCell>
-                                <StyledTableCell>
-                                  {item.transaction_date}
-                                </StyledTableCell>
-                              </StyledTableRow>
-                            ))}
-                        </TableBody>
-                      </Table>
-                    ) : (
-                      <Typography textAlign={"center"} fontSize={18}>
-                        No Data Available
-                      </Typography>
-                    )}
-                  </TableContainer>
+          <div style={{ padding: "15px" }}>
+            <h6 className="heading">Cashback History</h6>
+          </div>
+          <div style={{ paddingTop: "10px" }}>
+            <div style={{ width: "100%" }}>
+              <div>
+                <ul className="tab-list">
+                  <li
+                    className={`tabs ${getActiveClass(1, "active-tabs")}`}
+                    onClick={allTab}
+                  >
+                    All
+                  </li>
+                  <li
+                    className={`tabs ${getActiveClass(2, "active-tabs")}`}
+                    onClick={pendingTab}
+                  >
+                    Pending
+                  </li>
+                  <li
+                    className={`tabs ${getActiveClass(3, "active-tabs")}`}
+                    onClick={confirmedTab}
+                  >
+                    Confirmed
+                  </li>
+                  <li
+                    className={`tabs ${getActiveClass(4, "active-tabs")}`}
+                    onClick={declinedTab}
+                  >
+                    Declined
+                  </li>
+                </ul>
+                <div
+                  className={`content ${getActiveClass(1, "active-content")}`}
+                >
+                  {cashback_history_all.length > 0 ? (
+                    <table id="table_style" >
+                      <thead>
+                        <tr>
+                          <th>SN</th>
+                          <th>Store</th>
+                          <th>Amount</th>
+                          <th>Order Id</th>
+                          <th>Transaction Data</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {cashback_history_all &&
+                          cashback_history_all.map((item, i) => (
+                            <tr key={i + 1}>
+                              <td>{i + 1}</td>
+                              <td>{item.store_name}</td>
+                              <td> &#8377; {item.amount} </td>
+                              <td>{item.orderid}</td>
+                              <td>{item.transaction_date}</td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <p style={{textAlign:"center" ,fontSize:"18px"}}>
+                      No Data Available
+                    </p>
+                  )}
                   <div>
                     {noMoreData ? (
                       "No More Data..."
                     ) : (
-                      <Box
-                        sx={{ p: 1, display: "flex", justifyContent: "center" }}
-                      >
-                        <Button onClick={moreData} variant="outlined">
+                        <div
+                           style={{ padding:"10px", display: "flex", justifyContent: "center" }}
+                         >
+                        <button className="contain_button" onClick={moreData} >
                           More Data
-                        </Button>
-                      </Box>
+                        </button>
+                      </div>
                     )}
                   </div>
-                </TabPanel>
+                </div>
 
-                <TabPanel value={2}>
-                  <TableContainer component={Paper}>
-                    {cashback_history_confirmed.length > 0 ? (
-                      <Table
-                        sx={{ minWidth: 300 }}
-                        aria-label="customized table"
-                      >
-                        <TableHead>
-                          <TableRow>
-                            <StyledTableCell>SN</StyledTableCell>
-                            <StyledTableCell>Store</StyledTableCell>
-                            <StyledTableCell>Amount</StyledTableCell>
-                            <StyledTableCell>Order Id</StyledTableCell>
-                            <StyledTableCell>Transaction Data</StyledTableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {cashback_history_confirmed &&
-                            cashback_history_confirmed.map((item, i) => (
-                              <StyledTableRow key={i + 1}>
-                                <StyledTableCell>{i + 1}</StyledTableCell>
-                                <StyledTableCell>
-                                  {item.store_name}
-                                </StyledTableCell>
-                                <StyledTableCell>
-                                  {" "}
-                                  &#8377; {item.amount}{" "}
-                                </StyledTableCell>
-                                <StyledTableCell>
-                                  {item.orderid}
-                                </StyledTableCell>
-                                <StyledTableCell>
-                                  {item.transaction_date}
-                                </StyledTableCell>
-                              </StyledTableRow>
-                            ))}
-                        </TableBody>
-                      </Table>
-                    ) : (
-                      <Typography textAlign={"center"} fontSize={18}>
-                        No Data Available
-                      </Typography>
-                    )}
-                  </TableContainer>
+                <div
+                  className={`content ${getActiveClass(2, "active-content")}`}
+                >
+                  {cashback_history_pending.length > 0 ? (
+                    <table id="table_style"  >
+                      <thead>
+                        <tr>
+                          <th>SN</th>
+                          <th>Store</th>
+                          <th>Amount</th>
+                          <th>Order Id</th>
+                          <th>Transaction Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {cashback_history_pending &&
+                          cashback_history_pending.map((item, i) => (
+                            <tr key={i + 1}>
+                              <td>{i + 1}</td>
+                              <td>{item.store_name}</td>
+                              <td> &#8377; {item.amount} </td>
+                              <td>{item.orderid}</td>
+                              <td>{item.transaction_date}</td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <p style={{textAlign:"center",fontSize:"18"}}>
+                      No Data Available
+                    </p>
+                  )}
+
                   <div>
                     {noMoreData ? (
                       "No More Data..."
                     ) : (
-                      <Box
-                        sx={{ p: 1, display: "flex", justifyContent: "center" }}
+                      <div
+                        style={{padding:"10px", display: "flex", justifyContent: "center" }}
                       >
-                        <Button onClick={moreData} variant="outlined">
+                        <button  onClick={moreData}  className="border_button">
                           More Data
-                        </Button>
-                      </Box>
+                        </button>
+                      </div>
                     )}
                   </div>
-                </TabPanel>
-                <TabPanel value={3}>
-                  <TableContainer component={Paper}>
-                    {cashback_history_declined.length > 0 ? (
-                      <Table
-                        sx={{ minWidth: 300 }}
-                        aria-label="customized table"
-                      >
-                        <TableHead>
-                          <TableRow>
-                            <StyledTableCell>SN</StyledTableCell>
-                            <StyledTableCell>Store</StyledTableCell>
-                            <StyledTableCell>Amount</StyledTableCell>
-                            <StyledTableCell>Order Id</StyledTableCell>
-                            <StyledTableCell>Transaction Data</StyledTableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {cashback_history_declined &&
-                            cashback_history_declined.map((item, i) => (
-                              <StyledTableRow key={i + 1}>
-                                <StyledTableCell>{i + 1}</StyledTableCell>
-                                <StyledTableCell>
-                                  {item.store_name}
-                                </StyledTableCell>
-                                <StyledTableCell>
-                                  {" "}
-                                  &#8377; {item.amount}{" "}
-                                </StyledTableCell>
-                                <StyledTableCell>
-                                  {item.orderid}
-                                </StyledTableCell>
-                                <StyledTableCell>
-                                  {item.transaction_date}
-                                </StyledTableCell>
-                              </StyledTableRow>
-                            ))}
-                        </TableBody>
-                      </Table>
-                    ) : (
-                      <Typography textAlign={"center"} fontSize={18}>
-                        No Data Available
-                      </Typography>
-                    )}
-                  </TableContainer>
+                </div>
+
+                <div
+                  className={`content ${getActiveClass(3, "active-content")}`}
+                >
+                  {cashback_history_confirmed.length > 0 ? (
+                    <table id="table_style"  >
+                      <thead>
+                        <tr>
+                          <th>SN</th>
+                          <th>Store</th>
+                          <th>Amount</th>
+                          <th>Order Id</th>
+                          <th>Transaction Data</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {cashback_history_confirmed &&
+                          cashback_history_confirmed.map((item, i) => (
+                            <tr key={i + 1}>
+                              <td>{i + 1}</td>
+                              <td>{item.store_name}</td>
+                              <td> &#8377; {item.amount} </td>
+                              <td>{item.orderid}</td>
+                              <td>{item.transaction_date}</td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <p style={{textAlign:"center", fontSize:"18"}}>
+                      No Data Available
+                    </p>
+                  )}
+
                   <div>
                     {noMoreData ? (
                       "No More Data..."
                     ) : (
-                      <Box
-                        sx={{ p: 1, display: "flex", justifyContent: "center" }}
+                      <div
+                       style={{padding:"10px", display: "flex", justifyContent: "center" }}
                       >
-                        <Button onClick={moreData} variant="outlined">
+                        <button onClick={moreData} className="border_button">
                           More Data
-                        </Button>
-                      </Box>
+                        </button>
+                      </div>
                     )}
                   </div>
-                </TabPanel>
-              </TabsUnstyled>
-            </Box>
-          </Box>
-        </Box>
-        <style>
+                </div>
+
+                <div
+                  className={`content ${getActiveClass(4, "active-content")}`}
+                >
+                  {cashback_history_declined.length > 0 ? (
+                    <table id="table_style" >
+                      <thead>
+                        <tr>
+                          <th>SN</th>
+                          <th>Store</th>
+                          <th>Amount</th>
+                          <th>Order Id</th>
+                          <th>Transaction Data</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {cashback_history_declined &&
+                          cashback_history_declined.map((item, i) => (
+                            <tr key={i + 1}>
+                              <td>{i + 1}</td>
+                              <td>{item.store_name}</td>
+                              <td> &#8377; {item.amount} </td>
+                              <td>{item.orderid}</td>
+                              <td>{item.transaction_date}</td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <p style={{textAlign:"center", fontSize:"18px"}}>
+                      No Data Available
+                    </p>
+                  )}
+
+                  <div>
+                    {noMoreData ? (
+                      "No More Data..."
+                    ) : (
+                      <div
+                        style={{ padding:"10px", display: "flex", justifyContent: "center" }}
+                      >
+                        <button onClick={moreData} className="border_button">
+                          More Data
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <style jsx>
           {`
-            .tabsList::-webkit-scrollbar {
+            ::-webkit-scrollbar {
               display: none;
+            }
+
+            .heading {
+              font-weight: 500;
+              font-size: 21px;
+            }
+            .tab-list {
+            display: flex;
+            list-style: none;
+            font-size: 18px;
+            padding: 24px 2px;
+            margin: 0;
+            overflow: auto;
+            padding-top: 0;
           }
-        
-          .css-sli737-MuiTableCell-root{
-            padding: 12px 6px;
+
+          .tabs {
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            min-width: 100px;
+            cursor: pointer;
           }
-          .css-sli737-MuiTableCell-root.MuiTableCell-body{
-            font-size: 13px;
+          .active-tabs {
+            color: var(--main-color);
           }
-          .css-1f97x3w-MuiTableCell-root{
-            padding: 11px 10px;
-          }
-          .MuiPaper-root.MuiPaper-elevation::-webkit-scrollbar{
+
+          .content {
             display: none;
           }
-                    
-        `}
+
+          .active-content {
+            display: block;
+
+            overflow: auto;
+            margin: 0 10px;
+          }
+           {
+            /* table  style  */
+          }
+          #table_style {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+          }
+
+          #table_style td,
+          #table_style th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            min-width: 100px;
+            text-align: center;
+          }
+
+          #table_style tr:nth-child(even) {
+            background-color: #f2f2f2;
+          }
+
+          #table_style tr:hover {
+            background-color: #ddd;
+          }
+
+          #table_style th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            background-color: var(--main-color);
+            color: white;
+          }
+          `}
         </style>
       </div>
     </>

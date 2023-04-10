@@ -105,7 +105,7 @@ const Articels = () => {
             <h2 className="main_heading">
               {featured_article.title}
             </h2>
-            <Typography>{featured_article.description}</Typography>
+            <p className="p_tag_big">{featured_article.description}</p>
             <div className="main_articels_details">
               <div>
                 <p>
@@ -163,12 +163,12 @@ const Articels = () => {
                     </div>
                     <div>
                       <Link href={`/${item.slug_url}`}>
-                        <Button
-                          variant="text"
-                          sx={{ fontWeight: "600", letterSpacing: "1px" }}
+                        <button
+                          className="text_button"
+                          style={{ fontWeight: "600", letterSpacing: "1px" }}
                         >
                           Read Now
-                        </Button>
+                        </button>
                       </Link>
                     </div>
                   </div>
@@ -195,7 +195,7 @@ const Articels = () => {
           border-radius: 10px;
         }
         .main_heading {
-          font-size: 20px;
+          font-size: 16px;
           padding: 10px 0;
           word-spacing: 1px;
         }
@@ -204,6 +204,7 @@ const Articels = () => {
           color: #969696;
           flex-wrap: wrap;
           padding-top: 10px;
+          font-size:13px;
           align-items: center;
           justify-content: space-between;
         }

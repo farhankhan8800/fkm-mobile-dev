@@ -4,6 +4,8 @@ import axios from "axios";
 import {withdrawMoneyAPI} from "service/API"
 import { useEffect } from "react";
 import { useRouter } from 'next/router'
+import { BiErrorCircle } from "react-icons/bi";
+import { BsCheckCircle } from "react-icons/bs";
 
 const apiAuth = process.env.API_AUTH
 
@@ -110,10 +112,10 @@ const ReferalOtherBank = ({userData}) => {
     <>
      <div style={{paddingTop:"20px"}}>
    {
-    userAccountData ?  <Typography fontSize={"13px"} fontWeight={600}> {userAccountData.label_msg}</Typography> :""
+    userAccountData ?  <p style={{fontSize:"13px",fontWeight:"600"}}> {userAccountData.label_msg}</p> :""
    }
    
-     <Box sx={{paddingTop:"10px"}}>
+     <div style={{paddingTop:"10px"}}>
             <div >
             <label>Select Account</label>
               <select  className="select_tag_account"
@@ -133,40 +135,38 @@ const ReferalOtherBank = ({userData}) => {
                }
               </select>
               <label>Enter Amount</label>
-              <TextField
-                size="small"
-                fullWidth
+              <input
                 value={amount}
                 onChange={amountHandler}
                 type="Number"
                 id="outlined-basic"
                 placeholder="Enter Amount"
-                variant="outlined"
+                className="input_style"
               />
             
-              <Box sx={{ padding: "10px 0" }}>
-                <Button
+              <div style={{ padding: "10px 0" }}>
+                <button
                   type="button"
                   onClick={SubmitFormHandal}
-                  variant="contained"
+                  className="border_button"
                   sx={{ width: "100%", color: "#fff", fontWeight: "600" }}
                 >
                   {" "}
                  Withdraw
-                </Button>
-              </Box>
-              {notValid ? <Alert severity="warning">{notValid}</Alert> : ""}
+                </button>
+              </div>
+              {notValid ? <div  className="alert_warning_class" style={{background:" #f0462b4f"}}> <span><BiErrorCircle /></span> <p>{notValid}</p> </div>: ""}
               {
-                serverdata ? <Alert severity="info">{serverdata}</Alert>:""
+                serverdata ?<div  className="alert_warning_class" style={{background:"#4ac6ac4f;",color:"skyblue"}}> <span><BsCheckCircle /></span> <p> {serverdata}</p> </div>:""
               }
             </div>
-          </Box>
+          </div>
           <div>
             {
-              userPromocodes ? (<Box sx={{paddingTop:"10px"}}>{
+              userPromocodes ? (<div style={{paddingTop:"10px"}}>{
               }
-                <Typography fontWeight={"600"}>Your save Coupons</Typography>
-                <Box>
+                <h6 className="heading" >Your save Coupons</h6>
+                <div>
                     {
                         userPromocodes.map((item ,i)=>{
                             return(
@@ -182,8 +182,8 @@ const ReferalOtherBank = ({userData}) => {
                         
                         )
                     }
-                </Box>
-              </Box>):""
+                </div>
+              </div>):""
             }
           </div>
           
@@ -209,6 +209,10 @@ const ReferalOtherBank = ({userData}) => {
        }
        .promocodes_class input{
         margin-right: 10px;
+       }
+       .input_style{
+        border: 1px solid#bbb9b9;
+        margin-top: 13px!important;
        }
     `}</style>
     </>

@@ -1,37 +1,31 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Button,
-  Skeleton,
-  Typography,
-} from "@mui/material";
+
 import Header from "components/headerComponent/Header";
 import HeadTag from "components/headTagComponent/HeadTag";
 import React, { useState, useEffect } from "react";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 import Image from "next/image";
 import Link from "next/link";
 import { freebiesAPI } from "service/API";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Spinner from "components/utilites/Spinner";
+import { useUserToken } from "service/customHooks";
+
 
 const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE
 
 const Freebies = () => {
   const [readMore, setReadMore] = useState(false);
-  const [expanded, setExpanded] = useState("panel1");
-  const [userToken, setUserToken] = useState();
+  const [expanded, setExpanded] = useState(false);
+
   const [cate_data, setCate_data] = useState();
   const [offers_data, setOffers_data] = useState([]);
   const [page, setPage] = useState(1);
   const [noData, setNoData] = useState(false);
 
-  useEffect(() => {
-    if (localStorage.getItem("user")) {
-      setUserToken(JSON.parse(localStorage.getItem("user")).token);
-    }
-  }, []);
+  const token = useUserToken()
+
   const router = useRouter();
 
   useEffect(() => {
@@ -40,14 +34,14 @@ const Freebies = () => {
         freebiesAPI,
         {
           apiAuth: apiAuth,
-          device_type: "4",
+          device_type: DEVICE_TYPE,
           cate_slug: "earn-extra-cashback",
           page: page,
         },
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: userToken,
+            Authorization: token,
           },
         }
       );
@@ -61,11 +55,8 @@ const Freebies = () => {
       }
     };
     getData();
-  }, [userToken, page]);
+  }, [token, page]);
 
-  const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
-  };
 
   const readMoreBtn = () => {
     if (readMore === false) {
@@ -78,6 +69,15 @@ const Freebies = () => {
   const LodeMoreFun = () => {
     setPage(page + 1);
   };
+
+  const accordionFun = (id) => {
+    const panel = document.getElementById(`panel${id}`).classList;
+    const accordion = document.getElementById(`accordion${id}`).classList;
+    panel.toggle("activeTab");
+    setExpanded(!expanded)
+    accordion.toggle("accordionActive");
+  };
+
   const headeTitle = "Freebies | Freekaamaal";
   return (
     <>
@@ -96,20 +96,16 @@ const Freebies = () => {
               {cate_data.top_desc}
             </p>
             <div className="freebise_top_box_button">
-              <Button onClick={readMoreBtn} variant="text" type="button">
+              <button onClick={readMoreBtn}  className="text_button" type="button">
                 {readMore === true ? "Close" : "Read More"}{" "}
-              </Button>
+              </button>
             </div>
           </div>
         ) : (
           <>
-            <Skeleton
-              animation="wave"
-              variant="text"
-              sx={{ fontSize: "2rem", marginTop: "10px" }}
-            />
-            <Skeleton animation="wave" variant="rounded" height={60} />
-            <Skeleton animation="wave" variant="text" height={20} />
+          <div style={{minHeight:"95vh"}}>
+          <Spinner  />
+          </div>
           </>
         )}
 
@@ -119,119 +115,108 @@ const Freebies = () => {
               {offers_data &&
                 offers_data.map((item, i) => {
                   return (
-                    // eslint-disable-next-line react/jsx-key
-                    <Accordion
-                      expanded={expanded === `panel${i + 1}`}
-                      sx={{ marginBottom: "10px" }}
-                      onChange={handleChange(`panel${i + 1}`)}
-                      key={i}
+                    <div key={i}>
+                    <button
+                      className={`accordion d_flex ${i==0? "accordionActive":""} ` }
+                      id={`accordion${i}`}
+                      onClick={() => accordionFun(i)}
                     >
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls={`panel${i + 1}bh-content`}
-                        id={`panel${i + 1}bh-header`}
-                      >
-                        <div style={{ width: "24%", flexShrink: 0 }}>
-                          <Image
-                            src={item.store_image}
-                            alt=""
-                            width={60}
-                            height={40}
-                          />
-                        </div>
-                        <div style={{ color: "text.secondary" }}>
-                          <h4 className="">{item.offer_title}</h4>
-                          {item.is_cashback == 1 ? (
-                            <>
-                              <Typography
-                                color={"red"}
-                                fontSize={12}
-                                paddingTop={"7px"}
+                     <Image
+                        src={item.store_image}
+                        alt=""
+                        width={80}
+                        height={30}
+                      />
+                      <div style={{paddingLeft:"10px"}}>
+                      <h5> {item.offer_title}</h5>
+                      {item.is_cashback == 1 ? (
+                              <>
+                                <p
+                                 className="p_tag_small"
+                                 style={{color:"red"}} 
+                                >
+                                  {item.max_cashback} &nbsp; Cashback
+                                </p>
+                              </>
+                            ) : (
+                              ""
+                            )}
+                      </div>
+                       
+                    </button>
+                    <div className={`panel ${i==0?"activeTab":""}`} id={`panel${i}`}>
+                          <p
+                            className="accordion_section_bottom_p"
+                            dangerouslySetInnerHTML={{ __html: item.bottom_desc }}
+                          ></p>
+                          <div className="" style={{ padding: "5px 0 " }}>
+                            <Link href={item.landing_url}>
+                              <button
+                                className="contain_button"
+                                style={{color: "#fff",padding:" 4px 6px" }}
                               >
-                                {item.max_cashback} &nbsp; Cashback
-                              </Typography>
-                            </>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <p
-                          className="accordion_section_bottom_p"
-                          dangerouslySetInnerHTML={{ __html: item.bottom_desc }}
-                        ></p>
-                        <div className="" style={{ padding: "5px 0 " }}>
-                          <Link href={item.landing_url}>
-                            <Button
-                              variant="contained"
-                              size="small"
-                              sx={{ color: "#fff" }}
-                            >
-                              {" "}
-                              {item.is_cashback == 1
-                                ? "Shop & Earn"
-                                : "Shop Now"}{" "}
-                            </Button>
-                          </Link>
-                        </div>
-                      </AccordionDetails>
-                    </Accordion>
+                                {" "}
+                                {item.is_cashback == 1
+                                  ? "Shop & Earn"
+                                  : "Shop Now"}{" "}
+                              </button>
+                            </Link>
+                          </div>
+                    </div>
+                  </div>
                   );
                 })}
               <div style={{ textAlign: "center" }}>
                 {noData ? (
                   "No More Found"
                 ) : (
-                  <Button
+                  <button
                     onClick={LodeMoreFun}
-                    variant="contained"
-                    size="small"
-                    sx={{ color: "#fff" }}
+                    className="contain_button"
+                    style={{ color: "#fff" }}
                   >
                     Lode More
-                  </Button>
+                  </button>
                 )}
               </div>
             </>
-          ) : (
-            <>
-              <Skeleton animation="wave" variant="rounded" height={130} />
-              <Skeleton
-                animation="wave"
-                variant="rounded"
-                sx={{ margin: "10px 0" }}
-                height={60}
-              />
-              <Skeleton
-                animation="wave"
-                variant="rounded"
-                sx={{ margin: "10px 0" }}
-                height={60}
-              />
-              <Skeleton
-                animation="wave"
-                variant="rounded"
-                sx={{ margin: "10px 0" }}
-                height={60}
-              />
-              <Skeleton
-                animation="wave"
-                variant="rounded"
-                sx={{ margin: "10px 0" }}
-                height={60}
-              />
-              <Skeleton
-                animation="wave"
-                variant="rounded"
-                sx={{ margin: "10px 0" }}
-                height={60}
-              />
-            </>
-          )}
+          ) : ""}
         </div>
       </div>
       <style jsx>{`
+      .accordion {
+          background-color: #eee;
+          color: #444;
+          cursor: pointer;
+          border-radius: 3px;
+          padding: 13px;
+          width: 100%;
+          border: none;
+          text-align: left;
+          outline: none;
+          border-bottom: 1px solid #e0dddd;
+          font-size: 15px;
+          transition: 0.4s;
+          margin-bottom: 2px;
+        }
+        .panel.activeTab {
+          display: block;
+        }
+        .accordion.active {
+          background-color: #cdc6c6;
+        }
+        .panel {
+          padding: 0 11px;
+          background-color: #f5f4f4;
+          font-size: 14px;
+          line-height: 21px;
+          display: none;
+          margin-bottom: 10px;
+        }
+        .accordion.accordionActive {
+          background: #cbd1ee;
+        }
+
         .topFreebise_page {
           padding: 4px;
         }
@@ -254,7 +239,6 @@ const Freebies = () => {
         .accordion_section p {
           font-size: 13px;
           line-height: 20px;
-          padding-top: 10px;
         }
         .accordion_section p.accordion_section_bottom_p {
           padding-top: 0px;

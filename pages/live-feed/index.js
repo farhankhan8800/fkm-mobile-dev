@@ -4,7 +4,6 @@ import "swiper/css";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 import Image from "next/image";
-import { Button, Typography } from "@mui/material";
 import Link from "next/link";
 import axios from "axios";
 import { livefeed_detailAPI } from "service/API";
@@ -158,9 +157,9 @@ const LiveFeed = () => {
               {noData ? (
                 "No Data Found"
               ) : (
-                <Button type="button" onClick={lodeMoredata} variant="outlined">
+                <button type="button" onClick={lodeMoredata} className="border_button">
                   Lode More
-                </Button>
+                </button>
               )}
             </div>
           </div>

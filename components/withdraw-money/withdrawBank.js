@@ -146,16 +146,16 @@ const WithdrawBank = ({userData}) => {
                 style={{width:"100%",padding: "6px 10px"}}
               />
             
-              <button 
+             <div style={{paddingTop:"10px"}}>
+             <button 
                   type="button"
                   onClick={SubmitFormHandal}
                   className="full_with_button"
                   style={{ width: "100%", color: "#fff", fontWeight: "600" }}
                 >
-                  
                  Withdraw
-               
               </button>
+             </div>
               {notValid ?<div  className="alert_warning_class"> <span><ImWarning /></span> <p>{notValid}</p> </div>  : ""}
               {
                 serverdata ? <div  className="alert_info_class"> <span><AiFillInfoCircle /></span> <p>{serverdata}</p> </div>:""

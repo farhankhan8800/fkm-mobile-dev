@@ -1,19 +1,22 @@
 import Header from "components/headerComponent/Header";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Breadcrumbs,
- 
-  Typography,
-} from "@mui/material";
 import Link from "next/link";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import HeadTag from "components/headTagComponent/HeadTag";
 
 
 const headeTitle = "FAQ | Freekaamaal";
+
+
+
 const faq = () => {
+  
+  const accordionFun = (id) => {
+    const panel = document.getElementById(`panel${id}`).classList;
+    const accordion = document.getElementById(`accordion${id}`).classList;
+    panel.toggle("activeTab");
+    accordion.toggle("activeAccordion")
+   
+  };
+
   return (
     <>
     <HeadTag headeTitle={headeTitle} />
@@ -23,12 +26,13 @@ const faq = () => {
         <h1 className="">Frequently Asked Questions</h1>
         </div>
         <div role="presentation" style={{padding:"10px"}} >
-          <Breadcrumbs aria-label="breadcrumb">
-            <Link underline="hover" color="inherit" href="/">
+          <div  className="d_flex">
+            <Link  href="/">
               Home
             </Link>
-            <Typography color="text.primary">FAQ&#39;s</Typography>
-          </Breadcrumbs>
+            <span>&nbsp;/&nbsp;</span>
+            <p >FAQ&#39;s</p>
+          </div>
         </div>
         <div className="faq-list-section">
           <div className="faq-list">
@@ -53,44 +57,46 @@ const faq = () => {
           </div>
           <div id="cashback">
             <h2 className="h2-heading">cashback</h2>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              <div
+                className={`accordion ` }
+                style={{ background: "#f1f1f1" }}
+                      id={`accordion1`}
+                      onClick={() => accordionFun(1)}
               >
                 What is FKM Cashback and how does it work?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel1`}>
                 FreeKaaMaal provides rewards in the form of Cashback every time
                 users successfully purchase something, redirecting via
                 Freekaamaal, from its partner&#39;s website. The cashback can be
                 used like real Cash as it can be transferred back to your
                 account or Paytm wallet.
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+           
+              <div
+               className={`accordion ` }
+               style={{ background: "#f1f1f1" }}
+                   id={`accordion2`}
+                     onClick={() => accordionFun(2)}
               >
                 How does FreeKaaMaal provide cashback to its users?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel2`}>
                 Freekaamaal earns a commission every time users successfully
                 purchase something from its partner sites visiting through
                 Freekaamaal. We share this commission with our users in the form
                 of cashback which they can withdraw into their bank account/
                 Paytm.
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+              <div
+               className={`accordion ` }
+               style={{ background: "#f1f1f1" }}
+                   id={`accordion3`}
+                     onClick={() => accordionFun(3)}
               >
                 How can I earn cashback from FreeKaaMaal?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel3`}>
                 To earn cashback from FreeKaaMaal, you need to follow some
                 really easy steps.
                 <br />
@@ -108,17 +114,17 @@ const faq = () => {
                 future reference.Your Cashback will be credited into your FKM
                 account in the pending cashback section within 15 min or it may
                 take upto 2-3 business days (varies from store to store).
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+              <div
+               className={`accordion ` }
+               style={{ background: "#f1f1f1" }}
+                   id={`accordion4`}
+                     onClick={() => accordionFun(4)}
               >
                 Where can I see my cashback earnings or expected confirmation
                 date?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel4`}>
                 To see the cashback, you need to follow these steps, which we
                 have mentioned below for you: <br />
                 <br />
@@ -133,16 +139,16 @@ const faq = () => {
                 next month. <br />
                 You can check the tentative date of cashback confirmation in the
                 pending cashback section.
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+              <div
+               className={`accordion ` }
+               style={{ background: "#f1f1f1" }}
+                   id={`accordion5`}
+                     onClick={() => accordionFun(5)}
               >
                 What does Pending, Confirm, and Decline Cashback means?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel5`}>
                 There are three types of status for your cashback: <br /> <br />
                 <strong>Pending Cashback:</strong> When your transaction is
                 successful on the Merchant&#39;s Site, Your cashback will be
@@ -156,16 +162,15 @@ const faq = () => {
                 <strong>Declined Cashback:</strong> When your pending cashback
                 gets declined it means your transaction had some issues and your
                 cashback can&#39;t be processed further.
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+              <div className={`accordion ` }
+               style={{ background: "#f1f1f1" }}
+                   id={`accordion6`}
+                     onClick={() => accordionFun(6)}
               >
                 Why did my cashback got declined?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel6`}>
                 If your Cashback got declined, then below we have mentioned some
                 of the reasons. <br /> <br />
                 Modified Order: Cashback is not payable if you return/cancel/
@@ -192,17 +197,16 @@ const faq = () => {
                 <br />
                 Compliance Issue: If You did not follow the steps mentioned on
                 the offer page.
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+              <div className={`accordion ` }
+               style={{ background: "#f1f1f1" }}
+                   id={`accordion7`}
+                     onClick={() => accordionFun(7)}
               >
                 Can the user visit the merchant directly and send the receipt to
                 get his/her cashback?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel7`}>
                 No, We create a unique link with every deal posted on the
                 FreeKaaMaal website, which gets us a commission on your Sale&#39;s
                 completion. The unique link makes the merchant capable of
@@ -210,17 +214,16 @@ const faq = () => {
                 intentionally or unintentionally from somewhere else and
                 claiming a reward on Freekaamaal may result in your account
                 being banned under the fraudulent activity policy.
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+              <div className={`accordion ` }
+               style={{ background: "#f1f1f1" }}
+                   id={`accordion8`}
+                     onClick={() => accordionFun(8)}
               >
                 Why I did not get any cashback crediting mail after my purchase
                 through FreeKaaMaal.com?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel8`}>
                 You get a cashback crediting email only when cashback is
                 credited. You can check your spam or promotions for that. It
                 depends upon your cashback tracking speed. If it is 15 min then
@@ -229,16 +232,15 @@ const faq = () => {
                 the case where the tracking speed time is over and you still
                 haven&#39;t received the cashback kindly raise a missing request or
                 connect with the support team asap.
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+              <div className={`accordion ` }
+               style={{ background: "#f1f1f1" }}
+                   id={`accordion9`}
+                     onClick={() => accordionFun(9)}
               >
                 Why is my cashback not tracked?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel9`}>
                 When you visit the partner&#39;s website via the shop & earn
                 cashback button on FKM. our system tracks and records it as an
                 “Exit Click.” On the basis of the unique link passed in the exit
@@ -260,51 +262,48 @@ const faq = () => {
                 Your Session after redirection took too long or expired. <br />
                 Products were already in the cart when you redirected. <br />
                 previous cookies and caches not cleared (Use Incognito Mode).
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+              <div className={`accordion ` }
+               style={{ background: "#f1f1f1" }}
+                   id={`accordion10`}
+                     onClick={() => accordionFun(10)}
               >
                 In how many days the cashback will get confirmed?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel10`}>
                 Check your cashback summary to know when your cashback will be
                 confirmed. In general, it could be within 10 to 12 weeks or 90
                 business days. However, The confirmation days may vary from
                 store to store as we do have some particular stores wherein the
                 confirmations stood between 72 hours to 15-30 Business days
                 only.
-              </AccordionDetails>
-            </Accordion>
+              </div>
           </div>
           <div id="promo-balance">
             <h2 className="h2-heading">promo balance</h2>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+            <div className={`accordion ` }
+               style={{ background: "#f1f1f1" }}
+                   id={`accordion11`}
+                     onClick={() => accordionFun(11)}
               >
                 {" "}
                 What is FreeKaaMaal promo balance?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel11`}>
                 Promo Bal is an amount provided through a promo code given by
                 the FKM team to its users as a token of apology or as
                 appreciation. The promo code is also provided if there is a
                 concern from our side or a wrongly declined cashback.
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+              <div className={`accordion ` }
+               style={{ background: "#f1f1f1" }}
+                   id={`accordion12`}
+                     onClick={() => accordionFun(12)}
               >
                 {" "}
                 How can I redeem my promo balance?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel12`}>
                 To redeem the promo balance, you need to follow specific steps
                 which we have mentioned below:
                 <br /> <br />
@@ -323,47 +322,44 @@ const faq = () => {
                 <Link href="" style={{ color: "#f27935" }}>
                   CLICK HERE
                 </Link>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+              <div className={`accordion ` }
+               style={{ background: "#f1f1f1" }}
+                   id={`accordion13`}
+                     onClick={() => accordionFun(13)}
               >
                 {" "}
                 Is there any limit to redeem the promo balance?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel13`}>
                 Promo Balance is provided to you after you get a Promo Code
                 provided by our team that adds the promo balance directly to
                 your FKM account which is unique and has its own terms &
                 conditions. Therefore, the limit of recovery will depend on the
                 promo code that you have used to avail of the promo balance.
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+              <div className={`accordion ` }
+               style={{ background: "#f1f1f1" }}
+                   id={`accordion14`}
+                     onClick={() => accordionFun(14)}
               >
                 Is there any validity for the promo balance?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel14`}>
                 No, there is no such validity for the promo balance.
-              </AccordionDetails>
-            </Accordion>
+              </div>
           </div>
           <div id="fkm-gold">
             <h2 className="h2-heading">FKM Gold Membership</h2>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+            <div className={`accordion ` }
+               style={{ background: "#f1f1f1" }}
+                   id={`accordion15`}
+                     onClick={() => accordionFun(15)}
               >
                 {" "}
                 What is FKM Gold membership?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel15`}>
                 Freekaamaal Gold membership is for our privilege user who has
                 successfully completed the minimum criteria of purchasing
                 through our portal and being an gold member you will get plenty
@@ -372,75 +368,70 @@ const faq = () => {
                 <Link href="" style={{ color: "#f27935" }}>
                   click here
                 </Link>
-              </AccordionDetails>
-            </Accordion>
+              </div>
           </div>
           <div id="missing-cashback">
             <h2 className="h2-heading">missing cashback</h2>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+            <div className={`accordion ` }
+               style={{ background: "#f1f1f1" }}
+                   id={`accordion16`}
+                     onClick={() => accordionFun(16)}
               >
                 When to fill the claim form/where to fill the Cashback claim
                 form?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel16`}>
                 To avail the cashback its mandate to fill the cashback claim
                 form within 24 hrs of your purchase and you can get the claim
                 form link through our deal/offer page through which you have
                 redirected through the merchant end.
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+              <div className={`accordion ` }
+               style={{ background: "#f1f1f1" }}
+                   id={`accordion17`}
+                     onClick={() => accordionFun(17)}
               >
                 What if the Store is not live or I forget to fill out the form?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel17`}>
                 It&#39;s very rare to occur such cases, though you can visit your
                 Cashback summary wherein you will get the Option to Submit the
                 Claim form for your purchase.
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+              <div className={`accordion ` }
+               style={{ background: "#f1f1f1" }}
+                   id={`accordion18`}
+                     onClick={() => accordionFun(18)}
               >
                 What is missing cashback requests?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel18`}>
                 If your purchase does not get tracked within 15 -30 minutes for
                 an online store that does accept the missing request in such
                 case you need to raise the missing request for your purchase.
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+              <div className={`accordion ` }
+               style={{ background: "#f1f1f1" }}
+                   id={`accordion19`}
+                     onClick={() => accordionFun(19)}
               >
                 When can I raise the missing request?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel19`}>
                 If your cashback does not get tracked in 15 mins, you can report
                 the missing after 1 hour of your purchase, missing could be
                 reported within 5 days of your purchase, and before the 4th of
                 the next month whichever is earlier no further delay will be
                 entertaining to claim the cashback.
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+              <div className={`accordion ` }
+                   style={{ background: "#f1f1f1" }}
+                   id={`accordion20`}
+                   onClick={() => accordionFun(20)}
               >
                 How to raise the missing Cashback request for your purchase?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel20`}>
                 kindly follow the below-mentioned steps to raise the missing
                 cashback request from your freekaamaal account. <br />
                 <br />
@@ -452,19 +443,18 @@ const faq = () => {
                 mandate details for your order and click on the &#34;SUBMIT &#34;
                 buttonWe will verify your request and upon verification,
                 cashback will be added to your account within 2-3 Business days.
-              </AccordionDetails>
-            </Accordion>
+              </div>
           </div>
           <div id="withdraw">
             <h2 className="h2-heading">withdraw</h2>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+            <div className={`accordion ` }
+                   style={{ background: "#f1f1f1" }}
+                   id={`accordion21`}
+                   onClick={() => accordionFun(21)}
               >
                 How can I redeem my earned cashback?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel21`}>
                 You can not redeem the earned cashback unless FreeKaaMaal has
                 confirmed it. After your pending cashback approval, you will
                 receive mail for the same from us to process your confirmed
@@ -482,62 +472,58 @@ const faq = () => {
                 also over the E-Mail.Insert the OTP and now click on Withdraw.
                 (Your withdrawal reflect in your account in 4 to 5 business
                 days)
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+              <div className={`accordion ` }
+                   style={{ background: "#f1f1f1" }}
+                   id={`accordion22`}
+                   onClick={() => accordionFun(22)}
               >
                 What are the modes to withdraw my cashback?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel22`}>
                 FreeKaaMaal provides two options for withdrawing cashback. These
                 modes of transacting money are: <br /> <br /> PaytmBank <br />{" "}
                 Transfer
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+              <div className={`accordion ` }
+                   style={{ background: "#f1f1f1" }}
+                   id={`accordion23`}
+                   onClick={() => accordionFun(23)}
               >
                 What is the minimum amount to withdraw the cashback in my FKM
                 Account?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel23`}>
                 The minimum amount of cashback that you can withdraw is Rs. 100
                 for all modes of Payment. You will be incurred with a 3%
                 Convenience Charge (On Paytm only) on the withdrawal.
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+              <div className={`accordion ` }
+                   style={{ background: "#f1f1f1" }}
+                   id={`accordion24`}
+                   onClick={() => accordionFun(24)}
               >
                 How to verify my mail ID and mobile number for withdrawal ??
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel24`}>
                 <iframe
                   src="https://www.youtube.com/embed/9m1lZixJrOc"
                   frameborder="0"
                   width={"100%"}
                   height={"400px"}
                 ></iframe>
-              </AccordionDetails>
-            </Accordion>
+              </div>
           </div>
           <div id="miscellaneous">
             <h2 className="h2-heading">Miscellaneous</h2>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+            <div className={`accordion ` }
+                   style={{ background: "#f1f1f1" }}
+                   id={`accordion25`}
+                   onClick={() => accordionFun(25)}
               >
                 What is declined cashback?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel25`}>
                 Based on the purchase criteria and as per the validation report
                 the declined cashback orders are those order which has been
                 rejected by the merchant due to the following reasons <br />{" "}
@@ -557,28 +543,26 @@ const faq = () => {
                 <br />
                 <b>Used any Gift card/coupon/store credit</b>
                 <br />
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+              <div className={`accordion ` }
+                   style={{ background: "#f1f1f1" }}
+                   id={`accordion26`}
+                   onClick={() => accordionFun(26)}
               >
                 How to check the Decline Cashback Reason?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel26`}>
                 You can check the reason for declined cashback store along with
                 the order id in the declined cashback summary.
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                sx={{ background: "#f1f1f1" }}
+              </div>
+              <div className={`accordion ` }
+                   style={{ background: "#f1f1f1" }}
+                   id={`accordion27`}
+                   onClick={() => accordionFun(27)}
               >
                 How to claim/report the decline cashback?
-              </AccordionSummary>
-              <AccordionDetails>
+              </div>
+              <div className={`panel`} id={`panel27`}>
                 To claim any declined cashback or order for any store you need
                 to{" "}
                 <strong>
@@ -605,8 +589,7 @@ const faq = () => {
                   for the re-validation and will not be eligible to claim the
                   Decline order or to raise the dispute ahead.
                 </b>
-              </AccordionDetails>
-            </Accordion>
+              </div>
           </div>
         </div>
         <div className="tc-wrapper">
@@ -781,8 +764,46 @@ const faq = () => {
           .tc {
             padding-left: 40px;
           }
+          .accordion {
+          background-color: #eee;
+          color: #444;
+          cursor: pointer;
+          border-radius: 3px;
+          padding: 13px;
+          width: 100%;
+          border: none;
+          text-align: left;
+          outline: none;
+          border-bottom: 1px solid #e0dddd;
+          font-size: 15px;
+          transition: 0.4s;
+          margin-bottom: 2px;
+        }
+        .panel.activeTab {
+          display: block;
+        }
+        .accordion.active {
+          background-color: #cdc6c6;
+        }
+        .panel {
+          padding: 0 11px;
+          background-color: #f5f4f4;
+          font-size: 14px;
+          line-height: 21px;
+          display: none;
+          margin-bottom: 10px;
+        }
+       
+        .accordion_section {
+          padding-top: 20px;
+        }
+        .activeAccordion{
+          background: #eb4e4e45 !important;
+        }
+       
         `}
       </style>
+    
     </>
   );
 };

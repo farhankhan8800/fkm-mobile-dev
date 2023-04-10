@@ -18,8 +18,8 @@ const HowToEarnCashback = (props) => {
 
   return (
     <>
-      <div className="d_flex" style={{ padding: "13px 3px 3px" }}>
-        <div>
+      <div className="d_flex" style={{ padding: "13px 3px 3px",alignItems: "center",
+    justifyContent: "flex-start"}}>
           <div style={{ width: "30px", marginRight: "10px" }}>
             <Image
               src={cashbackImage}
@@ -28,7 +28,6 @@ const HowToEarnCashback = (props) => {
               width={29}
             />
           </div>
-        </div>
         <div>
           <h6 className="heading">
             {" "}
@@ -98,19 +97,20 @@ const HowToEarnCashback = (props) => {
           padding: 13px;
           width: 100%;
           border: none;
-          text-align: left;
           outline: none;
-          border-bottom: 1px solid #e0dddd;
+          border-bottom: 1px solid#e0dddd;
           font-size: 15px;
-          transition: 0.4s;
+          transition: .4s;
           margin-bottom: 2px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
         }
         .panel.activeTab {
           display: block;
+          margin-bottom: 21px;
         }
-        .accordion.active {
-          background-color: #cdc6c6;
-        }
+      
         .panel {
           padding: 0 11px;
           background-color: #f5f4f4;
@@ -120,8 +120,14 @@ const HowToEarnCashback = (props) => {
           margin-bottom: 10px;
         }
         .accordion.accordionActive {
-          background: #080808e0;
+          background-color: #f27935;
           color: #fff;
+        }
+       .panel p{
+          line-height: 1.55;
+    font-size: 13px;
+    font-weight: 100;
+    margin-top: 10px;
         }
       `}</style>
     </>

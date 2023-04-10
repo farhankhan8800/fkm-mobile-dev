@@ -4,9 +4,10 @@ import HeadTag from "../../components/headTagComponent/HeadTag";
 // import Image from "next/image";
 import { missingStoreAPI } from "service/API";
 import { missingStoreClickAPI } from "service/API";
-import { Box, Typography, Button, Alert } from "@mui/material";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { BsCheckCircle } from "react-icons/bs";
+import { BiErrorCircle } from "react-icons/bi";
 
 const apiAuth = process.env.API_AUTH;
 
@@ -103,17 +104,13 @@ const MissingClaimForm = () => {
       <HeadTag headeTitle={headeTitle}></HeadTag>
       <Header></Header>
       <div style={{ paddingTop: "56px" }}>
-        <Box sx={{ m: 2, p: 2, bgcolor: "#f1f1f1", borderRadius: "4px" }}>
-          <Box>
-            <Typography component="h6" fontWeight="700">
-              {" "}
+        <div style={{ margin:"15px", padding:"15px", background: "#f1f1f1", borderRadius: "4px" }}>
+          <div>
+            <h6 className="heading">
               Missing CalimForm
-            </Typography>
-            <Typography component="p" fontSize="13px">
-              {" "}
-            </Typography>
-          </Box>
-          <Box sx={{ paddingTop: "10px" }}>
+            </h6>
+          </div>
+          <div style={{ paddingTop: "10px" }}>
             <form onSubmit={onSubmit}>
               <select
                 onChange={storeHandler}
@@ -133,34 +130,34 @@ const MissingClaimForm = () => {
                     );
                   })}
               </select>
-              <Box sx={{ padding: "10px 0" }}>
-                <Button
+              <div style={{ padding: "10px 0" }}>
+                <button
                   type="submit"
-                  variant="contained"
-                  sx={{ width: "100%", color: "#fff", fontWeight: "600" }}
+                  className="contain_button"
+                  style={{ width: "100%", color: "#fff", fontWeight: "600" }}
                 >
                   {" "}
                   Submit
-                </Button>
-              </Box>
-              <Box>
+                </button>
+              </div>
+              <div>
                 {err ? (
-                  <Box sx={{ paddingTop: "10px" }}>
+                  <div sx={{ paddingTop: "10px" }}>
                     {" "}
-                    <Alert severity="error">{err}</Alert>
-                  </Box>
+                    <div className="alert_warning_class" style={{background:"rgb(225 20 20 / 26%)"}}> <span><BsCheckCircle /></span> <p>{err}</p> </div>
+                  </div>
                 ) : (
                   ""
                 )}
                 {alert_message ? (
-                  <Alert severity="info">{alert_message}</Alert>
+                   <div  className="alert_warning_class" style={{background:" #f0462b4f"}}> <span><BiErrorCircle /></span> <p>{alert_message}</p> </div>
                 ) : (
                   ""
                 )}
-              </Box>
+              </div>
             </form>
-          </Box>
-        </Box>
+          </div>
+        </div>
       </div>
       <style jsx>{`
         select {

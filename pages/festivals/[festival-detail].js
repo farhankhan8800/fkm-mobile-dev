@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 import Image from "next/image";
-import { Breadcrumbs, Button, Typography } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 const apiAuth = process.env.API_AUTH;
-const DEVICE_TYPE = process.env.DEVICE_TYPE; 
+const DEVICE_TYPE = process.env.DEVICE_TYPE;
 
 const FestivalDetail = () => {
   const [userToken, setUserToken] = useState();
@@ -18,13 +17,11 @@ const FestivalDetail = () => {
       setUserToken(JSON.parse(localStorage.getItem("user")).token);
     }
   }, []);
- 
-
 
   const router = useRouter();
   const dealSlug = router.query["festival-detail"];
 
-  console.log(dealSlug)
+  console.log(dealSlug);
 
   useEffect(() => {
     const getFestival = async () => {
@@ -41,13 +38,10 @@ const FestivalDetail = () => {
             },
           }
         );
-       
       } catch (error) {
         console.log(error);
       }
     };
-
-   
   }, [userToken]);
 
   const readmoreFunction = () => {
@@ -83,29 +77,29 @@ const FestivalDetail = () => {
           />
         </div>
         <div className="breadcrumb_fastivals_offer_page">
-          <Breadcrumbs sx={{ fontSize: "13px" }} aria-label="breadcrumb">
-            <Link underline="hover" color="inherit" href="/">
+          <div className="d_flex" style={{ fontSize: "13px" }}>
+            <Link style={{ padding: "1px 5px" }} href="/">
               Home
             </Link>
-            <Link underline="hover" color="inherit" href="/festivals">
+            /
+            <Link style={{ padding: "1px 5px" }} href="/">
               Fastivals
             </Link>
-            <Typography sx={{ fontSize: "13px" }} color="text.primary">
-              Diwali Offers
-            </Typography>
-          </Breadcrumbs>
+            /
+            <p
+              className="p_tag_small"
+              style={{ fontSize: "13px", padding: "1px 5px" }}
+            >
+              Holi
+            </p>
+          </div>
         </div>
         <div className="fastival_top_content_box">
-          <Typography
-            variant="h4"
-            fontSize={18}
-            fontWeight={"bolder"}
-            component="h6"
-          >
+          <h6 style={{ fontSize: "18px", fontWeight: "bolder", marginBottom:"10px"}}>
             Diwali Offers
-          </Typography>
-          <Typography
-            sx={{ height: readMore ? "100%" : "140px", overflow: "hidden" }}
+          </h6>
+          <p
+            style={{ height: readMore ? "100%" : "140px", overflow: "hidden" }}
             fontSize={14}
           >
             The festive season has begun, and it is time to shop and save with
@@ -119,28 +113,24 @@ const FestivalDetail = () => {
             top offers from leading stores to ensure you pay the lowest price.
             The handpicked deals make your festive shopping more affordable. Get
             up to 80% off across all categories with Diwali offers online.
-          </Typography>
+          </p>
           <div style={{ textAlign: "right" }}>
-            <Button
+            <button
               onClick={readmoreFunction}
               type="button"
-              size="small"
-              variant="text"
+             className="text_button"
+             
             >
               {readMore ? "close" : "Read More"}
-            </Button>
+            </button>
           </div>
         </div>
         <div className="fastivals_articles_box">
-          <Typography
-            variant="h4"
-            fontSize={19}
-            fontWeight={"bolder"}
-            component="h6"
-            marginBottom={1}
+          <h4
+           style={{fontSize:"19px",fontWeight:"bolder",marginBottom:"8px"}}
           >
             Diwali Article
-          </Typography>
+          </h4>
           <div className="fastival_article_wrapper">
             <Link href="/">
               <Image
@@ -152,27 +142,23 @@ const FestivalDetail = () => {
             </Link>
 
             <div className="fastival_article_contant">
-              <Typography fontSize={14}>
+              <p style={{fontSize:"14px"}}>
                 Top 10 Diwali Coupons for Gifts, Travel and More
-              </Typography>
-              <Link style={{ fontSize: "12px" }} href="">
+              </p>
+              <Link style={{ fontSize: "12px" }} href="/">
                 Read Article
               </Link>
             </div>
           </div>
         </div>
         <div className="fastival_store_section">
-          <Typography
-            variant="h4"
-            fontWeight={"bolder"}
-            component="h4"
-            color={"#fff"}
-            letterSpacing={1}
-            fontSize={19}
-            style={{ padding: "10px 0" }}
+          <div
+            style={{ padding: "10px 0", fontSize:"19px", letterSpacing:"1.47",
+             color:"#fff",fontWeight:"bloder"
+          }}
           >
             Diwali Sale 2021
-          </Typography>
+          </div>
           <div className="fastival_store_box">
             <div className="fastival_store_wrapper">
               <Image
@@ -182,9 +168,9 @@ const FestivalDetail = () => {
                 height={30}
               />
               <Link href="">
-                <Typography color={"#000"} fontSize={13}>
+                <p style={{color:"#000", fontSize:"12px"}}>
                   Amazon Diwali Sale 2022
-                </Typography>
+                </p>
               </Link>
             </div>
             <div className="fastival_store_wrapper">
@@ -195,9 +181,9 @@ const FestivalDetail = () => {
                 height={30}
               />
               <Link href="">
-                <Typography color={"#000"} fontSize={13}>
+              <p style={{color:"#000", fontSize:"12px"}}>
                   Amazon Diwali Sale 2022
-                </Typography>
+                </p>
               </Link>
             </div>
           </div>
@@ -217,7 +203,7 @@ const FestivalDetail = () => {
             padding: 10px;
             border-radius: 5px;
           }
-         
+
           .fastivals_articles_box {
             max-width: 95%;
             padding: 10px 0;
@@ -233,9 +219,7 @@ const FestivalDetail = () => {
           .fastival_article_wrapper .fastival_article_contant {
             margin-left: 10px;
           }
-          
-          
-         
+
           .fastival_store_section {
             background: #697988 !important;
             margin: 20px 0 30px;

@@ -92,7 +92,7 @@ const CashBackStore = () => {
           <div  class="tabcontent">
           <div
               className="flex_start"
-              style={{flexWrap: "wrap"}}
+              style={{flexWrap: "wrap",justifyContent:"center"}}
             >
               {stores &&
                 stores.map((store, i) => {
@@ -143,10 +143,10 @@ const CashBackStore = () => {
 
         </div>
       </div>
-      <style>
+      <style jsx>
         {`
        .tab {
-        background-color: #ecb799;
+        background-color: #ffeade;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -161,6 +161,8 @@ const CashBackStore = () => {
         transition: 0.3s;
         font-size: 15px;
         font-weight: 600;
+        color: #222222;
+        border-radius: 4px;
         min-width: 241px;
         letter-spacing: 1px;
     }

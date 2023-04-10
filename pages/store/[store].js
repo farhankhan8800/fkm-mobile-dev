@@ -359,6 +359,7 @@ const StoreDetails = () => {
                 textAlign: "center",
                 bottom: "0",
                 left: "0",
+                zIndex:"99",
                 padding: "4px",
                 background: "#fff",
               }}
@@ -405,12 +406,14 @@ const StoreDetails = () => {
           .tandc_box {
             position: absolute;
             background: #fff;
-            z-index: 2;
+            z-index: 12;
             box-shadow: 0px 2px 15px -1px gray;
             padding: 16px 10px;
             border-radius: 3px;
-            overflow: hidden;
+            
             top: 40px;
+            max-height: 500px;
+             overflow: auto;
             border-bottom: 6px solid var(--main-color);
           }
           .tandc_contant {

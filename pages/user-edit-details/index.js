@@ -13,16 +13,15 @@ import {
   Button,
   Alert,
 } from "@mui/material";
+import { FaUser } from "react-icons/fa";
 
 const UserEditDetails = () => {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [mobile, setMobile] = useState("");
-
   const [passwordErr, setPasswordErr] = useState(false);
   const [userNameErr, setUserNameErr] = useState(false);
   const [mobileErr, setMobileErr] = useState(false);
-
   const [callWarning, SetCallWarning] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
 
@@ -84,135 +83,125 @@ const UserEditDetails = () => {
       <HeadTag headeTitle={headeTitle}></HeadTag>
       <Header></Header>
       <div style={{ paddingTop: "56px" }}>
-        <Box sx={{ p: 2 }}>
-          <Box
-            component="div"
+        <div style={{ padding:"15px" }}>
+          <div
             style={{
               backgroundColor: "#f27935",
               padding: "10px 20px",
               borderRadius: "10px",
             }}
           >
-            <Grid
-              container
+            <div 
+              className="d_flex"
+             
               justifyContent="space-around"
               alignItems="center"
               style={{ color: "#fff" }}
             >
-              <Grid item>
-                <Avatar
-                  alt="Freekaamaal"
-                  sx={{ border: "3px solid #fff" }}
-                  src="/static/images/avatar/1.jpg"
-                />
-              </Grid>
-              <Grid item>
-                <Typography
-                  variant="h6"
-                  component="h6"
-                  sx={{ fontWeight: "600" }}
+             
+              <div className="avatar_div">
+                <FaUser />
+              </div>
+              
+              <div  style={{paddingLeft:"10px"}}>
+                <h6
+                 className="heading"
+                  style={{ fontWeight: "600" }}
                 >
                   {" "}
                   Freekaamaal
-                </Typography>
-                <Typography variant="p" component="p" fontSize="12px">
+                </h6>
+                <p className="p_tag_big" style={{color:"#fff"}}>
                   {" "}
                   Thanks for chosing freekaamaal
-                </Typography>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-        <Box sx={{ p: 2 }}>
-          <Box component="div" style={{ width: "100%", padding: " 5px 13px" }}>
-            <Typography variant="h6" component="h5">
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style={{padding:"15px" }}>
+          <div  style={{ width: "100%", padding: " 5px 13px" }}>
+            <h6 className="heading" >
               <strong style={{ fontWeight: "800" }}>
                 Edit Your Information
               </strong>
-            </Typography>
+            </h6>
 
             <form onSubmit={onEdit}>
-              <label style={{ marginTop: "10px", display: "block" }}>
-                Name
-              </label>
-              <TextField
-                sx={{ width: "100%", marginTop: "3px" }}
-                size="small"
+             
+              <input
+                style={{ width: "100%"}}
+                className="input_style"
                 id="name"
                 value={userName}
                 onChange={userNameChangeHandler}
                 type="text"
                 placeholder="Name"
-                variant="outlined"
+               
               />
               <p style={{ color: "#f27935", paddingLeft: "5px" }}>
                 {userNameErr ? "Please Enter Valid Name" : ""}
               </p>
-              <label style={{ marginTop: "10px", display: "block" }}>
-                Password
-              </label>
-              <TextField
-                sx={{ width: "100%", marginTop: "3px" }}
+              
+              <input
+                style={{ width: "100%" }}
                 id="password"
                 value={password}
                 onChange={passwordChangeHandler}
                 type="password"
-                size="small"
                 name="password"
                 placeholder="Password"
-                variant="outlined"
+                className="input_style"
               />
               <p style={{ color: "#f27935", paddingLeft: "5px" }}>
                 {passwordErr ? "Please Enter Valid Password" : ""}
               </p>
-              <label style={{ marginTop: "10px", display: "block" }}>
-                Mobile No.
-              </label>
-              <TextField
-                sx={{ width: "100%", marginTop: "3px" }}
+             
+              <input
+                style={{ width: "100%" }}
                 id="mobile"
                 value={mobile}
                 onChange={mobileChangeHandler}
                 type="number"
-                size="small"
+                
                 name="mobile"
                 placeholder="Mobile No."
-                variant="outlined"
+                className="input_style"
               />
               <p style={{ color: "#f27935", paddingLeft: "5px" }}>
                 {mobileErr ? "Please Enter Valid Mobile No." : ""}
               </p>
               {showSignUp ? (
-                <Button
-                  variant="contained"
+                <button
+                 className="full_with_button"
                   disabled
-                  sx={{
+                   style={{
                     width: "100%",
                     color: "#fff",
                     fontWeight: "bold",
                     margin: "20px 0 10px 0",
                     letterSpacing: "1px",
-                    fontSize: "17px",
+                    fontSize: "16px",
                   }}
                   type="submit"
                 >
                   Edit Details
-                </Button>
+                </button>
               ) : (
-                <Button
-                  variant="contained"
-                  sx={{
+                <button
+                className="full_with_button"
+                  style={{
                     width: "100%",
                     color: "#fff",
                     fontWeight: "bold",
                     margin: "20px 0 10px 0",
                     letterSpacing: "1px",
-                    fontSize: "17px",
+                    fontSize: "16px",
                   }}
                   type="submit"
                 >
                   Edit Details
-                </Button>
+                </button>
               )}
             </form>
             <Box component="div" sx={{ padding: "10px 0" }}>
@@ -229,9 +218,32 @@ const UserEditDetails = () => {
                 ""
               )}
             </Box>
-          </Box>
-        </Box>
+          </div>
+        </div>
       </div>
+      <style jsx>{`
+        .avatar_div{
+          padding: 10px;
+          border: none;
+          background: #cac3c3;
+          border-radius: 32px;
+          width: 45px;
+          height: 45px;
+          /* text-align: center; */
+          justify-content: center;
+          align-items: center;
+          display: flex;
+          color: #fff;
+          font-size: 21px;
+        }
+        .input_style{
+          border: 1px solid #bbb9b9;
+          margin-top: 13px !important;
+        }
+        .full_with_button{
+          padding: 6px 15px;
+        }
+      `}</style>
     </>
   );
 };

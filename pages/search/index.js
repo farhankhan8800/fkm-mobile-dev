@@ -56,7 +56,7 @@ const SearchPage = () => {
               <p>Search Again Valid Stores, Deals & Much More.. </p>
 
               <Link href="/">
-                <Button sx={{marginTop:"20px"}} variant="outlined">Home</Button>
+                <button style={{marginTop:"20px"}} className="border_button">Home</button>
               </Link>
             </div>
           ) : (
@@ -156,17 +156,16 @@ const SearchPage = () => {
                                     <small> &#8377; {item.price}</small>{" "}
                                   </div>
                                   <Link href={`/deals/${item.slug_url}`}>
-                                    <Button
-                                      sx={{
+                                    <button
+                                      style={{
                                         whiteSpace: "pre",
                                         fontSize: "10px",
                                         color: "#fff",
                                       }}
-                                      variant="contained"
-                                      size="small"
+                                     className="contain_button"
                                     >
                                       Read More
-                                    </Button>
+                                    </button>
                                   </Link>
                                 </div>
                               </div>
@@ -195,7 +194,7 @@ const SearchPage = () => {
                               <span>
                                 {searchText ? `'${searchText}'` : ""},
                               </span>{" "}
-                              In Articles <Link href="">View All</Link>
+                              In Articles <Link href="/">View All</Link>
                             </h5>
                             <div className="showing_articles_list">
                               <div className="showing_articles_item">
@@ -219,17 +218,16 @@ const SearchPage = () => {
                                       <small> 3 hours Ago</small>
                                     </div>
                                     <Link href="">
-                                      <Button
-                                        sx={{
+                                      <button
+                                        style={{
                                           whiteSpace: "pre",
                                           fontSize: "10px",
                                           color: "#fff",
                                         }}
-                                        variant="contained"
-                                        size="small"
+                                      className="contain_button"
                                       >
                                         Read More
-                                      </Button>
+                                      </button>
                                     </Link>
                                   </div>
                                 </div>

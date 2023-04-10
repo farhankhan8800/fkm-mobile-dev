@@ -287,7 +287,7 @@ const UserProfile = () => {
         </div>
         <UserSummary />
       </div>
-      <style>
+      <style jsx>
         {`
          .avatar_div{
           padding: 10px;

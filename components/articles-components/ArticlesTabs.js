@@ -1,450 +1,510 @@
-import * as React from 'react';
-import { styled } from '@mui/system';
-import TabsUnstyled from '@mui/base/TabsUnstyled';
-import TabsListUnstyled from '@mui/base/TabsListUnstyled';
-import TabPanelUnstyled from '@mui/base/TabPanelUnstyled';
-import { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
-import TabUnstyled, { tabUnstyledClasses } from '@mui/base/TabUnstyled';
-import { BsFillEyeFill } from 'react-icons/bs';
-import { BiTime } from 'react-icons/bi';
-import { Button, Typography } from '@mui/material';
-import Image from 'next/image';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import Link from 'next/link';
-  
-  const Tab = styled(TabUnstyled)`
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: 600;
-    width: 100%;
-    padding: 10px 12px;
-    margin: 6px 6px;
-    border: none;
-    border-radius: 4px;
-    display: flex;
-    justify-content: center;
-    letter-spacing: 1px;
+import * as React from "react";
 
-    &:hover {
-      background-color: #dfb198;
-      color: #fff;
-    }
-  
-    &:focus {
-      color: #fff;
-      outline: 1px solid #f27935;
-    }
-  
-    &.${tabUnstyledClasses.selected} {
-      background-color: #fff;
-      color: #f27935;
-      border:1px solid #f27935;
-    }
-  
-    &.${buttonUnstyledClasses.disabled} {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-  `;
-  
-  const TabPanel = styled(TabPanelUnstyled)(
-    ({ theme }) => `
-    width: 100%;
-    font-size: 0.875rem;
-    padding: 20px 12px;
-    border-radius: 12px;
-   
-    `,
-  );
-  
-  const TabsList = styled(TabsListUnstyled)(
-    ({ theme }) => `
-    min-width: 400px;
-    border-radius: 12px;
-    margin-bottom: 16px;
-    display: flex;
-    color:#fff;
-    overflow-x: scroll;
-    `,
-  );
-  
+import TabsUnstyled from "@mui/base/TabsUnstyled";
 
- const ArticlesTabs = ({all_articles,lodeMoreData,changeOption,nodata}) => {
+import { BsFillEyeFill } from "react-icons/bs";
+import { BiTime } from "react-icons/bi";
+import { Button, Typography } from "@mui/material";
+import Image from "next/image";
+import { useState } from "react";
+import { useEffect } from "react";
+import Link from "next/link";
 
-  const [all_articles_data, setAll_articles_data] = useState()
+const ArticlesTabs = ({ all_articles, lodeMoreData, changeOption, nodata }) => {
+  const [all_articles_data, setAll_articles_data] = useState();
+  const [ToggleState, setToggleState] = useState(1);
 
-    useEffect(()=>{
-      setAll_articles_data(all_articles)
-    },[all_articles])
+  useEffect(() => {
+    setAll_articles_data(all_articles);
+  }, [all_articles]);
 
+  const allTab = () => {
+    changeOption("all");
+    toggleTab(1);
+  };
+
+  const FashionTab = () => {
+    changeOption("fashion-accessories-offers");
+    toggleTab(2);
+  };
+
+  const FoodTab = () => {
+    changeOption("food-drink-offers");
+    toggleTab(3);
+  };
+
+  const ElectronicTab = () => {
+    changeOption("electronics-offers");
+    toggleTab(4);
+  };
+  const EntertainmentTab = () => {
+    changeOption("entertainment-offers");
+    toggleTab(5);
+  };
+
+  const HealthBeauityTab = () => {
+    changeOption("health-beauty-personal-care-offers");
+    toggleTab(6);
+  };
+
+  const toggleTab = (index) => {
+    setToggleState(index);
+  };
+
+  const getActiveClass = (index, className) =>
+    ToggleState === index ? className : "";
 
   return (
     <>
-     <TabsUnstyled defaultValue={0}>
-    <TabsList>
-      <Tab onClick={()=>changeOption("all")}>All</Tab>
-      <Tab onClick={()=>changeOption("fashion-accessories-offers")}>Fashion</Tab>
-      <Tab onClick={()=>changeOption("food-drink-offers")}>Food</Tab>
-      <Tab onClick={()=>changeOption("electronics-offers")}>Electronic</Tab>
-      <Tab onClick={()=>changeOption("entertainment-offers")}>Entertainment</Tab>
-      <Tab onClick={()=>changeOption("health-beauty-personal-care-offers")}>Health&nbsp;&&nbsp;Beauity</Tab>
-    
-    </TabsList>
-    <TabPanel value={0}>
-    <div className="most_populr_list">
-      {
-        all_articles_data && all_articles_data.map((item,i)=>{
-           return(<>
-           <div className="most_populr_item" key={i}>
-                <div className="most_populr_item_img">
-                  <Image
-                    style={{ borderRadius: "5px" }}
-                    src={item.article_image}
-                    alt=""
-                    height={80}
-                    width={70}
-                  />
-                </div>
-                <div style={{ paddingLeft: " 14px" }}>
-                  <h3>
-                   {item.title}
-                  </h3>
-                  <div className="main_articels_details">
-                    <div className="main_articels_details_ico">
-                      <p>
-                        {" "}
-                        <BiTime /> <span>{item.update_time}</span>
-                      </p>
-                      <p>
-                        {" "}
-                        <BsFillEyeFill /> <span>{item.author}</span>
-                      </p>
-                    </div>
-                    <div>
-                      <Link href={`/${item.slug_url}`}>
-                      <Button
-                        variant="text"
-                        sx={{ fontWeight: "600", letterSpacing: "1px",fontSize:"13px" }}
-                      >
-                        Read Now
-                      </Button>
-                      </Link>
-                     
-                    </div>
-                  </div>
-                </div>
+      <div>
+        <ul className="tab-list">
+          <li
+            className={`tabs ${getActiveClass(1, "active-tabs")}`}
+            onClick={allTab}
+          >
+            All
+          </li>
+          <li
+            className={`tabs ${getActiveClass(2, "active-tabs")}`}
+            onClick={FashionTab}
+          >
+            Fashion
+          </li>
+          <li
+            className={`tabs ${getActiveClass(3, "active-tabs")}`}
+            onClick={FoodTab}
+          >
+            Food
+          </li>
+          <li
+            className={`tabs ${getActiveClass(4, "active-tabs")}`}
+            onClick={ElectronicTab}
+          >
+            Electronic
+          </li>
+          <li
+            className={`tabs ${getActiveClass(5, "active-tabs")}`}
+            onClick={EntertainmentTab}
+          >
+            Entertainment
+          </li>
+          <li
+            className={`tabs ${getActiveClass(6, "active-tabs")}`}
+            onClick={HealthBeauityTab}
+          >
+            Health&nbsp;&&nbsp;Beauity
+          </li>
+        </ul>
+
+        <div>
+          <div className={`content ${getActiveClass(1, "active-content")}`}>
+            <div className="most_populr_list">
+              {all_articles_data &&
+                all_articles_data.map((item, i) => {
+                  return (
+                    <>
+                      <div className="most_populr_item" key={i}>
+                        <div className="most_populr_item_img">
+                          <Image
+                            style={{ borderRadius: "5px" }}
+                            src={item.article_image}
+                            alt=""
+                            height={80}
+                            width={70}
+                          />
+                        </div>
+                        <div style={{ paddingLeft: " 14px" }}>
+                          <h3>{item.title}</h3>
+                          <div className="main_articels_details">
+                            <div className="main_articels_details_ico">
+                              <p>
+                                <BiTime /> <span>{item.update_time}</span>
+                              </p>
+                              <p>
+                                <BsFillEyeFill /> <span>{item.author}</span>
+                              </p>
+                            </div>
+                            <div>
+                              <Link href={`/${item.slug_url}`}>
+                                <button
+                                  className="text_button"
+                                  style={{
+                                    fontWeight: "600",
+                                    letterSpacing: "1px",
+                                    fontSize: "13px",
+                                  }}
+                                >
+                                  Read Now
+                                </button>
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  );
+                })}
+
+              <div style={{ textAlign: "center" }}>
+                {nodata ? (
+                  <p  className="p_tag_big" style={{fontSize:"20px"}}>NO Data</p>
+                ) : (
+                  <button onClick={lodeMoreData} className="border_button">
+                    More Data
+                  </button>
+                )}
               </div>
-           
-           </>)
-        })
-      }
-              
-        <div style={{textAlign:"center"}}>
-          {
-            nodata ?  <Typography fontSize="20px">NO Data</Typography> : <Button onClick={lodeMoreData} variant="outlined">More Data</Button>
-          }
-       
-        </div>
-             
             </div>
-    </TabPanel>
-    <TabPanel value={1}>
-    <div className="most_populr_list">
-      {
-        all_articles_data && all_articles_data.map((item,i)=>{
-           return(<>
-           <div className="most_populr_item" key={i}>
-                <div className="most_populr_item_img">
-                  <Image
-                    style={{ borderRadius: "5px" }}
-                    src={item.article_image}
-                    alt=""
-                    height={80}
-                    width={70}
-                  />
-                </div>
-                <div style={{ paddingLeft: " 14px" }}>
-                  <h3>
-                   {item.title}
-                  </h3>
-                  <div className="main_articels_details">
-                    <div className="main_articels_details_ico">
-                      <p>
-                        {" "}
-                        <BiTime /> <span>{item.update_time}</span>
-                      </p>
-                      <p>
-                        {" "}
-                        <BsFillEyeFill /> <span>{item.author}</span>
-                      </p>
-                    </div>
-                    <div>
-                      <Link href={`${item.slug_url}`}>
-                      <Button
-                        variant="text"
-                        sx={{ fontWeight: "600", letterSpacing: "1px",fontSize:"13px" }}
-                      >
-                        Read Now
-                      </Button>
-                      </Link>
-                     
-                    </div>
-                  </div>
-                </div>
+          </div>
+          <div className={`content ${getActiveClass(2, "active-content")}`}>
+            <div className="most_populr_list">
+              {all_articles_data &&
+                all_articles_data.map((item, i) => {
+                  return (
+                    <>
+                      <div className="most_populr_item" key={i}>
+                        <div className="most_populr_item_img">
+                          <Image
+                            style={{ borderRadius: "5px" }}
+                            src={item.article_image}
+                            alt=""
+                            height={80}
+                            width={70}
+                          />
+                        </div>
+                        <div style={{ paddingLeft: " 14px" }}>
+                          <h3>{item.title}</h3>
+                          <div className="main_articels_details">
+                            <div className="main_articels_details_ico">
+                              <p>
+                                <BiTime /> <span>{item.update_time}</span>
+                              </p>
+                              <p>
+                                <BsFillEyeFill /> <span>{item.author}</span>
+                              </p>
+                            </div>
+                            <div>
+                              <Link href={`${item.slug_url}`}>
+                                <button
+                                 className="text_button"
+                                  style={{
+                                    fontWeight: "600",
+                                    letterSpacing: "1px",
+                                    fontSize: "13px",
+                                  }}
+                                >
+                                  Read Now
+                                </button>
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  );
+                })}
+
+              <div style={{ textAlign: "center" }}>
+                {nodata ? (
+                  <p className="p_tag_big" style={{fontSize:"20px"}}>No Data</p>
+                ) : (
+                  <button onClick={lodeMoreData} className="border_button">
+                    More Data
+                  </button>
+                )}
               </div>
-           
-           </>)
-        })
-      }
-              
-        <div style={{textAlign:"center"}}>
-          {
-             nodata ?  <Typography fontSize="20px">No Data</Typography> : <Button onClick={lodeMoreData} variant="outlined">More Data</Button>
-          }
-        </div>
-             
             </div>
-    </TabPanel>
-    <TabPanel value={2}>
-    <div className="most_populr_list">
-      {
-        all_articles_data && all_articles_data.map((item,i)=>{
-           return(<>
-           <div className="most_populr_item" key={i}>
-                <div className="most_populr_item_img">
-                  <Image
-                    style={{ borderRadius: "5px" }}
-                    src={item.article_image}
-                    alt=""
-                    height={80}
-                    width={70}
-                  />
-                </div>
-                <div style={{ paddingLeft: " 14px" }}>
-                  <h3>
-                   {item.title}
-                  </h3>
-                  <div className="main_articels_details">
-                    <div className="main_articels_details_ico">
-                      <p>
-                        {" "}
-                        <BiTime /> <span>{item.update_time}</span>
-                      </p>
-                      <p>
-                        {" "}
-                        <BsFillEyeFill /> <span>{item.author}</span>
-                      </p>
-                    </div>
-                    <div>
-                      <Link href={`/${item.slug_url}`}>
-                      <Button
-                        variant="text"
-                        sx={{ fontWeight: "600", letterSpacing: "1px",fontSize:"13px" }}
-                      >
-                        Read Now
-                      </Button>
-                      </Link>
-                     
-                    </div>
-                  </div>
-                </div>
+          </div>
+          <div className={`content ${getActiveClass(3, "active-content")}`}>
+            <div className="most_populr_list">
+              {all_articles_data &&
+                all_articles_data.map((item, i) => {
+                  return (
+                    <>
+                      <div className="most_populr_item" key={i}>
+                        <div className="most_populr_item_img">
+                          <Image
+                            style={{ borderRadius: "5px" }}
+                            src={item.article_image}
+                            alt=""
+                            height={80}
+                            width={70}
+                          />
+                        </div>
+                        <div style={{ paddingLeft: " 14px" }}>
+                          <h3>{item.title}</h3>
+                          <div className="main_articels_details">
+                            <div className="main_articels_details_ico">
+                              <p>
+                                {" "}
+                                <BiTime /> <span>{item.update_time}</span>
+                              </p>
+                              <p>
+                                {" "}
+                                <BsFillEyeFill /> <span>{item.author}</span>
+                              </p>
+                            </div>
+                            <div>
+                              <Link href={`/${item.slug_url}`} className="text_button">
+                                <button
+                                  style={{
+                                    fontWeight: "600",
+                                    letterSpacing: "1px",
+                                    fontSize: "13px",
+                                  }}
+                                >
+                                  Read Now
+                                </button>
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  );
+                })}
+
+              <div style={{ textAlign: "center" }}>
+                {nodata ? (
+                  <p style={{fontSize:"20px"}} className="p_tag_big">NO Data</p>
+                ) : (
+                  <button onClick={lodeMoreData} className="border_button">
+                    More Data
+                  </button>
+                )}
               </div>
-           
-           </>)
-        })
-      }
-              
-        <div style={{textAlign:"center"}}>
-        {
-            nodata ?  <Typography fontSize="20px">NO Data</Typography> : <Button onClick={lodeMoreData} variant="outlined">More Data</Button>
-          }
-        </div>
-             
             </div>
-    </TabPanel>
-    <TabPanel value={3}>
-    <div className="most_populr_list">
-      {
-        all_articles_data && all_articles_data.map((item,i)=>{
-           return(<>
-           <div className="most_populr_item" key={i}>
-                <div className="most_populr_item_img">
-                  <Image
-                    style={{ borderRadius: "5px" }}
-                    src={item.article_image}
-                    alt=""
-                    height={80}
-                    width={70}
-                  />
-                </div>
-                <div style={{ paddingLeft: " 14px" }}>
-                  <h3>
-                   {item.title}
-                  </h3>
-                  <div className="main_articels_details">
-                    <div className="main_articels_details_ico">
-                      <p>
-                        {" "}
-                        <BiTime /> <span>{item.update_time}</span>
-                      </p>
-                      <p>
-                        {" "}
-                        <BsFillEyeFill /> <span>{item.author}</span>
-                      </p>
-                    </div>
-                    <div>
-                      <Link href={`/${item.slug_url}`}>
-                      <Button
-                        variant="text"
-                        sx={{ fontWeight: "600", letterSpacing: "1px",fontSize:"13px" }}
-                      >
-                        Read Now
-                      </Button>
-                      </Link>
-                     
-                    </div>
-                  </div>
-                </div>
+          </div>
+          <div className={`content ${getActiveClass(4, "active-content")}`} >
+            <div className="most_populr_list">
+              {all_articles_data &&
+                all_articles_data.map((item, i) => {
+                  return (
+                    <>
+                      <div className="most_populr_item" key={i}>
+                        <div className="most_populr_item_img">
+                          <Image
+                            style={{ borderRadius: "5px" }}
+                            src={item.article_image}
+                            alt=""
+                            height={80}
+                            width={70}
+                          />
+                        </div>
+                        <div style={{ paddingLeft: " 14px" }}>
+                          <h3>{item.title}</h3>
+                          <div className="main_articels_details">
+                            <div className="main_articels_details_ico">
+                              <p>
+                                {" "}
+                                <BiTime /> <span>{item.update_time}</span>
+                              </p>
+                              <p>
+                                {" "}
+                                <BsFillEyeFill /> <span>{item.author}</span>
+                              </p>
+                            </div>
+                            <div>
+                              <Link href={`/${item.slug_url}`}>
+                                <Button
+                                  variant="text"
+                                  sx={{
+                                    fontWeight: "600",
+                                    letterSpacing: "1px",
+                                    fontSize: "13px",
+                                  }}
+                                >
+                                  Read Now
+                                </Button>
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  );
+                })}
+
+              <div style={{ textAlign: "center" }}>
+                {nodata ? (
+                  <p style={{fontSize:"20px"}} className="p_tag_big">NO Data</p>
+                ) : (
+                  <button onClick={lodeMoreData} className="border_button">
+                    More Data
+                  </button>
+                )}
               </div>
-           
-           </>)
-        })
-      }
-              
-        <div style={{textAlign:"center"}}>
-         {
-            nodata ? <Typography fontSize="20px">NO Data</Typography>: <Button onClick={lodeMoreData} variant="outlined">More Data</Button>
-          }
-        </div>
-             
             </div>
-    </TabPanel>
-    <TabPanel value={4}>
-    <div className="most_populr_list">
-      {
-        all_articles_data && all_articles_data.map((item,i)=>{
-           return(<>
-           <div className="most_populr_item" key={i}>
-                <div className="most_populr_item_img">
-                  <Image
-                    style={{ borderRadius: "5px" }}
-                    src={item.article_image}
-                    alt=""
-                    height={80}
-                    width={70}
-                  />
-                </div>
-                <div style={{ paddingLeft: " 14px" }}>
-                  <h3>
-                   {item.title}
-                  </h3>
-                  <div className="main_articels_details">
-                    <div className="main_articels_details_ico">
-                      <p>
-                        {" "}
-                        <BiTime /> <span>{item.update_time}</span>
-                      </p>
-                      <p>
-                        {" "}
-                        <BsFillEyeFill /> <span>{item.author}</span>
-                      </p>
-                    </div>
-                    <div>
-                      <Link href={`/${item.slug_url}`}>
-                      <Button
-                        variant="text"
-                        sx={{ fontWeight: "600", letterSpacing: "1px",fontSize:"13px" }}
-                      >
-                        Read Now
-                      </Button>
-                      </Link>
-                     
-                    </div>
-                  </div>
-                </div>
+          </div>
+          <div className={`content ${getActiveClass(5, "active-content")}`}>
+            <div className="most_populr_list">
+              {all_articles_data &&
+                all_articles_data.map((item, i) => {
+                  return (
+                    <>
+                      <div className="most_populr_item" key={i}>
+                        <div className="most_populr_item_img">
+                          <Image
+                            style={{ borderRadius: "5px" }}
+                            src={item.article_image}
+                            alt=""
+                            height={80}
+                            width={70}
+                          />
+                        </div>
+                        <div style={{ paddingLeft: " 14px" }}>
+                          <h3>{item.title}</h3>
+                          <div className="main_articels_details">
+                            <div className="main_articels_details_ico">
+                              <p>
+                                {" "}
+                                <BiTime /> <span>{item.update_time}</span>
+                              </p>
+                              <p>
+                                {" "}
+                                <BsFillEyeFill /> <span>{item.author}</span>
+                              </p>
+                            </div>
+                            <div>
+                              <Link href={`/${item.slug_url}`}>
+                                <button
+                                 className="text_button"
+                                  style={{
+                                    fontWeight: "600",
+                                    letterSpacing: "1px",
+                                    fontSize: "13px",
+                                  }}
+                                >
+                                  Read Now
+                                </button>
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  );
+                })}
+
+              <div style={{ textAlign: "center" }}>
+                {nodata ? (
+                  <p style={{fontSize:"20px"}} className="p_tag_big">NO Data</p>
+                ) : (
+                  <button onClick={lodeMoreData} className="border_button">
+                    More Data
+                  </button>
+                )}
               </div>
-           
-           </>)
-        })
-      }
-              
-        <div style={{textAlign:"center"}}>
-          {
-            nodata ?  <Typography fontSize="20px">NO Data</Typography> : <Button onClick={lodeMoreData} variant="outlined">More Data</Button>
-          }
-        </div>
-             
             </div>
-    </TabPanel>
-    <TabPanel value={5}>
-    <div className="most_populr_list">
-      {
-        all_articles_data && all_articles_data.map((item,i)=>{
-           return(<>
-           <div className="most_populr_item" key={i}>
-                <div className="most_populr_item_img">
-                  <Image
-                    style={{ borderRadius: "5px" }}
-                    src={item.article_image}
-                    alt=""
-                    height={80}
-                    width={70}
-                  />
-                </div>
-                <div style={{ paddingLeft: " 14px" }}>
-                  <h3>
-                   {item.title}
-                  </h3>
-                  <div className="main_articels_details">
-                    <div className="main_articels_details_ico">
-                      <p>
-                        {" "}
-                        <BiTime /> <span>{item.update_time}</span>
-                      </p>
-                      <p>
-                        {" "}
-                        <BsFillEyeFill /> <span>{item.author}</span>
-                      </p>
-                    </div>
-                    <div>
-                      <Link href={`/${item.slug_url}`}>
-                      <Button
-                        variant="text"
-                        sx={{ fontWeight: "600", letterSpacing: "1px",fontSize:"13px" }}
-                      >
-                        Read Now
-                      </Button>
-                      </Link>
-                     
-                    </div>
-                  </div>
-                </div>
+          </div>
+          <div className={`content ${getActiveClass(6, "active-content")}`}>
+            <div className="most_populr_list">
+              {all_articles_data &&
+                all_articles_data.map((item, i) => {
+                  return (
+                    <>
+                      <div className="most_populr_item" key={i}>
+                        <div className="most_populr_item_img">
+                          <Image
+                            style={{ borderRadius: "5px" }}
+                            src={item.article_image}
+                            alt=""
+                            height={80}
+                            width={70}
+                          />
+                        </div>
+                        <div style={{ paddingLeft: " 14px" }}>
+                          <h3>{item.title}</h3>
+                          <div className="main_articels_details">
+                            <div className="main_articels_details_ico">
+                              <p>
+                                {" "}
+                                <BiTime /> <span>{item.update_time}</span>
+                              </p>
+                              <p>
+                                {" "}
+                                <BsFillEyeFill /> <span>{item.author}</span>
+                              </p>
+                            </div>
+                            <div>
+                              <Link href={`/${item.slug_url}`}>
+                                <button
+                                  className="text_button"
+                                  style={{
+                                    fontWeight: "600",
+                                    letterSpacing: "1px",
+                                    fontSize: "13px",
+                                  }}
+                                >
+                                  Read Now
+                                </button>
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  );
+                })}
+
+              <div style={{ textAlign: "center" }}>
+                {nodata ? (
+                  <p style={{fontSize:"20px"}} className="p_tag_big">NO Data</p>
+                ) : (
+                  <button  className="border_button" onClick={lodeMoreData} >
+                    More Data
+                  </button>
+                )}
               </div>
-           
-           </>)
-        })
-      }
-              
-        <div style={{textAlign:"center"}}>
-         {
-            nodata ?  <Typography fontSize="20px">NO Data</Typography> : <Button onClick={lodeMoreData} variant="outlined">More Data</Button>
-          }
-        </div>
-             
             </div>
-    </TabPanel>
-   
-  </TabsUnstyled>
-  <style jsx>{`
- 
-  
-       
+          </div>
+        </div>
+      </div>
+      <style jsx>{`
+        .tab-list {
+          display: flex;
+          list-style: none;
+          overflow: auto;
+          font-size: 18px;
+          padding: 10px 2px;
+          margin: 0;
+        }
+        .tab-list::-webkit-scrollbar {
+            display: none;
+        }
+        .tabs {
+          width: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          padding: 6px 19px;
+          cursor: pointer;
+          margin: 0 10px;
+          border: 1px solid transparent;
+          border-radius: 4px;
+        }
+        .active-tabs {
+          color: var(--main-color);
+          border-color: var(--main-color);
+        }
+
+        .content {
+          display: none;
+        }
+
+        .active-content {
+          display: block;
+
+          overflow: auto;
+          margin: 0 10px;
+        }
+
         .main_articels_details {
           display: flex;
           color: #969696;
-          flex-wrap:wrap;
-          padding-top:10px;
+          flex-wrap: wrap;
+          padding-top: 10px;
           align-items: center;
           justify-content: space-between;
         }
@@ -470,17 +530,15 @@ import Link from 'next/link';
         .most_populr_item {
           padding: 13px;
           border: 1px solid #e0d2d2;
-          -webkit-border-radius: 8px;
-          -moz-border-radius: 8px;
+          display: grid;
+          grid-template-columns: auto auto;
           border-radius: 8px;
           background: #ece4e4;
-          display: flex;
           margin-bottom: 20px;
-          align-items: center;
-          justify-content: space-between;
+          justify-content: start;
+          
         }
         .main_articels_details div.main_articels_details_ico:first-child {
-         
           justify-content: flex-start;
         }
         .most_populr_item h3 {
@@ -489,11 +547,9 @@ import Link from 'next/link';
           text-transform: capitalize;
           word-spacing: 1px;
         }
-    
-    `}</style>
+      `}</style>
     </>
-   
-  )
-}
+  );
+};
 
-export default ArticlesTabs
+export default ArticlesTabs;

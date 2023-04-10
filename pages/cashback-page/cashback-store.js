@@ -5,14 +5,6 @@ import axios from "axios";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 import { Typography, Box, Button } from "@mui/material";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
-import { styled } from "@mui/system";
-import TabsUnstyled from "@mui/base/TabsUnstyled";
-import TabsListUnstyled from "@mui/base/TabsListUnstyled";
-import TabPanelUnstyled from "@mui/base/TabPanelUnstyled";
-
-import TabUnstyled, { tabUnstyledClasses } from "@mui/base/TabUnstyled";
 import FaqCashbackPage from "components/cashback-page-components/FaqCashbackPage";
 import CashbackStorePageCard from "components/cashback-page-components/CashbackPageStoreCard";
 
@@ -31,6 +23,9 @@ const CashbackStore = () => {
   const [option, setOption] = useState("hundredpercent");
   const [page, setPage]= useState(null)
   const [noData, setNoData] = useState()
+  const [ToggleState, setToggleState] = useState(1);
+
+
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("user"))) {
@@ -81,16 +76,20 @@ useEffect(()=>{
 
 const tabClick = (value)=>{
   if(value == "hundredpercent"){
+    toggleTab(1);
     setCahsbackstore("")
     setOption("hundredpercent")
 
   }else if(value == "newest"){
+    toggleTab(2);
     setCahsbackstore("")
     setOption("newest")
   }else if(value == "popular"){
+    toggleTab(3);
     setCahsbackstore("")
     setOption("popular")
   }else if(value == "all"){
+    toggleTab(4);
     setPage(1)
     setNoData(false)
     setCahsbackstore("")
@@ -103,75 +102,15 @@ const addPage =()=>{
 }
 
 
+const toggleTab = (index) => {
+  setToggleState(index);
+};
 
-  //  tabs 
-  const Tab = styled(TabUnstyled)`
-    font-family: IBM Plex Sans, sans-serif;
-    text-transform: uppercase;
-    cursor: pointer;
-    font-size: 0.875rem;
-    font-weight: 800;
-    background-color: transparent;
-    min-width: 154px;
-    padding: 10px 5px;
+const getActiveClass = (index, className) =>
+  ToggleState === index ? className : "";
 
-    border: none;
-    border-radius: 7px;
-    display: flex;
-    justify-content: center;
 
-    &:focus {
-      color: #fff;
-    }
-
-    &.${tabUnstyledClasses.selected} {
-      background-color: #fff;
-      color: #f27935;
-    }
-  `;
-
-  const TabsList = styled(TabsListUnstyled)(
-    ({ theme }) => `
  
-  display: flex;
-  overflow-x: scroll;
-  align-items: center;
-  justify-content: space-between;
-  align-content: space-between;
-  box-shadow: 0px 4px 30px ${theme.palette.mode === "dark" ? "#fff" : "#fff"};
-  `
-  );
-
-  const TabPanel = styled(TabPanelUnstyled)(
-    ({ theme }) => `
-  font-family: IBM Plex Sans, sans-serif;
-  font-size: 0.875rem;
-  overflow:auto;
-  padding: 10px 12px;
- 
-  border-radius: 7px;
-  `
-  );
-
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
-
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    "&:nth-of-type(odd)": {
-      backgroundColor: theme.palette.action.hover,
-    },
-    "&:last-child td, &:last-child th": {
-      border: 0,
-    },
-  }));
-
   return (
     <>
       <HeadTag headeTitle={headeTitle}></HeadTag>
@@ -186,64 +125,72 @@ const addPage =()=>{
       >
         <div className="top_box">
           <h3>Earn Real Money When You Shop Online</h3>
-          <Typography fontSize={14} sx={{ margin: "10px 0" }}>
+          <p className="p_tag_big"  style={{ margin: "10px 0",fontSize:"14px" }}>
             Get upto 100% Cashback at over 200+ Online E-commerce stores in
             India. Stores pay us a commission for sending you onto their store,
             and we at FreeKaaMaal shares the commission with you as Cash Back.
-          </Typography>
+          </p>
 
-          <Box>
+          <div>
             <Link className="Shop__Start" href="">
               Join & start Earning Now
             </Link>
-          </Box>
+          </div>
         </div>
         <div className="middle_box">
-          <TabsUnstyled defaultValue={0}>
-            <TabsList className="tabsList">
-              <Tab onClick={()=>tabClick("hundredpercent")}>100% Cashback</Tab>
-              <Tab onClick={()=>tabClick("newest")}>Newest</Tab>
-              <Tab onClick={()=>tabClick("popular")}>Popular</Tab>
-              <Tab onClick={()=>tabClick("all")}>A&nbsp;-&nbsp;Z</Tab>
-            </TabsList>
+          <div >
+          <ul className="tab-list">
+                <li
+                  className={`tabs ${getActiveClass(1, "active-tabs")}`}
+                  onClick={()=>tabClick("hundredpercent")}
+                >
+                  100%&nbsp;Cashback
+                </li>
+                <li
+                  className={`tabs ${getActiveClass(2, "active-tabs")}`}
+                  onClick={()=>tabClick("newest")}
+                >
+                  Newest
+                </li>
+                <li
+                  className={`tabs ${getActiveClass(3, "active-tabs")}`}
+                  onClick={()=>tabClick("popular")}
+                >
+                  Popular
+                </li>
+                <li
+                  className={`tabs ${getActiveClass(4, "active-tabs")}`}
+                  onClick={()=>tabClick("all")}
+                >
+                  A&nbsp;-&nbsp;Z
+                </li>
+              </ul>
 
-            <TabPanel value={0}>
+            <div className={`content ${getActiveClass(1, "active-content")}`}>
               {
                 option == "hundredpercent"? <main>
                 <div className="stroes_box">
                               <CashbackStorePageCard cahsbackstore={cahsbackstore} />
                               </div>
-                              {/* <div style={{ textAlign: "center", padding: "7px" }}>
-                                <Button
-                                  variant="contained"
-                                  type="button"
-                                  size="small"
-                                  sx={{ color: "#fff" }}
-                                >
-                                  {" "}
-                                  Lode More
-                                </Button>
-                              </div> */}
+                          
                               <div className="how_cashback_work_box">
-                                <Typography
-                                  fontWeight={600}
-                                  variant="h4"
-                                  sx={{ color: "#fff" }}
+                                <p
+                                  style={{ color: "#fff",fontWeight:"600"}}
                                 >
                                   How Cashback Works?
-                                </Typography>
-                                <Typography
-                                  variant="h4"
-                                  fontSize={12}
-                                  sx={{ color: "#fff" }}
-                                  lineHeight={2}
+                                </p>
+                                <h4
+                                  
+                                 
+                                  style={{ color: "#fff" ,fontSize:"12px",lineHeight:"1.45" }}
+                                  
                                 >
                                   Now shop through FreeKaaMaal and get cashback on every
                                   purchase. We get commission for every sale that you do through
                                   us and now we will be passing on that commission back to our
                                   users. Shop from our partner stores and get upto 100%
                                   cashback. This is what we call Free Ki Shopping
-                                </Typography>
+                                </h4>
                               </div>
                               <div className="point_remamber">
                                 <div className="point_remamber_ab_heading">
@@ -336,8 +283,8 @@ const addPage =()=>{
               }
               
               
-            </TabPanel>
-            <TabPanel value={1}>
+            </div>
+            <div className={`content ${getActiveClass(2, "active-content")}`}>
             <div className="stroes_box">
               {
                 option == "newest" ? 
@@ -345,36 +292,16 @@ const addPage =()=>{
                 :""
               }
               </div>
-              {/* <div style={{ textAlign: "center", padding: "7px" }}>
-                <Button
-                  variant="contained"
-                  type="button"
-                  size="small"
-                  sx={{ color: "#fff" }}
-                >
-                  {" "}
-                  Lode More
-                </Button>
-              </div> */}
-            </TabPanel>
-            <TabPanel value={2}>
+             
+            </div>
+            <div className={`content ${getActiveClass(3, "active-content")}`}>
               <div className="stroes_box">
                 {
                   option == "popular" ?  <CashbackStorePageCard cahsbackstore={cahsbackstore} />:""
                 }
                
               </div>
-              {/* <div style={{ textAlign: "center", padding: "7px" }}>
-                <Button
-                  variant="contained"
-                  type="button"
-                  size="small"
-                  sx={{ color: "#fff" }}
-                >
-                  {" "}
-                  Lode More
-                </Button>
-              </div> */}
+             
               <div className="how_cashback_work_box">
                 <Typography
                   fontWeight={600}
@@ -483,8 +410,8 @@ const addPage =()=>{
               <div className="faq_section_components">
                 <FaqCashbackPage />
               </div>
-            </TabPanel>
-            <TabPanel value={3}>
+            </div>
+            <div className={`content ${getActiveClass(4, "active-content")}`}>
               <div className="atoz_tab">
                   <div className="atoz_tab_heading">
                          <span className="active">A - Z</span>
@@ -506,7 +433,6 @@ const addPage =()=>{
                          <span>B</span>
                          <span>B</span>
                          <span>B</span>
-
                   </div>
               </div>
               <div className="store_list_box">
@@ -533,33 +459,10 @@ const addPage =()=>{
                
               </div>
                  </div>
-                 {/* <div className="store-main-con">
-                  <h5>A</h5>
-                  <div className="stroes_box">
-                  <CashbackStorePageCard />
-               <CashbackStorePageCard />
-               <CashbackStorePageCard />
-               <CashbackStorePageCard />
-               <CashbackStorePageCard />
-               <CashbackStorePageCard />
-                  </div>
-                  
-                 </div> */}
-                 {/* <div className="store-main-con">
-                  <h5>A</h5>
-                  <div className="stroes_box">
-                  <CashbackStorePageCard />
-               <CashbackStorePageCard />
-               <CashbackStorePageCard />
-               <CashbackStorePageCard />
-               <CashbackStorePageCard />
-               <CashbackStorePageCard />
-                  </div>
-                  
-                 </div> */}
+              
               </div>
-            </TabPanel>
-          </TabsUnstyled>
+            </div>
+          </div>
         </div>
       </div>
       <style jsx>{`
@@ -668,10 +571,6 @@ const addPage =()=>{
     min-width: 30px;
     text-align: center;
         }
-{/*      
-   .store_list_box{
-    padding-top: 30px; */}
-        }
         .store-main-con{
           padding: 12px 0;
 
@@ -691,6 +590,39 @@ const addPage =()=>{
     top: 27px;
     left: 67px;
         }
+        .tab-list {
+            display: flex;
+            list-style: none;
+            overflow: auto;
+            font-size: 18px;
+            padding: 10px 2px;
+            margin: 0;
+          }
+
+          .tabs {
+            position: relative;
+    cursor: pointer;
+    
+    padding: 8px 17px;
+    border: 1px solid transparent;
+    margin-right: 10px;
+    border-radius: 4px;
+          }
+          .active-tabs {
+            color: var(--main-color);
+            border-color: var(--main-color);
+          }
+
+          .content {
+            display: none;
+          }
+
+          .active-content {
+            display: block;
+
+            overflow: auto;
+            margin: 0 10px;
+          }
       `}</style>
     </>
   );

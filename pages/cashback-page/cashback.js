@@ -5,7 +5,6 @@ import axios from "axios";
 
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import { Button, Typography, Box } from "@mui/material";
 import CashbackDealPageCard from "components/cashback-page-components/CashbackPageDealCard";
 import{cashbackpageAPI} from "service/API"
 const headeTitle = "100% Cashback | Freekaamaal";
@@ -40,8 +39,7 @@ const Cashback = () => {
       )
       console.log(data.response)
       setCahsbackstore(data.response.cahsbackstore)
-     setCahsbackDeal(data.response.cashbackdeal)
-      // console.log(data.response)
+      setCahsbackDeal(data.response.cashbackdeal)
     } catch (error) {
       console.log(error)
     }
@@ -67,18 +65,18 @@ useEffect(()=>{
       >
         <div className="top_box">
           <h3>Earn Real Money When You Shop Online</h3>
-          <Typography fontSize={14} sx={{ margin: "10px 0" }}>
+          <p  style={{ margin: "10px 0",fontSize:"14px" }}>
             Just shop at your favorite store by logging into your FreeKaaMaal
             account and earn upto 100% cashback. Amount will be added to your
             account once your purchase is over and redeem your earning through
             payTM , Bank Transfer or Gift Vouchers
-          </Typography>
+          </p>
 
-          <Box>
+          <div>
             <Link className="Shop__Start" href="">
               Shop & Start Earning Now
             </Link>
-          </Box>
+          </div>
         </div>
         <div className="middle_box">
           <h4>Top CashBack Stores</h4>
@@ -110,9 +108,9 @@ useEffect(()=>{
           </div>
           <div style={{ textAlign: "center" }}>
             <Link href="cashback-store">
-              <Button variant="contained" size="small" sx={{ color: "#fff" }}>
+              <button className="contain_button" style={{ color: "#fff" }}>
                 View All Store
-              </Button>
+              </button>
             </Link>
           </div>
         </div>
@@ -126,20 +124,19 @@ useEffect(()=>{
           </div>
           <div style={{ textAlign: "center" }}>
             <Link href="cashback-deals">
-              <Button variant="contained" size="small" sx={{ color: "#fff" }}>
+              <button className="contain_button"  style={{ color: "#fff" }}>
                 View All Deals
-              </Button>
+              </button>
             </Link>
           </div>
         </div>
         <div className="video_section">
-          <Box
-            component="div"
-            sx={{
+          <div
+            style={{
               borderRadius: "10px",
               overflow: "hidden",
               margin: "10px",
-              bgcolor: "#fff",
+              background: "#fff",
               boxShadow: " 0px 0px 6px -2px grey",
             }}
           >
@@ -151,7 +148,7 @@ useEffect(()=>{
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
-          </Box>
+          </div>
         </div>
         <div className="three_tabs">
           <div className="three_tabs_btn three_tabs_btn_one">
@@ -164,8 +161,7 @@ useEffect(()=>{
             <div className="three_tabs_right">
               <h5>This is how your cashback Works!</h5>
               <Link className="three_tabs_right_link" href="">
-                {" "}
-                Know More{" "}
+                Know More
               </Link>
             </div>
           </div>

@@ -1,17 +1,6 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Grid,
-  Button,
-  Card,
-  CardActionArea,
-  CardContent,
-  Typography,
-} from "@mui/material";
-
 import Link from "next/link";
 import Image from "next/image";
-
 import { homeAPI2 } from "service/API";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
@@ -66,99 +55,88 @@ const HotDealInternal = () => {
       <HeadTag headeTitle={headeTitle}></HeadTag>
       <Header />
       <div style={{ paddingTop: "56px" }}>
-        <Box component="div" sx={{ p: 1, position: "relative" }}>
-          <Box component="div">
-            <Grid container>
-              <Grid>
-                <div className="flex_div">
-                  {allHotDeals &&
-                    allHotDeals.map((item, i) => {
-                      return (
-                        <Box
-                          sx={{ maxWidth: "167px", marginBottom: "10px " }}
-                          component="div"
-                          key={i}
+        <div style={{ padding: "10px", position: "relative" }}>
+          <div>
+            <div className="d_flex">
+              <div className="flex_div">
+                {allHotDeals &&
+                  allHotDeals.map((item, i) => {
+                    return (
+                      <div
+                        style={{ maxWidth: "167px", marginBottom: "10px " }}
+                        key={i}
+                      >
+                        <div
+                          style={{
+                            background: "rgb(248, 248, 248)",
+                              border: "1px solid rgb(223 219 219 / 40%)",
+                              borderRadius: "7px"
+                          }}
                         >
-                          <Card
-                            sx={{
-                              background: "rgb(248 248 248)",
-                              border: "1px solid #dfdbdb",
-                            }}
+                          <Link
+                            className="card_link"
+                            href={`/deals/${item.slug_url}`}
                           >
-                            <Link
-                              className="card_link"
-                              href={`/deals/${item.slug_url}`}
-                            >
-                              <CardActionArea>
-                                <Box
-                                  component="div"
-                                  sx={{ padding: "15px 21px 0px" }}
-                                >
-                                  <Image
-                                    src={item.deal_image}
-                                    alt={item.title}
-                                    height={92}
-                                    width={120}
-                                    style={{ borderRadius: "7px" }}
-                                  />
-                                </Box>
-                                <CardContent
-                                  sx={{
-                                    background: "rgb(248 248 248)",
-                                    padding: "7px",
+                            <div>
+                              <div style={{ padding: "15px 21px 0px" }}>
+                                <Image
+                                  src={item.deal_image}
+                                  alt={item.title}
+                                  height={92}
+                                  width={120}
+                                  style={{ borderRadius: "7px" }}
+                                />
+                              </div>
+                              <p
+                                className=""
+                                style={{
+                                  background: "rgb(248 248 248)",
+                                  padding: "7px",
+                                }}
+                              >
+                                <p
+                                 style={{
+                                    color: "#000",
+                                    marginBottom: "0",
+                                    fontSize: "17px",
                                   }}
                                 >
-                                  <Typography
-                                    gutterBottom
-                                    variant="p"
-                                    component="div"
-                                    sx={{
-                                      color: "#000",
-                                      marginBottom: "0",
-                                      fontSize: "17px",
-                                    }}
-                                  >
-                                    {item.store_name}{" "}
-                                  </Typography>
-                                  <Typography
-                                    variant="body2"
-                                    sx={{
-                                      color: "#000",
-                                      padding: "4px 0",
-                                      fontSize: "13px",
-                                      textOverflow: "ellipsis",
-                                      overflow: "hidden",
-                                      whiteSpace: "wrap",
-                                      height: "62px",
-                                    }}
-                                  >
-                                    {item.title}{" "}
-                                  </Typography>
-                                  <Box
-                                    component="div"
-                                    sx={{ paddingTop: "4px" }}
-                                  >
-                                    <strong className="card_amouunt">
-                                      &#8377;{item.offer_price}
-                                    </strong>
-                                    <small className="card_small_amouunt">
-                                      &#8377;{item.price}
-                                    </small>
-                                  </Box>
-                                </CardContent>
-                              </CardActionArea>
-                            </Link>
-                          </Card>
-                        </Box>
-                      );
-                    })}
-                </div>
-              </Grid>
-            </Grid>
-            <Box>
+                                  {item.store_name}{" "}
+                                </p>
+                                <p
+                                  style={{
+                                    color: "#000",
+                                    padding: "4px 0",
+                                    fontSize: "13px",
+                                    textOverflow: "ellipsis",
+                                    overflow: "hidden",
+                                    whiteSpace: "wrap",
+                                    height: "62px",
+                                  }}
+                                >
+                                  {item.title}{" "}
+                                </p>
+                                <div style={{ paddingTop: "4px" }}>
+                                  <strong className="card_amouunt">
+                                    &#8377;{item.offer_price}
+                                  </strong>
+                                  <small className="card_small_amouunt">
+                                    &#8377;{item.price}
+                                  </small>
+                                </div>
+                              </p>
+                            </div>
+                          </Link>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+            <div>
               {noDeals ? (
-                <Box
-                  sx={{
+                <div
+                  style={{
                     display: "flex",
                     alignContent: "center",
                     justifyContent: "center",
@@ -166,23 +144,23 @@ const HotDealInternal = () => {
                 >
                   {" "}
                   No Data Found{" "}
-                </Box>
+                </div>
               ) : (
-                <Box
-                  sx={{
+                <div
+                  style={{
                     display: "flex",
                     alignContent: "center",
                     justifyContent: "center",
                   }}
                 >
-                  <Button onClick={pageFunction} variant="outlined">
+                  <button onClick={pageFunction} className="border_button">
                     Lode More
-                  </Button>
-                </Box>
+                  </button>
+                </div>
               )}
-            </Box>
-          </Box>
-        </Box>
+            </div>
+          </div>
+        </div>
       </div>
       <style jsx>
         {`

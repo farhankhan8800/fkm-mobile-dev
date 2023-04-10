@@ -82,52 +82,53 @@ const Festivals = () => {
           />
         </div>
         <div className="breadcrumb_fastivals_offer_page">
-          <Breadcrumbs sx={{ fontSize: "13px" }} aria-label="breadcrumb">
-            <Link underline="hover" color="inherit" href="/">
+          <div className="d_flex" style={{ fontSize: "13px" }} >
+            <Link style={{padding:"1px 5px" }} href="/">
               Home
             </Link>
-            <Typography sx={{ fontSize: "13px" }} color="text.primary">
+            /
+            <p className="p_tag_small" style={{ fontSize: "13px",padding:"1px 5px" }} >
               Fastivals
-            </Typography>
-          </Breadcrumbs>
+            </p>
+          </div>
         </div>
         <div className="fastival_top_content_box">
-          <Typography
-            variant="h4"
-            fontSize={18}
-            fontWeight={"bolder"}
-            component="h6"
+          <h5 
+          className=""
+           style={{ fontSize:"18px",
+           fontWeight:"bolder",
+           paddingBottom:"10px"
+          }}
           >
             {Festivaldata ? Festivaldata.response.topheading : ""}
-          </Typography>
-          <Typography
-            sx={{ height: readMore ? "100%" : "140px", overflow: "hidden" }}
-            fontSize={14}
+          </h5>
+          <p
+            style={{ height: readMore ? "100%" : "140px", overflow: "hidden",    lineHeight: "20px" }}
+            className="p_tag_big"
           >
             {Festivaldata ? Festivaldata.response.topdesc : ""}
-          </Typography>
+          </p>
           <div style={{ textAlign: "right" }}>
-            <Button
+            <button
               onClick={readmoreFunction}
               type="button"
-              size="small"
-              variant="text"
+              
+              className="text_button"
             >
               {readMore ? "close" : "Read More"}
-            </Button>
+            </button>
           </div>
         </div>
 
         <div className="fastivals_articles_box">
-          <Typography
-            variant="h4"
-            fontSize={19}
-            fontWeight={"bolder"}
-            component="h6"
-            marginBottom={1}
+          <h4
+           style={{paddingBottom:"10px",
+           fontSize:"20px"
+          }}
+
           >
             Popular Festival Sales of 2021
-          </Typography>
+          </h4>
           <div className="fastival_article_store_box_wraper">
             {
               Festivalstore && Festivalstore.map((item,i)=>{
@@ -154,17 +155,18 @@ const Festivals = () => {
         </div>
 
         <div className="fastival_top_content_box">
-          <Typography
-            variant="h4"
-            fontSize={18}
-            fontWeight={"bolder"}
-            component="h6"
+          <h6 className="heading"
+            style={{fontSize:"18px",
+            fontWeight:"bold",
+            paddingBottom: "13px"
+            }}
+            
           >
             {Festivaldata ? Festivaldata.response.bottomheading : ""}
-          </Typography>
-          <Typography fontSize={14}>
+          </h6>
+          <p fontSize={14}>
             {Festivaldata ? Festivaldata.response.bottomdesc : ""}
-          </Typography>
+          </p>
         </div>
       </div>
       <style jsx>

@@ -161,6 +161,7 @@ button{
   cursor: pointer;
   font-size: 13px;
 }
+
 .text_button:hover{
   color: var(--btn-hover);
 }
@@ -210,7 +211,6 @@ button{
   gap:"10px"
 }
 
-
 .input_style{
   padding: 9px 10px;
   border: none;
@@ -221,9 +221,11 @@ button{
   outline: none;
   color: #343434;
 }
+
 .input_style:focus{
   border-color: var(--main-color);
 }
+
 .input_style::placeholder{
   letter-spacing: 1px;
   word-spacing: 1px;
@@ -515,4 +517,22 @@ padding: 0 26px 0 0;
 .atoz_tab_heading span.active,
 .atoz_tab_heading span:hover {
   color: blue;
+}
+
+
+/* artical style  */
+.articels_dynimic_bottom_div .full-width-container{
+  background-color: #ff000024;
+  padding: 14px;
+  border-radius: 5px;
+ 
+}
+.articels_dynimic_bottom_div .full-width-container .flex-row-box .flex-right{
+ text-align: center;
+}
+.articels_dynimic_bottom_div   {
+  line-height: 23px !important; 
+}
+.articels_dynimic_bottom_div h3{
+
 }

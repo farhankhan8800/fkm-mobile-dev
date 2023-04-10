@@ -2,19 +2,7 @@ import React from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 import { Box, Button, Typography } from "@mui/material";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { styled } from "@mui/system";
-import TabsUnstyled from "@mui/base/TabsUnstyled";
-import TabsListUnstyled from "@mui/base/TabsListUnstyled";
-import TabPanelUnstyled from "@mui/base/TabPanelUnstyled";
 
-import TabUnstyled, { tabUnstyledClasses } from "@mui/base/TabUnstyled";
 import axios from "axios";
 import { withdrawal_historyAPI } from "service/API";
 import { useState } from "react";
@@ -168,18 +156,18 @@ const WithdrawHistory = () => {
       <HeadTag headeTitle={headeTitle}></HeadTag>
       <Header></Header>
       <div style={{ paddingTop: "56px" }}>
-        <Box
-          sx={{
-            p: 2,
+        <div
+          style={{
+             padding:"15px",
             margin: "10px 10px 0",
-            bgcolor: "#f1f1f1",
+            background: "#f1f1f1",
             borderRadius: "5px",
           }}
         >
-          <Typography component="p" fontSize="13px" color="gray">
+          <p className="p_tag_big">
             {setCashback_history_title ? cashback_history_title : "Loding.."}
-          </Typography>
-        </Box>
+          </p>
+        </div>
         <div sx={{ p: 2 }}>
           <div sx={{ width: "100%" }}>
             <div className="container">
@@ -255,7 +243,6 @@ const WithdrawHistory = () => {
                     )}
                   </div>
                 </div>
-
                 <div
                   className={`content ${getActiveClass(2, "active-content")}`}
                 >

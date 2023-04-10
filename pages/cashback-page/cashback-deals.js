@@ -1,5 +1,4 @@
-import { Button, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+
 import axios from "axios";
 import CashbackDealPageCard from "components/cashback-page-components/CashbackPageDealCard";
 import Header from "components/headerComponent/Header";
@@ -88,22 +87,21 @@ const loadMoreFun = ()=>{
       >
         <div className="top_box">
           <h3>Earn Real Money When You Shop Online</h3>
-          <Typography fontSize={14} sx={{ margin: "10px 0" }}>
+          <p  style={{ margin: "10px 0",fontSize:"14"}}>
             Get upto 100% Cashback at over 200+ Online E-commerce stores in
             India. Stores pay us a commission for sending you onto their store,
             and we at FreeKaaMaal shares the commission with you as Cash Back.
-          </Typography>
+          </p>
 
-          <Box>
+          <div>
             <Link className="Shop__Start" href="">
               Join & start Earning Now
             </Link>
-          </Box>
+          </div>
         </div>
         <div className="middle_box">
           <div className="filter_box">
             <div className="filter_box_left">
-              {/* <Image src="https://images.freekaamaal.com/common-images/cb-deals-filter.png" width={25} height={25} alt=""></Image> */}
               <h5 onClick={filter_box_left_fn}>Search By Category</h5>
             </div>
             <div className="filter_box_right">
@@ -111,8 +109,7 @@ const loadMoreFun = ()=>{
             </div>
             {search_by_store ? (
               <div className="filter_box_left_ab filter_box_ab">
-                {" "}
-                <input type="text" />{" "}
+                <input type="text" />
               </div>
             ) : (
               ""
@@ -131,28 +128,25 @@ const loadMoreFun = ()=>{
             
           </div>
           <div style={{ textAlign: "center" }}>
-            <Button variant="contained" sx={{ color: "#fff" }} onClick={loadMoreFun}>
+            <button style={{ color: "#fff" }} className="contain_button"  onClick={loadMoreFun}>
               View All{" "}
-            </Button>
+            </button>
           </div>
           <div>
             <div className="how_cashback_work_box">
-              <Typography fontWeight={600} variant="h4" sx={{ color: "#fff" }}>
+              <h5 style={{color: "#fff",fontWeight:"600"}}>
                 How Cashback Works?
-              </Typography>
-              <Typography
-                variant="h4"
-                fontSize={12}
-                sx={{ color: "#fff" }}
-                lineHeight={2}
+              </h5>
+              <p
+                sx={{ color: "#fff"  }}
               >
                 Now shop through FreeKaaMaal and get cashback on every purchase.
                 We get commission for every sale that you do through us and now
                 we will be passing on that commission back to our users. Shop
                 from our partner stores and get upto 100% cashback. This is what
                 we call Free Ki Shopping
-              </Typography>
-              <a href=""> Know More </a>
+              </p>
+              <Link href=""> Know More </Link>
             </div>
           </div>
         </div>
@@ -195,20 +189,7 @@ const loadMoreFun = ()=>{
           .filter_box h5:hover {
             color: gray;
           }
-           {
-            /* .filter_box h5:after {
-    position: absolute;
-    content: "";
-    width: 10px;
-    height: 10px;
-    border-bottom: 2px solid #000;
-    transform: rotate(45deg);
-    top: 3px;
-    border-right: 2px solid #000;
-    right: 20px;
-    cursor: pointer;
-} */
-          }
+          
           .filter_box_left_ab {
             right: 4px;
           }

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import { Box, Typography } from "@mui/material";
 import Bank from "components/add-account/Bank";
 import { useEffect } from "react";
 import OtherBank from "components/add-account/OtherBank";

@@ -36,7 +36,7 @@ const HotDealsCards = (props) => {
   
   return (
     <>
-      <div className="flex_div">
+      <div className="flex_div " style={{justifyContent:"center"}}>
         {hotDeals ? (
           <>
             {hotDeals &&
@@ -61,9 +61,11 @@ const HotDealsCards = (props) => {
                   >
                     <div
                       style={{
-                        background: "#f1f1f16b",
+                        background: "rgb(242 239 239 / 62%)",
                         border: "1px solid #f1f1f16b",
                         position: "relative",
+                        borderRadius: "7px",
+                        overflow: "hidden",
                         boxShadow: "none",
                       }}
                     >
@@ -115,17 +117,20 @@ const HotDealsCards = (props) => {
                                 style={{ borderRadius: "7px" }}
                               />
                             </div>
-                            <div
+                            <p
                               style={{
-                                color: "#000",
+                                color: "rgb(70 70 70)",
                                 padding: "4px 0",
+                                paddingBottom:"7px",
                                 fontSize: "11px",
                                 overflow:"hidden",
-                                height:"51px"
+                                height:"51px",
+                                lineHeight: "1.50"
+
                               }}
                             >
                               {deal_title ? deal_title : title}{" "}
-                            </div>
+                            </p>
                             <div  style={{ paddingTop: "4px" }}>
                               <strong className="card_amouunt">
                                 &#8377;{offer_price}

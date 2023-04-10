@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Button, Divider, Typography } from "@mui/material";
+
 import Link from "next/link";
 import Image from "next/image";
 import Header from "components/headerComponent/Header";
@@ -84,10 +84,9 @@ const CouponCodeCopy = () => {
 
       <div style={{ paddingTop: "56px" }}>
         {couponCode ? (
-          <Box component="div" sx={{ p: 4, paddingTop: "100px" }}>
-            <Box
-              component="div"
-              sx={{
+          <div style={{ padding: "30px", paddingTop: "100px" }}>
+            <div
+              style={{
                 padding: "50px 15px 20px",
                 position: "relative",
                 textAlign: "center",
@@ -95,33 +94,21 @@ const CouponCodeCopy = () => {
                 borderRadius: "10px",
               }}
             >
-              <Box
-                component="div"
-                style={cardCupon}
-                sx={{ position: "absolute" }}
-              >
+              <div style={cardCupon}>
                 <Image
                   src={couponCode.store_image}
                   width={150}
                   height={50}
                   alt="store"
                 />
-              </Box>
-              <Box>
-                <Typography
-                  component="p"
-                  sx={{ fontWeight: "600", fontSize: "14px" }}
-                >
+              </div>
+              <div>
+                <p style={{ fontWeight: "600", fontSize: "14px" }}>
                   {couponCode.description}
-                </Typography>
-                <Typography
-                  component="p"
-                  sx={{ marginTop: "20px", fontSize: "14px" }}
-                >
-                  {}
-                </Typography>
-              </Box>
-              <Box component="div" margin="10px 0" position="relative">
+                </p>
+                <p style={{ marginTop: "20px", fontSize: "14px" }}>{}</p>
+              </div>
+              <div  style={{margin:"10px 0", position:"relative"}}>
                 <input
                   id="couponCode"
                   style={{
@@ -135,44 +122,49 @@ const CouponCodeCopy = () => {
                   value={couponCode.coupon_code}
                   variant="outlined"
                 />
-                <Button
+                <button
                   onClick={copyCode}
                   id="copyButton"
-                  sx={{
-                    color: "#fff",
+                  style={{
+                    color:" rgb(255, 255, 255)",
                     position: "absolute",
-                    padding: "6px 40px",
-                    top: "1px",
-                    right: "0",
-                    borderRadius: "none",
+                    padding: "6px 11px",
+                    top: "3px",
+                    right:' 6px',
+                    minWidth: "89px"
                   }}
-                  variant="contained"
+                 className="contain_button"
                 >
                   Copy
-                </Button>
-              </Box>
-              <Box display="flex" justifyContent="space-around" padding="5px 0">
-                <Button>
+                </button>
+              </div>
+              <div style={{display:"flex" ,justifyContent:"space-around", padding:"5px 0"}}>
+                <button>
                   <Link
                     href={`/cashback-activated/${1}`}
                     style={{ color: "green" }}
                   >
                     Earn Cashback
                   </Link>{" "}
-                </Button>
-                <Divider orientation="vertical" flexItem />
-                <Button>
+                </button>
+                <div className="divider_line" />
+                <div>
                   <Link href="/" style={{ color: "gray" }}>
                     Skip Cashback
                   </Link>{" "}
-                </Button>
-              </Box>
-            </Box>
-          </Box>
+                </div>
+              </div>
+            </div>
+          </div>
         ) : (
           ""
         )}
       </div>
+      <style>{`
+      .divider_line{
+        border-left: 0.5px solid #cbc6c6b5;
+      }
+      `}</style>
     </>
   );
 };

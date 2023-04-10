@@ -19,8 +19,8 @@ const HotDeals = (props) => {
         style={{ padding: "13px 3px 3px",alignItems:"center",paddingRight:"10px"}}
       >
         <div >
-          <div className="d_flex" >
-            <div >
+          <div className="d_flex" style={{alignItems:"center",justifyContent:"center"}}>
+         
               <div  style={{ width: "30px", marginRight: "10px" }}>
                 <Image
                   src={hotDealsImage}
@@ -29,7 +29,7 @@ const HotDeals = (props) => {
                   height={29}
                 />
               </div>
-            </div>
+            
             <div >
               <h6 className="heading">
                 {" "}

@@ -216,8 +216,8 @@ return(
           color: "red";
         }
         .articels_dynimic_bottom_div .articels_dynimic_bottom_div_contant {
-          background: #fff2e6;
-          padding: 20px;
+          
+          padding: 10px;
           border-radius: 4px;
         }
         .articels_dynimic_bottom_div .articels_dynimic_bottom_div_contant h3 {

@@ -10,6 +10,7 @@ import contentWritingIcon from "../../public/images/icon/content-writing.png";
 import phoneCallIcon from "../../public/images/icon/phone-call.png";
 import powerOffIcon from "../../public/images/icon/power-off.png";
 import loginIcon from "../../public/images/icon/login-account.png";
+
 import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 export const menuList = [
@@ -121,6 +122,8 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
               boxShadow: "0px 2px 13px 3px #cecece",
             }}
           >
+            <div>
+
             <div
               style={{
                 padding: "10px 13px",
@@ -258,13 +261,14 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
                   )}
                 </div>
               </ul>
+            </div>
             
           </div>
         </div>
       ) : (
         ""
       )}
-      <style>{`
+      <style jsx>{`
       .avatar_div{
         padding: 10px;
         border: none;

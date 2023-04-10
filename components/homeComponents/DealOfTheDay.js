@@ -4,7 +4,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
 import hotdealImage from "../../public/images/hot-sale.png";
-import { Grid, Box, Typography, Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
 
 const DealOfTheDay = (props) => {
@@ -37,7 +36,7 @@ const DealOfTheDay = (props) => {
               </h6>
             </div>
           </div>
-          <Box sx={{ padding: "2px 10px" }}>
+          <div style={{ padding: "2px 10px" }}>
             <Swiper
               className="deal_of_the_day_component"
               slidesPerView={1.8}
@@ -63,7 +62,7 @@ const DealOfTheDay = (props) => {
               
             </Swiper>
             
-          </Box>
+          </div>
         </>
       ) : (
         <></>

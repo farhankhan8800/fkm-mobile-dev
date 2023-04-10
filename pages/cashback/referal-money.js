@@ -82,16 +82,16 @@ const ReferalMoney = () => {
       <HeadTag headeTitle={headeTitle}></HeadTag>
       <Header></Header>
       <div style={{ paddingTop: "56px" }}>
-        <Box
-          component="div"
-          sx={{ p: 2, m: 2, mt: 0, background: "#f7f7f7", borderRadius: "5px" }}
+        <div
+          
+          style={{ padding:"16px",margin:"15px", marginTop: 0, background: "#f7f7f7", borderRadius: "5px" }}
         >
-          <Box sx={{}}>
-            <Typography variant="p" fontWeight={400} color="initial">
+          <div>
+            <p className="p_tag_big">
               Select Your Payment Mode
-            </Typography>
-          </Box>
-          <Box>
+            </p>
+          </div>
+          <div>
             <select
               className="select_tag"
               onChange={accountHandler}
@@ -102,16 +102,16 @@ const ReferalMoney = () => {
               <option value="bank">Bank</option>
               <option value="paytm">Paytm</option>
             </select>
-          </Box>
+          </div>
           {serverdata ? <Alert severity="info">{serverdata}</Alert> : ""}
-          <Box>
+          <div>
             <div>{activeBank ? <ReferalBank userData={userData} /> : ""}</div>
 
             <div>
               {activePaytm ? <ReferalOtherBank userData={userData} /> : ""}
             </div>
-          </Box>
-        </Box>
+          </div>
+        </div>
       </div>
       <style jxs>{`
       .select_tag{

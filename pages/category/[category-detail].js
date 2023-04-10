@@ -9,6 +9,9 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useRouter } from "next/router";
 import axios from "axios";
 import DealsAndCouponsCategory from "components/couponsComponents/DealsAndCouponsCategory";
+import Spinner from "../../components/utilites/Spinner"
+
+
 
 const apiAuth = process.env.API_AUTH;
 
@@ -56,22 +59,20 @@ const CategoryDetail = () => {
 
       <Header />
       <div style={{ paddingTop: "56px" }}>
-        <Box component="div" sx={{ paddingTop: "80px", bgcolor: "#F7F7F7" }}>
+        <div component="div" style={{ paddingTop: "80px", background: "#F7F7F7" }}>
           {categoryProduct ? (
-            <Box
-              component="div"
-              sx={{
+            <div
+                style={{
                 width: "100%",
                 padding: "10px 20px",
-                bgcolor: "#fff",
+                background: "#fff",
                 position: "relative",
               }}
             >
-              <Box
-                component="div"
-                sx={{
-                  p: 2,
-                  bgcolor: "#fff",
+              <div
+                style={{
+                 padding:"15px",
+                  background: "#fff",
                   borderRadius: "100px",
                   position: "absolute",
                   left: "50%",
@@ -88,48 +89,46 @@ const CategoryDetail = () => {
                   src={categoryProduct.cate_img_url}
                   alt="taddy bear"
                 />
-              </Box>
-              <Box component="div" sx={{ padding: "50px 0" }}>
-                <Typography
-                  component="p"
-                  fontWeight="600"
-                  fontSize="14px"
-                  color="#000"
-                  padding="5px"
-                  textAlign="center"
+              </div>
+              <div style={{ padding: "50px 0" }}>
+                <p
+                  style={{fontWeight:"600",
+                  fontSize:"14px",
+                  color:"#000",
+                  padding:"5px",
+                  textAlign:"center"}}
                 >
                   {categoryProduct.name}
-                </Typography>
-                <Typography
-                  component="p"
-                  color="#000"
-                  fontSize="12px"
-                  textAlign="center"
+                </p>
+                <p
+                style={{ color:"#000",
+                fontSize:"12px",
+                textAlign:"center"}}
                 >
                   {
                     <div
                       dangerouslySetInnerHTML={{ __html: categoryProductTitle }}
                     />
                   }
-                </Typography>
-              </Box>
-            </Box>
+                </p>
+              </div>
+            </div>
           ) : (
-            <Box
-              sx={{
+            <div
+              style={{
                 display: "flex",
                 alignItems: "center",
                 paddingBottom: "40px",
                 justifyContent: "center",
               }}
             >
-              <CircularProgress />
-            </Box>
+            <Spinner />
+            </div>
           )}
           <DealsAndCouponsCategory
            cate_slug={cate_slug}
           />
-        </Box>
+        </div>
       </div>
     </>
   );

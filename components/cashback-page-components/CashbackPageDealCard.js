@@ -5,52 +5,45 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 
-const CashbackDealPageCard = ({cahsbackDeal}) => {
-  const [dealData, setDealData] = useState()
+const CashbackDealPageCard = ({ cahsbackDeal }) => {
+  const [dealData, setDealData] = useState();
 
-  useEffect(()=>{
-    setDealData(cahsbackDeal)
-  },[cahsbackDeal])
-
-
+  useEffect(() => {
+    setDealData(cahsbackDeal);
+  }, [cahsbackDeal]);
 
   return (
     <>
-    {
-       dealData && dealData.map((item, i)=>{
-return(<div key={i} className="store_wrapper deal_wrapper">
-<Link href="cashback-deals">
-  <div className="deal_img">
-    <Image
-      alt=""
-      src={item.image_url}
-      width={112}
-      height={100}
-    />
-  </div>
-  <Image
-    alt=""
-    src={item.store_img}
-    width={92}
-    height={32}
-  />
-  <div className="prize_tag_ab">
-    {" "}
-    <strong>{item.cahsback}</strong> 
-  </div>
-</Link>
-<Typography
-  fontSize={12}
-  sx={{ margin: "7px 0", overflow: "hidden", height: "59px" }}
->
-  {item.title}
-</Typography>
-</div>)
-       })
-    }
-       
+      {dealData &&
+        dealData.map((item, i) => {
+          return (
+            <div key={i} className="store_wrapper deal_wrapper">
+              <Link href="cashback-deals">
+                <div className="deal_img">
+                  <Image alt="" src={item.image_url} width={112} height={100} />
+                </div>
+                <Image alt="" src={item.store_img} width={92} height={32} />
+                <div className="prize_tag_ab">
+                  {" "}
+                  <strong>{item.cahsback}</strong>
+                </div>
+              </Link>
+              <p
+                style={{
+                  margin: "7px 0",
+                  overflow: "hidden",
+                  height: "59px",
+                  fontSize: "12px",
+                }}
+              >
+                {item.title}
+              </p>
+            </div>
+          );
+        })}
+
       <style jsx>{`
-      .store_wrapper {
+        .store_wrapper {
           background: #fff;
           width: 168px;
           height: 100px;
@@ -88,7 +81,6 @@ return(<div key={i} className="store_wrapper deal_wrapper">
           flex-direction: column;
           padding: 10px;
         }
-       
       `}</style>
     </>
   );

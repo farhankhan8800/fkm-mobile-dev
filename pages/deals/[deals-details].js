@@ -90,13 +90,13 @@ const DealsDetails = () => {
           <div>
             <HeadTag headeTitle={`${deal.deal_title} || Freekaamaal`} />
             <div style={{ padding: "10px" }}>
-              <h3 style={{ fontWeight: "600", color: "#4a4a4a" }}>
+              <h3 style={{ fontWeight: "600", color: "#4a4a4a",lineHeight: '1.55'}}>
                 {deal.deal_title}
               </h3>
               <div
                 style={{
                   padding: "20px 0 20px ",
-                  margin: "10px 7px 10px ",
+                  margin: "17px 0",
                   border: "1px solid #e1dadab3",
                   borderRadius: "10px",
                   position: "relative",
@@ -132,10 +132,10 @@ const DealsDetails = () => {
                     style={{ alignItems: "center" }}
                   >
                     <div>
-                      <div className="card_mrp_box">
+                      <h3 className="card_mrp_box">
                         <strong>&#8377; {deal.offer_price} </strong>{" "}
                         <span>&#8377; {deal.price}</span>
-                      </div>
+                      </h3>
                     </div>
                     <div>
                       <div style={{ maxWidth: "100px" }}>
@@ -236,11 +236,11 @@ const DealsDetails = () => {
             position: absolute;
             content: "";
             top: 10px;
-            left: 0;
+            left: -1px;
             height: 1px;
-            width: 100%;
+            width: 106%;
             background-color: red;
-            transform: rotate(-10deg);
+            transform: rotate(358deg);
           }
           .product_offer {
             position: absolute;
