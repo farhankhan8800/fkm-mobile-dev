@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Alert, Box, Button, TextField } from "@mui/material";
+
 import axios from "axios";
 import {add_accountAPI} from "service/API"
-import { useEffect } from "react";
 import { ImWarning } from "react-icons/im";
 import { AiFillInfoCircle } from "react-icons/ai";
+import { useRouter } from "next/router";
 
 const apiAuth = process.env.API_AUTH
+const DEVICE_TYPE = process.env.DEVICE_TYPE
+
 
 const Bank = () => {
   const [name, setName] = useState();
@@ -14,18 +16,11 @@ const Bank = () => {
   const [accountnumber, setAccountNumber] = useState();
   const [ifsc, setIfsc] = useState();
   const [bankName, setBankName] = useState();
-  const [authToken, setAuthToken] = useState()
   const [serverdata, setServerdata] = useState()
- 
   const [notValid, setNotValid] = useState(null);
 
-
-  useEffect(()=>{
-    setAuthToken(JSON.parse(localStorage.getItem("user")).token)
-  },[])
-
-
-//   debugger
+  const router = useRouter()
+  const authToken = useUserToken()
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +34,7 @@ const Bank = () => {
                 try {
                   let{data} = await axios.post(add_accountAPI,{
                       apiAuth:apiAuth,
-                      device_type: "4",
+                      device_type: DEVICE_TYPE,
                       phone: phone,
                       account_name:name,
                       account_type:"bank",
@@ -53,6 +48,9 @@ const Bank = () => {
                           }
                     })
                   //  console.log(data)
+                  if(data.code == "401"){
+                    return router.push("/session-expired")
+                  }
                    if(data.status == 1){
                     setTimeout(function(){
                       setName("");
@@ -191,7 +189,7 @@ const Bank = () => {
           </div>
      </div>
      
-      <style jxs>{`
+      <style jsx>{`
     label{
         display: block;
         padding: 9px 2px 5px;

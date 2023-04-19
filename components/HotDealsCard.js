@@ -5,38 +5,38 @@ import Image from "next/image";
 
 const HotDealsCards = (props) => {
   const [hotDeals, SethotDeals] = useState(null);
-  
-  useEffect(()=>{
-      SethotDeals(props.hotdeals)
-  },[props])
+
+  useEffect(() => {
+    SethotDeals(props.hotdeals)
+  }, [props])
 
   const Skeleton = []
-   for (let input = 1; input <= 10; input++) {
-    Skeleton.push( <div className="Skeleton_hotDeal_card_wrapper" style={{width:"45%",marginBottom:"25px"}}>
-    <div class="sk_livedeals_card">
-      <p></p>
-    </div>
-    <div class="sk_livedeals_card_text">
-     <p></p>
-    </div>
-    <div class="sk_livedeals_card_text">
-     <p></p>
-    </div>
-    <div style={{display:"flex",justifyContent:"flex-start",alignItems:"center"}}>
-    <div class="sk_livedeals_card_button">
-     <p></p>
-    </div>
-    <div class="sk_livedeals_card_button">
-     <p></p>
-    </div>
-    </div>
+  for (let input = 1; input <= 10; input++) {
+    Skeleton.push(<div className="Skeleton_hotDeal_card_wrapper" style={{ width: "45%", marginBottom: "25px" }}>
+      <div class="sk_livedeals_card">
+        <p></p>
+      </div>
+      <div class="sk_livedeals_card_text">
+        <p></p>
+      </div>
+      <div class="sk_livedeals_card_text">
+        <p></p>
+      </div>
+      <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }}>
+        <div class="sk_livedeals_card_button">
+          <p></p>
+        </div>
+        <div class="sk_livedeals_card_button">
+          <p></p>
+        </div>
+      </div>
     </div>
     )
-   }
-  
+  }
+
   return (
     <>
-      <div className="flex_div " style={{justifyContent:"center"}}>
+      <div className="flex_div " style={{ justifyContent: "center" }}>
         {hotDeals ? (
           <>
             {hotDeals &&
@@ -46,6 +46,7 @@ const HotDealsCards = (props) => {
                   deal_image,
                   slug_url,
                   deal_slug,
+                  deal_slug_url,
                   title,
                   store_img_url: store_image,
                   deal_title,
@@ -56,7 +57,6 @@ const HotDealsCards = (props) => {
                 return (
                   <div
                     style={{ maxWidth: "154px", margin: "13px" }}
-                   
                     key={i}
                   >
                     <div
@@ -71,10 +71,7 @@ const HotDealsCards = (props) => {
                     >
                       <Link
                         className="card_link"
-                        href={
-                          slug_url
-                            ? `/deals/${slug_url}`
-                            : `/deals/${deal_slug}`
+                        href={slug_url ? `/deals/${slug_url}` : deal_slug ? `/deals/${deal_slug} ` : deal_slug_url ? `/deals/${deal_slug_url} ` : `/deals/${slug_url}`
                         }
                       >
                         <span>
@@ -87,8 +84,12 @@ const HotDealsCards = (props) => {
 
                         <div>
                           <div
-                            
-                            style={{ padding: "23px 21px 0px" }}
+                            style={{
+                              padding: "23px 11px 0px", padding: " 23px 11px 0px",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center"
+                            }}
                           >
                             <Image
                               src={deal_image}
@@ -121,17 +122,17 @@ const HotDealsCards = (props) => {
                               style={{
                                 color: "rgb(70 70 70)",
                                 padding: "4px 0",
-                                paddingBottom:"7px",
+                                paddingBottom: "7px",
                                 fontSize: "11px",
-                                overflow:"hidden",
-                                height:"51px",
+                                overflow: "hidden",
+                                height: "51px",
                                 lineHeight: "1.50"
 
                               }}
                             >
                               {deal_title ? deal_title : title}{" "}
                             </p>
-                            <div  style={{ paddingTop: "4px" }}>
+                            <div style={{ paddingTop: "4px" }}>
                               <strong className="card_amouunt">
                                 &#8377;{offer_price}
                               </strong>
@@ -153,7 +154,7 @@ const HotDealsCards = (props) => {
       </div>
       {!hotDeals && (
         <div className="Skeleton_hotDeal_card">
-          { Skeleton }
+          {Skeleton}
         </div>
       )}
       <style jsx>{`

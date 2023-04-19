@@ -11,12 +11,13 @@ import ArticlesTabs from "components/articles-components/ArticlesTabs";
 import Link from "next/link";
 import { hindiArticleAPI } from "service/API";
 import axios from "axios";
+import { useUserToken } from "service/customHooks";
 
 const apiAuth = process.env.API_AUTH;
-
+const DEVICE_TYPE = process.env.DEVICE_TYPE;
 const Articels = () => {
   const [articels_data, setArticels_data] = useState();
-  const [userToken, setUserToken] = useState();
+
   const [featured_article, setFeatured_article] = useState();
   const [mviewed_article, setMviewed_article] = useState();
   const [all_articles, setAll_articles] = useState([]);
@@ -33,19 +34,16 @@ const Articels = () => {
     setOption(item);
     setPage(1);
   };
+ 
+  const userToken =  useUserToken();
 
-  useEffect(() => {
-    if (localStorage.getItem("user")) {
-      setUserToken(JSON.parse(localStorage.getItem("user")).token);
-    }
-  }, []);
   const getData = async () => {
     try {
       let { data } = await axios.post(
         hindiArticleAPI,
         {
           apiAuth: apiAuth,
-          device_type: "4",
+          device_type:DEVICE_TYPE,
           page: page,
           option: option,
         },

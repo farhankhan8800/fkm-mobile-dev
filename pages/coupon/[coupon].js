@@ -7,9 +7,11 @@ import HeadTag from "components/headTagComponent/HeadTag";
 import { useRouter } from "next/router";
 import { coupon_detail } from "service/API";
 import axios from "axios";
-import PageNotFound from "components/PageNotFound";
+
+import { useUserToken } from "service/customHooks";
 
 const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE;
 
 const cardCupon = {
   position: "absolute",
@@ -33,8 +35,10 @@ const copyCode = () => {
 const CouponCodeCopy = () => {
   const [couponCode, setCouponCode] = useState({});
   const [CouponNotFound, setCouponNotFound] = useState(false);
+
   const router = useRouter();
   const couponid = router.query["coupon"];
+  const authToken = useUserToken();
 
   const GetData = async () => {
     try {
@@ -47,6 +51,7 @@ const CouponCodeCopy = () => {
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: authToken,
           },
         }
       );
@@ -69,13 +74,7 @@ const CouponCodeCopy = () => {
   const headeTitle = "Copy Code | Freekaamaal";
 
   if (CouponNotFound === true) {
-    return (
-      <>
-        <Header />
-        <HeadTag headeTitle={`404 Page Not Found|| Freekaamaal`} />
-        <PageNotFound />
-      </>
-    );
+   return router.push("/404")
   }
   return (
     <>

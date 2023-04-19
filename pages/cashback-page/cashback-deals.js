@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import {cashbackdealAPI} from "service/API"
+import { useUserToken } from "service/customHooks";
 
 const apiAuth = process.env.API_AUTH;
 const DEVICE_TYPE = process.env.API_AUTH;
@@ -15,14 +16,9 @@ const CashbackDeals = () => {
   const [search_by_category, setSearch_by_category] = useState(false);
   const [search_by_store, setSearch_by_store] = useState(false);
   const [cahsbackDeal, setCahsbackDeal] = useState([])
-  const [authToken, setAuthToken] = useState();
   const [page,setPage]= useState(1)
 
-  useEffect(() => {
-    if (JSON.parse(localStorage.getItem("user"))) {
-      setAuthToken(JSON.parse(localStorage.getItem("user")).token);
-    }
-  }, []);
+  const authToken = useUserToken();
 
   const getdata = async ()=>{
     try {
@@ -39,8 +35,8 @@ const CashbackDeals = () => {
           },
         }
       )
-      console.log(data.response)
-     
+
+      // console.log(data.response)
       setCahsbackDeal([...cahsbackDeal,...data.response.cashbackdeal])
       // console.log(data.response)
     } catch (error) {

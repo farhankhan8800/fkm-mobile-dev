@@ -6,6 +6,7 @@ import Link from "next/link";
 import cashbackImage from "../../public/images/money.png";
 import { homeAPI2 } from "service/API.js";
 import axios from "axios";
+import { useUserToken } from "service/customHooks";
 
 const DEVICE_TYPE = process.env.DEVICE_TYPE
 const apiAuth = process.env.API_AUTH
@@ -13,15 +14,10 @@ const apiAuth = process.env.API_AUTH
 const CashBackStore = () => {
   const [stores, setStores] = useState([]);
   const [storeTabs,setStoreTabs] = useState([])
-  const [authToken, setAuthToken] = useState()
   const [cat_id,setCat_id] = useState("all")
   const [activeTab, setActiveTab]= useState(true)
 
-  useEffect(() => {
-    if (JSON.parse(localStorage.getItem("user"))) {
-      setAuthToken(JSON.parse(localStorage.getItem("user")).token);
-    }
-  }, []);
+   const authToken = useUserToken()
 
   useEffect(() => {
     const getAPI2 = async () => {
@@ -146,7 +142,6 @@ const CashBackStore = () => {
       <style jsx>
         {`
        .tab {
-        background-color: #ffeade;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -163,7 +158,9 @@ const CashBackStore = () => {
         font-weight: 600;
         color: #222222;
         border-radius: 4px;
+        background-color: #ffeade;
         min-width: 241px;
+        margin-right: 10px;
         letter-spacing: 1px;
     }
         .tab button:hover {

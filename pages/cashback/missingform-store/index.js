@@ -7,13 +7,17 @@ import { Box, Button, Typography, TextField, Alert } from "@mui/material";
 import Header from "components/headerComponent/Header";
 import HeadTag from "components/headTagComponent/HeadTag";
 import axios from "axios";
+import protectRoute from "service/protect-route";
+import { useUserToken } from "service/customHooks";
 
 const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE
+
 
 const MissingformStore = () => {
   const [inputForm, setInputForm] = useState();
   const [store_id, setStore_id] = useState();
-  const [userToken, setUserToken] = useState();
+
   const [serverError, setServerError] = useState();
   const [clientError, setClientError] = useState();
   const [mess, setMessage] = useState();
@@ -29,12 +33,12 @@ const MissingformStore = () => {
   });
 
   const route = useRouter();
+  const userToken = useUserToken()
 
   useEffect(() => {
     let InputData = sessionStorage.getItem("missingStoreForm");
     setInputForm(JSON.parse(InputData));
     setStore_id(sessionStorage.getItem("store_id"));
-    setUserToken(JSON.parse(localStorage.getItem("user")).token);
   }, []);
 
   const submitForm = async (e) => {
@@ -46,7 +50,7 @@ const MissingformStore = () => {
           saveMissingAPI,
           {
             apiAuth: apiAuth,
-            device_type: "4",
+            device_type:DEVICE_TYPE,
             name: formData.name,
             store_id: store_id,
             clickid: formData.click_id,
@@ -64,6 +68,9 @@ const MissingformStore = () => {
             },
           }
         );
+        if(data.code == "401"){
+          return route.push("/session-expired")
+        }
         if (data.status == 1) {
           setMessage(data);
           route.push("cashback-summary/missing-claimform");
@@ -289,4 +296,4 @@ const MissingformStore = () => {
   );
 };
 
-export default MissingformStore;
+export default protectRoute(MissingformStore) ;

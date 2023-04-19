@@ -9,6 +9,7 @@ import { useState } from "react";
 
 const LiveDeals = (props) => {
   const [deal, setDeal] = useState();
+  
   useEffect(() => {
     setDeal(props.liveDeal);
   }, [props]);
@@ -46,9 +47,9 @@ const LiveDeals = (props) => {
 
               return (
                 <SwiperSlide key={i}>
-                  <div className="slider_card" style={{ height: "190px" }}>
+                  <div className="slider_card" style={{  }}>
                     <Link
-                      className="card_link"
+                      className="Live_deal_card_link"
                       href={`deals/${slug_url}`}
                       rel="noopener"
                     >
@@ -67,7 +68,7 @@ const LiveDeals = (props) => {
                         </div>
 
                         <div
-                          style={{ background: "#f1f1f16b", padding: "7px" }}
+                          style={{ padding: "7px" }}
                         >
                           <p
                           className="p_tag_small"
@@ -135,15 +136,7 @@ const LiveDeals = (props) => {
 
       <style jsx>
         {`
-          .card_link {
-            text-decoration: none;
-            border-radius: 10px;
-            width: 100%;
-            height: 190px;
-            display: inline-block;
-            overflow: hidden;
-            position: relative;
-          }
+          
 
           .strong_tag {
             font-weight: 900;
@@ -158,7 +151,7 @@ const LiveDeals = (props) => {
             justify-content: center;
             padding-top: 16px;
             padding-bottom: 7px;
-            background: #f1f1f16b;
+            
           }
 
           .card_amouunt {
@@ -200,7 +193,7 @@ const LiveDeals = (props) => {
             color: #fff;
           }
           .slider_card{
-            height: 190px;
+            
             box-shadow: 0px 1px 18px -3px #d0d0d0;
             border: 1px solid #f1efef;
             border-radius: 7px;

@@ -1,10 +1,11 @@
 import React from "react";
-import { Typography, Box, Button } from "@mui/material";
+
 
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 
 import FrequentlyQuestion from "../../components/FrequentlyQuestion";
+import protectRoute from "service/protect-route";
 
 const referEarn = () => {
   const copyLink = () => {
@@ -106,4 +107,4 @@ const referEarn = () => {
   );
 };
 
-export default referEarn;
+export default protectRoute(referEarn) ;

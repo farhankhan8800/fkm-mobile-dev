@@ -26,7 +26,7 @@ const SearchPage = () => {
           apiAuth: apiAuth,
           keyword: searchText,
         });
-        console.log(data);
+        // console.log(data);
         if (data.status == 1) {
           setNoData(false);
           if (data.message == "Oops No Data Available") {

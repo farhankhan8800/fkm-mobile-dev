@@ -11,27 +11,21 @@ import CashbackStorePageCard from "components/cashback-page-components/CashbackP
 import {cashbackstoreAPI} from "service/API"
 import { useState } from "react";
 import { useEffect } from "react";
+import { useUserToken } from "service/customHooks";
 
 const apiAuth = process.env.API_AUTH;
 const DEVICE_TYPE = process.env.DEVICE_TYPE;
-const headeTitle = "100% Cashback | Freekaamaal";
+const headeTitle = "Cashback Store | Freekaamaal";
 
 
 const CashbackStore = () => {
   const [cahsbackstore, setCahsbackstore] = useState([])
-  const [authToken, setAuthToken] = useState();
   const [option, setOption] = useState("hundredpercent");
   const [page, setPage]= useState(null)
   const [noData, setNoData] = useState()
   const [ToggleState, setToggleState] = useState(1);
 
-
-
-  useEffect(() => {
-    if (JSON.parse(localStorage.getItem("user"))) {
-      setAuthToken(JSON.parse(localStorage.getItem("user")).token);
-    }
-  }, []);
+  const authToken = useUserToken();
 
   const getdata = async ()=>{
     try {
@@ -67,12 +61,8 @@ const CashbackStore = () => {
 
 useEffect(()=>{
    getdata()
-},[authToken])
-useEffect(()=>{
-  getdata()
-},[page,option])
+},[authToken,page,option])
 
-// console.log(cahsbackstore)
 
 const tabClick = (value)=>{
   if(value == "hundredpercent"){
@@ -101,7 +91,6 @@ const addPage =()=>{
   setPage(page+1)
 }
 
-
 const toggleTab = (index) => {
   setToggleState(index);
 };
@@ -110,7 +99,6 @@ const getActiveClass = (index, className) =>
   ToggleState === index ? className : "";
 
 
- 
   return (
     <>
       <HeadTag headeTitle={headeTitle}></HeadTag>
@@ -303,25 +291,20 @@ const getActiveClass = (index, className) =>
               </div>
              
               <div className="how_cashback_work_box">
-                <Typography
-                  fontWeight={600}
-                  variant="h4"
-                  sx={{ color: "#fff" }}
+                <h4
+                  style={{ color: "#fff",fontWeight:"600" }}
                 >
                   How Cashback Works?
-                </Typography>
-                <Typography
-                  variant="h4"
-                  fontSize={12}
-                  sx={{ color: "#fff" }}
-                  lineHeight={2}
+                </h4>
+                <p
+                  style={{ color: "#fff", fontSize:"12px", lineHeight:"1.55" }}
                 >
                   Now shop through FreeKaaMaal and get cashback on every
                   purchase. We get commission for every sale that you do through
                   us and now we will be passing on that commission back to our
                   users. Shop from our partner stores and get upto 100%
                   cashback. This is what we call Free Ki Shopping
-                </Typography>
+                </p>
               </div>
               <div className="point_remamber">
                 <div className="point_remamber_ab_heading">
@@ -445,16 +428,15 @@ const getActiveClass = (index, className) =>
                   </div>
                  <div style={{ textAlign: "center", padding: "7px" }}>
                   {
-                    noData ? "No Data Found": <Button
+                    noData ? "No Data Found": <button
                     onClick={addPage}
-                   variant="contained"
+                   className="contain_button"
                    type="button"
-                   size="small"
-                   sx={{ color: "#fff" }}
+                   style={{ color: "#fff" }}
                  >
                    {" "}
                    Lode More
-                 </Button>
+                 </button>
                   }
                
               </div>

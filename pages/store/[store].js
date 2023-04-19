@@ -13,9 +13,7 @@ import { useEffect, useState } from "react";
 import { BsInfoCircle } from "react-icons/bs";
 
 import DealsAndCouponsStore from "components/couponsComponents/DealsAndCouponsStore";
-
-
-
+import { useGetUser, useUserToken } from "service/customHooks";
 
 const headeTitle = " Store | Freekaamaal";
 const apiAuth = process.env.API_AUTH;
@@ -25,15 +23,17 @@ const StoreDetails = () => {
   const [store_data, setStore_data] = useState();
   const [storeRate, setStoreRate] = useState();
   const [storeRateMore, setStoreRateMore] = useState(false);
-  const [user, setUser] = useState();
+
   const [topDescState, setTopDescState] = useState(false);
   const [tcOpenState, setTcOpenState] = useState(false);
+  
   const router = useRouter();
   const store_slug = router.query["store"];
 
-  useEffect(() => {
-    setUser(localStorage.getItem("user"));
-  }, []);
+ 
+  const user = useGetUser()
+  const authToken = useUserToken();
+
 
   const storeData = async () => {
     try {
@@ -49,13 +49,11 @@ const StoreDetails = () => {
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: authToken,
           },
         }
       );
-
-
-
-      console.log(data)
+      // console.log(data)
       if (data.status == 0 && data.error == 0) {
         router.push(`/404`);
       } else {
@@ -63,6 +61,7 @@ const StoreDetails = () => {
           setStoreRate(data.response.store_rates);
       }
     } catch (err) {
+      
     }
   };
 

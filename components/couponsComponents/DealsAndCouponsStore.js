@@ -51,14 +51,14 @@ const DealsAndCouponsStore = ({ store_slug }) => {
             setDeals([...deals, ...data.response.deals]);
           }
         } else {
-          if(data.response.coupons.length == "0"){
+          if (data.response.coupons.length == "0") {
             setNoData(true);
-          }else{
+          } else {
             setCoupons([...coupons, ...data.response.coupons]);
           }
         }
       }
-    } catch (err) {}
+    } catch (err) { }
   };
 
   useEffect(() => {
@@ -102,19 +102,18 @@ const DealsAndCouponsStore = ({ store_slug }) => {
             Coupons
           </button>
         </div>
-
         <div className="tabcontent">
           {clickTab == "deals" ? (
             <div>
               {deals.length > 0 ? (
                 <div>
                   <HotDealsCards hotdeals={deals} />
-                  <div className="flex_center" style={{paddingBottom:"20px"}}>
+                  <div className="flex_center" style={{ paddingBottom: "20px" }}>
                     {noData ? (
                       "No More Data"
                     ) : (
                       <button
-                      className="contain_button"
+                        className="contain_button"
                         onClick={addDealPage}
                         style={{ color: "#fff", fontWeight: "600" }}
                       >
@@ -129,16 +128,15 @@ const DealsAndCouponsStore = ({ store_slug }) => {
             </div>
           ) : (
             <div>
-             
               {coupons.length > 0 ? (
                 <div>
-                   <CouponsCade couponCard={coupons} />
-                  <div className="flex_center" style={{paddingBottom:"20px"}}>
+                  <CouponsCade couponCard={coupons} />
+                  <div className="flex_center" style={{ paddingBottom: "20px" }}>
                     {noData ? (
                       "No More Data"
                     ) : (
                       <button
-                      className="contain_button"
+                        className="contain_button"
                         onClick={addDealPage}
                         style={{ color: "#fff", fontWeight: "600" }}
                       >

@@ -1,76 +1,84 @@
-export const registerApi = "https://fkmdata.freekaamaal.com/user/register";
+
+
+const mainUrl = "https://fkmdata.freekaamaal.com"
+
+export const registerApi = mainUrl + "/user/register";
 
 // export const homeApi = "https://fkmdata.freekaamaal.com/home/home";
-export const homeAPI1 = "https://fkmdata.freekaamaal.com/home/part1";
+export const homeAPI1 = mainUrl + "/home/part1";
 
-export const homeAPI2 = "https://fkmdata.freekaamaal.com/home/part2";
+export const homeAPI2 = mainUrl + "/home/part2";
 
-export const allStores = " https://fkmdata.freekaamaal.com/store/allstores";
+export const allStores = mainUrl + "/store/allstores";
 
-export const allCategory = "https://fkmdata.freekaamaal.com/category/all-category";
+export const allCategory = mainUrl + "/category/all-category";
 
-export const categoryDetailApi = "https://fkmdata.freekaamaal.com/category/category-detail";
+export const categoryDetailApi = mainUrl + "/category/category-detail";
 
-export const StoreDetailApi = "https://fkmdata.freekaamaal.com/store/storedetail";
+export const StoreDetailApi = mainUrl + "/store/storedetail";
 
-export const loginUser = "https://fkmdata.freekaamaal.com/user/login";
+export const loginUser = mainUrl + "/user/login";
 
-export const AllCoupons = "https://fkmdata.freekaamaal.com/coupons/all-coupons"
+export const AllCoupons = mainUrl + "/coupons/all-coupons"
 
-export const coupon_detail= "https://fkmdata.freekaamaal.com/coupons/coupon-detail"
+export const coupon_detail = mainUrl + "/coupons/coupon-detail"
 
-export const deal_detail = "https://fkmdata.freekaamaal.com/deals/dealdetail"
+export const deal_detail = mainUrl + "/deals/dealdetail"
 
-export const verifyUser = "https://fkmdata.freekaamaal.com/user/verifyuser"
+export const verifyUser = mainUrl + "/user/verifyuser"
 
-export const clickHistoryAPI = "https://fkmdata.freekaamaal.com/cashback/click-history"
+export const clickHistoryAPI = mainUrl + "/cashback/click-history"
 
-export const cashbackHistoryAPI = "https://fkmdata.freekaamaal.com/cashback/cashback-history"
+export const cashbackHistoryAPI = mainUrl + "/cashback/cashback-history"
 
-export const withdrawal_historyAPI = "https://fkmdata.freekaamaal.com/cashback/withdrawal-history"
+export const withdrawal_historyAPI = mainUrl + "/cashback/withdrawal-history"
 
-export const missing_historyAPI = "https://fkmdata.freekaamaal.com/cashback/missing-history"
+export const missing_historyAPI = mainUrl + "/cashback/missing-history"
 
-export const referral_summaryAPI = "https://fkmdata.freekaamaal.com/cashback/referral-summary"
+export const referral_summaryAPI = mainUrl + "/cashback/referral-summary"
 
-export const add_accountAPI = "https://fkmdata.freekaamaal.com/cashback/add-account"
+export const add_accountAPI = mainUrl + "/cashback/add-account"
 
-export const withdrawMoneyAPI = "https://fkmdata.freekaamaal.com/cashback/withdraw-money"
+export const withdrawMoneyAPI = mainUrl + "/cashback/withdraw-money"
 
-export const withdrawPaymentModeAPI =  "https://fkmdata.freekaamaal.com/cashback/withdraw-payment-mode"
+export const withdrawPaymentModeAPI = mainUrl + "/cashback/withdraw-payment-mode"
 
-export const searchSuggestionApi = "https://fkmdata.freekaamaal.com/search/suggestion"
+export const searchSuggestionApi = mainUrl + "/search/suggestion"
 
- export const claimformStoreAPI = "https://fkmdata.freekaamaal.com/cashback/claimformstore"
+export const claimformStoreAPI = mainUrl + "/cashback/claimformstore"
 
- export  const userClaimformAPI = "https://fkmdata.freekaamaal.com/cashback/userclaimform"
- 
- export  const userclaimdataAPI = "https://fkmdata.freekaamaal.com/cashback/userclaimdata"
+export const userClaimformAPI = mainUrl + "/cashback/userclaimform"
 
- export const  searchAPI= "https://fkmdata.freekaamaal.com/search/search"
+export const userclaimdataAPI = mainUrl + "/cashback/userclaimdata"
 
- export const promoCodeAPI = "https://fkmdata.freekaamaal.com/cashback/userpromocode"
+export const searchAPI = mainUrl + "/search/search"
 
- export const missingStoreAPI = "https://fkmdata.freekaamaal.com/cashback/missingstore"
+export const promoCodeAPI = mainUrl + "/cashback/userpromocode"
 
- export const missingStoreClickAPI = "https://fkmdata.freekaamaal.com/cashback/missingstoreclicks"
+export const missingStoreAPI = mainUrl + "/cashback/missingstore"
 
- export const saveMissingAPI = "https://fkmdata.freekaamaal.com/cashback/savemissing"
+export const missingStoreClickAPI = mainUrl + "/cashback/missingstoreclicks"
 
- export const allArticleAPI = "https://fkmdata.freekaamaal.com/article/allArticle"
+export const saveMissingAPI = mainUrl + "/cashback/savemissing"
 
- export const hindiArticleAPI = "https://fkmdata.freekaamaal.com/article/hindi-artilce"
+export const allArticleAPI = mainUrl + "/article/allArticle"
 
- export const articleDetailsAPI = "https://fkmdata.freekaamaal.com/article/articleDetail"
+export const hindiArticleAPI = mainUrl + "/article/hindi-artilce"
 
- export const livefeed_detailAPI = "https://fkmdata.freekaamaal.com/livefeed/livefeed-detail"
+export const articleDetailsAPI = mainUrl + "/article/articleDetail"
 
- export const freebiesAPI = "https://fkmdata.freekaamaal.com/offer/offer-detail"
- 
- export const cashbackpageAPI = "https://fkmdata.freekaamaal.com/cashback/cashbackpage"
+export const livefeed_detailAPI = mainUrl + "/livefeed/livefeed-detail"
 
- export const cashbackdealAPI =  "https://fkmdata.freekaamaal.com/cashback/cashbackdeal"
+export const freebiesAPI = mainUrl + "/offer/offer-detail"
 
- export const cashbackstoreAPI =  "https://fkmdata.freekaamaal.com/cashback/cashbackstore"
- 
- export const festivalAPI =  "https://fkmdata.freekaamaal.com/festival/allfestivals"
+export const cashbackpageAPI = mainUrl + "/cashback/cashbackpage"
+
+export const cashbackdealAPI = mainUrl + "/cashback/cashbackdeal"
+
+export const cashbackstoreAPI = mainUrl + "/cashback/cashbackstore"
+
+export const festivalAPI = mainUrl + "/festival/allfestivals"
+
+export const OneFestivalAPI = mainUrl + "/festival/festivalpage"
+
+export const updateUserDataAPI = mainUrl +"/user/updateprofile"

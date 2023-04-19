@@ -2,12 +2,13 @@ import Image from "next/image";
 import React from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
+
 const fkmTestimonial = () => {
   return (
     <>
-    <Header/>
-    <HeadTag title={"Testimonial | Freekaamaal"} />
-      <div className="fkm-heroes fkm-testimonial" style={{paddingTop:"60px"}}>
+      <Header />
+      <HeadTag title={" Testimonial | Freekaamaal"} />
+      <div className="fkm-heroes fkm-testimonial" style={{ paddingTop: "60px" }}>
         <div>
           <h1 className="main-title">
             <Image
@@ -106,7 +107,7 @@ const fkmTestimonial = () => {
             If you also wanted to get featured as our superhero & wanted to tell
             your story then feel free to write us at Support@freekaamaal.com
           </p>
-          <h3 className="first-heading-title" style={{textAlign:"center", fontSize:"28px"}}> Freekaamaal Reviews </h3>
+          <h3 className="first-heading-title" style={{ textAlign: "center", fontSize: "28px" }}> Freekaamaal Reviews </h3>
           <h3 className="sec-heading-title" s>
             <Image
               src="https://images.freekaamaal.com/common-images/newtrustpilotico.svg"
@@ -278,9 +279,9 @@ const fkmTestimonial = () => {
             </div>
             <div className="rate-btn">
               <a href="https://www.trustpilot.com/review/freekaamaal.com">
-              <Image
-                    width={35}
-                    height={35}
+                <Image
+                  width={35}
+                  height={35}
                   src="https://images.freekaamaal.com/common-images/likeico9-17-21.png"
                   alt="thumb-icon"
                 />
@@ -290,9 +291,9 @@ const fkmTestimonial = () => {
             {/*-------- play store section ----- */}
             <div style={{ width: "100%" }}>
               <h3 className="sec-heading-title extra-space">
-              <Image
-                    width={40}
-                    height={40}
+                <Image
+                  width={40}
+                  height={40}
                   src="https://images.freekaamaal.com/common-images/playstoreico2021.png"
                   alt="icon"
                 />
@@ -309,9 +310,9 @@ const fkmTestimonial = () => {
                 <p>
                   Avijit Biswas
                   <strong>
-                  <Image
-                   width={17}
-                   height={16}
+                    <Image
+                      width={17}
+                      height={16}
                       src="https://images.freekaamaal.com/common-images/mapsflags.png"
                       alt="nav-icon"
                     />
@@ -339,8 +340,8 @@ const fkmTestimonial = () => {
                   Vimal Patel
                   <strong>
                     <Image
-                    width={17}
-                    height={16}
+                      width={17}
+                      height={16}
                       src="https://images.freekaamaal.com/common-images/mapsflags.png"
                       alt="nav-icon"
                     />
@@ -369,9 +370,9 @@ const fkmTestimonial = () => {
                 <p>
                   Mr.Srinivas
                   <strong>
-                  <Image
-                   width={17}
-                   height={16}
+                    <Image
+                      width={17}
+                      height={16}
                       src="https://images.freekaamaal.com/common-images/mapsflags.png"
                       alt="nav-icon"
                     />
@@ -397,9 +398,9 @@ const fkmTestimonial = () => {
                 <p>
                   Joginder Singh
                   <strong>
-                  <Image
-                     width={17}
-                     height={16}
+                    <Image
+                      width={17}
+                      height={16}
                       src="https://images.freekaamaal.com/common-images/mapsflags.png"
                       alt="nav-icon"
                     />
@@ -417,10 +418,10 @@ const fkmTestimonial = () => {
               </div>
             </div>
             <div className="rate-btn">
-              <a  href="https://play.google.com/store/apps/details?id=com.freekaamaalindia">
-              <Image
-                    width={35}
-                    height={35}
+              <a href="https://play.google.com/store/apps/details?id=com.freekaamaalindia">
+                <Image
+                  width={35}
+                  height={35}
                   src="https://images.freekaamaal.com/common-images/likeico9-17-21.png"
                   alt="thumb-icon"
                 />

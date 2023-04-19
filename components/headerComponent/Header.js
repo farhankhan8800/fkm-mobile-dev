@@ -12,18 +12,22 @@ import { searchSuggestionApi } from "service/API";
 
 import fkmLogo from "../../public/images/fkm-logo/fkm-logo.png";
 import axios from "axios";
+import { useGetUser } from "service/customHooks";
 
 const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE;
 
 const Header = () => {
   const [sidebarToggle, setSidebarToggle] = useState(false);
-  const [user, setuser] = useState();
+
   const [searchInput, setSearchInput] = useState(false);
   const [searchSuggestion, setSearchSuggestion] = useState();
   const [searchTextLength, setSearchTextLength] = useState(0);
   const [getInputvalue, setGetInputvalue] = useState();
 
   const router = useRouter();
+
+  const user = useGetUser()
 
   const toggleClick = () => {
     setSidebarToggle(!sidebarToggle);
@@ -66,11 +70,7 @@ const Header = () => {
 
   const optimizedFunction = useCallback(debounce(OnInputSearchText), []);
 
-  useEffect(() => {
-    if (localStorage.getItem("user")) {
-      setuser(localStorage.getItem("user"));
-    }
-  }, []);
+ 
 
   const handleKeyPress = (e) => {
     if (searchTextLength >= 3) {
@@ -85,6 +85,7 @@ const Header = () => {
       }
     }
   };
+  
   const searchButtonClick = (e) => {
     if (searchTextLength >= 3) {
       e.preventDefault();

@@ -2,17 +2,25 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
-import dashboardIcon from "../../public/images/icon/dashboard.png";
-import shopIcon from "../../public/images/icon/shop.png";
-import categoryIcon from "../../public/images/icon/category.png";
-import promoCodeIcon from "../../public/images/icon/promo-code.png";
-import contentWritingIcon from "../../public/images/icon/content-writing.png";
-import phoneCallIcon from "../../public/images/icon/phone-call.png";
-import powerOffIcon from "../../public/images/icon/power-off.png";
-import loginIcon from "../../public/images/icon/login-account.png";
+import dashboardIcon from "../../public/images/icon/sidebar/dashboard.png";
+import shopIcon from "../../public/images/icon/sidebar/store.png";
+import categoryIcon from "../../public/images/icon/sidebar/top categories.png";
+import promoCodeIcon from "../../public/images/icon/sidebar/coupon.png";
+import contentWritingIcon from "../../public/images/icon/sidebar/article.png";
+import phoneCallIcon from "../../public/images/icon/sidebar/contact us.png";
+import powerOffIcon from "../../public/images/icon/sidebar/logout.png";
+import loginIcon from "../../public/images/icon/sidebar/login-account.png";
+import freebies from "../../public/images/icon/sidebar/Freebies.png";
+import livefeed from "../../public/images/icon/sidebar/live.png";
+import festivals from "../../public/images/icon/sidebar/festival.png";
+import cashbackIcon from "../../public/images/icon/sidebar/100cb.png";
+import aboutus from "../../public/images/icon/sidebar/about.png";
+import FAQs from "../../public/images/icon/sidebar/faq.png";
+import addwithUs from "../../public/images/icon/sidebar/advertise with us.png";
 
-import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
+import { useGetUser } from "service/customHooks";
+
 export const menuList = [
   {
     link: "/all-store",
@@ -32,12 +40,12 @@ export const menuList = [
   {
     link: "/freebies",
     menuName: "Freebies",
-    menuIcon: "",
+    menuIcon: freebies,
   },
   {
     link: "/live-feed",
     menuName: "Live Feed",
-    menuIcon: "",
+    menuIcon:livefeed,
   },
   {
     link: "/articles",
@@ -47,12 +55,12 @@ export const menuList = [
   {
     link: "/festivals",
     menuName: "Festivals",
-    menuIcon: "",
+    menuIcon: festivals,
   },
   {
     link: "/cashback-page/cashback",
     menuName: "100% Cashback",
-    menuIcon: "",
+    menuIcon: cashbackIcon,
   },
   {
     link: "/contact-us",
@@ -62,33 +70,32 @@ export const menuList = [
   {
     link: "/about-us",
     menuName: "About Us",
-    menuIcon: phoneCallIcon,
+    menuIcon: aboutus,
   },
   {
     link: "/advertise-with-us",
     menuName: "Advertise with Us",
-    menuIcon: phoneCallIcon,
+    menuIcon: addwithUs,
   },
   {
     link: "/faq",
     menuName: "FAQ's",
-    menuIcon: phoneCallIcon,
+    menuIcon: FAQs,
   },
 ];
 
 const Sidebar = ({ togalButton, closeSidebar }) => {
-  const [userdata, setUserdata] = useState();
 
-  useEffect(() => {
-    setUserdata(localStorage.getItem("user"));
-  }, []);
-
+  const userdata = useGetUser()
+  // console.log(userdata)
   const router = useRouter();
+
   const sidebarClose = () => {
     setTimeout(() => {
       closeSidebar();
     }, 200);
   };
+
   const logoutUser = () => {
     localStorage.clear();
     sessionStorage.clear();
@@ -140,8 +147,9 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
                     alignItems: "center",
                   }}
                 >
-                  <div className="avatar_div">
-                    <FaUser />
+                  <div className="avatar_div" style={{overflow:"hidden"}}>
+                    {/* <FaUser /> */}
+                   <Image src= {userdata.data.user_img_url} alt=""height={45} width={45}></Image>
                   </div>
                   <div>
                     <p className="p_tag_big" style={{ fontSize: "16px" }}>
@@ -157,7 +165,7 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
                         }}
                       >
                         {" "}
-                        {JSON.parse(userdata).data.username}
+                        {userdata.data.username}
                       </p>
                     ) : (
                       <p
@@ -272,7 +280,7 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
       .avatar_div{
         padding: 10px;
         border: none;
-        background: #cac3c3;
+        {/* background: #cac3c3; */}
         border-radius: 32px;
         width: 45px;
         height: 45px;

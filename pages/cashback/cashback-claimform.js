@@ -6,20 +6,19 @@ import { userClaimformAPI } from "service/API";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { BsCheckCircle } from "react-icons/bs";
+import protectRoute from "service/protect-route";
+import { useUserToken } from "service/customHooks";
 
 const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE
 
 const CashbackClaimform = () => {
   const [storeType, setStoreType] = useState();
-  const [authToken, setAuthToken] = useState();
   const [store, setStore] = useState();
   const [err, setErr] = useState();
 
-  const router = useRouter();
-
-  useEffect(() => {
-    setAuthToken(JSON.parse(localStorage.getItem("user")).token);
-  }, []);
+  const router = useRouter()
+  const authToken = useUserToken()
 
   const getData = async () => {
     try {
@@ -27,7 +26,7 @@ const CashbackClaimform = () => {
         claimformStoreAPI,
         {
           apiAuth: apiAuth,
-          device_type: "4",
+          device_type: DEVICE_TYPE,
         },
         {
           headers: {
@@ -35,6 +34,9 @@ const CashbackClaimform = () => {
           },
         }
       );
+      if(data.code == "401"){
+        return router.push("/session-expired")
+      }
       setStore(data.response);
     } catch (error) {}
   };
@@ -162,4 +164,4 @@ const CashbackClaimform = () => {
   );
 };
 
-export default CashbackClaimform;
+export default protectRoute(CashbackClaimform) ;

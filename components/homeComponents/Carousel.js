@@ -50,7 +50,7 @@ const Carousel = (props) => {
         </div>
        </>
       }
-      <style>{`
+      <style jsx>{`
      .sk_carousel_card{
         height: 9rem;
         box-shadow: 0 0 5px rgba(0,0,0,0.4);

@@ -40,7 +40,6 @@ const DealsAndCouponsCategory = ({ cate_slug }) => {
           },
         }
       );
-
       if (data.status == 0 && data.error == 0) {
         router.push(`/404`);
       } else {
@@ -51,14 +50,14 @@ const DealsAndCouponsCategory = ({ cate_slug }) => {
             setDeals([...deals, ...data.response.deals]);
           }
         } else {
-          if(data.response.coupons.length == "0"){
+          if (data.response.coupons.length == "0") {
             setNoData(true);
-          }else{
+          } else {
             setCoupons([...coupons, ...data.response.coupons]);
           }
         }
       }
-    } catch (err) {}
+    } catch (err) { }
   };
 
   useEffect(() => {
@@ -80,7 +79,6 @@ const DealsAndCouponsCategory = ({ cate_slug }) => {
       setNoData(false);
     }
   }
-
   const addDealPage = () => {
     setPage(page + 1);
   };
@@ -102,19 +100,18 @@ const DealsAndCouponsCategory = ({ cate_slug }) => {
             Coupons
           </button>
         </div>
-
         <div className="tabcontent">
           {clickTab == "deals" ? (
             <div>
               {deals.length > 0 ? (
                 <div>
                   <HotDealsCards hotdeals={deals} />
-                  <div className="flex_center" style={{paddingBottom:"20px"}}>
+                  <div className="flex_center" style={{ paddingBottom: "20px" }}>
                     {noData ? (
                       "No More Data"
                     ) : (
                       <button
-                      className="contain_button"
+                        className="contain_button"
                         onClick={addDealPage}
                         style={{ color: "#fff", fontWeight: "600" }}
                       >
@@ -129,16 +126,15 @@ const DealsAndCouponsCategory = ({ cate_slug }) => {
             </div>
           ) : (
             <div>
-             
               {coupons.length > 0 ? (
                 <div>
-                   <CouponsCade couponCard={coupons} />
-                  <div className="flex_center" style={{paddingBottom:"20px"}}>
+                  <CouponsCade couponCard={coupons} />
+                  <div className="flex_center" style={{ paddingBottom: "20px" }}>
                     {noData ? (
                       "No More Data"
                     ) : (
                       <button
-                      className="contain_button"
+                        className="contain_button"
                         onClick={addDealPage}
                         style={{ color: "#fff", fontWeight: "600" }}
                       >
@@ -176,7 +172,6 @@ const DealsAndCouponsCategory = ({ cate_slug }) => {
             align-items: center;
             justify-content: space-evenly;
           }
-
           .tab button {
             border: none;
             outline: none;
@@ -190,7 +185,6 @@ const DealsAndCouponsCategory = ({ cate_slug }) => {
             font-weight: 700;
             width: 100%;
           }
-
           .tablinks.active {
             background: var(--main-color);
             color: var(--second-color);

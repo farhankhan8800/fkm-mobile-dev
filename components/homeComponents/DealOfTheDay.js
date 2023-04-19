@@ -18,9 +18,9 @@ const DealOfTheDay = (props) => {
     <>
       {dealofday?.length > 0 ? (
         <>
-          <div className="flex_start" style={{ padding: "13px 3px 3px"}}>
+          <div className="flex_start" style={{ padding: "13px 3px 3px" }}>
             <div >
-              <div  style={{ width: "30px", marginRight: "10px" }}>
+              <div style={{ width: "30px", marginRight: "10px" }}>
                 <Image
                   src={hotdealImage}
                   alt="Hot Deal Of the Day"
@@ -44,11 +44,11 @@ const DealOfTheDay = (props) => {
             >
               {dealofday &&
                 dealofday.map((item, i) => {
-                  const {  image, option, slug_url
+                  const { image, option, slug_url
                   } = item;
                   return (
                     <SwiperSlide key={i}>
-                      <Link href={option =="deal"? `/deals/${slug_url}`:slug_url}>
+                      <Link href={option == "deal" ? `/deals/${slug_url}` : slug_url}>
                         <Image
                           width={200}
                           height={100}
@@ -59,15 +59,15 @@ const DealOfTheDay = (props) => {
                     </SwiperSlide>
                   );
                 })}
-              
+
             </Swiper>
-            
+
           </div>
         </>
       ) : (
         <></>
       )}
-     
+
     </>
   );
 };

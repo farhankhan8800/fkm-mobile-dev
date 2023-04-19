@@ -1,24 +1,23 @@
 import React, { useState } from "react";
-import { Alert, Box, Button, TextField } from "@mui/material";
 import axios from "axios";
 import {add_accountAPI} from "service/API"
-import { useEffect } from "react";
+
 import { ImWarning } from "react-icons/im";
 import { AiFillInfoCircle } from "react-icons/ai";
-
+import { useUserToken } from "service/customHooks";
+import { useRouter } from "next/router";
 
 const OtherBank = () => {
   const [name, setName] = useState();
   const [phone, setPhone] = useState();
   const [notValid, setNotValid] = useState(null);
-  const [authToken, setAuthToken] = useState()
   const [serverdata, setServerdata] = useState()
 
+  const router = useRouter()
+  const authToken = useUserToken()
 
-  useEffect(()=>{
-    setAuthToken(JSON.parse(localStorage.getItem("user")).token)
-  },[])
   const apiAuth = process.env.API_AUTH
+  const DEVICE_TYPE = process.env.DEVICE_TYPE
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -29,7 +28,7 @@ const OtherBank = () => {
                   let{data}= await axios.post(add_accountAPI,{
                     
                       apiAuth:apiAuth,
-                      device_type: "4",
+                      device_type: DEVICE_TYPE,
                       paytmphone: phone,
                       account_type:"paytm",
                       paytmname:name,
@@ -38,6 +37,10 @@ const OtherBank = () => {
                       Authorization:authToken
                     }
                    })
+
+                    if(data.code == "401"){
+                       return router.push("/session-expired")
+                    }
                    if(data.status == 1){
                     setTimeout(function(){
                       setName("")
@@ -49,7 +52,6 @@ const OtherBank = () => {
                     setServerdata(data.message)
                    }
                 } catch (error) {
-                  
                 }
 
         } else {
@@ -72,7 +74,6 @@ const OtherBank = () => {
     setNotValid(null);
   };
  
-
   return (
     <>
      <div style={{paddingTop:"20px"}}>
@@ -118,11 +119,11 @@ const OtherBank = () => {
           </div>
      </div>
      
-      <style jxs>{`
-     label{
-        display: block;
-        padding: 9px 2px 5px;
-    }
+      <style jsx>{`
+        label{
+            display: block;
+            padding: 9px 2px 5px;
+        }
     `}</style>
     </>
   );

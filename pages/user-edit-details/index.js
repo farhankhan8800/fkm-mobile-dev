@@ -1,82 +1,80 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import {
-  Box,
-  Grid,
-  Typography,
-  Avatar,
-  TextField,
-  Button,
-  Alert,
-} from "@mui/material";
+
 import { FaUser } from "react-icons/fa";
+import { BsCheckCircle } from "react-icons/bs";
+import { ImWarning } from "react-icons/im";
+import { updateUserDataAPI } from "service/API";
+import { useGetUser, useUserToken } from "service/customHooks";
+import protectRoute from "service/protect-route";
+import axios from "axios";
+
+const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE;
 
 const UserEditDetails = () => {
-  const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
-  const [mobile, setMobile] = useState("");
-  const [passwordErr, setPasswordErr] = useState(false);
-  const [userNameErr, setUserNameErr] = useState(false);
-  const [mobileErr, setMobileErr] = useState(false);
-  const [callWarning, SetCallWarning] = useState(false);
-  const [showSignUp, setShowSignUp] = useState(false);
+  const [profileImage, setProfileImage] = useState("");
+  const [error, setError] = useState(null)
+  const [updatedSucc, setUpdatedSucc] = useState(null)
 
+  const authToken = useUserToken();
+  const userdata = useGetUser()
   const router = useRouter();
-  const onEdit = (e) => {
+  // console.log(userdata)
+
+  useEffect(()=>{
+    setUserName(userdata?.data.username)
+  },[userdata])
+
+
+  const onEdit = async (e) => {
     e.preventDefault();
-    if (password.length < 6 || userName.length < 3 || mobile.length < 9) {
-      SetCallWarning(true);
-    } else {
-      setPassword("");
-      setUserName("");
-      setMobile("");
-
-      setTimeout(() => {
-        setShowSignUp(true);
-      }, 1000);
-      setTimeout(() => {
-        router.push("/login");
-      }, 3000);
+    if(profileImage || userName ){
+      try {
+        let { data } = await axios.post(
+          updateUserDataAPI,
+          {
+            apiAuth: apiAuth,
+            device_type:DEVICE_TYPE,
+            title:userName,
+            profileimage:profileImage
+          },
+          {
+            headers: {
+               "Content-Type": "multipart/form-data",
+               Authorization: authToken,
+            },
+          }
+        );
+        
+        // console.log(data)
+        setUpdatedSucc(data.message)
+      } catch (error) {
+      //  console.log(error)
+      }
+    }else{
+      setError("Att list Update One Input")
+    //  console.log("Att list Update One Input")
     }
-  };
-
+      
+    }
   const userNameChangeHandler = (e) => {
-    const item = e.target.value;
-    let nameRegex = /^[a-zA-Z]*$/;
-    if (item.length < 3 || nameRegex.test(item) == false) {
-      setUserNameErr(true);
-      setUserName("");
-    } else {
-      setUserNameErr(false);
-    }
-    setUserName(item);
+    setUserName(e.target.value);
+    setUpdatedSucc(null)
+    setError(null)
   };
-
-  const mobileChangeHandler = (e) => {
-    const item = e.target.value;
-    if (item.length < 9) {
-      setMobileErr(true);
-      setMobile("");
-    } else {
-      setMobileErr(false);
-    }
-    setMobile(item);
-  };
-
-  const passwordChangeHandler = (e) => {
-    const item = e.target.value;
-    if (item.length < 6) {
-      setPasswordErr(true);
-      setPassword("");
-    } else {
-      setPasswordErr(false);
-    }
-    setPassword(e.target.value);
-  };
+  const fileChangeHandler =(e)=>{
+    setProfileImage(e.target.files[0])
+    setUpdatedSucc(null)
+    setError(null)
+    // console.log(e.target.files[0])
+  }
+  
   const headeTitle = "Edit your Details | Freekaamaal";
   return (
     <>
@@ -93,23 +91,21 @@ const UserEditDetails = () => {
           >
             <div 
               className="d_flex"
-             
               justifyContent="space-around"
               alignItems="center"
               style={{ color: "#fff" }}
             >
-             
               <div className="avatar_div">
-                <FaUser />
+                {/* <FaUser /> */}
+                <Image src={userdata?.data.user_img_url} alt="userProfile" height={45} width={45}></Image>
               </div>
-              
               <div  style={{paddingLeft:"10px"}}>
                 <h6
                  className="heading"
                   style={{ fontWeight: "600" }}
                 >
-                  {" "}
-                  Freekaamaal
+                  {userdata?.data.username}
+                 
                 </h6>
                 <p className="p_tag_big" style={{color:"#fff"}}>
                   {" "}
@@ -128,7 +124,6 @@ const UserEditDetails = () => {
             </h6>
 
             <form onSubmit={onEdit}>
-             
               <input
                 style={{ width: "100%"}}
                 className="input_style"
@@ -137,44 +132,21 @@ const UserEditDetails = () => {
                 onChange={userNameChangeHandler}
                 type="text"
                 placeholder="Name"
-               
               />
-              <p style={{ color: "#f27935", paddingLeft: "5px" }}>
-                {userNameErr ? "Please Enter Valid Name" : ""}
-              </p>
               
               <input
                 style={{ width: "100%" }}
-                id="password"
-                value={password}
-                onChange={passwordChangeHandler}
-                type="password"
-                name="password"
-                placeholder="Password"
+                id="file"
+                onChange={fileChangeHandler}
+                type="file"
+                accept="image/*"
+                name="file"
+                placeholder="Your Profile Image"
                 className="input_style"
               />
-              <p style={{ color: "#f27935", paddingLeft: "5px" }}>
-                {passwordErr ? "Please Enter Valid Password" : ""}
-              </p>
-             
-              <input
-                style={{ width: "100%" }}
-                id="mobile"
-                value={mobile}
-                onChange={mobileChangeHandler}
-                type="number"
-                
-                name="mobile"
-                placeholder="Mobile No."
-                className="input_style"
-              />
-              <p style={{ color: "#f27935", paddingLeft: "5px" }}>
-                {mobileErr ? "Please Enter Valid Mobile No." : ""}
-              </p>
-              {showSignUp ? (
-                <button
+
+              <button
                  className="full_with_button"
-                  disabled
                    style={{
                     width: "100%",
                     color: "#fff",
@@ -187,37 +159,16 @@ const UserEditDetails = () => {
                 >
                   Edit Details
                 </button>
-              ) : (
-                <button
-                className="full_with_button"
-                  style={{
-                    width: "100%",
-                    color: "#fff",
-                    fontWeight: "bold",
-                    margin: "20px 0 10px 0",
-                    letterSpacing: "1px",
-                    fontSize: "16px",
-                  }}
-                  type="submit"
-                >
-                  Edit Details
-                </button>
-              )}
             </form>
-            <Box component="div" sx={{ padding: "10px 0" }}>
-              {showSignUp ? (
-                <Alert sx={{ marginBottom: "10px" }} severity="success">
-                  You Have Successfully Edit Your Details
-                </Alert>
-              ) : (
-                ""
-              )}
-              {callWarning ? (
-                <Alert severity="warning">Please fill out the form </Alert>
-              ) : (
-                ""
-              )}
-            </Box>
+            <div component="div" sx={{ padding: "10px 0" }}>
+            {
+              error ?   <div  className="alert_warning_class"> <span><ImWarning /></span> <p>{error}</p> </div>:""
+            }
+            {
+              updatedSucc ?<div  className="alert_warning_class" style={{background:"#5cc64a4f",color:"green"}}> <span><BsCheckCircle /></span> <p> {updatedSucc} </p> </div>:""
+            }
+             
+            </div>
           </div>
         </div>
       </div>
@@ -228,6 +179,7 @@ const UserEditDetails = () => {
           background: #cac3c3;
           border-radius: 32px;
           width: 45px;
+          overflow: hidden;
           height: 45px;
           /* text-align: center; */
           justify-content: center;
@@ -248,4 +200,4 @@ const UserEditDetails = () => {
   );
 };
 
-export default UserEditDetails;
+export default  protectRoute(UserEditDetails) ;

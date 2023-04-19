@@ -3,18 +3,19 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import clickImage from "public/images/icon/click.png";
-import referalHistoryImage from "public/images/icon/referal-history.png";
-import referEarnImage from "public/images/icon/refer-earn.png";
-import cashbackHistoryImage from "public/images/icon/cashback-history.png";
-import reportIconImage from "public/images/icon/report-icon.png";
-import withdrawalHistoryImage from "public/images/icon/withdrawal-history.png";
-import withdrawalMoneyImage from "public/images/icon/withdrawal-money.png";
-import refrealMoneyImage from "public/images/icon/refreal-money.png";
-import climeFormImage from "public/images/icon/clime-form.png";
-import missingCashbackImage from "public/images/icon/missing-cashback.png";
-import addAccountImage from "public/images/icon/add-account.png";
-import bellImage from "public/images/icon/bell.png";
+import clickImage from "public/images/icon/dashboard/click.png";
+import referalHistoryImage from "public/images/icon/dashboard/referal-history.png";
+import referEarnImage from "public/images/icon/dashboard/refer-earn.png";
+import cashbackHistoryImage from "public/images/icon/dashboard/cashback-history.png";
+import reportIconImage from "public/images/icon/dashboard/report-icon.png";
+import withdrawalHistoryImage from "public/images/icon/dashboard/withdrawal-history.png";
+import withdrawalMoneyImage from "public/images/icon/dashboard/withdrawal-money.png";
+import refrealMoneyImage from "public/images/icon/dashboard/refreal-money.png";
+import climeFormImage from "public/images/icon/dashboard/clime-form.png";
+import missingCashbackImage from "public/images/icon/dashboard/missing-cashback.png";
+import addAccountImage from "public/images/icon/dashboard/add-account.png";
+import bellImage from "public/images/icon/dashboard/bell.png";
+
 
 const userManage = [
   {
@@ -99,13 +100,12 @@ const UserSummary = () => {
         {userManage.map((item, i) => (
           <div
             key={i}
-           
-            style={{ background: "#fff7f7",margin:"8px", padding:"9px", borderRadius: "5px" }}
+
+            style={{ background: "#fff7f7", margin: "8px", padding: "9px", borderRadius: "5px" }}
           >
             <Link href={item.link}>
-              <div className="d_grid" style={{gridTemplateColumns:"20% auto 20%"}}>
+              <div className="d_grid" style={{ gridTemplateColumns: "20% auto 20%" }}>
                 <div
-                 
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -113,8 +113,8 @@ const UserSummary = () => {
                   }}
                 >
                   <Image
-                    width={25}
-                    height={25}
+                    width={20}
+                    height={20}
                     alt="icon"
                     sx={{ color: "#000" }}
                     src={item.icon}
@@ -122,22 +122,19 @@ const UserSummary = () => {
                 </div>
                 <div >
                   <p
-                    style={{ color: "#000", fontSize: "14px" , fontWeight:"600"}}
-                    
-                   
+                    style={{ color: "#000", fontSize: "14px", fontWeight: "600" }}
                   >
                     {item.headingTag}
                   </p>
                   <p
                     style={{ color: "#000", fontSize: "11px" }}
-                    
                   >
                     {item.pTage}
                   </p>
                 </div>
                 <div >
-                  <button className="text_button" style={{ color: "#bbb7b7",minWidth:"65px" }}>
-                    <MdKeyboardArrowRight style={{fontSize:"25px"}} />
+                  <button className="text_button" style={{ color: "#bbb7b7", minWidth: "65px" }}>
+                    <MdKeyboardArrowRight style={{ fontSize: "25px" }} />
                   </button>
                 </div>
               </div>

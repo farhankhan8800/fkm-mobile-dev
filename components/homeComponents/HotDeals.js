@@ -7,6 +7,7 @@ import HotDealsCards from "../HotDealsCard";
 
 const HotDeals = (props) => {
   const [hotDeals, SethotDeals] = useState();
+  
   useEffect(() => {
     SethotDeals(props.hotdeals);
   }, [props]);

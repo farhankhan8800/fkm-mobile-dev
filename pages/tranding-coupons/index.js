@@ -4,14 +4,7 @@ import "swiper/css";
 import Link from "next/link";
 import Image from "next/image";
 import priceLabelImage from "../../public/images/price-label.png";
-import {
-  Grid,
-  Box,
-  Typography,
-  CardActionArea,
-  CardContent,
-  Card,
-} from "@mui/material";
+
 const TrendingCoupons = (props) => {
   const [trending_coupons, setTrending_coupons] = useState();
 

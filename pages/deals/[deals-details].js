@@ -10,9 +10,9 @@ import { useEffect, useState } from "react";
 import { deal_detail } from "service/API";
 import Spinner from "components/utilites/Spinner";
 import axios from "axios";
-import PageNotFound from "components/PageNotFound";
-import { isTokenExpired } from "service/helper";
-import OpenExpireSectionDialog from "components/utilites/session-expired";
+import { useGetUser, useUserToken } from "service/customHooks";
+
+
 
 const apiAuth = process.env.API_AUTH;
 const DEVICE_TYPE = process.env.DEVICE_TYPE;
@@ -21,27 +21,13 @@ const DealsDetails = () => {
   const [deal, setDeal] = useState();
   const [similarDeal, setSimilarDeal] = useState();
   const [myhtml, setMyHtml] = useState();
-  const [user, setUser] = useState();
+  
   const [DealNotFound, setDealNotFound] = useState(false);
-  const [sessionExpired, setSessionExpired] = useState(false);
   const router = useRouter();
   
   const dealSlug = router.query["deals-details"];
-
-  useEffect(() => {
-    if (JSON.parse(localStorage.getItem("user"))) {
-      setUser(JSON.parse(localStorage.getItem("user")));
-    }
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-      // console.log( "deals",user.token)
-      if (isTokenExpired(user.token)) {
-        setSessionExpired(true);
-      }
-    }
-  }, [user]);
+  const authToken = useUserToken();
+  const user = useGetUser() 
 
   useEffect(() => {
     const storeData = async () => {
@@ -56,6 +42,7 @@ const DealsDetails = () => {
           },
           {
             headers: {
+              Authorization: authToken,
               "Content-Type": "application/json",
             },
           }
@@ -76,15 +63,13 @@ const DealsDetails = () => {
   if (DealNotFound) {
    router.push("/404")
   }
+  const regex = /(<([^>]+)>)/ig;
+  // const myhtmlresult = data.response.store_details.myhtml?.replace(regex, '');
 
   return (
     <>
       <Header />
-      {sessionExpired ? (
-        <OpenExpireSectionDialog setSessionExpired={setSessionExpired} />
-      ) : (
-        ""
-      )}
+      
       <div style={{ paddingTop: "56px" }}>
         {deal ? (
           <div>
@@ -164,10 +149,11 @@ const DealsDetails = () => {
                 <h3 style={{ fontWeight: "600" }}>About The Deals</h3>
                 <div>
                   {
+                   
                     <div
                       id="about_the_deals"
                       className="about_the_deals"
-                      dangerouslySetInnerHTML={{ __html: myhtml }}
+                      dangerouslySetInnerHTML={{ __html: myhtml }} 
                     />
                   }
                 </div>

@@ -1,5 +1,4 @@
-import Link from "next/link";
-import Image from "next/image";
+
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 
@@ -11,11 +10,15 @@ import axios from "axios";
 import { promoCodeAPI } from "service/API";
 import { useUserToken } from "service/customHooks";
 import { FaUser } from "react-icons/fa";
-import { GrEdit } from "react-icons/gr";
+import { AiFillEdit } from "react-icons/ai";
 import { ImWarning } from "react-icons/im";
 import { BsCheckCircle } from "react-icons/bs";
 
+import protectRoute from "service/protect-route";
+
+
 const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE
 
 const UserProfile = () => {
   const [user_summary, setUser_summary] = useState();
@@ -27,17 +30,16 @@ const UserProfile = () => {
   const headeTitle = "User Name | Freekaamaal";
 
   const authToken = useUserToken();
-  useEffect(() => {
-    if (!localStorage.getItem("user")) {
-      router.push("/");
-    }
-  }, [router]);
+ 
 
   useEffect(() => {
     setUser_summary(JSON.parse(localStorage.getItem("usersummary")));
   }, []);
-  // console.log(user_summary)
-  const redeemCode = async (e) => {
+
+  // session-expired
+
+
+    const redeemCode = async (e) => {
     e.preventDefault();
     set_code_error("");
     setServerError("");
@@ -48,7 +50,7 @@ const UserProfile = () => {
           promoCodeAPI,
           {
             apiAuth: apiAuth,
-            device_type: "4",
+            device_type: DEVICE_TYPE,
             promocode: getCode,
           },
           {
@@ -57,14 +59,19 @@ const UserProfile = () => {
             },
           }
         );
-        console.log(data);
+  
+
+        // console.log(data)
+        if(data.code == "401"){
+          return router.push("/session-expired")
+        }
         if (data.status == 1) {
           set_Alert_message(data.message);
         } else {
-          setServerError(data.message);
+          setServerError(data.message ? data.message: data.msg ? data.msg :"" );
         }
       } catch (error) {
-        console.log(error);
+       
       }
     } else {
       set_code_error("Enter Any Code Then Press Redeem Button");
@@ -106,7 +113,7 @@ const UserProfile = () => {
                   onClick={() => router.push("/user-edit-details")}
                   style={{ color: "#fff" }}
                 >
-                  <GrEdit style={{ fontSize: "20px" }} />
+                  <AiFillEdit style={{ fontSize: "23px" }} />
                 </button>
               </div>
             </div>
@@ -203,6 +210,7 @@ const UserProfile = () => {
               </div>
             </div>
           </div>
+          
           {/* PromoCode  */}
 
           <div
@@ -306,7 +314,6 @@ const UserProfile = () => {
         .promocode_input_style{
           padding: 4px 10px;
           border: none;
-          
           letter-spacing: 1px;
           font-size: 16px;
           outline: none;
@@ -319,4 +326,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default protectRoute(UserProfile) ;

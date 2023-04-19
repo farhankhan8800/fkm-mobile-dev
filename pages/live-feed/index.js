@@ -10,6 +10,7 @@ import { livefeed_detailAPI } from "service/API";
 import { useRouter } from "next/router";
 import Spinner from "components/utilites/Spinner";
 import Error404 from "pages/404";
+import { useUserToken } from "service/customHooks";
 
 const apiAuth = process.env.API_AUTH;
 
@@ -17,15 +18,12 @@ const LiveFeed = () => {
   const [topStore, setTopStore] = useState();
   const [feed_banner, setFeed_banner] = useState();
   const [feedStore, setfeedStore] = useState([]);
-  const [userToken, setUserToken] = useState();
   const [page, setPage] = useState(1);
   const [noData, setNoData] = useState(false);
 
-  useEffect(() => {
-    if (localStorage.getItem("user")) {
-      setUserToken(JSON.parse(localStorage.getItem("user")).token);
-    }
-  }, []);
+  
+  const userToken = useUserToken()
+  const DEVICE_TYPE = process.env.DEVICE_TYPE;
   const router = useRouter();
 
   useEffect(() => {
@@ -34,7 +32,7 @@ const LiveFeed = () => {
         livefeed_detailAPI,
         {
           apiAuth: apiAuth,
-          device_type: "4",
+          device_type: DEVICE_TYPE,
           cate_slug: "amazon-summer-sale",
           page: page,
         },
@@ -47,7 +45,7 @@ const LiveFeed = () => {
       );
       console.log(data.response.cate_data);
       if (data.response.cate_data.length == 0) {
-        return <Error404 />;
+        return router.push("/404")
       } else {
         setFeed_banner(data.response.cate_data);
       }

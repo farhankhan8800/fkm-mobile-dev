@@ -16,26 +16,22 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import {articleDetailsAPI} from "service/API"
-import PageNotFound from "components/PageNotFound";
+import { useUserToken } from "service/customHooks";
 
+
+const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE;
 
 const Articels = () => {
    
-  const [authToken, setAuthToken] = useState()
+
   const [articleDetails, setArticleDetails]= useState()
   const [articleHtml, setArticleHtml]= useState()
   const [ArticleNotFound, setArticleNotFound] = useState(false);
   const router = useRouter();
   const paramId  = router.query
 
-
-  const apiAuth = process.env.API_AUTH;
-
-  useEffect(()=>{
-    if(localStorage.getItem("user")){
-      setAuthToken(JSON.parse(localStorage.getItem("user")).token)
-    }
-  },[])
+  const authToken = useUserToken()
 
   useEffect(() => {
 
@@ -44,7 +40,7 @@ const Articels = () => {
       let {data} = await axios.post(articleDetailsAPI,
         {
           apiAuth :apiAuth ,
-          device_type : "4",
+          device_type : DEVICE_TYPE,
           article_slug : paramId.articles
         },
         {
@@ -63,16 +59,10 @@ const Articels = () => {
   }, [apiAuth, authToken, paramId]);
 
   const headeTitle = "Articels | Freekaamaal";
-  if(ArticleNotFound)
-{
-return(
-    <>
-    <Header />
-      <HeadTag headeTitle={`404 Page Not Found|| Freekaamaal`} />
-    <PageNotFound page="article" />
-    </> 
-  );
-}
+   if(ArticleNotFound)
+    {
+      return router.push("/404")
+    }
   return (
     <>
       <HeadTag headeTitle={headeTitle}></HeadTag>

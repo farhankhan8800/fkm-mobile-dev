@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import fPasswordImage from "../../public/images/f-password.png";
 import { useRouter } from "next/router";
-import { Box, Button, Typography, TextField } from "@mui/material";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 import Image from "next/image";
+import authPageProtect from "service/auth-page-protect";
 
 const ForgotPassword = () => {
   const [forgotPassword, setForgotPassword] = useState("");
@@ -71,7 +71,7 @@ const ForgotPassword = () => {
               </p>
             }
             <button
-              className="contain_button"
+               className="contain_button"
                style={{
                 width: "100%",
                 letterSpacing: "1px",
@@ -97,4 +97,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default authPageProtect(ForgotPassword) ;

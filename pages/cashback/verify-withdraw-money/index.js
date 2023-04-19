@@ -8,22 +8,28 @@ import Header from "components/headerComponent/Header";
 import HeadTag from "components/headTagComponent/HeadTag";
 import { withdrawMoneyAPI } from "service/API";
 import axios from "axios";
+import protectRoute from "service/protect-route";
+import { useUserToken } from "service/customHooks";
+
+
+
+const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE
 
 const VerifyWithdrawMoney = () => {
   const [OTP, setOTP] = useState();
-  const [userToken, setUserToken] = useState();
   const [OtpErr, setOtpErr] = useState(false);
   const [serverErr, setServerErr] = useState();
   const [successAlert, setSuccessAlert] = useState();
   const [verifyPayment, setVerifyPayment] = useState();
+
   const router = useRouter();
 
-  const apiAuth = process.env.API_AUTH;
-
   useEffect(() => {
-    setUserToken(JSON.parse(localStorage.getItem("user")).token);
     setVerifyPayment(JSON.parse(sessionStorage.getItem("verifydata")));
   }, []);
+
+  const userToken = useUserToken()
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -45,7 +51,10 @@ const VerifyWithdrawMoney = () => {
             },
           }
         );
-        console.log(data);
+        // console.log(data);
+        if(data.code == "401"){
+          return router.push("/session-expired")
+        }
         if (data.status == 1) {
           setTimeout(() => {
             setSuccessAlert(data.message);
@@ -162,4 +171,4 @@ const VerifyWithdrawMoney = () => {
   );
 };
 
-export default VerifyWithdrawMoney;
+export default protectRoute(VerifyWithdrawMoney) ;

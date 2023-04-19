@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import TabsUnstyled from "@mui/base/TabsUnstyled";
+
 
 import { BsFillEyeFill } from "react-icons/bs";
 import { BiTime } from "react-icons/bi";
-import { Button, Typography } from "@mui/material";
+
 import Image from "next/image";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -147,7 +147,7 @@ const ArticlesTabs = ({ all_articles, lodeMoreData, changeOption, nodata }) => {
 
               <div style={{ textAlign: "center" }}>
                 {nodata ? (
-                  <p  className="p_tag_big" style={{fontSize:"20px"}}>NO Data</p>
+                  <p className="p_tag_big" style={{ fontSize: "20px" }}>NO Data</p>
                 ) : (
                   <button onClick={lodeMoreData} className="border_button">
                     More Data
@@ -186,7 +186,7 @@ const ArticlesTabs = ({ all_articles, lodeMoreData, changeOption, nodata }) => {
                             <div>
                               <Link href={`${item.slug_url}`}>
                                 <button
-                                 className="text_button"
+                                  className="text_button"
                                   style={{
                                     fontWeight: "600",
                                     letterSpacing: "1px",
@@ -206,7 +206,7 @@ const ArticlesTabs = ({ all_articles, lodeMoreData, changeOption, nodata }) => {
 
               <div style={{ textAlign: "center" }}>
                 {nodata ? (
-                  <p className="p_tag_big" style={{fontSize:"20px"}}>No Data</p>
+                  <p className="p_tag_big" style={{ fontSize: "20px" }}>No Data</p>
                 ) : (
                   <button onClick={lodeMoreData} className="border_button">
                     More Data
@@ -266,7 +266,7 @@ const ArticlesTabs = ({ all_articles, lodeMoreData, changeOption, nodata }) => {
 
               <div style={{ textAlign: "center" }}>
                 {nodata ? (
-                  <p style={{fontSize:"20px"}} className="p_tag_big">NO Data</p>
+                  <p style={{ fontSize: "20px" }} className="p_tag_big">NO Data</p>
                 ) : (
                   <button onClick={lodeMoreData} className="border_button">
                     More Data
@@ -306,16 +306,16 @@ const ArticlesTabs = ({ all_articles, lodeMoreData, changeOption, nodata }) => {
                             </div>
                             <div>
                               <Link href={`/${item.slug_url}`}>
-                                <Button
-                                  variant="text"
-                                  sx={{
+                                <button
+                                  className="text_button"
+                                  style={{
                                     fontWeight: "600",
                                     letterSpacing: "1px",
                                     fontSize: "13px",
                                   }}
                                 >
                                   Read Now
-                                </Button>
+                                </button>
                               </Link>
                             </div>
                           </div>
@@ -327,7 +327,7 @@ const ArticlesTabs = ({ all_articles, lodeMoreData, changeOption, nodata }) => {
 
               <div style={{ textAlign: "center" }}>
                 {nodata ? (
-                  <p style={{fontSize:"20px"}} className="p_tag_big">NO Data</p>
+                  <p style={{ fontSize: "20px" }} className="p_tag_big">NO Data</p>
                 ) : (
                   <button onClick={lodeMoreData} className="border_button">
                     More Data
@@ -368,7 +368,7 @@ const ArticlesTabs = ({ all_articles, lodeMoreData, changeOption, nodata }) => {
                             <div>
                               <Link href={`/${item.slug_url}`}>
                                 <button
-                                 className="text_button"
+                                  className="text_button"
                                   style={{
                                     fontWeight: "600",
                                     letterSpacing: "1px",
@@ -388,7 +388,7 @@ const ArticlesTabs = ({ all_articles, lodeMoreData, changeOption, nodata }) => {
 
               <div style={{ textAlign: "center" }}>
                 {nodata ? (
-                  <p style={{fontSize:"20px"}} className="p_tag_big">NO Data</p>
+                  <p style={{ fontSize: "20px" }} className="p_tag_big">NO Data</p>
                 ) : (
                   <button onClick={lodeMoreData} className="border_button">
                     More Data
@@ -449,9 +449,9 @@ const ArticlesTabs = ({ all_articles, lodeMoreData, changeOption, nodata }) => {
 
               <div style={{ textAlign: "center" }}>
                 {nodata ? (
-                  <p style={{fontSize:"20px"}} className="p_tag_big">NO Data</p>
+                  <p style={{ fontSize: "20px" }} className="p_tag_big">NO Data</p>
                 ) : (
-                  <button  className="border_button" onClick={lodeMoreData} >
+                  <button className="border_button" onClick={lodeMoreData} >
                     More Data
                   </button>
                 )}

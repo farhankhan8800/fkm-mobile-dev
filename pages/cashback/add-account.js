@@ -4,6 +4,7 @@ import HeadTag from "../../components/headTagComponent/HeadTag";
 import Bank from "components/add-account/Bank";
 import { useEffect } from "react";
 import OtherBank from "components/add-account/OtherBank";
+import protectRoute from "service/protect-route";
 
 const AddAccount = () => {
   const [account, setAccount] = useState();
@@ -62,23 +63,23 @@ const AddAccount = () => {
           </div>
         </div>
       </div>
-      <style jxs>{`
- .select_tag{
-  width: 100%;
-  margin: 18px 0px;
-  cursor: pointer;
-  padding: 8px;
-  border: none;
-  border: 2px solid #383535;
-  border-radius: 7px;
-  color: #000;
- }
- .select_tag option{
-  padding:5px;
- }
+      <style jsx>{`
+        .select_tag{
+          width: 100%;
+          margin: 18px 0px;
+          cursor: pointer;
+          padding: 8px;
+          border: none;
+          border: 2px solid #383535;
+          border-radius: 7px;
+          color: #000;
+        }
+        .select_tag option{
+          padding:5px;
+        }
     `}</style>
     </>
   );
 };
 
-export default AddAccount;
+export default protectRoute(AddAccount) ;

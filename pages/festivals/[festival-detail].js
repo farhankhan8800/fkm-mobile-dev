@@ -4,33 +4,36 @@ import HeadTag from "../../components/headTagComponent/HeadTag";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { OneFestivalAPI } from "service/API";
+import axios from "axios";
+import { useUserToken } from "service/customHooks";
+
 
 const apiAuth = process.env.API_AUTH;
 const DEVICE_TYPE = process.env.DEVICE_TYPE;
 
 const FestivalDetail = () => {
-  const [userToken, setUserToken] = useState();
-  const [readMore, setReadMore] = useState(false);
 
-  useEffect(() => {
-    if (localStorage.getItem("user")) {
-      setUserToken(JSON.parse(localStorage.getItem("user")).token);
-    }
-  }, []);
+  const [readMore, setReadMore] = useState(false);
+  const [ festivalInfo ,setFestivalInfo] = useState()
+  const [article, setArticle] = useState([])
+  const [store, setStore] = useState([])
+
+
+ const userToken = useUserToken();
 
   const router = useRouter();
   const dealSlug = router.query["festival-detail"];
-
-  console.log(dealSlug);
 
   useEffect(() => {
     const getFestival = async () => {
       try {
         const { data } = await axios.post(
-          festivalAPI,
+          OneFestivalAPI,
           {
             apiAuth: apiAuth,
             device_type: DEVICE_TYPE,
+            festivalslug:dealSlug
           },
           {
             headers: {
@@ -38,11 +41,21 @@ const FestivalDetail = () => {
             },
           }
         );
+
+        setFestivalInfo(data.response.festivalinfo)
+        setArticle(data.response.article)
+       
+        setStore(data.response.stores)
+        
+
+    
       } catch (error) {
         console.log(error);
       }
     };
-  }, [userToken]);
+
+    getFestival()
+  }, [userToken,dealSlug]);
 
   const readmoreFunction = () => {
     if (readMore == true) {
@@ -53,6 +66,8 @@ const FestivalDetail = () => {
   };
 
   const headeTitle = "Festivals Offer | Freekaamaal";
+  console.log(store)
+
 
   return (
     <>
@@ -88,31 +103,22 @@ const FestivalDetail = () => {
             /
             <p
               className="p_tag_small"
-              style={{ fontSize: "13px", padding: "1px 5px" }}
+              style={{ fontSize: "13px", padding: "1px 5px",textTransform:"capitalize"}}
             >
-              Holi
+              {festivalInfo ? festivalInfo.name :""}
             </p>
           </div>
         </div>
         <div className="fastival_top_content_box">
-          <h6 style={{ fontSize: "18px", fontWeight: "bolder", marginBottom:"10px"}}>
-            Diwali Offers
+          <h6 style={{ fontSize: "18px", fontWeight: "bolder", marginBottom:"10px", textTransform:"capitalize"}}>
+          {festivalInfo ? festivalInfo.name :""}
           </h6>
           <p
             style={{ height: readMore ? "100%" : "140px", overflow: "hidden" }}
             fontSize={14}
+            dangerouslySetInnerHTML={{__html:festivalInfo ? festivalInfo.description:"" }}
           >
-            The festive season has begun, and it is time to shop and save with
-            Diwali offers. People eagerly wait for the Diwali sale to start
-            their festive shopping. With the Diwali offers of top online stores,
-            you get discounts on everything - electronics, appliances, fashion,
-            daily essentials etc. If you are looking for the best deals this
-            festive season, your search ends with FreeKaaMaal. Here on this
-            page, you will get Diwali offers across all categories such as
-            mobiles, electronics, fashion, accessories and more. We handpick the
-            top offers from leading stores to ensure you pay the lowest price.
-            The handpicked deals make your festive shopping more affordable. Get
-            up to 80% off across all categories with Diwali offers online.
+            
           </p>
           <div style={{ textAlign: "right" }}>
             <button
@@ -127,12 +133,17 @@ const FestivalDetail = () => {
         </div>
         <div className="fastivals_articles_box">
           <h4
-           style={{fontSize:"19px",fontWeight:"bolder",marginBottom:"8px"}}
+           style={{fontSize:"19px",fontWeight:"bolder",marginBottom:"8px", textTransform:"capitalize"}}
           >
-            Diwali Article
+           {festivalInfo ? festivalInfo.name :""} Article
           </h4>
-          <div className="fastival_article_wrapper">
-            <Link href="/">
+          <div>
+            {
+              article && article.map((item , i)=>{
+                return (
+
+            <div className="fastival_article_wrapper" key={i}>
+            <Link href={`/${item.base_url}`}>
               <Image
                 src="https://images.freekaamaal.com/common-images/M-topCoupons14-10-19.jpg"
                 width={200}
@@ -143,24 +154,31 @@ const FestivalDetail = () => {
 
             <div className="fastival_article_contant">
               <p style={{fontSize:"14px"}}>
-                Top 10 Diwali Coupons for Gifts, Travel and More
+              {item.title}
               </p>
-              <Link style={{ fontSize: "12px" }} href="/">
+              <Link style={{ fontSize: "12px" }}  href={`/${item.base_url}`}>
                 Read Article
               </Link>
             </div>
+           </div>
+                )
+              })
+            }
           </div>
         </div>
         <div className="fastival_store_section">
           <div
             style={{ padding: "10px 0", fontSize:"19px", letterSpacing:"1.47",
-             color:"#fff",fontWeight:"bloder"
+             color:"#fff",fontWeight:"bloder", textTransform:"capitalize"
           }}
           >
-            Diwali Sale 2021
+              {festivalInfo ? festivalInfo.name :""} Sale 2023
           </div>
           <div className="fastival_store_box">
-            <div className="fastival_store_wrapper">
+            {
+              store && store.map((item , i)=>{
+                return(
+             <div className="fastival_store_wrapper" key={i}>
               <Image
                 alt=""
                 src="	https://images.freekaamaal.com/store-images/1.jpg"
@@ -169,23 +187,15 @@ const FestivalDetail = () => {
               />
               <Link href="">
                 <p style={{color:"#000", fontSize:"12px"}}>
-                  Amazon Diwali Sale 2022
+                {item.name}   {festivalInfo ? festivalInfo.name :""} Sale 2023
                 </p>
               </Link>
             </div>
-            <div className="fastival_store_wrapper">
-              <Image
-                alt=""
-                src="	https://images.freekaamaal.com/store-images/1.jpg"
-                width={92}
-                height={30}
-              />
-              <Link href="">
-              <p style={{color:"#000", fontSize:"12px"}}>
-                  Amazon Diwali Sale 2022
-                </p>
-              </Link>
-            </div>
+                )
+              })
+            }
+            
+           
           </div>
         </div>
       </div>
@@ -212,14 +222,12 @@ const FestivalDetail = () => {
           .fastival_article_wrapper {
             background: #fff;
             padding: 9px;
-
             box-shadow: 0px 2px 12px 2px #e6e6e6;
             display: flex;
           }
           .fastival_article_wrapper .fastival_article_contant {
             margin-left: 10px;
           }
-
           .fastival_store_section {
             background: #697988 !important;
             margin: 20px 0 30px;
@@ -230,11 +238,13 @@ const FestivalDetail = () => {
             display: flex;
             align-items: flex-start;
             justify-content: space-evenly;
+            flex-wrap: wrap;
             text-align: center;
           }
           .fastival_store_wrapper {
             background: #fff;
             padding: 16px 19px;
+            min-width: 200px;
             margin: 10px;
             border-radius: 6px;
           }

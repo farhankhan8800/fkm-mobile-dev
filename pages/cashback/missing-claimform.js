@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-// import Image from "next/image";
+
 import { missingStoreAPI } from "service/API";
 import { missingStoreClickAPI } from "service/API";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { BsCheckCircle } from "react-icons/bs";
 import { BiErrorCircle } from "react-icons/bi";
+import protectRoute from "service/protect-route";
+import { useUserToken } from "service/customHooks";
 
 const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE
 
 const MissingClaimForm = () => {
   const [storeType, setStoreType] = useState();
-  const [authToken, setAuthToken] = useState();
+
   const [store, setStore] = useState();
   const [alert_message, setAlert_Message] = useState();
   const [err, setErr] = useState();
 
-  const router = useRouter();
-
-  useEffect(() => {
-    setAuthToken(JSON.parse(localStorage.getItem("user")).token);
-  }, []);
+  const router = useRouter()
+  const authToken = useUserToken()
 
   const getData = async () => {
     try {
@@ -30,7 +30,7 @@ const MissingClaimForm = () => {
         missingStoreAPI,
         {
           apiAuth: apiAuth,
-          device_type: "4",
+          device_type: DEVICE_TYPE,
         },
         {
           headers: {
@@ -38,6 +38,9 @@ const MissingClaimForm = () => {
           },
         }
       );
+      if(data.code == "401"){
+        return router.push("/session-expired")
+      }
       setStore(data.response);
     } catch (error) {}
   };
@@ -58,7 +61,7 @@ const MissingClaimForm = () => {
               missingStoreClickAPI,
               {
                 apiAuth: apiAuth,
-                device_type: "4",
+                device_type: DEVICE_TYPE,
                 store_id: storeType,
               },
               {
@@ -67,7 +70,10 @@ const MissingClaimForm = () => {
                 },
               }
             );
-            if (data.status == 1) {
+            if(data.code == "401"){
+              return router.push("/session-expired")
+            }
+              if (data.status == 1) {
               setAlert_Message(data.message);
               if (data.response) {
                 sessionStorage.setItem("store_id", storeType);
@@ -172,4 +178,4 @@ const MissingClaimForm = () => {
   );
 };
 
-export default MissingClaimForm;
+export default protectRoute(MissingClaimForm) ;

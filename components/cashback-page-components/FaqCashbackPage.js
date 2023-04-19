@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {} from "@mui/material";
+import { } from "@mui/material";
 
 import Link from "next/link";
 
@@ -13,7 +13,6 @@ const FaqCashbackPage = (props) => {
   const accordionFun = (id) => {
     const panel = document.getElementById(`panel${id}`).classList;
     const accordion = document.getElementById(`accordion${id}`).classList;
-
     panel.toggle("activeTab");
     accordion.toggle("activeAccordion");
   };

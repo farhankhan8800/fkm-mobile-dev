@@ -8,6 +8,7 @@ import { ImWarning } from "react-icons/im";
 import { AiFillInfoCircle } from "react-icons/ai";
 
 const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE
 
 const WithdrawOtherBank = ({ userData }) => {
   const [amount, setAmount] = useState();
@@ -44,7 +45,7 @@ const WithdrawOtherBank = ({ userData }) => {
               withdrawMoneyAPI,
               {
                 apiAuth: apiAuth,
-                device_type: "4",
+                device_type: DEVICE_TYPE,
                 wallet_name: "paytm",
                 account_ref_id: account,
                 amount: amount,
@@ -58,6 +59,9 @@ const WithdrawOtherBank = ({ userData }) => {
                 },
               }
             );
+            if(data.code == "401"){
+              return router.push("/session-expired")
+            }
             if (data.status == 1) {
               setTimeout(() => {
                 setServerdata(data.msg);

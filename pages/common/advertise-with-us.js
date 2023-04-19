@@ -88,10 +88,11 @@ const MetroCity = [
     count: "7857657",
   },
 ];
+const headeTitle = " Advertise With Us | Freekaamaal";
 const advertiseWithUs = () => {
   return (
     <>
-      <HeadTag />
+      <HeadTag headeTitle={headeTitle} />
       <Header />
       <div style={{ padding: "7px", paddingTop: "57px" }}>
         <div className="intro-box">

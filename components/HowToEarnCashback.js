@@ -127,6 +127,7 @@ const HowToEarnCashback = (props) => {
           line-height: 1.55;
     font-size: 13px;
     font-weight: 100;
+    padding: 10px 0;
     margin-top: 10px;
         }
       `}</style>

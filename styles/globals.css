@@ -536,3 +536,13 @@ padding: 0 26px 0 0;
 .articels_dynimic_bottom_div h3{
 
 }
+.Live_deal_card_link {
+  text-decoration: none;
+  border-radius: 10px;
+  width: 100%;
+  height: 190px;
+  background: #f1f1f16b;
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+}

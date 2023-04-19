@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import shopImage from "../../public/images/restaurant.png";
-import { Grid, Box, Typography } from "@mui/material";
+
 
 
 const FeaturedStore = (props) => {

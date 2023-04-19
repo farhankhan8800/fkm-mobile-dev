@@ -16,6 +16,7 @@ import { loginFun } from "redux-store/slices/UserSlice";
 import axios from "axios";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import { ImWarning } from "react-icons/im";
+import authPageProtect from "service/auth-page-protect";
 
 
 const apiAuth = process.env.API_AUTH;
@@ -26,7 +27,6 @@ const Login = () => {
   const [callWarning, SetCallWarning] = useState(false);
   const [emailErr, setEmailErr] = useState(false);
   const [passwordErr, setPasswordErr] = useState(false);
-  const [userdata, setUserdata] = useState();
   const [serverErr, setServerErr] = useState("");
   const [showPass, setShowPass] = useState(true)
   const headeTitle = "Login | Freekaamaal";
@@ -39,12 +39,8 @@ const Login = () => {
 
   const dispatch = useDispatch()
   
-  useEffect(() => {
-    setUserdata(localStorage.getItem("user"));
-    if (userdata) {
-      router.push("/");
-    }
-  }, [router, userdata]);
+  
+  
   const onSubmit = async (e) => {
     e.preventDefault();
     if (email.length < 4 || password.length < 6) {
@@ -308,4 +304,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default authPageProtect(Login) ;

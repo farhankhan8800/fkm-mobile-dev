@@ -1,17 +1,18 @@
 import React from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import Image from "next/image";
-import { Box, Button, Typography } from "@mui/material";
 
 import axios from "axios";
 import { withdrawal_historyAPI } from "service/API";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useUserToken } from "service/customHooks";
+import protectRoute from "service/protect-route";
+import { useRouter } from "next/router";
 
 const apiAuth = process.env.API_AUTH;
 const DEVICE_TYPE = process.env.DEVICE_TYPE;
+
 const CashbackHistory = () => {
   const [page, setPage] = useState(1);
   const [ToggleState, setToggleState] = useState(1);
@@ -24,7 +25,7 @@ const CashbackHistory = () => {
   const [noMoreData, setNoMoreData] = useState(false);
 
   const authToken = useUserToken();
-
+  const router = useRouter()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getData = async () => {
     try {
@@ -42,7 +43,9 @@ const CashbackHistory = () => {
           },
         }
       );
-
+      if(data.code == "401"){
+        return router.push("/session-expired")
+      }
       setCashback_history_title(data.response.top_desc);
       if (option == " ") {
         if (data.response.all.length == 0) {
@@ -160,18 +163,18 @@ const CashbackHistory = () => {
       <HeadTag headeTitle={headeTitle}></HeadTag>
       <Header></Header>
       <div style={{ paddingTop: "56px" }}>
-        <Box
-          sx={{
-            p: 2,
+        <div
+          style={{
+            padding:"15px",
             margin: "10px 10px 0",
-            bgcolor: "#f1f1f1",
+            background: "#f1f1f1",
             borderRadius: "5px",
           }}
         >
-          <Typography component="p" fontSize="13px" color="gray">
+          <p  style={{fontSize:"13px",color:"gray"}}>
             {setCashback_history_title ? cashback_history_title : "Loding.."}
-          </Typography>
-        </Box>
+          </p>
+        </div>
         <div sx={{ p: 2 }}>
           <div sx={{ width: "100%" }}>
             <div className="container">
@@ -445,7 +448,7 @@ const CashbackHistory = () => {
 }
 
 #table_style td, #table_style th {
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd5c;
   padding: 8px;
   min-width:100px;
   text-align: center;
@@ -458,7 +461,7 @@ const CashbackHistory = () => {
 #table_style th {
     padding-top: 12px;
     padding-bottom: 12px;
-    background-color: var(--main-color);
+    background-color: #757171;
     color: white;
   }
         `}
@@ -467,4 +470,4 @@ const CashbackHistory = () => {
   );
 };
 
-export default CashbackHistory;
+export default protectRoute(CashbackHistory) ;

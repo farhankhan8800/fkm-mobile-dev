@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 import Image from "next/image";
-import { Breadcrumbs, Button, Typography } from "@mui/material";
 import Link from "next/link";
-import StarIcon from "@mui/icons-material/Star";
 import { useRouter } from "next/router";
 
 import { festivalAPI } from "service/API";

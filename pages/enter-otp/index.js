@@ -12,6 +12,7 @@ import { useSelector,useDispatch } from "react-redux";
 import { clearToken, loginVarifid } from "redux-store/slices/authSlice";
 import { BiErrorCircle } from "react-icons/bi";
 import { BsCheckCircle } from "react-icons/bs";
+import authPageProtect from "service/auth-page-protect";
 
 const EnterOtp = () => {
   const [OTP, setOTP] = useState();
@@ -24,9 +25,10 @@ const EnterOtp = () => {
   const router = useRouter();
 
   const token=  useSelector((state)=>{return state.authSlice})
-   console.log(registerToken)
+  //  console.log(registerToken)
   const dispatch = useDispatch()
   const apiAuth = process.env.API_AUTH;
+  const DEVICE_TYPE = process.env.DEVICE_TYPE;
 
   useEffect(() => {
     setRegisterToken(token.data?.token);
@@ -53,6 +55,7 @@ const EnterOtp = () => {
   //     };
   //   }
   // }, [time]);
+
   const onSubmit = async (e) => {
     e.preventDefault();
     if (OTP) {
@@ -205,4 +208,4 @@ const EnterOtp = () => {
   );
 };
 
-export default EnterOtp;
+export default authPageProtect(EnterOtp) ;

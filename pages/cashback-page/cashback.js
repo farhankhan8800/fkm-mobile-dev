@@ -6,7 +6,8 @@ import axios from "axios";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 import CashbackDealPageCard from "components/cashback-page-components/CashbackPageDealCard";
-import{cashbackpageAPI} from "service/API"
+import { cashbackpageAPI } from "service/API"
+import { useUserToken } from "service/customHooks";
 const headeTitle = "100% Cashback | Freekaamaal";
 
 const apiAuth = process.env.API_AUTH;
@@ -15,17 +16,13 @@ const DEVICE_TYPE = process.env.API_AUTH;
 const Cashback = () => {
   const [cahsbackstore, setCahsbackstore] = useState()
   const [cahsbackDeal, setCahsbackDeal] = useState()
-  const [authToken, setAuthToken] = useState();
 
-  useEffect(() => {
-    if (JSON.parse(localStorage.getItem("user"))) {
-      setAuthToken(JSON.parse(localStorage.getItem("user")).token);
-    }
-  }, []);
 
-  const getdata = async ()=>{
+  const authToken = useUserToken()
+
+  const getdata = async () => {
     try {
-      let {data} = await axios.post(
+      let { data } = await axios.post(
         cashbackpageAPI,
         {
           apiAuth: apiAuth,
@@ -37,17 +34,17 @@ const Cashback = () => {
           },
         }
       )
-      console.log(data.response)
+      // console.log(data.response)
       setCahsbackstore(data.response.cahsbackstore)
       setCahsbackDeal(data.response.cashbackdeal)
     } catch (error) {
-      console.log(error)
+      // console.log(error)
     }
   }
 
-useEffect(()=>{
-   getdata()
-},[authToken])
+  useEffect(() => {
+    getdata()
+  }, [authToken])
 
 
 
@@ -65,7 +62,7 @@ useEffect(()=>{
       >
         <div className="top_box">
           <h3>Earn Real Money When You Shop Online</h3>
-          <p  style={{ margin: "10px 0",fontSize:"14px" }}>
+          <p style={{ margin: "10px 0", fontSize: "14px" }}>
             Just shop at your favorite store by logging into your FreeKaaMaal
             account and earn upto 100% cashback. Amount will be added to your
             account once your purchase is over and redeem your earning through
@@ -85,25 +82,25 @@ useEffect(()=>{
             {
               // console.log(cahsbackstore)
 
-               cahsbackstore && cahsbackstore.map((item ,i)=>{
-                return(
+              cahsbackstore && cahsbackstore.map((item, i) => {
+                return (
                   // eslint-disable-next-line react/jsx-key
                   <div className="store_wrapper" key={i}>
-                  <Link href="cashback-store">
-                    <Image
-                      alt=""
-                      src={item.img_url}
-                      width={92}
-                      height={32}
-                    />
-                    <div className="prize_tag_ab">
-                      {" "}
-                      <strong>{item.cahsback}</strong> 
-                    </div>
-                  </Link>
-                </div>
+                    <Link href="cashback-store">
+                      <Image
+                        alt=""
+                        src={item.img_url}
+                        width={92}
+                        height={32}
+                      />
+                      <div className="prize_tag_ab">
+                        {" "}
+                        <strong>{item.cahsback}</strong>
+                      </div>
+                    </Link>
+                  </div>
                 )
-               })
+              })
             }
           </div>
           <div style={{ textAlign: "center" }}>
@@ -119,12 +116,12 @@ useEffect(()=>{
           <hr />
           <div className="stroes_box ">
             {
-              cahsbackDeal ?  <CashbackDealPageCard cahsbackDeal={cahsbackDeal} />:""
+              cahsbackDeal ? <CashbackDealPageCard cahsbackDeal={cahsbackDeal} /> : ""
             }
           </div>
           <div style={{ textAlign: "center" }}>
             <Link href="cashback-deals">
-              <button className="contain_button"  style={{ color: "#fff" }}>
+              <button className="contain_button" style={{ color: "#fff" }}>
                 View All Deals
               </button>
             </Link>

@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import signupImage from "../../public/images/signup.png";
-import { Box, Button, Typography, TextField, Grid, Alert } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
 import Header from "../../components/headerComponent/Header";
@@ -14,8 +13,10 @@ import { useDispatch } from "react-redux";
 import { registerToken } from "redux-store/slices/authSlice";
 import { ImWarning } from "react-icons/im";
 import { BsCheckCircle, BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+import authPageProtect from "service/auth-page-protect";
 
 const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE;
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -31,18 +32,13 @@ const SignUp = () => {
 
   const [callWarning, SetCallWarning] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
-  const [userdata, setUserdata] = useState();
   const router = useRouter();
 
   const dispatch = useDispatch()
 
   useEffect(() => {
     localStorage.removeItem("verified");
-    setUserdata(localStorage.getItem("user"));
-    if (userdata) {
-      router.push("/");
-    }
-  }, [router, userdata]);
+  }, []);
 
   const showPassFun = ()=>{
     setShowPass(!showPass)
@@ -67,7 +63,7 @@ const SignUp = () => {
             email: email,
             pass: password,
             phone: mobile,
-            device_type: "1",
+            device_type:DEVICE_TYPE,
             name: userName,
             referral_code: "",
             app_device_id: "",
@@ -96,7 +92,7 @@ const SignUp = () => {
           setSignupError(data.message);
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         setSignupError(error.response?.data.message);
       }
     }
@@ -338,4 +334,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default authPageProtect(SignUp) ;

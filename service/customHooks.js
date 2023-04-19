@@ -2,6 +2,8 @@
 import  { useEffect, useState } from 'react'
 
 
+// get user data in localStorage 
+
 export const useGetUser = () => {
     const [getUser, setGetUser] = useState(null);
     useEffect(()=>{
@@ -13,6 +15,7 @@ export const useGetUser = () => {
     getUser
   )
 }
+// get user Token in localStorage 
 
 export const useUserToken = () => {
     const [userToken, setUserToken] = useState(null);

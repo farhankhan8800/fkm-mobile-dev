@@ -8,7 +8,7 @@ import { AiFillInfoCircle } from "react-icons/ai";
 import { ImWarning } from "react-icons/im";
 
 const apiAuth = process.env.API_AUTH
-
+const DEVICE_TYPE = process.env.DEVICE_TYPE
 const WithdrawBank = ({userData}) => {
 
   const [amount, setAmount] = useState();
@@ -45,7 +45,7 @@ const WithdrawBank = ({userData}) => {
         try {
                 let{data} = await axios.post(withdrawMoneyAPI,{
                     apiAuth:apiAuth,
-                    device_type: "4",
+                    device_type: DEVICE_TYPE,
                     wallet_name:"paytm",
                     account_ref_id:account,
                     amount:amount,
@@ -58,6 +58,9 @@ const WithdrawBank = ({userData}) => {
                           Authorization:authToken
                         }
                   })
+                  if(data.code == "401"){
+                    return router.push("/session-expired")
+                  }
                  if(data.status == 1){
                   setTimeout(()=>{
                     setServerdata(data.msg)
@@ -87,9 +90,6 @@ const WithdrawBank = ({userData}) => {
     setNotValid("Select Withdrawal Account");
    }
   };
-
-
-
   const amountHandler = (e) => {
     setAmount(e.target.value);
     setNotValid(null);
@@ -113,7 +113,7 @@ const WithdrawBank = ({userData}) => {
     <>
      <div style={{paddingTop:"20px"}}>
    {
-    userAccountData ?  <Typography fontSize={"13px"} fontWeight={600}> {userAccountData.label_msg}</Typography> :""
+    userAccountData ?  <p style={{fontSize:"13px", fontWeight:"600"}}> {userAccountData.label_msg}</p> :""
    }
    
      <div style={{paddingTop:"10px"}}>
@@ -125,9 +125,7 @@ const WithdrawBank = ({userData}) => {
               >
                 <option value="00">Select Account</option>
                {
-
                userAccountData ? userAccountData.account.map((item,i)=>
-               
                 // eslint-disable-next-line react/jsx-key
                 <option key={i} value={item.account_ref_id}>{item.name}</option>
 
@@ -190,7 +188,7 @@ const WithdrawBank = ({userData}) => {
           
      </div>
      
-      <style jxs>{`
+      <style jsx>{`
     label{
         display: block;
         padding: 9px 2px 5px;

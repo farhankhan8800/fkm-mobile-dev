@@ -1,18 +1,20 @@
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import { Box, Button, Typography } from "@mui/material";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { referral_summaryAPI } from "service/API";
 import React from "react";
 import { cashbackHistoryAPI } from "service/API";
+import protectRoute from "service/protect-route";
+import { useUserToken } from "service/customHooks";
+import { useRouter } from "next/router";
 
 const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE
 
 const ReferralHistory = () => {
   const [referral, setReferral] = useState();
   const [page, setPage] = useState(1);
-  const [authToken, setAuthToken] = useState();
   const [cashback_history_all, setCashback_history_all] = useState([]);
   const [cashback_history_pending, setCashback_history_pending] = useState([]);
   const [cashback_history_confirmed, setCashback_history_confirmed] = useState(
@@ -25,10 +27,8 @@ const ReferralHistory = () => {
   const [noMoreData, setNoMoreData] = useState(false);
   const [ToggleState, setToggleState] = useState(1);
 
-
-  useEffect(() => {
-    setAuthToken(JSON.parse(localStorage.getItem("user")).token);
-  }, []);
+  const router = useRouter()
+  const authToken = useUserToken()
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getData = async () => {
@@ -37,7 +37,7 @@ const ReferralHistory = () => {
         referral_summaryAPI,
         {
           apiAuth: apiAuth,
-          device_type: "4",
+          device_type: DEVICE_TYPE,
           option: "summary",
           page: 1,
         },
@@ -47,9 +47,12 @@ const ReferralHistory = () => {
           },
         }
       );
+      if(data.code == "401"){
+        return router.push("/session-expired")
+      }
       setReferral(data.response.summary);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -60,7 +63,7 @@ const ReferralHistory = () => {
         cashbackHistoryAPI,
         {
           apiAuth: apiAuth,
-          device_type: "4",
+          device_type: DEVICE_TYPE,
           option: option,
           page: page,
         },
@@ -70,7 +73,9 @@ const ReferralHistory = () => {
           },
         }
       );
-
+      if(data.code == "401"){
+        return router.push("/session-expired")
+      }
       if (option == " ") {
         if (data.response.all.length == 0) {
           setNoMoreData(true);
@@ -117,7 +122,7 @@ const ReferralHistory = () => {
           ]);
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const moreData = () => {
@@ -362,7 +367,7 @@ const ReferralHistory = () => {
                       </tbody>
                     </table>
                   ) : (
-                    <p style={{textAlign:"center" ,fontSize:"18px"}}>
+                    <p style={{ textAlign: "center", fontSize: "18px" }}>
                       No Data Available
                     </p>
                   )}
@@ -370,9 +375,9 @@ const ReferralHistory = () => {
                     {noMoreData ? (
                       "No More Data..."
                     ) : (
-                        <div
-                           style={{ padding:"10px", display: "flex", justifyContent: "center" }}
-                         >
+                      <div
+                        style={{ padding: "10px", display: "flex", justifyContent: "center" }}
+                      >
                         <button className="contain_button" onClick={moreData} >
                           More Data
                         </button>
@@ -409,7 +414,7 @@ const ReferralHistory = () => {
                       </tbody>
                     </table>
                   ) : (
-                    <p style={{textAlign:"center",fontSize:"18"}}>
+                    <p style={{ textAlign: "center", fontSize: "18" }}>
                       No Data Available
                     </p>
                   )}
@@ -419,9 +424,9 @@ const ReferralHistory = () => {
                       "No More Data..."
                     ) : (
                       <div
-                        style={{padding:"10px", display: "flex", justifyContent: "center" }}
+                        style={{ padding: "10px", display: "flex", justifyContent: "center" }}
                       >
-                        <button  onClick={moreData}  className="border_button">
+                        <button onClick={moreData} className="border_button">
                           More Data
                         </button>
                       </div>
@@ -457,7 +462,7 @@ const ReferralHistory = () => {
                       </tbody>
                     </table>
                   ) : (
-                    <p style={{textAlign:"center", fontSize:"18"}}>
+                    <p style={{ textAlign: "center", fontSize: "18" }}>
                       No Data Available
                     </p>
                   )}
@@ -467,7 +472,7 @@ const ReferralHistory = () => {
                       "No More Data..."
                     ) : (
                       <div
-                       style={{padding:"10px", display: "flex", justifyContent: "center" }}
+                        style={{ padding: "10px", display: "flex", justifyContent: "center" }}
                       >
                         <button onClick={moreData} className="border_button">
                           More Data
@@ -505,7 +510,7 @@ const ReferralHistory = () => {
                       </tbody>
                     </table>
                   ) : (
-                    <p style={{textAlign:"center", fontSize:"18px"}}>
+                    <p style={{ textAlign: "center", fontSize: "18px" }}>
                       No Data Available
                     </p>
                   )}
@@ -515,7 +520,7 @@ const ReferralHistory = () => {
                       "No More Data..."
                     ) : (
                       <div
-                        style={{ padding:"10px", display: "flex", justifyContent: "center" }}
+                        style={{ padding: "10px", display: "flex", justifyContent: "center" }}
                       >
                         <button onClick={moreData} className="border_button">
                           More Data
@@ -582,7 +587,7 @@ const ReferralHistory = () => {
 
           #table_style td,
           #table_style th {
-            border: 1px solid #ddd;
+            border: 1px solid #dddddd5c;
             padding: 8px;
             min-width: 100px;
             text-align: center;
@@ -599,7 +604,7 @@ const ReferralHistory = () => {
           #table_style th {
             padding-top: 12px;
             padding-bottom: 12px;
-            background-color: var(--main-color);
+            background-color: #757171;
             color: white;
           }
           `}
@@ -609,4 +614,4 @@ const ReferralHistory = () => {
   );
 };
 
-export default ReferralHistory;
+export default protectRoute(ReferralHistory);

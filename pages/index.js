@@ -11,12 +11,9 @@ const  HowToEarnCashback = dynamic(() => import('components/HowToEarnCashback'))
 import  CashBackStore from 'components/homeComponents/CashBackStore'
 import { homeAPI1 } from "service/API";
 import { homeAPI2 } from "service/API";
-import { useRouter } from 'next/router'
-import OpenExpireSectionDialog from "components/utilites/session-expired";
-
 import axios from "axios";
-import {isTokenExpired} from "service/helper.js";
 
+import {useUserToken} from "service/customHooks"
 
 const apiAuth = process.env.API_AUTH;
 const DEVICE_TYPE = process.env.DEVICE_TYPE
@@ -31,23 +28,9 @@ export default function Home() {
   const [page, setPage] = useState(1);
   const [noData, setNoData] = useState(false);
   const [sponsoredCount, setSponsoredCount] = useState();
-  const [authToken, setAuthToken] = useState();
-  const [sessionExpired,setSessionExpired] =  useState(false)
-
-  const router = useRouter()
-
-  useEffect(() => {
-    if (JSON.parse(localStorage.getItem("user"))) {
-      setAuthToken(JSON.parse(localStorage.getItem("user")).token);
-    }
-  }, []);
-
-  useEffect(()=>{
-    if(isTokenExpired(authToken)){
-      setSessionExpired(true)
-    } 
-  },[authToken])
-
+ 
+  const authToken = useUserToken()
+  
   const headeTitle = "Online Shopping India, Best Deals, Offers, Coupons & Free Stuff in India | Freekaamaal";
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -61,17 +44,18 @@ export default function Home() {
         },
         {
           headers: {
+            "Content-Type": "application/json",
             Authorization: authToken,
           },
         }
       );
-
-      // console.log("callapi1");
-      
+      console.log(data)
       setCarousel(data.response.slider);
       setLiveDeal(data.response.live_deals);
       setDealofday(data.response.sticky);
-    } catch (error) {}
+    } catch (error) {
+     
+    }
   };
   const fistApiCallback = useCallback(GetData,[authToken])
 
@@ -87,13 +71,12 @@ export default function Home() {
         },
         {
           headers: {
+            "Content-Type": "application/json",
             Authorization: authToken,
           },
         }
       );
-
-
-      // console.log(data.response.user_summary)
+  
       if (data.response.user_summary) {
         localStorage.setItem(
           "usersummary",
@@ -112,6 +95,7 @@ export default function Home() {
 
   useEffect(() => {
     fistApiCallback()
+   
   }, []);
 
 const secondApiCallback = useCallback( getAPI2 ,[authToken, page])
@@ -124,9 +108,7 @@ const secondApiCallback = useCallback( getAPI2 ,[authToken, page])
   };
   return (
     <>
-    {
-      sessionExpired ?<OpenExpireSectionDialog setSessionExpired={setSessionExpired} />:""
-    }
+   
       <HeadTag headeTitle={headeTitle} />
       <Header />
       <div>

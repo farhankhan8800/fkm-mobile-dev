@@ -1,26 +1,32 @@
 import React, { useState } from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import { Alert, Box, Typography } from "@mui/material";
+import { Alert,  } from "@mui/material";
 import ReferalOtherBank from "components/referal-money/referalOtherBank";
 import { useEffect } from "react";
 import ReferalBank from "components/referal-money/referalBank";
 import { withdrawPaymentModeAPI } from "service/API";
 import axios from "axios";
+import protectRoute from "service/protect-route";
+import { useUserToken } from "service/customHooks";
+import { useRouter } from "next/router";
 
 const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE
+
 
 const ReferalMoney = () => {
   const [account, setAccount] = useState();
   const [activeBank, setActiveBank] = useState(false);
   const [activePaytm, setActivePaytm] = useState(false);
-  const [authToken, setAuthToken] = useState();
+  
   const [serverdata, setServerdata] = useState();
   const [userData, setuserData] = useState([]);
 
-  useEffect(() => {
-    setAuthToken(JSON.parse(localStorage.getItem("user")).token);
-  }, []);
+
+  const router = useRouter()
+  const authToken = useUserToken()
+
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const changeAccount = async (account) => {
@@ -29,7 +35,7 @@ const ReferalMoney = () => {
         withdrawPaymentModeAPI,
         {
           apiAuth: apiAuth,
-          device_type: "4",
+          device_type: DEVICE_TYPE,
           wallet_type: account,
         },
         {
@@ -38,7 +44,9 @@ const ReferalMoney = () => {
           },
         }
       );
-
+      if(data.code == "401"){
+        return router.push("/session-expired")
+      }
       if (data.status == 1) {
         setuserData(data);
         if (account == "bank") {
@@ -55,9 +63,7 @@ const ReferalMoney = () => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    setAuthToken(JSON.parse(localStorage.getItem("user")).token);
-  }, []);
+ 
 
   const accountHandler = (e) => {
     setServerdata("");
@@ -113,7 +119,7 @@ const ReferalMoney = () => {
           </div>
         </div>
       </div>
-      <style jxs>{`
+      <style jsx>{`
       .select_tag{
         width: 100%;
         margin: 18px 0px;
@@ -132,4 +138,4 @@ const ReferalMoney = () => {
   );
 };
 
-export default ReferalMoney;
+export default protectRoute(ReferalMoney) ;

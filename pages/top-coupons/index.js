@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from "react";
 import couponImage from "../../public/images/coupon.png";
-
-import {
-  Grid,
-  Box,
-  Typography,
-  CardActionArea,
-  CardContent,
-  Card,
-  Button,
-} from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 

@@ -1,18 +1,19 @@
 import React from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import { Box, Button, Typography } from "@mui/material";
-
 import axios from "axios";
 import { withdrawal_historyAPI } from "service/API";
 import { useState } from "react";
 import { useEffect } from "react";
+import protectRoute from "service/protect-route";
+import { useRouter } from "next/router";
+import { useUserToken } from "service/customHooks";
 
 const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE
 
 const WithdrawHistory = () => {
   const [page, setPage] = useState(1);
-  const [authToken, setAuthToken] = useState();
   const [cashback_history_title, setCashback_history_title] = useState();
   const [cashback_history_all, setCashback_history_all] = useState([]);
   const [cashback_history_pending, setCashback_history_pending] = useState([]);
@@ -22,6 +23,11 @@ const WithdrawHistory = () => {
   const [noMoreData, setNoMoreData] = useState(false);
   const [ToggleState, setToggleState] = useState(1);
 
+
+  const router = useRouter()
+  const authToken = useUserToken()
+
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getData = async () => {
     try {
@@ -29,7 +35,7 @@ const WithdrawHistory = () => {
         withdrawal_historyAPI,
         {
           apiAuth: apiAuth,
-          device_type: "4",
+          device_type:DEVICE_TYPE,
           option: option,
           page: page,
         },
@@ -39,12 +45,14 @@ const WithdrawHistory = () => {
           },
         }
       );
-
-      setCashback_history_title(data.response.top_desc);
-      if (option == " ") {
-        if (data.response.all.length == 0) {
-          setNoMoreData(true);
-        } else {
+          if(data.code == "401"){
+            return router.push("/session-expired")
+          }
+         setCashback_history_title(data.response.top_desc);
+          if (option == " ") {
+          if (data.response.all.length == 0) {
+            setNoMoreData(true);
+          } else {
           setCashback_history_all([
             ...cashback_history_all,
             ...data.response.all,
@@ -94,7 +102,6 @@ const WithdrawHistory = () => {
   };
 
   useEffect(() => {
-    setAuthToken(JSON.parse(localStorage.getItem("user")).token);
     getData();
   }, [authToken]);
 
@@ -443,7 +450,7 @@ const WithdrawHistory = () => {
 
           #table_style td,
           #table_style th {
-            border: 1px solid #ddd;
+            border: 1px solid #dddddd5c;
             padding: 8px;
             min-width: 100px;
             text-align: center;
@@ -460,7 +467,7 @@ const WithdrawHistory = () => {
           #table_style th {
             padding-top: 12px;
             padding-bottom: 12px;
-            background-color: var(--main-color);
+            background-color: #757171;
             color: white;
           }
         `}
@@ -469,4 +476,4 @@ const WithdrawHistory = () => {
   );
 };
 
-export default WithdrawHistory;
+export default protectRoute(WithdrawHistory) ;
