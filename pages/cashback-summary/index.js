@@ -6,10 +6,19 @@ import { Box, Grid, Typography, IconButton, Avatar } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import UserSummary from "../../components/clickHistoryComponents/UserSummary";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const UserProfile = () => {
+
   const router = useRouter();
   const headeTitle = "User Name | Freekaamaal";
+
+  useEffect(()=>{
+    if(!(localStorage.getItem("user"))){
+      router.push("/")
+    }
+  },[router])
+
   return (
     <>
       <HeadTag headeTitle={headeTitle}></HeadTag>

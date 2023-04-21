@@ -4,6 +4,7 @@ import {allStores} from "../../service/API"
 import { useState,useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import axios from "axios";
 
 
 import Header from "../../components/headerComponent/Header";
@@ -23,24 +24,19 @@ const Index = () => {
  
   const GetData = async ()=>{
     try {
-          let data = await fetch(allStores,{
-            method: 'post',
-            body: JSON.stringify({ 
+          let {data} = await axios.post(allStores,{
               apiAuth:apiAuth
-             }),
-            mode: 'cors', 
-            Headers: {
-               'Content-Type': 'application/json'
-               }
-            })
-            let result = await data.json();
-             setAllStore(result.response.allstores)
-         
-
-    } catch (error) {
-      return error     
-    }   
-  }
+             },
+              {
+                headers: {
+                   'Content-Type': 'application/json'
+                }
+              })
+             setAllStore(data.response.allstores)
+      } catch (error) {
+        return error     
+      }   
+    }
 
   // console.log(allStore)
  

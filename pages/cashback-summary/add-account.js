@@ -1,44 +1,42 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import { Box, Button, TextField } from "@mui/material";
+import {Box, Typography} from "@mui/material";
+import Bank from "components/add-account/Bank";
+import { useEffect } from "react";
+import OtherBank from "components/add-account/OtherBank";
 
 const AddAccount = () => {
-  const [name, setName] = useState();
-  const [phone, setPhone] = useState();
-  const [accountnumber, setAccountNumber] = useState();
-  const [ifsc, setIfsc] = useState();
-  const [bankName, setBankName] = useState();
-  const [accountType, setAccountType] = useState();
+  
+  const [account,setAccount] = useState()
+   const [activeBank, setActiveBank]= useState(false)
+   const [activePaytm, setActivePaytm]= useState(false)
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    // console.log(`${name},${phone},${accountnumber},${ifsc},${bankName},${accountType}`)
-    setName("");
-    setPhone("");
-    setAccountNumber("");
-    setIfsc("");
-    setBankName("");
-    setAccountType("");
-  };
-  const nameHandler = (e) => {
-    setName(e.target.value);
-  };
-  const phoneHandler = (e) => {
-    setPhone(e.target.value);
-  };
-  const acountNumberHandler = (e) => {
-    setAccountNumber(e.target.value);
-  };
-  const ifscHandler = (e) => {
-    setIfsc(e.target.value);
-  };
-  const bankNameHandler = (e) => {
-    setBankName(e.target.value);
-  };
-  const accountTypeHandler = (e) => {
-    setAccountType(e.target.value);
-  };
+
+
+  useEffect(()=>{
+    // setUser(json.parse(localStorage.getItem("user").token));
+  },[])
+
+  
+
+  const accountHandler = (e) =>{
+    setAccount(e.target.value)
+  }
+
+  useEffect(()=>{
+    if(account == "bank"){
+      setActiveBank(true)
+      setActivePaytm(false)
+    }else if(account == "paytm"){
+      setActiveBank(false)
+      setActivePaytm(true)
+    }else{
+      setActiveBank(false)
+      setActivePaytm(false)
+    }
+  },[account])
+  
 
   const headeTitle = "Add Your bank Account | Freekaamaal";
   return (
@@ -48,103 +46,52 @@ const AddAccount = () => {
       <div style={{ paddingTop: "56px" }}>
         <Box
           component="div"
-          sx={{ p: 2, m: 2, background: "#f7f7f7", borderRadius: "5px" }}
+          sx={{ p: 2, m: 2, mt: 0, background: "#f7f7f7", borderRadius: "5px" }}
         >
+          <Box sx={{}}>
+            <Typography variant="p" fontWeight={400} color="initial">
+              Add Your Account to withdraw Cashback
+            </Typography>
+          </Box>
           <Box>
-            <form onSubmit={onSubmit}>
-              <label>Account Type</label>
-              <select
-                onChange={accountTypeHandler}
-                value={accountType}
-                name="account-type"
-                id="account-type"
+          <select className="select_tag"
+                onChange={accountHandler}
+                value={account}
               >
-                <option value="">Opction</option>
-                <option value="saving">Saving</option>
-                <option value="current">Current</option>
-                <option value="bussines">Bussines</option>
-              </select>
-              <label>Account Holder Name</label>
-              <TextField
-                size="small"
-                fullWidth
-                value={name}
-                onChange={nameHandler}
-                type="text"
-                id="outlined-basic"
-                placeholder="Account Type"
-                variant="outlined"
-              />
-              <label>Phone</label>
-              <TextField
-                size="small"
-                fullWidth
-                onChange={phoneHandler}
-                type="number"
-                value={phone}
-                id="outlined-basic"
-                placeholder="Phone"
-                variant="outlined"
-              />
-              <label>Account Number</label>
-              <TextField
-                size="small"
-                fullWidth
-                type="text"
-                value={accountnumber}
-                onChange={acountNumberHandler}
-                id="outlined-basic"
-                placeholder="Account Number"
-                variant="outlined"
-              />
-              <label>IFSC</label>
-              <TextField
-                size="small"
-                fullWidth
-                value={ifsc}
-                onChange={ifscHandler}
-                type="text"
-                id="outlined-basic"
-                placeholder="IFSC"
-                variant="outlined"
-              />
-              <label>Bank Name</label>
-              <TextField
-                size="small"
-                fullWidth
-                type="text"
-                value={bankName}
-                onChange={bankNameHandler}
-                id="outlined-basic"
-                placeholder="Bank Name"
-                variant="outlined"
-              />
-              <Box sx={{ padding: "10px 0" }}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{ width: "100%", color: "#fff", fontWeight: "600" }}
-                >
-                  {" "}
-                  Submit
-                </Button>
-              </Box>
-            </form>
+                <option value="Option">Select Your Payment mode</option>
+                <option value="bank">Bank</option>
+                <option value="paytm">Paytm</option>
+          </select>
+          </Box>
+          <Box>
+            <div>
+            {
+              activeBank ? <Bank />:""
+            }
+            </div>
+            
+            <div>
+            {
+              activePaytm ? <OtherBank />:""
+            }
+            </div>
           </Box>
         </Box>
       </div>
       <style jxs>{`
-    label{
-        display: block;
-        padding: 9px 2px 5px;
-    }
-    select{
-        width: 100%;
-        padding: 10px;
-        border-radius: 5px;
-        font-size: 15px;
-        border: 1px solid #c1c1c1;
-    }
+ .select_tag{
+  width: 100%;
+  margin: 18px 0px;
+  cursor: pointer;
+  padding: 8px;
+  border: none;
+  border: 2px solid #383535;
+  border-radius: 7px;
+  color: #000;
+ }
+ .select_tag option{
+  padding:5px;
+ }
     `}</style>
     </>
   );

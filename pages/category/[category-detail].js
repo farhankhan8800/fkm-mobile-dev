@@ -1,19 +1,21 @@
 import Image from "next/image";
 import { Box, Typography } from "@mui/material";
-import Header from "../../components/headerComponent/Header";
-import HeadTag from "../../components/headTagComponent/HeadTag";
-import DealsAndCoupons from "../../components/couponsComponents/DealsAndCoupons";
+import Header from "components/headerComponent/Header";
+import HeadTag from "components/headTagComponent/HeadTag";
+import DealsAndCoupons from "components/couponsComponents/DealsAndCoupons";
 import { useEffect, useState } from "react";
-import { categoryDetailApi } from "../../service/API";
+import { categoryDetailApi } from "service/API";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 const apiAuth = process.env.API_AUTH;
 
 const CategoryDetail = () => {
-   const [categoryDeals, setCategoryDeals] = useState([]);
+  const [categoryDeals, setCategoryDeals] = useState([]);
   const [categoryCoupons, setCategoryCoupons] = useState([]);
   const [categoryProduct, setCategoryProduct] = useState();
+  const [ categoryProductTitle, setCategoryProductTitle] = useState()
   const [Page, setPage] = useState(1);
   const [changeOption, setChangeOption] = useState("");
   const [noDealData, setNoDealData]= useState(false)
@@ -23,74 +25,73 @@ const CategoryDetail = () => {
   const router = useRouter();
   const cate_slug = router.query["category-detail"];
 
- 
+  // console.log("Component agya",cate_slug);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   
   const GetData = async () => {
 
     try {
-      let data = await fetch(categoryDetailApi, {
-        method: "post",
-        body: JSON.stringify({
+      let {data} = await axios.post(categoryDetailApi, {
           apiAuth: apiAuth,
           page: Page,
           cate_slug: cate_slug,
           option: changeOption,
-        }),
-        mode: "cors",
-        Headers: {
-          "Content-Type": "application/json",
         },
-      });
-      let result = await data.json();       
-      if(changeOption ==""){
-          setCategoryProduct(result.response.category);
-          if((result.response.deals).length == 0){
+        { headers: {
+          "Content-Type": "application/json",
+        }
+      },
+      );
+       
+      if(changeOption == ""){
+         setCategoryProduct(data.response.category);
+         setCategoryProductTitle(data.response.category.description)
+          if(data.response.deals.length == 0){
             setNoDealData(true)
           }else{
-            setCategoryDeals([...categoryDeals, ...result.response.deals]);
+            setCategoryDeals([...categoryDeals, ...data.response.deals]);
           }
           
-      }else if(changeOption =="deals") {
-        if((result.response.deals).length == 0){
+      }else if( changeOption =="deals") {
+        if(data.response.deals.length == 0 ){
           setNoDealData(true)
         }else{
-          setCategoryDeals([...categoryDeals, ...result.response.deals]);
+          setCategoryDeals([...categoryDeals, ...data.response.deals]);
         }
-
       }else if(changeOption =="coupons"){
-        if((result.response.coupons).length == 0){
+        if(data.response.coupons.length == 0){
           setNoCouponData(true)
         }else{
-          setCategoryCoupons([...categoryCoupons, ...result.response.coupons]);
+          setCategoryCoupons([...categoryCoupons, ...data.response.coupons]);
         }
-        
       }
     } catch (error) {
-      return error;
+      
     }
   };
-
-
-  useEffect(() => {
-    GetData();
-  },[Page, changeOption]);
+  
 
   const dealsTabCall = () => {
+    setNoDealData(false)
     setChangeOption("deals");
     setPage(1);
     setCategoryCoupons([]);
 
   };
   const couponsTabCall = () => {
+    setNoCouponData(false)
     setChangeOption("coupons");
     setPage(1);
     setCategoryDeals([]);
   };
 
+  useEffect(() => {
+    GetData();
+  },[Page, changeOption,cate_slug]);
 
-    // console.log( "category_info == ", categoryProduct)
-    // console.log( "deals == ", categoryDeals)
-    //  console.log( "coupons_info == ", categoryCoupons)
+  //  console.log( "changeOption == ", changeOption)
+  //  console.log( "deals == ", categoryDeals)
+  //  console.log( "coupons == ", categoryCoupons)
 
 
   const addDealPage = () => {
@@ -160,7 +161,9 @@ const CategoryDetail = () => {
                   fontSize="12px"
                   textAlign="center"
                 >
-                  {categoryProduct.description}
+                  {
+                    <div dangerouslySetInnerHTML={{__html: categoryProductTitle}} />
+                  }
                 </Typography>
               </Box>
             </Box>
@@ -179,13 +182,13 @@ const CategoryDetail = () => {
           <DealsAndCoupons
             categoryDeals={categoryDeals}
             categoryCoupons={categoryCoupons}
-            categoryProduct={categoryProduct}
+            // categoryProduct={categoryProduct}
+            noCouponData = {noCouponData}
+            noDealData={noDealData}
             addDealPage={addDealPage}
             addCouponPage={addCouponPage}
             dealsTabCall={dealsTabCall}
             couponsTabCall={couponsTabCall}
-            noCouponData = {noCouponData}
-            noDealData={noDealData}
           />
         </Box>
       </div>

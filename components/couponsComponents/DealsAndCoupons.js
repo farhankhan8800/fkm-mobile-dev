@@ -9,7 +9,6 @@ import TabUnstyled, { tabUnstyledClasses } from "@mui/base/TabUnstyled";
 import HotDealsCards from "../HotDealsCard";
 
 const Tab = styled(TabUnstyled)`
-  
   color: #fff;
   cursor: pointer;
   font-size: 0.875rem;
@@ -22,7 +21,6 @@ const Tab = styled(TabUnstyled)`
   border-radius: 7px;
   display: flex;
   justify-content: center;
-
   &.${tabUnstyledClasses.selected} {
     background-color: #fff;
     color: #f27935;
@@ -51,24 +49,23 @@ const TabPanel = styled(TabPanelUnstyled)(
     `
 );
 
-const DealsAndCoupons = ({categoryCoupons,tabCountNumber, noCouponData, noDealData , categoryDeals, dealsTabCall, couponsTabCall, addDealPage, addCouponPage}) => {
-  const [deals, setDeals] = useState([]);
-  const [coupons, setCoupons] = useState([]);
-  const [category, setCategory] = useState()
+const DealsAndCoupons = ({categoryCoupons, noCouponData, noDealData , categoryDeals, dealsTabCall, couponsTabCall, addDealPage, addCouponPage}) => {
+  const [deals, setDeals] = useState();
+  const [coupons, setCoupons] = useState();
+
 
   useEffect(() => {
     setDeals(categoryDeals);
     setCoupons(categoryCoupons);
-    setCategory(tabCountNumber)
-  }, [categoryCoupons,tabCountNumber, categoryDeals]);
+  }, [categoryCoupons, categoryDeals]);
 
   return (
     <>
       <Box sx={{ width: "100%", padding: "10px 17px" }}>
         <TabsUnstyled defaultValue={0}>
           <TabsList className="tabsList" sx={{ bgcolor: "#f27935" }}>
-            <Tab onClick={dealsTabCall}> Deals ({ category && category.deals_count})</Tab>
-            <Tab onClick={couponsTabCall}> Coupons ({ category && category.coupons_count})</Tab>
+            <Tab onClick={dealsTabCall}> Deals </Tab>
+            <Tab onClick={couponsTabCall}> Coupons </Tab>
           </TabsList>
           <TabPanel value={0}>
             <HotDealsCards hotdeals={deals} />
@@ -89,11 +86,12 @@ const DealsAndCoupons = ({categoryCoupons,tabCountNumber, noCouponData, noDealDa
               )}
                 </>
                 }
-             
-
             </Box>
           </TabPanel>
           <TabPanel value={1}>
+            {
+            // console.log(coupons)
+            }
             <CouponsCade couponCard={coupons} />
             <Box component="div" sx={{ p: 1, textAlign: "center" }}>{
               noCouponData ? `No Data Found`:

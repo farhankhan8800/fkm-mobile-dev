@@ -96,4 +96,43 @@ a{
   width: 100%;
  }
 
-
+#about_the_deals p{
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+#about_the_deals h5{
+  font-size: 19px;
+}
+#about_the_deals h3{
+  font-size: 17px;
+    margin-bottom: 10px;
+    font-weight: 300;
+}
+#about_the_deals ul{
+  margin-left: 21px;
+font-size: 14px;
+margin-bottom: 10px;
+}
+#about_the_deals ol{
+  margin-left: 21px;
+font-size: 14px;
+margin-bottom: 10px;
+}
+#about_the_deals ol li, #about_the_deals ul li {
+  font-size: 14px;
+  padding-bottom: 4px;
+}
+#about_the_deals ol{
+ align-self: start;
+}
+#about_the_deals a{
+    color: blue;
+    cursor: pointer;
+    font-size: 15px;
+ }
+ #about_the_deals a:hover{
+  text-decoration: underline;
+ }
+ #about_the_deals img{
+  width: 52% !important;
+}
