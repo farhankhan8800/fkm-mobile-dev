@@ -1,45 +1,84 @@
 
 
-export const registerApi = "https://fkmdata.freekaamaal.com/user/register";
+const mainUrl = "https://fkmdata.freekaamaal.com"
 
-export const homeApi = "https://fkmdata.freekaamaal.com/home/home";
+export const registerApi = mainUrl + "/user/register";
 
-export const allStores = " https://fkmdata.freekaamaal.com/store/allstores";
+// export const homeApi = "https://fkmdata.freekaamaal.com/home/home";
+export const homeAPI1 = mainUrl + "/home/part1";
 
-export const allCategory = "https://fkmdata.freekaamaal.com/category/all-category";
+export const homeAPI2 = mainUrl + "/home/part2";
 
-export const categoryDetailApi = "https://fkmdata.freekaamaal.com/category/category-detail";
+export const allStores = mainUrl + "/store/allstores";
 
-export const StoreDetailApi = "https://fkmdata.freekaamaal.com/store/storedetail";
+export const allCategory = mainUrl + "/category/all-category";
 
-export const loginUser = "https://fkmdata.freekaamaal.com/user/login";
+export const categoryDetailApi = mainUrl + "/category/category-detail";
 
-export const AllCoupons = "https://fkmdata.freekaamaal.com/coupons/all-coupons"
+export const StoreDetailApi = mainUrl + "/store/storedetail";
 
-export const coupon_detail= "https://fkmdata.freekaamaal.com/coupons/coupon-detail"
+export const loginUser = mainUrl + "/user/login";
 
-export const deal_detail = "https://fkmdata.freekaamaal.com/deals/dealdetail"
+export const AllCoupons = mainUrl + "/coupons/all-coupons"
 
-export const verifyUser = "https://fkmdata.freekaamaal.com/user/verifyuser"
+export const coupon_detail = mainUrl + "/coupons/coupon-detail"
 
-export const clickHistoryAPI = "https://fkmdata.freekaamaal.com/cashback/click-history"
+export const deal_detail = mainUrl + "/deals/dealdetail"
 
-export const cashbackHistoryAPI = "https://fkmdata.freekaamaal.com/cashback/cashback-history"
+export const verifyUser = mainUrl + "/user/verifyuser"
 
-export const withdrawal_historyAPI = "https://fkmdata.freekaamaal.com/cashback/withdrawal-history"
+export const clickHistoryAPI = mainUrl + "/cashback/click-history"
 
-export const missing_historyAPI = "https://fkmdata.freekaamaal.com/cashback/missing-history"
+export const cashbackHistoryAPI = mainUrl + "/cashback/cashback-history"
 
-export const referral_summaryAPI = "https://fkmdata.freekaamaal.com/cashback/referral-summary"
+export const withdrawal_historyAPI = mainUrl + "/cashback/withdrawal-history"
 
-export const add_accountAPI = "https://fkmdata.freekaamaal.com/cashback/add-account"
+export const missing_historyAPI = mainUrl + "/cashback/missing-history"
 
-export const withdrawMoneyAPI = "https://fkmdata.freekaamaal.com/cashback/withdraw-money"
+export const referral_summaryAPI = mainUrl + "/cashback/referral-summary"
 
-export const withdrawPaymentModeAPI =  "https://fkmdata.freekaamaal.com/cashback/withdraw-payment-mode"
+export const add_accountAPI = mainUrl + "/cashback/add-account"
 
-export const searchSuggestionApi = "https://fkmdata.freekaamaal.com/search/suggestion"
+export const withdrawMoneyAPI = mainUrl + "/cashback/withdraw-money"
 
- export const claimformStoreAPI = "https://fkmdata.freekaamaal.com/cashback/claimformstore"
+export const withdrawPaymentModeAPI = mainUrl + "/cashback/withdraw-payment-mode"
 
- export  const userClaimformAPI = "https://fkmdata.freekaamaal.com/cashback/userclaimform"
+export const searchSuggestionApi = mainUrl + "/search/suggestion"
+
+export const claimformStoreAPI = mainUrl + "/cashback/claimformstore"
+
+export const userClaimformAPI = mainUrl + "/cashback/userclaimform"
+
+export const userclaimdataAPI = mainUrl + "/cashback/userclaimdata"
+
+export const searchAPI = mainUrl + "/search/search"
+
+export const promoCodeAPI = mainUrl + "/cashback/userpromocode"
+
+export const missingStoreAPI = mainUrl + "/cashback/missingstore"
+
+export const missingStoreClickAPI = mainUrl + "/cashback/missingstoreclicks"
+
+export const saveMissingAPI = mainUrl + "/cashback/savemissing"
+
+export const allArticleAPI = mainUrl + "/article/allArticle"
+
+export const hindiArticleAPI = mainUrl + "/article/hindi-artilce"
+
+export const articleDetailsAPI = mainUrl + "/article/articleDetail"
+
+export const livefeed_detailAPI = mainUrl + "/livefeed/livefeed-detail"
+
+export const freebiesAPI = mainUrl + "/offer/offer-detail"
+
+export const cashbackpageAPI = mainUrl + "/cashback/cashbackpage"
+
+export const cashbackdealAPI = mainUrl + "/cashback/cashbackdeal"
+
+export const cashbackstoreAPI = mainUrl + "/cashback/cashbackstore"
+
+export const festivalAPI = mainUrl + "/festival/allfestivals"
+
+export const OneFestivalAPI = mainUrl + "/festival/festivalpage"
+
+export const updateUserDataAPI = mainUrl +"/user/updateprofile"

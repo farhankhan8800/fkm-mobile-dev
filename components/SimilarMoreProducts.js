@@ -1,5 +1,4 @@
 import React, { useState,useEffect } from "react";
-import { Grid, Box,Typography ,Button  } from "@mui/material";
 import hotDealsImage from "public/images/fire.png";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,40 +15,38 @@ const SimilarMoreProducts = (props) => {
 
   return (
     <>
-     <Grid
-        container
-        textAlign="center"
-        justifyContent="space-between"
-        sx={{ padding: "13px 3px 3px" }}
+     <div
+       className="flex_space_between"
+        style={{ padding: "13px 3px 3px" , alignItems:"center"}}
       >
-        <Grid item>
-          <Grid container>
-            <Grid item>
-              <Box component="div" sx={{ width: "30px", marginRight: "10px" }}>
+        <div >
+          <div className="d_flex" style={{alignItems:"center"}}>
+            
+              <div  style={{ width: "30px", marginRight: "10px" }}>
                 <Image
                   src={hotDealsImage}
                   alt="Hot Deal Of the Day"
                   width={29}
                   height={29}
                 />
-              </Box>
-            </Grid>
-            <Grid item>
-              <Typography variant="h6" component="h6">
+              </div>
+           
+            <div >
+              <h6 className="heading">
                 {" "}
-               Similar <strong>Product</strong>
-              </Typography>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item>
-          <Button>
+                 Similar <strong>Product</strong>
+              </h6>
+            </div>
+          </div>
+        </div>
+        <div >
+          <button className="text_button">
             <Link style={{ color: "#f27935" }} href="/all-hot-deals">
               View All
             </Link>
-          </Button>
-        </Grid>
-      </Grid>
+          </button>
+        </div>
+      </div>
         <HotDealsCards hotdeals={store} />
     </>
   );

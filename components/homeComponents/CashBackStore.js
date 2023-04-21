@@ -2,345 +2,197 @@ import React, { useState, useEffect } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
-import { Grid, Box, Typography, Card, CardActionArea } from "@mui/material";
+
 import cashbackImage from "../../public/images/money.png";
+import { homeAPI2 } from "service/API.js";
+import axios from "axios";
+import { useUserToken } from "service/customHooks";
 
-import { styled } from "@mui/system";
-import TabsUnstyled from "@mui/base/TabsUnstyled";
-import TabsListUnstyled from "@mui/base/TabsListUnstyled";
-import TabPanelUnstyled from "@mui/base/TabPanelUnstyled";
+const DEVICE_TYPE = process.env.DEVICE_TYPE
+const apiAuth = process.env.API_AUTH
 
-import TabUnstyled, { tabUnstyledClasses } from "@mui/base/TabUnstyled";
+const CashBackStore = () => {
+  const [stores, setStores] = useState([]);
+  const [storeTabs,setStoreTabs] = useState([])
+  const [cat_id,setCat_id] = useState("all")
+  const [activeTab, setActiveTab]= useState(true)
 
-const Tab = styled(TabUnstyled)`
- 
-  color: #fff;
-  cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 600;
-  background-color: transparent;
-  min-width: 130px;
-  padding: 10px 12px;
-  margin: 6px 6px;
-  border: none;
-  border-radius: 7px;
-  display: flex;
-  justify-content: center;
+   const authToken = useUserToken()
 
-  &:hover {
-    background-color: #f27935;
-  }
-
-  &:focus {
-    color: #fff;
-  }
-
-  &.${tabUnstyledClasses.selected} {
-    background-color: #fff;
-    color: #f27935;
-  }
-`;
-
-const TabsList = styled(TabsListUnstyled)(
-  ({ theme }) => `
-    background-color: #f27935;
-    display: flex;
-    overflow-x: scroll;
-    align-items: center;
-    justify-content: space-between;
-    align-content: space-between;
-    box-shadow: 0px 4px 30px ${theme.palette.mode === "dark" ? "#fff" : "#fff"};
-    `
-);
-const TabPanel = styled(TabPanelUnstyled)(
-  ({ theme }) => `
-    font-family: IBM Plex Sans, sans-serif;
-    font-size: 0.875rem;
-    overflow:auto;
-    padding: 20px 12px;
-    background:rgb(248 248 248);
-    border-radius: 7px;
-    `
-);
-
-const CashBackStore = (props) => {
-  const [stores, setStores] = useState();
+  useEffect(() => {
+    const getAPI2 = async () => {
+      try {
+        let  {data}  = await axios.post(
+          homeAPI2,
+          {
+            apiAuth: apiAuth,
+            page: "1",
+            device_type: DEVICE_TYPE,
+            sponsored_count: "1",
+            option:cat_id
+          },
+          {
+            headers: {
+              Authorization: authToken,
+            },
+          }
+        );
+       
+        setStores(data.response.cbstores)
+        setStoreTabs(data.response.store_tabbing)
+      } catch (error) {}
+    };
+    getAPI2()
+  }, [authToken, cat_id]);
   useEffect(()=>{
-      //  console.log(props.cbStore)
-       setStores(props.cbStore)
-  },[props]) 
+   
+  })
 
+  function openTabFun(id){
+    setCat_id(id)
+    setActiveTab(false)
+  }
 
+  // console.log(stores)
   return (
     <>
-      <Grid container sx={{ padding: "13px 3px 3px" }}>
-        <Grid item>
-          <Box component="div" sx={{ width: "30px", marginRight: "10px" }}>
-            <Image
-              src={cashbackImage}
-              alt="cashback image"
-              width={29}
-              height={29}
-            />
-          </Box>
-        </Grid>
-        <Grid item>
-          <Typography variant="h6" component="h6">
-            {" "}
+      <div className="d_flex" style={{ padding: "13px 3px 3px" }}>
+        <div style={{ width: "30px", marginRight: "10px" }}>
+          <Image
+            src={cashbackImage}
+            alt="cashback image"
+            width={29}
+            height={29}
+          />
+        </div>
+        <div>
+          <h6 className="heading">
             Cashback <strong>Store</strong>
-          </Typography>
-        </Grid>
-      </Grid>
-      <Box sx={{ width: "100%" }}>
-        <TabsUnstyled defaultValue={0}>
-          <TabsList className="tabsList" sx={{ bgcolor: "#f279359e" }}>
-            <Tab>All Store</Tab>
-            <Tab>Beauty Product</Tab>
-            <Tab>Kids</Tab>
-            <Tab>food</Tab>
-          </TabsList>
-          <TabPanel value={0}>
-            <Grid
-              container
-              direction="row"
-              justifyContent="flex-start"
-              alignItems="center"
+          </h6>
+        </div>
+      </div>
+      <div className="store_box">
+        <div className="tab">
+          {
+            storeTabs && storeTabs.map((item, i)=>{
+              return  <button   key={i}
+              className={`tablinks  ${i=="0" && activeTab ? "active":""}` }
+              onClick={(e) => openTabFun(item.cate_id)}
             >
-              {stores && stores.map((store, i) => {
-                if(store.rate_type==0)
-                {
-                var cashback_amount = ' Rs ' +parseInt(store.cashback_amount) ;
-                }
-                else if(store.rate_type==1)
-                {
-                  var cashback_amount = parseInt(store.cashback_amount) +' %';
-                }
-               
-                return (
-                  <Grid key={i} item xs={4}>
-                    <Card
-                      sx={{
-                        maxWidth: "120px",
-                        padding: "5px 3px 7px 3px ",
-                        marginBottom: "10px",
-                        boxShadow: "0 0 0 ",
-                      }}
+             {item.name}
+            </button>
+            })
+          }
+        </div>
+        <div className="stores">
+          <div  class="tabcontent">
+          <div
+              className="flex_start"
+              style={{flexWrap: "wrap",justifyContent:"center"}}
+            >
+              {stores &&
+                stores.map((store, i) => {
+                  return (
+                    <div
+                     key ={i}
+                     style={{
+                      maxWidth: "120px",
+                      padding: "5px 3px 7px 3px ",
+                      marginBottom: "10px",
+                      boxShadow: "0 0 0 ",
+                    }}
+                  >
+                    <Link
+                      className="cash_back_store_link"
+                      href={`/${store.store_slug}`}
                     >
-                      <Link className="cash_back_store_link" href={`store/${store.name}`}>
-                        <CardActionArea>
-                          <Box
-                              component="div"
-                              sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              width: "100%",
-                              padding: "10px",
-                            }}
-                          >
-                            <Image
-                              src={store.store_image}
-                              alt="store"
-                              height={30}
-                              style={{ width: "100%" }}
-                              width={100}
-                            />
-                          </Box>
-                          <p className="cash_back_store_offer">
-                            <span style={{ color: "red" }}>
-                              {cashback_amount}
-                            </span>{" "}
-                            Cashback
-                          </p>
-                        </CardActionArea>
-                      </Link>
-                    </Card>
-                  </Grid>
-                );
-              })}
-            </Grid>
-          </TabPanel>
+                      <div>
+                        <div
+                         style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: "100%",
+                            padding: "10px",
+                          }}
+                        >
+                          <Image
+                            src={store.store_image}
+                            alt="store"
+                            height={30}
+                            width={100}
+                          />
+                        </div>
+                        <p className="cash_back_store_offer">
+                          <span style={{ color: "red" }}>
+                            {store.name}{" "}
+                          </span>
+                          Cashback
+                        </p>
+                      </div>
+                    </Link>
+                  </div>
+                  );
+                })}
+            </div>
+          </div>
 
-          <TabPanel value={1}>
-            <Grid
-              container
-              direction="row"
-              justifyContent="flex-start"
-              alignItems="center"
-            >
-              {stores && stores.map((store, i) => {
-                if (store.cate_id == "14") {
-                  return (
-                    <Grid key={i} item xs={4}>
-                      <Card
-                        sx={{
-                          maxWidth: "120px",
-                          padding: "5px 3px 7px 3px ",
-                          marginBottom: "10px",
-                          boxShadow: "0 0 0 ",
-                        }}
-                      >
-                        <a className="cash_back_store_link" href='https://freekaamaal.com/'>
-                          <CardActionArea>
-                            <Box
-                              component="div"
-                              sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                width: "100%",
-                                padding: "10px",
-                              }}
-                            >
-                              <Image
-                                src={store.store_image}
-                                alt="store"
-                                height={30}
-                                width={100}
-                              />
-                            </Box>
-                            <p className="cash_back_store_offer">
-                              <span style={{ color: "red" }}>
-                                {store.name}{" "}
-                              </span>
-                              Cashback
-                            </p>
-                          </CardActionArea>
-                        </a>
-                      </Card>
-                    </Grid>
-                  );
-                }
-              })}
-            </Grid>
-          </TabPanel>
-
-          <TabPanel value={2}>
-            <Grid
-              container
-              direction="row"
-              justifyContent="flex-start"
-              alignItems="center"
-            >
-               {stores && stores.map((store, i) => {
-                if (store.cate_id === "0") {
-                  return (
-                    <Grid key={i} item xs={4}>
-                      <Card
-                        sx={{
-                          maxWidth: "120px",
-                          padding: "5px 3px 7px 3px ",
-                          marginBottom: "10px",
-                          boxShadow: "0 0 0 ",
-                        }}
-                      >
-                        <a className="cash_back_store_link" href='https://freekaamaal.com/'>
-                          <CardActionArea>
-                            <Box
-                              component="div"
-                              sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                width: "100%",
-                                padding: "10px",
-                              }}
-                            >
-                              <Image
-                                src={store.store_image}
-                                alt="store"
-                                height={30}
-                                width={100}
-                              />
-                            </Box>
-                            <p className="cash_back_store_offer">
-                              <span style={{ color: "red" }}>
-                                {store.name}{" "}
-                              </span>
-                              Cashback
-                            </p>
-                          </CardActionArea>
-                        </a>
-                      </Card>
-                    </Grid>
-                  );
-                }
-              })}
-            </Grid>
-          </TabPanel>
-          <TabPanel value={3}>
-            <Grid
-              container
-              direction="row"
-              justifyContent="flex-start"
-              alignItems="center"
-            >
-              {stores && stores.map((store, i) => {
-                if (store.cate_id === "14") {
-                  return (
-                    <Grid key={i} item xs={4}>
-                      <Card
-                        sx={{
-                          maxWidth: "120px",
-                          padding: "5px 3px 7px 3px ",
-                          marginBottom: "10px",
-                          boxShadow: "0 0 0 ",
-                        }}
-                      >
-                        <a className="cash_back_store_link" href='https://freekaamaal.com/'>
-                          <CardActionArea>
-                            <Box
-                              component="div"
-                              sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                width: "100%",
-                                padding: "10px",
-                              }}
-                            >
-                              <Image
-                                src={store.store_image}
-                                alt="store"
-                                height={30}
-                                width={100}
-                              />
-                            </Box>
-                            <p className="cash_back_store_offer">
-                              <span style={{ color: "red" }}>
-                                {store.name}{" "}
-                              </span>
-                              Cashback
-                            </p>
-                          </CardActionArea>
-                        </a>
-                      </Card>
-                    </Grid>
-                  );
-                }
-              })}
-            </Grid>
-          </TabPanel>
-        </TabsUnstyled>
-      </Box>
-      <style>
+        </div>
+      </div>
+      <style jsx>
         {`
-                        .tabsList::-webkit-scrollbar {
-                          display: none;
-                      }
-                      .cash_back_store_offer{
-                          text-align: center;
-                          color: #000;
-                          padding: 1px 2px;
-                          font-size: 13px;
-                      }
-                      .cash_back_store_link{
-                        text-decoration: none;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                      }
-                    `}
+       .tab {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        overflow: auto;
+        width: 100%;
+       }
+       .tab button {
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 15px;
+        font-weight: 600;
+        color: #222222;
+        border-radius: 4px;
+        background-color: #ffeade;
+        min-width: 241px;
+        margin-right: 10px;
+        letter-spacing: 1px;
+    }
+        .tab button:hover {
+          background-color: var(--main-color);
+          color: #fff;
+      }
+      .tab button.active {
+          background-color: var(--main-color);
+          color: #fff;
+      }
+      .tabcontent {
+        display: block;
+        padding: 6px 12px;
+        border: 1px solid #e9e7e7;
+        border-top: none;
+      }
+      .tab::-webkit-scrollbar {
+        display: none;
+     }
+        .cash_back_store_offer{
+          text-align: center;
+          color: #000;
+          padding: 1px 2px;
+          font-size: 13px;
+      }
+      .cash_back_store_link{
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      `}
       </style>
     </>
   );

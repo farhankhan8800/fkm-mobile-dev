@@ -1,120 +1,142 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 import Image from "next/image";
 import Link from "next/link";
 import liveDealsImage from "../../public/images/live-streaming.png";
-import {
-  Grid,
-  Box,
-  Typography,
-  CardActionArea,
-  CardContent,
-  Card,
-} from "@mui/material";
 import { useEffect } from "react";
 import { useState } from "react";
 
-
 const LiveDeals = (props) => {
   const [deal, setDeal] = useState();
+  
   useEffect(() => {
     setDeal(props.liveDeal);
   }, [props]);
 
   return (
     <>
-      <Grid container sx={{ padding: "13px 3px 3px" }}>
-        <Grid item>
-          <Box component="div" sx={{ width: "30px", marginRight: "10px" }}>
+      <div className="d_flex" style={{ padding: "13px 3px 3px",alignItems:"center" }}>
+        <div >
+          <div  style={{ width: "30px", marginRight: "10px" }}>
             <Image
               width={29}
               height={29}
               src={liveDealsImage}
               alt="Hot Deal Of the Day"
             />
-          </Box>
-        </Grid>
-        <Grid item>
-          <Typography variant="h6" component="h6">
+          </div>
+        </div>
+        <div >
+          <h6 className="heading">
             {" "}
             Live <strong className="strong_tag">Deals</strong>
-          </Typography>
-        </Grid>
-      </Grid>
-      <Box  sx={{padding:"2px 10px"}}>
-      <Swiper className="live_deals_component" 
-       slidesPerView={2}
-       spaceBetween={10}
-      >
-        {deal &&
-          deal.map((item, i) => {
-            const {slug_url, views, img_hp_url, title, offer_price, price} = item;
-         
-            return (
-              <SwiperSlide key={i}>
-                <Card sx={{ height: "190px" }}>
-                  <Link
-                    className="card_link"
-                    href={`deal/${slug_url}`}
-                    rel="noopener"
-                  >
-                    <div className="view_count">
-                      <p>{views} </p>
-                    </div>
-                    <CardActionArea>
-                      <div className="image_box">
-                        <Image
-                          className="image_box_image"
-                          height={70}
-                          width={100}
-                          src={img_hp_url}
-                          alt="live deals"
-                        />
-                      </div>
+          </h6>
+        </div>
+      </div>
+      <div style={{ padding: "2px 10px" }}>
+        <Swiper
+          className="live_deals_component"
+          slidesPerView={1.9}
+          spaceBetween={12}
+        >
+          {deal &&
+            deal.map((item, i) => {
+              const { slug_url, views, img_hp_url, title, offer_price, price } =
+                item;
 
-                      <CardContent
-                        sx={{ background: "#f1f1f16b", padding: "7px" }}
-                      >
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            color: "#000",
-                            padding: "4px 0",
-                            fontSize: "11px",
-                          }}
+              return (
+                <SwiperSlide key={i}>
+                  <div className="slider_card" style={{  }}>
+                    <Link
+                      className="Live_deal_card_link"
+                      href={`deals/${slug_url}`}
+                      rel="noopener"
+                    >
+                      <div className="view_count">
+                        <p>{views} </p>
+                      </div>
+                      <div>
+                        <div className="image_box">
+                          <Image
+                            className="image_box_image"
+                            height={70}
+                            width={100}
+                            src={img_hp_url}
+                            alt="live deals"
+                          />
+                        </div>
+
+                        <div
+                          style={{ padding: "7px" }}
                         >
-                          {title}
-                        </Typography>
-                        <Box component="div" sx={{ paddingTop: "4px" }}>
-                          <strong className="card_amouunt">
-                            &#8377;{offer_price}
-                          </strong>
-                          <small className="card_small_amouunt">
-                            &#8377;{price}
-                          </small>
-                        </Box>
-                      </CardContent>
-                    </CardActionArea>
-                  </Link>
-                </Card>
-              </SwiperSlide>
-            );
-          })}
-      </Swiper>
-      </Box>
-      
+                          <p
+                          className="p_tag_small"
+                          >
+                            {title}
+                          </p>
+                          <div  style={{ paddingTop: "4px" }}>
+                            <strong className="card_amouunt">
+                              &#8377;{offer_price}
+                            </strong>
+                            <small className="card_small_amouunt">
+                              &#8377;{price}
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+          {!deal && (<>
+            <SwiperSlide>
+            <div class="sk_livedeals_card">
+              <p></p>
+            </div>
+            <div class="sk_livedeals_card_text">
+             <p></p>
+            </div>
+            <div class="sk_livedeals_card_text">
+             <p></p>
+            </div>
+            <div style={{display:"flex",justifyContent:"flex-start",alignItems:"center"}}>
+            <div class="sk_livedeals_card_button">
+             <p></p>
+            </div>
+            <div class="sk_livedeals_card_button">
+             <p></p>
+            </div>
+            </div>
+            </SwiperSlide>
+            <SwiperSlide>
+            <div class="sk_livedeals_card">
+             <p></p>
+            </div>
+            <div class="sk_livedeals_card_text">
+             <p></p>
+            </div>
+            <div class="sk_livedeals_card_text">
+             <p></p>
+            </div>
+            <div style={{display:"flex",justifyContent:"flex-start",alignItems:"center"}}>
+            <div class="sk_livedeals_card_button">
+             <p></p>
+            </div>
+            <div class="sk_livedeals_card_button">
+             <p></p>
+            </div>
+            </div>
+            </SwiperSlide>
+          </>
+          )}
+        </Swiper>
+      </div>
+
       <style jsx>
         {`
-          .card_link {
-            text-decoration: none;
-            border-radius: 10px;
-            width: 100%;
-            height: 190px;
-            display: inline-block;
-            overflow: hidden;
-            position: relative;
-          }
+          
 
           .strong_tag {
             font-weight: 900;
@@ -124,14 +146,12 @@ const LiveDeals = (props) => {
           }
           .image_box {
             width: 100%;
-
-            /* height: 60px; */
             display: flex;
             align-items: center;
             justify-content: center;
             padding-top: 16px;
             padding-bottom: 7px;
-            background: #f1f1f16b;
+            
           }
 
           .card_amouunt {
@@ -140,10 +160,10 @@ const LiveDeals = (props) => {
             font-size: 18px;
           }
           .card_small_amouunt {
-            color: gray;
+            color: #222020;
             margin-left: 15px;
             position: relative;
-            font-size: 16px;
+            font-size: 15px;
           }
           .card_small_amouunt::after {
             content: "";
@@ -151,9 +171,9 @@ const LiveDeals = (props) => {
             width: 100%;
             height: 1px;
             position: absolute;
-            bottom: 9px;
+            bottom: 8px;
             left: 0;
-            transform: rotate(-10deg);
+            transform: rotate(359deg);
             border-radius: 10px;
           }
           .view_count {
@@ -165,12 +185,73 @@ const LiveDeals = (props) => {
             background-color: #f27935;
             border-radius: 3px;
           }
+          p{
+          color:  #474747;
+          }
           .view_count p {
-            font-size: 10px;
+            font-size: 11px;
             color: #fff;
           }
+          .slider_card{
+            
+            box-shadow: 0px 1px 18px -3px #d0d0d0;
+            border: 1px solid #f1efef;
+            border-radius: 7px;
+            overflow: hidden;
+          }
+          
+         
         `}
       </style>
+      <style>{`
+       .sk_livedeals_card{
+        height: 4rem;
+        box-shadow: 0 0 5px rgba(0,0,0,0.4);
+        position: relative;
+        border-radius: 7px;
+        overflow: hidden;
+          }
+          .sk_livedeals_card p:empty{
+            width: 100%;
+            height: 4rem;
+            background-color: rgba(0,0,0,0.2);
+            animation: skeleton-anim 1s infinite alternate;
+          }
+          @keyframes skeleton-anim{
+            0%{opacity: 0.3}
+            100%{opacity: 0.8}
+          }
+          .sk_livedeals_card_text{
+            height: 1rem;
+            box-shadow: 0 0 5px rgba(0,0,0,0.4);
+            position: relative;
+            border-radius: 7px;
+            overflow: hidden;
+            margin-top: 8px;
+          }
+          .sk_livedeals_card_text p:empty{
+            width: 100%;
+            height: 1rem;
+            background-color: rgba(0,0,0,0.2);
+            animation: skeleton-anim 1s infinite alternate;
+          }
+          .sk_livedeals_card_button{
+            height: 1.6rem;
+            box-shadow: 0 0 5px rgba(0,0,0,0.4);
+            position: relative;
+            border-radius: 7px;
+            overflow: hidden;
+            margin-top: 8px;
+            width: 26%;
+            margin-right: 10px;
+          }
+          .sk_livedeals_card_button p:empty{
+            width: 100%;
+            height: 1.6rem;
+            background-color: rgba(0,0,0,0.2);
+            animation: skeleton-anim 1s infinite alternate;
+          }
+      `}</style>
     </>
   );
 };

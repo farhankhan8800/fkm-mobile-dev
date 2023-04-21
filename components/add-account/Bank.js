@@ -1,10 +1,14 @@
 import React, { useState } from "react";
-import { Alert, Box, Button, TextField } from "@mui/material";
+
 import axios from "axios";
 import {add_accountAPI} from "service/API"
-import { useEffect } from "react";
+import { ImWarning } from "react-icons/im";
+import { AiFillInfoCircle } from "react-icons/ai";
+import { useRouter } from "next/router";
 
 const apiAuth = process.env.API_AUTH
+const DEVICE_TYPE = process.env.DEVICE_TYPE
+
 
 const Bank = () => {
   const [name, setName] = useState();
@@ -12,18 +16,11 @@ const Bank = () => {
   const [accountnumber, setAccountNumber] = useState();
   const [ifsc, setIfsc] = useState();
   const [bankName, setBankName] = useState();
-  const [authToken, setAuthToken] = useState()
   const [serverdata, setServerdata] = useState()
- 
   const [notValid, setNotValid] = useState(null);
 
-
-  useEffect(()=>{
-    setAuthToken(JSON.parse(localStorage.getItem("user")).token)
-  },[])
-
-
-//   debugger
+  const router = useRouter()
+  const authToken = useUserToken()
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -37,7 +34,7 @@ const Bank = () => {
                 try {
                   let{data} = await axios.post(add_accountAPI,{
                       apiAuth:apiAuth,
-                      device_type: "4",
+                      device_type: DEVICE_TYPE,
                       phone: phone,
                       account_name:name,
                       account_type:"bank",
@@ -50,7 +47,10 @@ const Bank = () => {
                             Authorization:authToken
                           }
                     })
-                   console.log(data)
+                  //  console.log(data)
+                  if(data.code == "401"){
+                    return router.push("/session-expired")
+                  }
                    if(data.status == 1){
                     setTimeout(function(){
                       setName("");
@@ -64,9 +64,7 @@ const Bank = () => {
                    }else{
                     setServerdata(data.message)
                    }
-                  // console.log(
-                  //  `${name},${phone},${accountnumber},${ifsc},${bankName}`
-                  // );
+                
                 } catch (error) {
                   console.log(error)
                 }
@@ -90,16 +88,6 @@ const Bank = () => {
       setNotValid("Fill the all details ");
     }
   };
-
-  // console.log(
-  //   `${name},${phone},${accountnumber},${ifsc},${bankName},${accountType}`
-  // );
-  //     setName("");
-  //     setPhone("");
-  //     setAccountNumber("");
-  //     setIfsc("");
-  //     setBankName("");
-  //     setAccountType("");
 
   const nameHandler = (e) => {
     setName(e.target.value);
@@ -126,83 +114,82 @@ const Bank = () => {
     <>
      <div style={{paddingTop:"20px"}}>
         <hr></hr>
-     <Box sx={{paddingTop:"10px"}}>
+     <div style={{paddingTop:"10px"}}>
             <form onSubmit={onSubmit}>
-             
               <label>Account Holder Name</label>
-              <TextField
-                size="small"
-                fullWidth
+              <input
                 value={name}
                 onChange={nameHandler}
                 type="text"
                 id="outlined-basic"
+                style={{width:"100%",padding: "6px 10px"}}
                 placeholder="Name"
-                variant="outlined"
+                className="input_style"
               />
               <label>Phone</label>
-              <TextField
-                size="small"
-                fullWidth
+              <input
+              
                 onChange={phoneHandler}
                 type="number"
                 value={phone}
                 id="outlined-basic"
+                style={{width:"100%",padding: "6px 10px"}}
                 placeholder="Phone"
-                variant="outlined"
+                className="input_style"
               />
               <label>Account Number</label>
-              <TextField
-                size="small"
-                fullWidth
+              <input
+                className="input_style"
                 type="text"
+                style={{width:"100%",padding: "6px 10px"}}
                 value={accountnumber}
                 onChange={acountNumberHandler}
                 id="outlined-basic"
                 placeholder="Account Number"
-                variant="outlined"
+                
               />
               <label>IFSC</label>
-              <TextField
-                size="small"
-                fullWidth
+              <input
+              className="input_style" 
+              style={{width:"100%",padding: "6px 10px"}}
                 value={ifsc}
                 onChange={ifscHandler}
                 type="text"
                 id="outlined-basic"
                 placeholder="IFSC"
-                variant="outlined"
+               
               />
               <label>Bank Name</label>
-              <TextField
-                size="small"
-                fullWidth
+              <input
+                
                 type="text"
                 value={bankName}
                 onChange={bankNameHandler}
                 id="outlined-basic"
                 placeholder="Bank Name"
-                variant="outlined"
+                className="input_style" 
+                style={{width:"100%",padding: "6px 10px"}}
               />
-              <Box sx={{ padding: "10px 0" }}>
-                <Button
+              <div style={{ padding: "10px 0" }}>
+                <button
                   type="submit"
-                  variant="contained"
-                  sx={{ width: "100%", color: "#fff", fontWeight: "600" }}
+                   className="full_with_button"
+                  style={{ width: "100%", color: "#fff", fontWeight: "600" }}
                 >
                   {" "}
                   Save
-                </Button>
-              </Box>
-              {notValid ? <Alert severity="warning">{notValid}</Alert> : ""}
+                </button>
+             
+              </div>
+              {notValid ?  <div  className="alert_warning_class"> <span><ImWarning /></span> <p>{notValid}</p> </div> : ""}
               {
-                serverdata ? <Alert severity="info">{serverdata}</Alert>:""
+                serverdata ?<div  className="alert_info_class"> <span><AiFillInfoCircle /></span> <p>{serverdata}</p> </div> :""
               }
             </form>
-          </Box>
+          </div>
      </div>
      
-      <style jxs>{`
+      <style jsx>{`
     label{
         display: block;
         padding: 9px 2px 5px;

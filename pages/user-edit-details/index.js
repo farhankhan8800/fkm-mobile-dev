@@ -1,241 +1,203 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import {
-  Box,
-  Grid,
-  Typography,
-  Avatar,
-  TextField,
-  Button,
-  Alert,
-} from "@mui/material";
+
+import { FaUser } from "react-icons/fa";
+import { BsCheckCircle } from "react-icons/bs";
+import { ImWarning } from "react-icons/im";
+import { updateUserDataAPI } from "service/API";
+import { useGetUser, useUserToken } from "service/customHooks";
+import protectRoute from "service/protect-route";
+import axios from "axios";
+
+const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE;
 
 const UserEditDetails = () => {
-  const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
-  const [mobile, setMobile] = useState("");
+  const [profileImage, setProfileImage] = useState("");
+  const [error, setError] = useState(null)
+  const [updatedSucc, setUpdatedSucc] = useState(null)
 
-  const [passwordErr, setPasswordErr] = useState(false);
-  const [userNameErr, setUserNameErr] = useState(false);
-  const [mobileErr, setMobileErr] = useState(false);
-
-  const [callWarning, SetCallWarning] = useState(false);
-  const [showSignUp, setShowSignUp] = useState(false);
-
+  const authToken = useUserToken();
+  const userdata = useGetUser()
   const router = useRouter();
-  const onEdit = (e) => {
+  // console.log(userdata)
+
+  useEffect(()=>{
+    setUserName(userdata?.data.username)
+  },[userdata])
+
+
+  const onEdit = async (e) => {
     e.preventDefault();
-    if (password.length < 6 || userName.length < 3 || mobile.length < 9) {
-      SetCallWarning(true);
-    } else {
-      //  console.log(`, password = ${password} , name = ${userName}, mobile = ${mobile}`)
-
-      setPassword("");
-      setUserName("");
-      setMobile("");
-
-      setTimeout(() => {
-        setShowSignUp(true);
-      }, 1000);
-      setTimeout(() => {
-        router.push("/login");
-      }, 3000);
+    if(profileImage || userName ){
+      try {
+        let { data } = await axios.post(
+          updateUserDataAPI,
+          {
+            apiAuth: apiAuth,
+            device_type:DEVICE_TYPE,
+            title:userName,
+            profileimage:profileImage
+          },
+          {
+            headers: {
+               "Content-Type": "multipart/form-data",
+               Authorization: authToken,
+            },
+          }
+        );
+        
+        // console.log(data)
+        setUpdatedSucc(data.message)
+      } catch (error) {
+      //  console.log(error)
+      }
+    }else{
+      setError("Att list Update One Input")
+    //  console.log("Att list Update One Input")
     }
-  };
-
+      
+    }
   const userNameChangeHandler = (e) => {
-    const item = e.target.value;
-    let nameRegex = /^[a-zA-Z]*$/;
-    if (item.length < 3 || nameRegex.test(item) == false) {
-      setUserNameErr(true);
-      setUserName("");
-    } else {
-      setUserNameErr(false);
-    }
-    setUserName(item);
+    setUserName(e.target.value);
+    setUpdatedSucc(null)
+    setError(null)
   };
-
-  const mobileChangeHandler = (e) => {
-    const item = e.target.value;
-    if (item.length < 9) {
-      setMobileErr(true);
-      setMobile("");
-    } else {
-      setMobileErr(false);
-    }
-    setMobile(item);
-  };
-
-  const passwordChangeHandler = (e) => {
-    const item = e.target.value;
-    if (item.length < 6) {
-      setPasswordErr(true);
-      setPassword("");
-    } else {
-      setPasswordErr(false);
-    }
-    setPassword(e.target.value);
-  };
+  const fileChangeHandler =(e)=>{
+    setProfileImage(e.target.files[0])
+    setUpdatedSucc(null)
+    setError(null)
+    // console.log(e.target.files[0])
+  }
+  
   const headeTitle = "Edit your Details | Freekaamaal";
   return (
     <>
       <HeadTag headeTitle={headeTitle}></HeadTag>
       <Header></Header>
       <div style={{ paddingTop: "56px" }}>
-        <Box sx={{ p: 2 }}>
-          <Box
-            component="div"
+        <div style={{ padding:"15px" }}>
+          <div
             style={{
               backgroundColor: "#f27935",
               padding: "10px 20px",
               borderRadius: "10px",
             }}
           >
-            <Grid
-              container
+            <div 
+              className="d_flex"
               justifyContent="space-around"
               alignItems="center"
               style={{ color: "#fff" }}
             >
-              <Grid item>
-                <Avatar
-                  alt="Freekaamaal"
-                  sx={{ border: "3px solid #fff" }}
-                  src="/static/images/avatar/1.jpg"
-                />
-              </Grid>
-              <Grid item>
-                <Typography
-                  variant="h6"
-                  component="h6"
-                  sx={{ fontWeight: "600" }}
+              <div className="avatar_div">
+                {/* <FaUser /> */}
+                <Image src={userdata?.data.user_img_url} alt="userProfile" height={45} width={45}></Image>
+              </div>
+              <div  style={{paddingLeft:"10px"}}>
+                <h6
+                 className="heading"
+                  style={{ fontWeight: "600" }}
                 >
-                  {" "}
-                  Freekaamaal
-                </Typography>
-                <Typography variant="p" component="p" fontSize="12px">
+                  {userdata?.data.username}
+                 
+                </h6>
+                <p className="p_tag_big" style={{color:"#fff"}}>
                   {" "}
                   Thanks for chosing freekaamaal
-                </Typography>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-        <Box sx={{ p: 2 }}>
-          <Box component="div" style={{ width: "100%", padding: " 5px 13px" }}>
-            <Typography variant="h6" component="h5">
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style={{padding:"15px" }}>
+          <div  style={{ width: "100%", padding: " 5px 13px" }}>
+            <h6 className="heading" >
               <strong style={{ fontWeight: "800" }}>
                 Edit Your Information
               </strong>
-            </Typography>
+            </h6>
 
             <form onSubmit={onEdit}>
-              <label style={{ marginTop: "10px", display: "block" }}>
-                Name
-              </label>
-              <TextField
-                sx={{ width: "100%", marginTop: "3px" }}
-                size="small"
+              <input
+                style={{ width: "100%"}}
+                className="input_style"
                 id="name"
                 value={userName}
                 onChange={userNameChangeHandler}
                 type="text"
                 placeholder="Name"
-                variant="outlined"
               />
-              <p style={{ color: "#f27935", paddingLeft: "5px" }}>
-                {userNameErr ? "Please Enter Valid Name" : ""}
-              </p>
-              <label style={{ marginTop: "10px", display: "block" }}>
-                Password
-              </label>
-              <TextField
-                sx={{ width: "100%", marginTop: "3px" }}
-                id="password"
-                value={password}
-                onChange={passwordChangeHandler}
-                type="password"
-                size="small"
-                name="password"
-                placeholder="Password"
-                variant="outlined"
+              
+              <input
+                style={{ width: "100%" }}
+                id="file"
+                onChange={fileChangeHandler}
+                type="file"
+                accept="image/*"
+                name="file"
+                placeholder="Your Profile Image"
+                className="input_style"
               />
-              <p style={{ color: "#f27935", paddingLeft: "5px" }}>
-                {passwordErr ? "Please Enter Valid Password" : ""}
-              </p>
-              <label style={{ marginTop: "10px", display: "block" }}>
-                Mobile No.
-              </label>
-              <TextField
-                sx={{ width: "100%", marginTop: "3px" }}
-                id="mobile"
-                value={mobile}
-                onChange={mobileChangeHandler}
-                type="number"
-                size="small"
-                name="mobile"
-                placeholder="Mobile No."
-                variant="outlined"
-              />
-              <p style={{ color: "#f27935", paddingLeft: "5px" }}>
-                {mobileErr ? "Please Enter Valid Mobile No." : ""}
-              </p>
-              {showSignUp ? (
-                <Button
-                  variant="contained"
-                  disabled
-                  sx={{
+
+              <button
+                 className="full_with_button"
+                   style={{
                     width: "100%",
                     color: "#fff",
                     fontWeight: "bold",
                     margin: "20px 0 10px 0",
                     letterSpacing: "1px",
-                    fontSize: "17px",
+                    fontSize: "16px",
                   }}
                   type="submit"
                 >
                   Edit Details
-                </Button>
-              ) : (
-                <Button
-                  variant="contained"
-                  sx={{
-                    width: "100%",
-                    color: "#fff",
-                    fontWeight: "bold",
-                    margin: "20px 0 10px 0",
-                    letterSpacing: "1px",
-                    fontSize: "17px",
-                  }}
-                  type="submit"
-                >
-                  Edit Details
-                </Button>
-              )}
+                </button>
             </form>
-            <Box component="div" sx={{ padding: "10px 0" }}>
-              {showSignUp ? (
-                <Alert sx={{ marginBottom: "10px" }} severity="success">
-                  You Have Successfully Edit Your Details
-                </Alert>
-              ) : (
-                ""
-              )}
-              {callWarning ? (
-                <Alert severity="warning">Please fill out the form </Alert>
-              ) : (
-                ""
-              )}
-            </Box>
-          </Box>
-        </Box>
+            <div component="div" sx={{ padding: "10px 0" }}>
+            {
+              error ?   <div  className="alert_warning_class"> <span><ImWarning /></span> <p>{error}</p> </div>:""
+            }
+            {
+              updatedSucc ?<div  className="alert_warning_class" style={{background:"#5cc64a4f",color:"green"}}> <span><BsCheckCircle /></span> <p> {updatedSucc} </p> </div>:""
+            }
+             
+            </div>
+          </div>
+        </div>
       </div>
+      <style jsx>{`
+        .avatar_div{
+          padding: 10px;
+          border: none;
+          background: #cac3c3;
+          border-radius: 32px;
+          width: 45px;
+          overflow: hidden;
+          height: 45px;
+          /* text-align: center; */
+          justify-content: center;
+          align-items: center;
+          display: flex;
+          color: #fff;
+          font-size: 21px;
+        }
+        .input_style{
+          border: 1px solid #bbb9b9;
+          margin-top: 13px !important;
+        }
+        .full_with_button{
+          padding: 6px 15px;
+        }
+      `}</style>
     </>
   );
 };
 
-export default UserEditDetails;
+export default  protectRoute(UserEditDetails) ;

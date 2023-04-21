@@ -1,109 +1,59 @@
 import Image from "next/image";
-import { Box, Typography } from "@mui/material";
+
 import Header from "components/headerComponent/Header";
 import HeadTag from "components/headTagComponent/HeadTag";
-import DealsAndCoupons from "components/couponsComponents/DealsAndCoupons";
+
 import { useEffect, useState } from "react";
 import { categoryDetailApi } from "service/API";
-import CircularProgress from "@mui/material/CircularProgress";
+
 import { useRouter } from "next/router";
 import axios from "axios";
+import DealsAndCouponsCategory from "components/couponsComponents/DealsAndCouponsCategory";
+import Spinner from "../../components/utilites/Spinner"
+import { useUserToken } from "service/customHooks";
 
 const apiAuth = process.env.API_AUTH;
 
 const CategoryDetail = () => {
-  const [categoryDeals, setCategoryDeals] = useState([]);
-  const [categoryCoupons, setCategoryCoupons] = useState([]);
   const [categoryProduct, setCategoryProduct] = useState();
-  const [ categoryProductTitle, setCategoryProductTitle] = useState()
-  const [Page, setPage] = useState(1);
-  const [changeOption, setChangeOption] = useState("");
-  const [noDealData, setNoDealData]= useState(false)
-  const [noCouponData, setNoCouponData]= useState(false)
-
+  const [categoryProductTitle, setCategoryProductTitle] = useState();
 
   const router = useRouter();
+  const authToken = useUserToken()
   const cate_slug = router.query["category-detail"];
 
-  // console.log("Component agya",cate_slug);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  
   const GetData = async () => {
-
     try {
-      let {data} = await axios.post(categoryDetailApi, {
+      let { data } = await axios.post(
+        categoryDetailApi,
+        {
           apiAuth: apiAuth,
-          page: Page,
+          page: "1",
           cate_slug: cate_slug,
-          option: changeOption,
+          option: "",
         },
-        { headers: {
-          "Content-Type": "application/json",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: authToken,
+          },
         }
-      },
       );
-       
-      if(changeOption == ""){
-         setCategoryProduct(data.response.category);
-         setCategoryProductTitle(data.response.category.description)
-          if(data.response.deals.length == 0){
-            setNoDealData(true)
-          }else{
-            setCategoryDeals([...categoryDeals, ...data.response.deals]);
-          }
-          
-      }else if( changeOption =="deals") {
-        if(data.response.deals.length == 0 ){
-          setNoDealData(true)
-        }else{
-          setCategoryDeals([...categoryDeals, ...data.response.deals]);
-        }
-      }else if(changeOption =="coupons"){
-        if(data.response.coupons.length == 0){
-          setNoCouponData(true)
-        }else{
-          setCategoryCoupons([...categoryCoupons, ...data.response.coupons]);
-        }
-      }
-    } catch (error) {
-      
-    }
+      // console.log(data.response.category)
+      setCategoryProduct(data.response.category);
+      setCategoryProductTitle(data.response.category.description);
+    } catch (error) { }
   };
-  
-
-  const dealsTabCall = () => {
-    setNoDealData(false)
-    setChangeOption("deals");
-    setPage(1);
-    setCategoryCoupons([]);
-
-  };
-  const couponsTabCall = () => {
-    setNoCouponData(false)
-    setChangeOption("coupons");
-    setPage(1);
-    setCategoryDeals([]);
-  };
-
   useEffect(() => {
     GetData();
-  },[Page, changeOption,cate_slug]);
+  }, [cate_slug]);
 
-  //  console.log( "changeOption == ", changeOption)
-  //  console.log( "deals == ", categoryDeals)
-  //  console.log( "coupons == ", categoryCoupons)
-
-
-  const addDealPage = () => {
-    setPage(Page + 1);
-  };
-  const addCouponPage = () => {
-    setPage(Page + 1);
-  };
-  
+  const regex = /(<([^>]+)>)/ig;
+  const myhtmlresult = categoryProductTitle?.replace(regex, '');
   return (
     <>
-      {categoryProduct? (
+      {categoryProduct ? (
         <HeadTag headeTitle={` ${categoryProduct.name} | Freekaamaal `} />
       ) : (
         ""
@@ -111,22 +61,20 @@ const CategoryDetail = () => {
 
       <Header />
       <div style={{ paddingTop: "56px" }}>
-        <Box component="div" sx={{ paddingTop: "80px", bgcolor: "#F7F7F7" }}>
-          {categoryProduct? (
-            <Box
-              component="div"
-              sx={{
+        <div component="div" style={{ paddingTop: "80px", background: "#F7F7F7" }}>
+          {categoryProduct ? (
+            <div
+              style={{
                 width: "100%",
                 padding: "10px 20px",
-                bgcolor: "#fff",
+                background: "#fff",
                 position: "relative",
               }}
             >
-              <Box
-                component="div"
-                sx={{
-                  p: 2,
-                  bgcolor: "#fff",
+              <div
+                style={{
+                  padding: "15px",
+                  background: "#fff",
                   borderRadius: "100px",
                   position: "absolute",
                   left: "50%",
@@ -142,55 +90,49 @@ const CategoryDetail = () => {
                   height={70}
                   src={categoryProduct.cate_img_url}
                   alt="taddy bear"
-                 />
-              </Box>
-              <Box component="div" sx={{ paddingTop: "50px" }}>
-                <Typography
-                  component="p"
-                  fontWeight="600"
-                  fontSize="14px"
-                  color="#000"
-                  padding="5px"
-                  textAlign="center"
+                />
+              </div>
+              <div style={{ padding: "50px 0" }}>
+                <p
+                  style={{
+                    fontWeight: "600",
+                    fontSize: "14px",
+                    color: "#000",
+                    padding: "5px",
+                    textAlign: "center"
+                  }}
                 >
                   {categoryProduct.name}
-                </Typography>
-                <Typography
-                  component="p"
-                  color="#000"
-                  fontSize="12px"
-                  textAlign="center"
+                </p>
+                <p
+                  style={{
+                    color: "#000",
+                    fontSize: "12px",
+                    textAlign: "center"
+                  }}
                 >
                   {
-                    <div dangerouslySetInnerHTML={{__html: categoryProductTitle}} />
+                    <div>{myhtmlresult}</div>
                   }
-                </Typography>
-              </Box>
-            </Box>
+                </p>
+              </div>
+            </div>
           ) : (
-            <Box
-              sx={{
+            <div
+              style={{
                 display: "flex",
                 alignItems: "center",
                 paddingBottom: "40px",
                 justifyContent: "center",
               }}
             >
-              <CircularProgress />
-            </Box>
+              <Spinner />
+            </div>
           )}
-          <DealsAndCoupons
-            categoryDeals={categoryDeals}
-            categoryCoupons={categoryCoupons}
-            // categoryProduct={categoryProduct}
-            noCouponData = {noCouponData}
-            noDealData={noDealData}
-            addDealPage={addDealPage}
-            addCouponPage={addCouponPage}
-            dealsTabCall={dealsTabCall}
-            couponsTabCall={couponsTabCall}
+          <DealsAndCouponsCategory
+            cate_slug={cate_slug}
           />
-        </Box>
+        </div>
       </div>
     </>
   );

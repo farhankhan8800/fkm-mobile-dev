@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import { Box, Button, Typography, TextField } from "@mui/material";
 
 const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
@@ -14,10 +13,7 @@ const ResetPassword = () => {
   const router = useRouter();
   const onSubmit = (e) => {
     e.preventDefault();
-    // console.log(
-    //   `New Password = ${newPassword}, Conform Password =${conformPassword}`
-    // );
-    setTimeout(() => {
+      setTimeout(() => {
       setNewPassword("");
       setConformPassword("");
       router.push("/login");
@@ -34,10 +30,10 @@ const ResetPassword = () => {
   return (
     <>
       <HeadTag headeTitle={headeTitle}></HeadTag>
-      <Header></Header>
+      <Header />
       <div style={{ paddingTop: "56px" }}>
-        <Box
-          component="div"
+        <div
+         
           style={{
             width: "100%",
             display: "flex",
@@ -52,43 +48,42 @@ const ResetPassword = () => {
             height={300}
             style={{}}
           ></Image>
-        </Box>
-        <Box component="div" style={{ width: "100%", padding: " 5px 20px" }}>
-          <Typography variant="h5" component="h5">
-            <strong style={{ fontWeight: "800" }}>Reset Password</strong>
-          </Typography>
-          <Typography variant="body1" component="p">
-            {" "}
+        </div>
+        <div style={{ width: "100%", padding: " 5px 20px" }}>
+       
+          <h1 >
+            <strong style={{ fontWeight: "400",fontSize: "29px",color: "rgb(65, 61, 61)" }}>Reset Password</strong>
+          </h1>
+          <h4 className="heading_text">
+            
             Don&apos;t worry ! It happens. Please enter the address Associated
             with your acount.
-          </Typography>
+          </h4>
           <form style={{ paddingTop: "30px" }} onSubmit={onSubmit}>
-            <TextField
-              sx={{ width: "100%", marginTop: "10px" }}
-              size="small"
+         
+            <input
+              style={{ width: "100%", marginTop: "10px" }}
+              className="input_style"
               id="newPassword"
               value={newPassword}
               onChange={newPasswordChangeHandler}
               type="text"
-              label="New Password"
               placeholder="New Password"
-              variant="outlined"
+             
             />
 
-            <TextField
-              sx={{ width: "100%", marginTop: "10px" }}
-              size="small"
+            <input
+              style={{ width: "100%", marginTop: "10px" }}
+              className="input_style"
               id="conformPassword"
               value={conformPassword}
               onChange={conformPasswordChangeHandler}
               type="text"
-              label="Conform Password"
               placeholder="Conform Password"
-              variant="outlined"
             />
-            <Button
-              variant="contained"
-              sx={{
+            <button
+              className="full_with_button"
+              style={{
                 width: "100%",
                 letterSpacing: "1px",
                 fontSize: "17px",
@@ -99,9 +94,9 @@ const ResetPassword = () => {
               type="submit"
             >
               Submit
-            </Button>
+            </button>
           </form>
-        </Box>
+        </div>
       </div>
     </>
   );

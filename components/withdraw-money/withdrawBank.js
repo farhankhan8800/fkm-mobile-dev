@@ -4,9 +4,11 @@ import axios from "axios";
 import {withdrawMoneyAPI} from "service/API"
 import { useEffect } from "react";
 import { useRouter } from 'next/router'
+import { AiFillInfoCircle } from "react-icons/ai";
+import { ImWarning } from "react-icons/im";
 
 const apiAuth = process.env.API_AUTH
-
+const DEVICE_TYPE = process.env.DEVICE_TYPE
 const WithdrawBank = ({userData}) => {
 
   const [amount, setAmount] = useState();
@@ -43,7 +45,7 @@ const WithdrawBank = ({userData}) => {
         try {
                 let{data} = await axios.post(withdrawMoneyAPI,{
                     apiAuth:apiAuth,
-                    device_type: "4",
+                    device_type: DEVICE_TYPE,
                     wallet_name:"paytm",
                     account_ref_id:account,
                     amount:amount,
@@ -56,7 +58,9 @@ const WithdrawBank = ({userData}) => {
                           Authorization:authToken
                         }
                   })
-                //  console.log(data)
+                  if(data.code == "401"){
+                    return router.push("/session-expired")
+                  }
                  if(data.status == 1){
                   setTimeout(()=>{
                     setServerdata(data.msg)
@@ -76,7 +80,6 @@ const WithdrawBank = ({userData}) => {
                  }
                
               } catch (error) {
-                // console.log(error)
               }
 
         }
@@ -87,9 +90,6 @@ const WithdrawBank = ({userData}) => {
     setNotValid("Select Withdrawal Account");
    }
   };
-
-
-
   const amountHandler = (e) => {
     setAmount(e.target.value);
     setNotValid(null);
@@ -113,10 +113,10 @@ const WithdrawBank = ({userData}) => {
     <>
      <div style={{paddingTop:"20px"}}>
    {
-    userAccountData ?  <Typography fontSize={"13px"} fontWeight={600}> {userAccountData.label_msg}</Typography> :""
+    userAccountData ?  <p style={{fontSize:"13px", fontWeight:"600"}}> {userAccountData.label_msg}</p> :""
    }
    
-     <Box sx={{paddingTop:"10px"}}>
+     <div style={{paddingTop:"10px"}}>
             <div >
             <label>Select Account</label>
               <select  className="select_tag_account"
@@ -125,9 +125,7 @@ const WithdrawBank = ({userData}) => {
               >
                 <option value="00">Select Account</option>
                {
-
                userAccountData ? userAccountData.account.map((item,i)=>
-               
                 // eslint-disable-next-line react/jsx-key
                 <option key={i} value={item.account_ref_id}>{item.name}</option>
 
@@ -136,41 +134,38 @@ const WithdrawBank = ({userData}) => {
                }
               </select>
               <label>Enter Amount</label>
-              <TextField
-                size="small"
-                fullWidth
+              <input
                 value={amount}
                 onChange={amountHandler}
                 type="Number"
                 id="outlined-basic"
                 placeholder="Enter Amount"
-                variant="outlined"
+                className="input_style" 
+                style={{width:"100%",padding: "6px 10px"}}
               />
             
-              <Box sx={{ padding: "10px 0" }}>
-                <Button
+             <div style={{paddingTop:"10px"}}>
+             <button 
                   type="button"
                   onClick={SubmitFormHandal}
-                  variant="contained"
-                  sx={{ width: "100%", color: "#fff", fontWeight: "600" }}
+                  className="full_with_button"
+                  style={{ width: "100%", color: "#fff", fontWeight: "600" }}
                 >
-                  {" "}
                  Withdraw
-                </Button>
-              </Box>
-              {notValid ? <Alert severity="warning">{notValid}</Alert> : ""}
+              </button>
+             </div>
+              {notValid ?<div  className="alert_warning_class"> <span><ImWarning /></span> <p>{notValid}</p> </div>  : ""}
               {
-                serverdata ? <Alert severity="info">{serverdata}</Alert>:""
+                serverdata ? <div  className="alert_info_class"> <span><AiFillInfoCircle /></span> <p>{serverdata}</p> </div>:""
               }
             </div>
-          </Box>
+          </div>
           <div>
             {
-              userPromocodes ? (<Box sx={{paddingTop:"10px"}}>{
-                // console.log(userPromocodes)
+              userPromocodes ? (<div style={{paddingTop:"10px"}}>{
               }
-                <Typography fontWeight={"600"}>Your save Coupons</Typography>
-                <Box>
+                <h6 className="heading">Your save Coupons</h6>
+                <div>
                     {
                         userPromocodes.map((item ,i)=>{
                             return(
@@ -184,17 +179,16 @@ const WithdrawBank = ({userData}) => {
                             )
                         }
                         
-                        //   <Typography fontSize={"13px"} component="p" key={i+1}>{item.usage_text}</Typography>
                         )
                     }
-                </Box>
-              </Box>):""
+                </div>
+              </div>):""
             }
           </div>
           
      </div>
      
-      <style jxs>{`
+      <style jsx>{`
     label{
         display: block;
         padding: 9px 2px 5px;

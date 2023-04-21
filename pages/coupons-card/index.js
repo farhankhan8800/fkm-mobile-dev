@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { Grid, Box, Typography, Button } from "@mui/material";
-import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
+
 import { useState, useEffect } from "react";
+import { BiTimeFive } from "react-icons/bi";
+import { AiFillEye, AiFillHeart } from "react-icons/ai";
+import { BsFillShareFill } from "react-icons/bs";
 
 
 const CouponsCade = (props) => {
@@ -20,10 +19,10 @@ const CouponsCade = (props) => {
     <div>
       {
        coupons && coupons.map((item, i)=>
-       <Link key={i+1} href={`/coupon/${item.coupon_id}`}>
-        <Box 
-                component="div"
-                sx={{
+       <Link key={i+1} href={`/coupon-code/${item.coupon_id}`}>
+        <div 
+                
+                style={{
                   padding: "15px 0px 0",
                   border: "1px solid #e1dada",
                   overflow: "hidden",
@@ -32,17 +31,17 @@ const CouponsCade = (props) => {
                 }}
               >
                 
-                <Box sx={{ padding: "0 15px" }}>
-                  <Typography color="black" component="p" fontWeight="bold">
+                <div style={{ padding: "0 15px" }}>
+                  <p style={{color:"black",  fontWeight:"bold"}}>
                     {item.description}
-                  </Typography>
-                  <Grid
-                    sx={{ padding: "10px 0" }}
-                    container
-                    justifyContent="space-between"
-                    alignItem="center"
+                  </p>
+                  <div
+                 style={{ padding: "10px 0",  justifyContent:"space-between",
+                 alignItem:"center"}}
+                 className="d_flex"
+                   
                   >
-                    <Grid item>
+                    <div >
                      {
                       item.coupon_code?<Link href={`${item.shop_url}`} style={{ color: "#f27935",display:"inline-block",position:"relative" }}>
                       <span className="star_code_dot">
@@ -53,45 +52,46 @@ const CouponsCade = (props) => {
                      </span>
                     </Link>:""
                      }
-                    </Grid>
-                    <Grid item>
-                      <Typography
-                        justifyContent="center"
-                        color="gray"
-                        alignItems="center"
-                        component="small"
+                    </div>
+                    <div >
+                      <p
+                      className="d_flex"
+                       style={{ justifyContent:"center",
+                       color:"gray",
+                       alignItems:"center"
+                      }}
                       >
-                        <AccessTimeFilledIcon fontSize="10px" />{" "}
+                        <BiTimeFive fontSize="17px" />{" "}
                         <small>{item.expiry}</small>
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Box>
-                <Box
-                  component="div"
-                  sx={{ padding: "1px 10px", background: "#f5f1f1" }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                 
+                  style={{ padding: "1px 10px", background: "#f5f1f1" }}
                 >
-                  <Grid container justifyContent="space-around" alignItem="center">
-                    <Grid item>
-                      <Button sx={{ color: "gray", textTransform: "capitalize" }}>
-                        <RemoveRedEyeIcon fontSize="18px" sx={{ marginRight: "7px" }} />{" "}
+                  <div className="d_flex" style={{justifyContent:"space-around", alignItem:"center"}}>
+                    <div >
+                      <button style={{ color: "gray", textTransform: "capitalize" }}>
+                        <AiFillEye  style={{ marginRight: "7px",fontSize:"18px" }} />{" "}
                         2k views
-                      </Button>
-                    </Grid>
-                    <Grid item>
-                      <Button sx={{ color: "gray", textTransform: "capitalize" }}>
-                        <FavoriteIcon fontSize="18px" sx={{ marginRight: "7px" }} /> 10
+                      </button>
+                    </div>
+                    <div >
+                      <button style={{ color: "gray", textTransform: "capitalize" }}>
+                        <AiFillHeart  style={{ marginRight: "7px",fontSize:"18px" }} /> 10
                         Likes
-                      </Button>
-                    </Grid>
-                    <Grid item>
-                      <Button sx={{ color: "gray", textTransform: "capitalize" }}>
-                        <ShareIcon fontSize="18px" sx={{ marginRight: "7px" }} /> Share
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Box>
+                      </button>
+                    </div>
+                    <div >
+                      <button style={{ color: "gray", textTransform: "capitalize" }}>
+                        <BsFillShareFill  style={{ marginRight: "7px",fontSize:"18px" }} /> Share
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
                 </Link>
                  
 

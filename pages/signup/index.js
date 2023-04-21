@@ -3,44 +3,47 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import signupImage from "../../public/images/signup.png";
-import { Box, Button, Typography, TextField, Grid, Alert } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 import { registerApi } from "../../service/API";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { registerToken } from "redux-store/slices/authSlice";
+import { ImWarning } from "react-icons/im";
+import { BsCheckCircle, BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+import authPageProtect from "service/auth-page-protect";
 
-const apiAuth = process.env.API_AUTH
+const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE;
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [mobile, setMobile] = useState("");
-
+  const [showPass, setShowPass] = useState(true)
   const [emailErr, setEmailErr] = useState(false);
   const [passwordErr, setPasswordErr] = useState(false);
   const [userNameErr, setUserNameErr] = useState(false);
   const [mobileErr, setMobileErr] = useState(false);
-  const [signupError, setSignupError] = useState("")
+  const [signupError, setSignupError] = useState("");
 
   const [callWarning, SetCallWarning] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
-  const [userdata, setUserdata] = useState();
-  // const [user, setuser] = useState()
   const router = useRouter();
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     localStorage.removeItem("verified");
-    setUserdata(localStorage.getItem("user"))
-    if (userdata) {
-      router.push("/")
-    }
-  },[router, userdata]);
-  
-  
-  // console.log(userdata);return false;
+  }, []);
+
+  const showPassFun = ()=>{
+    setShowPass(!showPass)
+  }
+
   const onSubmit = async (e) => {
     e.preventDefault();
     setSignupError("");
@@ -53,43 +56,44 @@ const SignUp = () => {
       SetCallWarning(true);
     } else {
       try {
-        // console.log(`email = ${email} , password = ${password}, mobile = ${mobile} , mobile = ${userName}`)
-      let {data} = await axios.post(registerApi, {
-          apiAuth:apiAuth,
-          email: email,
-          pass: password,
-          phone: mobile,
-          device_type:"1",
-          name: userName,
-          referral_code:"",
-          app_device_id:""
-        },
-        {
-          headers:{
-            "Content-Type": "application/json",
+        let { data } = await axios.post(
+          registerApi,
+          {
+            apiAuth: apiAuth,
+            email: email,
+            pass: password,
+            phone: mobile,
+            device_type:DEVICE_TYPE,
+            name: userName,
+            referral_code: "",
+            app_device_id: "",
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
           }
-        }
-        )
-      if (data.status == "1") {
-         localStorage.setItem("registerToken", JSON.stringify(data));
+        );
+        if (data.status == "1") {
+          localStorage.setItem("registerToken", JSON.stringify(data));
+          dispatch(registerToken(data))
+          // console.log(data)
           setTimeout(() => {
-          setEmail("");
-          setPassword("");
-          setUserName("");
-          setMobile("");
-          setShowSignUp(true);
-        }, 500);
-        setTimeout(() => {
-          router.push("/enter-otp");
-        }, 3000);
-      } else {
-       
-        
-      }
+            setEmail("");
+            setPassword("");
+            setUserName("");
+            setMobile("");
+            setShowSignUp(true);
+          }, 500);
+          setTimeout(() => {
+            router.push("/enter-otp");
+          }, 3000);
+        } else {
+          setSignupError(data.message);
+        }
       } catch (error) {
-      // setSignupError(error.message);
-      console.log(error)
-      setSignupError(error.response.data.message)
+        // console.log(error);
+        setSignupError(error.response?.data.message);
       }
     }
   };
@@ -119,9 +123,7 @@ const SignUp = () => {
 
   const emailChangeHandler = (e) => {
     const item = e.target.value;
-    // let emailRegex =
-    //   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (item.length < 4 ) {
+    if (item.length < 4) {
       setEmailErr(true);
       setEmail("");
     } else {
@@ -148,8 +150,7 @@ const SignUp = () => {
       <HeadTag headeTitle={headeTitle}></HeadTag>
       <Header />
       <div style={{ paddingTop: "56px" }}>
-        <Box
-          component="div"
+        <div
           style={{
             width: "100%",
             display: "flex",
@@ -164,78 +165,75 @@ const SignUp = () => {
             width={300}
             style={{}}
           ></Image>
-        </Box>
-        <Box component="div" style={{ width: "100%", padding: " 5px 20px" }}>
-          <Typography variant="h5" component="h5">
-            <strong style={{ fontWeight: "800" }}>Sign Up & Earn</strong>
-          </Typography>
-
+        </div>
+        <div  style={{ width: "100%", padding: " 5px 20px" }}>
+           <h1>
+              <strong style={{ fontWeight: "400",fontSize: "29px",color: "rgb(65, 61, 61)" }}>SignIn </strong>
+           </h1>
           <form onSubmit={onSubmit}>
-            <TextField
-              sx={{ width: "100%", marginTop: "10px" }}
-              size="small"
+            <input
+              style={{ width: "100%", marginTop: "10px" }}
               id="name"
               value={userName}
               onChange={userNameChangeHandler}
               type="text"
-              label="Name"
               placeholder="Name"
-              variant="outlined"
+              className="input_style"
             />
             <p style={{ color: "#f27935", paddingLeft: "5px" }}>
               {userNameErr ? "Please Enter Valid Name" : ""}
             </p>
-            <TextField
-              sx={{ width: "100%", marginTop: "10px" }}
-              size="small"
+            <input
+              style={{ width: "100%", marginTop: "10px" }}
               id="email"
               value={email}
               onChange={emailChangeHandler}
               type="text"
-              label="Email ID"
               placeholder="Email ID"
-              variant="outlined"
+              className="input_style"
             />
             <p style={{ color: "#f27935", paddingLeft: "5px" }}>
               {emailErr ? "Please Enter Valid Email" : ""}
             </p>
-            <TextField
-              sx={{ width: "100%", marginTop: "10px" }}
+            <div style={{position:"relative"}}>
+            <input
+              style={{ width: "100%", marginTop: "10px" }}
               id="password"
               value={password}
               onChange={passwordChangeHandler}
-              type="current-password"
-              size="small"
+              type={showPass? "password":"text"}
               name="password"
-              label="Password"
               placeholder="Password"
-              variant="outlined"
+              className="input_style"
             />
+             <span className="eye_span_box_ab" onClick={showPassFun}>{showPass? <BsEyeFill  /> : <BsEyeSlashFill />}</span>
+            </div>
+           
             <p style={{ color: "#f27935", paddingLeft: "5px" }}>
               {passwordErr ? "Please Enter Valid Password" : ""}
             </p>
-            <TextField
-              sx={{ width: "100%", marginTop: "10px" }}
+            <input
+              style={{ width: "100%", marginTop: "10px" }}
               id="mobile"
               value={mobile}
               onChange={mobileChangeHandler}
               type="number"
-              size="small"
+              placeholder="Number"
               name="mobile"
-              label="Mobile No."
-              variant="outlined"
+              className="input_style"
             />
             <p style={{ color: "#f27935", paddingLeft: "5px" }}>
               {mobileErr ? "Please Enter Valid Mobile No." : ""}
             </p>
             {showSignUp ? (
-              <Button
-                variant="contained"
+              <button
+                className="full_with_button"
                 disabled
-                sx={{
+                style={{
                   width: "100%",
                   color: "#fff",
                   fontWeight: "bold",
+                  padding: "7px 15px",
                   margin: "20px 0 10px 0",
                   letterSpacing: "1px",
                   fontSize: "17px",
@@ -243,14 +241,15 @@ const SignUp = () => {
                 type="submit"
               >
                 Sign Up
-              </Button>
+              </button>
             ) : (
-              <Button
-                variant="contained"
-                sx={{
+              <button
+              className="full_with_button"
+                style={{
                   width: "100%",
                   color: "#fff",
                   fontWeight: "bold",
+                  padding: "7px 15px",
                   margin: "20px 0 10px 0",
                   letterSpacing: "1px",
                   fontSize: "17px",
@@ -258,27 +257,30 @@ const SignUp = () => {
                 type="submit"
               >
                 Sign Up
-              </Button>
+              </button>
             )}
           </form>
-          <Box component="div" sx={{ padding: "10px 0" }}>
+         
+          <div component="div" style={{ padding: "10px 0" }}>
             {showSignUp ? (
-              <Alert sx={{ marginBottom: "10px" }} severity="success">
-               Kindly Verify Your OTP And Confirm
-              </Alert>
+                <div  className="alert_warning_class" style={{background:"#5cc64a4f",color:"green"}}> <span><BsCheckCircle /></span> <p> Kindly Verify Your OTP And Confirm</p> </div>
+              
             ) : (
               ""
             )}
             {callWarning ? (
-              <Alert severity="warning">Please fill out the form </Alert>
+               <div  className="alert_warning_class"> <span><ImWarning /></span> <p>Please fill out the form</p> </div>
+     
             ) : (
               ""
             )}
-            { 
-               signupError? ( <Alert severity="warning">{signupError} </Alert>):("")
-            }
-            <Button
-              sx={{
+            {signupError ? (
+               <div  className="alert_warning_class"> <span><ImWarning /></span> <p>{signupError} </p></div>
+            ) : (
+              ""
+            )}
+            <button
+              style={{
                 width: "100%",
                 marginBottom: "5px",
                 color: "gray",
@@ -297,12 +299,12 @@ const SignUp = () => {
               >
                 &nbsp; Login
               </Link>
-            </Button>
-          </Box>
-          <Box component="div" sx={{ p: 1, display: "flex" }}>
-            <Grid container justifyContent="space-around" alignItems="center">
-              <Grid item>
-                <Button variant="contained" sx={{ bgcolor: "#f2793552" }}>
+            </button>
+          </div>
+          <div  style={{ padding: "10px", display: "flex" }}>
+            <div className="d_flex" style={{justifyContent:"space-around",alignItems:"center",width:"100%"}}>
+              <div >
+                <button className="contain_button"  style={{ bgcolor: "#f2793552" }}>
                   {" "}
                   <Link
                     href="/"
@@ -311,10 +313,10 @@ const SignUp = () => {
                     {" "}
                     Google
                   </Link>{" "}
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button variant="contained" sx={{ bgcolor: "#f2793552" }}>
+                </button>
+              </div>
+              <div >
+                <button className="contain_button" style={{ bgcolor: "#f2793552" }}>
                   {" "}
                   <Link
                     href="/"
@@ -322,14 +324,14 @@ const SignUp = () => {
                   >
                     Facebook
                   </Link>{" "}
-                </Button>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
 };
 
-export default SignUp;
+export default authPageProtect(SignUp) ;

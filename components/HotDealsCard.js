@@ -1,105 +1,162 @@
 import React, { useEffect, useState } from "react";
 
-import {
-  Box,
-  Typography,
-  CardActionArea,
-  CardContent,
-  Card,
-} from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
 
-
 const HotDealsCards = (props) => {
-  const [hotDeals, SethotDeals] = useState([]);
-  
-  useEffect(()=>{
-     SethotDeals(props.hotdeals)
-  },[props])
+  const [hotDeals, SethotDeals] = useState(null);
+
+  useEffect(() => {
+    SethotDeals(props.hotdeals)
+  }, [props])
+
+  const Skeleton = []
+  for (let input = 1; input <= 10; input++) {
+    Skeleton.push(<div className="Skeleton_hotDeal_card_wrapper" style={{ width: "45%", marginBottom: "25px" }}>
+      <div class="sk_livedeals_card">
+        <p></p>
+      </div>
+      <div class="sk_livedeals_card_text">
+        <p></p>
+      </div>
+      <div class="sk_livedeals_card_text">
+        <p></p>
+      </div>
+      <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }}>
+        <div class="sk_livedeals_card_button">
+          <p></p>
+        </div>
+        <div class="sk_livedeals_card_button">
+          <p></p>
+        </div>
+      </div>
+    </div>
+    )
+  }
 
   return (
     <>
-     
-      <div className="flex_div">
-        {hotDeals && hotDeals.map((item, i) => {
-          const {is_cashback,deal_image,slug_url,deal_slug,title,store_img_url:store_image, deal_title, offer_price, price}= item;
+      <div className="flex_div " style={{ justifyContent: "center" }}>
+        {hotDeals ? (
+          <>
+            {hotDeals &&
+              hotDeals.map((item, i) => {
+                const {
+                  is_cashback,
+                  deal_image,
+                  slug_url,
+                  deal_slug,
+                  deal_slug_url,
+                  title,
+                  store_img_url: store_image,
+                  deal_title,
+                  offer_price,
+                  price,
+                } = item;
 
-         
-         
-          return (
-            <Box
-              sx={{ maxWidth: "154px", margin: "7px" }}
-              component="div"
-              key={i}
-            >
-              <Card
-                sx={{
-                  background: "#f1f1f16b",
-                  border: "1px solid #f1f1f16b",
-                  position: "relative",
-                  boxShadow: "none",
-                }}
-              >
-                <Link
-                  className="card_link"
-                  href={slug_url? `/deal/${slug_url}`:`/deal/${deal_slug}`}
-                >
-                  <span>{is_cashback == "1" ? <span className="card_cashback">Cashback</span>:<span></span>}</span>
-                
-                  <CardActionArea>
-                    <Box component="div" sx={{ padding: "23px 21px 0px" }}>
-                      <Image
-                        src={deal_image}
-                        alt='FreeKaaMaal Product'
-                        height={92}
-                        width={120}
-                        style={{ borderRadius: "7px" }}
-                      />
-                    </Box>
-                    <CardContent
-                      sx={{ background: "#f1f1f16b", padding: "7px" }}
+                return (
+                  <div
+                    style={{ maxWidth: "154px", margin: "13px" }}
+                    key={i}
+                  >
+                    <div
+                      style={{
+                        background: "rgb(242 239 239 / 62%)",
+                        border: "1px solid #f1f1f16b",
+                        position: "relative",
+                        borderRadius: "7px",
+                        overflow: "hidden",
+                        boxShadow: "none",
+                      }}
                     >
-                      <Typography
-                        gutterBottom
-                        variant="h6"
-                        component="div"
-                        sx={{ color: "#000", marginBottom: "0", fontSize:"15px"}}
+                      <Link
+                        className="card_link"
+                        href={slug_url ? `/deals/${slug_url}` : deal_slug ? `/deals/${deal_slug} ` : deal_slug_url ? `/deals/${deal_slug_url} ` : `/deals/${slug_url}`
+                        }
                       >
-                        <Image
-                        src={store_image}
-                        alt='FreeKaaMaal Product'
-                        height={17}
-                        width={50}
-                        style={{ borderRadius: "7px" }}
-                      />
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          color: "#000",
-                          padding: "4px 0",
-                          fontSize: "11px",
-                        }}
-                      >
-                        {deal_title ? deal_title :  title }{" "}
-                      </Typography>
-                      <Box component="div" sx={{ paddingTop: "4px" }}>
-                        <strong className="card_amouunt">
-                          &#8377;{offer_price}
-                        </strong>
-                        <small className="card_small_amouunt">
-                          &#8377;{price}
-                        </small>
-                      </Box>
-                    </CardContent>
-                  </CardActionArea>
-                </Link>
-              </Card>
-            </Box>
-          );
-        })}
+                        <span>
+                          {is_cashback == "1" ? (
+                            <span className="card_cashback">Cashback</span>
+                          ) : (
+                            <span></span>
+                          )}
+                        </span>
+
+                        <div>
+                          <div
+                            style={{
+                              padding: "23px 11px 0px", padding: " 23px 11px 0px",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center"
+                            }}
+                          >
+                            <Image
+                              src={deal_image}
+                              alt="FreeKaaMaal Product"
+                              height={92}
+                              priority={true}
+                              width={120}
+                              style={{ borderRadius: "7px" }}
+                            />
+                          </div>
+                          <div
+                            style={{ background: "#f1f1f16b", padding: "7px" }}
+                          >
+                            <div
+                              style={{
+                                color: "#000",
+                                marginBottom: "0",
+                                fontSize: "15px",
+                              }}
+                            >
+                              <Image
+                                src={store_image}
+                                alt="FreeKaaMaal Product"
+                                height={17}
+                                width={50}
+                                style={{ borderRadius: "7px" }}
+                              />
+                            </div>
+                            <p
+                              style={{
+                                color: "rgb(70 70 70)",
+                                padding: "4px 0",
+                                paddingBottom: "7px",
+                                fontSize: "11px",
+                                overflow: "hidden",
+                                height: "51px",
+                                lineHeight: "1.50"
+
+                              }}
+                            >
+                              {deal_title ? deal_title : title}{" "}
+                            </p>
+                            <div style={{ paddingTop: "4px" }}>
+                              <strong className="card_amouunt">
+                                &#8377;{offer_price}
+                              </strong>
+                              <small className="card_small_amouunt">
+                                &#8377;{price}
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })}
+          </>
+        ) : (
+          ""
+        )}
       </div>
+      {!hotDeals && (
+        <div className="Skeleton_hotDeal_card">
+          {Skeleton}
+        </div>
+      )}
       <style jsx>{`
         .card_link {
           text-decoration: none;
@@ -135,7 +192,7 @@ const HotDealsCards = (props) => {
         .flex_div {
           padding: 6px;
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
           flex-wrap: wrap;
         }
         .flex_div img {
@@ -147,8 +204,19 @@ const HotDealsCards = (props) => {
           right: 0;
           padding: 2px 5px;
           color: #fff;
-          font-size: 10px;
+          font-size: 11px;
           background-color: #f27932;
+        }
+        .Skeleton_hotDeal_card {
+          display: flex;
+          width: 100%;
+          justify-content: space-evenly;
+          flex-wrap: wrap;
+        }
+        .Skeleton_hotDeal_card_wrapper {
+          width: 45%;
+          padding: 5px;
+          padding-bottom: 15px;
         }
       `}</style>
     </>

@@ -4,43 +4,41 @@ import HeadTag from "../../components/headTagComponent/HeadTag";
 import FeaturedStore from "../featured-store/index";
 import TopCoupons from "../top-coupons/index";
 import TrendingCoupons from "../tranding-coupons/index";
-import {AllCoupons} from "service/API"
-const apiAuth = process.env.API_AUTH
+import { AllCoupons } from "service/API";
+import { useUserToken } from "service/customHooks";
+import axios from "axios";
+
+const apiAuth = process.env.API_AUTH;
+const DEVICE_TYPE = process.env.DEVICE_TYPE;
 
 const Coupons = () => {
 
-  const [featured_store, setFeatured_store] = useState()
-  const [trending_coupons, setTrending_coupons] = useState()
-  const [top_coupons, setTop_coupons] = useState()
+  const [featured_store, setFeatured_store] = useState();
+  const [trending_coupons, setTrending_coupons] = useState();
+  const [top_coupons, setTop_coupons] = useState();
 
-    useEffect(()=>{
-      getData()
-    },[])
+  const authToken = useUserToken();
 
-    const getData = async ()=>{
-     try {
-      let resp = await fetch(AllCoupons,{
-        method: "post",
-        body: JSON.stringify({
+  const getData = async () => {
+    try {
+      let {data} = await axios.post(AllCoupons, {
           apiAuth: apiAuth,
-          
-        }),
-        mode: "cors",
-        Headers: {
+        },
+        {
+          headers: {
+          Authorization: authToken,
           "Content-Type": "application/json",
         },
- 
-      })
-      let result = await resp.json();
-      setFeatured_store(result.response.featured_stores)
-      setTrending_coupons(result.response.trending_coupons);
-      setTop_coupons(result.response.latest_coupons)
-     } catch (error) {
+      });
       
-     }
-    
-    }
-
+      setFeatured_store(data.response.featured_stores);
+      setTrending_coupons(data.response.trending_coupons);
+      setTop_coupons(data.response.latest_coupons);
+    } catch (error) {}
+  };
+  useEffect(() => {
+    getData();
+  }, []);
   const headeTitle = "Coupons | Freekaamaal";
 
   return (

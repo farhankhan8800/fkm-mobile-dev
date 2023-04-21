@@ -1,187 +1,116 @@
-import { Box, Typography } from "@mui/material";
 
-import React from "react";
-import { styled } from "@mui/material/styles";
-import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
-import MuiAccordion from "@mui/material/Accordion";
-import MuiAccordionSummary from "@mui/material/AccordionSummary";
-import MuiAccordionDetails from "@mui/material/AccordionDetails";
 
-const Accordion = styled((props) => (
-  <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-  border: `1px solid ${theme.palette.divider}`,
-  "&:not(:last-child)": {
-    borderBottom: 0,
-    marginBottom: 10,
-    borderRadius: 8,
+import React, { useEffect } from "react";
+
+const frQ = [
+  {
+    title: "This is how Cashback works",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."
   },
-  "&:before": {
-    display: "none",
+  {
+    title: "This is how Cashback works",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."
   },
-}));
-
-const AccordionSummary = styled((props) => (
-  <MuiAccordionSummary
-    expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
-    {...props}
-  />
-))(({ theme }) => ({
-  backgroundColor:
-    theme.palette.mode === "dark"
-      ? "rgba(255, 255, 255, .05)"
-      : "rgba(0, 0, 0, .03)",
-  flexDirection: "row-reverse",
-  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-    transform: "rotate(90deg)",
+  {
+    title: "This is how Cashback works",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."
   },
-  "& .MuiAccordionSummary-content": {
-    marginLeft: theme.spacing(1),
+  {
+    title: "This is how Cashback works",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."
   },
-}));
-
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-  padding: theme.spacing(2),
-  borderTop: "1px solid rgba(0, 0, 0, .125)",
-}));
-
+  {
+    title: "This is how Cashback works",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."
+  },
+  {
+    title: "This is how Cashback works",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."
+  },
+  {
+    title: "This is how Cashback works",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."
+  },
+]
 const FrequentlyQuestion = () => {
-  const [expanded, setExpanded] = React.useState("panel1");
 
-  const handleChange = (panel) => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
+  const accordionFun = (id) => {
+    const panel = document.getElementById(`panel${id}`).classList;
+    const accordion = document.getElementById(`accordion${id}`).classList;
+    panel.toggle("activeTab");
+    accordion.toggle("accordionActive");
   };
 
   return (
     <>
-      <Box>
-        <Typography component="h6" fontWeight="600">
-          {" "}
+      <div>
+        <h6 className="heading">
           frequent Asked Questions?
-        </Typography>
-      </Box>
+        </h6>
+      </div>
 
-      <Box component="div">
-        <Box component="div" sx={{ marginTop: "20px" }}>
-          <div>
-            <Accordion
-              sx={{ borderRadius: "8px" }}
-              expanded={expanded === "panel1"}
-              onChange={handleChange("panel1")}
-            >
-              <AccordionSummary
-                aria-controls="panel1d-content"
-                id="panel1d-header"
-              >
-                <Typography fontSize="14px">
-                  This is how Cashback works
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography fontSize="13px">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                  eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                  eget.
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion
-              sx={{ borderRadius: "8px" }}
-              expanded={expanded === "panel2"}
-              onChange={handleChange("panel2")}
-            >
-              <AccordionSummary
-                aria-controls="panel2d-content"
-                id="panel2d-header"
-              >
-                <Typography fontSize="14px">
-                  Frequaintly ask Quaction
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography fontSize="13px">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                  eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                  eget.
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion
-              sx={{ borderRadius: "8px" }}
-              expanded={expanded === "panel3"}
-              onChange={handleChange("panel3")}
-            >
-              <AccordionSummary
-                aria-controls="panel3d-content"
-                id="panel3d-header"
-              >
-                <Typography fontSize="14px">
-                  Signup to start Cashback{" "}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography fontSize="13px">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                  eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                  eget.
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion
-              sx={{ borderRadius: "8px" }}
-              expanded={expanded === "panel4"}
-              onChange={handleChange("panel4")}
-            >
-              <AccordionSummary
-                aria-controls="panel4d-content"
-                id="panel4d-header"
-              >
-                <Typography fontSize="14px">
-                  Signup to start Cashback{" "}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography fontSize="13px">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                  eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                  eget.
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion
-              sx={{ borderRadius: "8px" }}
-              expanded={expanded === "panel5"}
-              onChange={handleChange("panel5")}
-            >
-              <AccordionSummary
-                aria-controls="panel5d-content"
-                id="panel5d-header"
-              >
-                <Typography fontSize="14px">
-                  Signup to start Cashback{" "}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography fontSize="13px">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                  eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                  eget.
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-          </div>
-        </Box>
-      </Box>
+      <div style={{ marginTop: "20px" }}>
+        <div
+          style={{
+            borderRadius: "10px",
+            bgcolor: "#fff5efv",
+            padding: "0px 0px",
+          }}
+        >
+          {frQ &&
+            frQ.map((item, i) => {
+              return (
+                <div key={i}>
+                  <button
+                    className={`accordion `}
+                    id={`accordion${i}`}
+                    onClick={() => accordionFun(i)}
+                  >
+                    &nbsp; &nbsp; {item.title}{" "}
+                  </button>
+                  <div className="panel" id={`panel${i}`}>
+                    <p>{item.description}</p>
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+      </div>
+      <style jsx>{`
+          .accordion {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            border-radius: 3px;
+            padding: 13px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            border-bottom: 1px solid #e0dddd;
+            font-size: 15px;
+            transition: 0.4s;
+            margin-bottom: 2px;
+          }
+          .panel.activeTab {
+            display: block;
+          }
+          .accordion.active {
+            background-color: #cdc6c6;
+          }
+          .panel {
+            padding: 0 11px;
+            background-color: #f5f4f4;
+            font-size: 14px;
+            line-height: 21px;
+            display: none;
+            margin-bottom: 10px;
+          }
+          .accordion.accordionActive {
+            background: #080808e0;
+            color: #fff;
+          }
+          `}</style>
     </>
   );
 };

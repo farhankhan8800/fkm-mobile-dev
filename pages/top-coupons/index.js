@@ -1,36 +1,22 @@
 import React, { useEffect, useState } from "react";
 import couponImage from "../../public/images/coupon.png";
-
-import {
-  Grid,
-  Box,
-  Typography,
-  CardActionArea,
-  CardContent,
-  Card,
-  Button,
-} from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 
-
-
 const TopCoupons = (props) => {
   const [countBanner, SetCountBanner] = useState(10);
-  const [top_coupons, setTop_coupons] = useState()
-  // const slice = top_coupons.slice(0, countBanner);
+  const [top_coupons, setTop_coupons] = useState();
 
-  useEffect(()=>{
-    setTop_coupons(props.top_coupons)
-  },[props])
+  useEffect(() => {
+    setTop_coupons(props.top_coupons);
+  }, [props]);
   const lodeMore = () => {
     SetCountBanner(countBanner + 4);
   };
   return (
     <>
-      <Grid container sx={{ padding: "13px 3px 2px" }}>
-        <Grid item>
-          <Box component="div" sx={{ width: "30px", marginRight: "10px" }}>
+      <div className="d_flex" style={{ padding: "13px 3px 2px" }}>
+          <div style={{ width: "30px", marginRight: "10px" }}>
             <Image
               src={couponImage}
               alt="Hot Deal Of the Day"
@@ -38,79 +24,76 @@ const TopCoupons = (props) => {
               height={29}
               style={{ width: "100%" }}
             />
-          </Box>
-        </Grid>
-        <Grid item>
-          <Typography variant="h6" component="h6">
-            {" "}
+          </div>
+          <h6 className="heading">
             Top <strong>Coupons</strong>
-          </Typography>
-        </Grid>
-      </Grid>
-      <div className="flex_div">
-        {top_coupons && top_coupons.map((item, i) => {
-          const {img_url,couponid,description}=item
-          return (
-            <Box
-              sx={{ maxWidth: "167px", margin: "0px 5px 10px 5px", }}
-              component="div"
-              key={i}
-            >
-              <Card
-                sx={{
-                  display:"flex",alignItems:"center",justifyContent:"center",
-                  height:"140px",
-                  padding: "5px",
-                  border: "1px solid #a19b9b",
-                  borderRadius: "8px",
-                }}
-              >
-                <Link
-                  style={{ borderRadius: "0" }}
-                  className="card_link"
-                  href={`/coupon/${couponid}`}
-                >
-                  <CardActionArea 
-                  sx={{textAlign:"center"}}>
-                    <Image
-                      height={40}
-                      width={90}
-                      style={{ borderRadius: "0"}}
-                      src={img_url}
-                      alt=""
-                    />
-                    <CardContent sx={{ padding: "5px 5px 0" }}>
-                      <Typography
-                        variant="body2"
-                        sx={{ color: "#000", padding: "4px 0" }}
-                      >
-                        {description}{" "}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Link>
-              </Card>
-            </Box>
-          );
-        })}
+          </h6>
       </div>
-      <Box component="div" sx={{ p: 1, textAlign: "center" }}>
-        <Button
+      <div className="flex_div">
+        {top_coupons &&
+          top_coupons.map((item, i) => {
+            const { img_url, couponid, description } = item;
+            return (
+              <div
+                style={{ maxWidth: "167px", margin: "0px 5px 10px 5px" }}
+                
+                key={i}
+              >
+                <div
+                 style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: "140px",
+                    padding: "5px",
+                    border: "1px solid #a19b9b",
+                    borderRadius: "8px",
+                  }}
+                >
+                  <Link
+                    style={{ borderRadius: "0" }}
+                    className="card_link"
+                    href={`/coupon-code/${couponid}`}
+                  >
+                    <div style={{ textAlign: "center" }}>
+                      <Image
+                        height={40}
+                        width={90}
+                        style={{ borderRadius: "0" }}
+                        src={img_url}
+                        alt=""
+                      />
+                      <div style={{ padding: "5px 5px 0" }}>
+                        <p
+                        className="p_tag_big"
+                          style={{ color: "#000", padding: "4px 0" }}
+                        >
+                          {description}{" "}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
+      </div>
+      <div style={{ padding:"10px", textAlign: "center" }}>
+        <button
           onClick={lodeMore}
-          sx={{ color: "#fff", fontWeight: "600" }}
-          variant="contained"
+          style={{ color: "#fff", fontWeight: "600" }}
+          className="contain_button"
         >
           Lode More
-        </Button>
-      </Box>
+        </button>
+      </div>
       <style jsx>
-        
         {`
           .card_link {
             text-decoration: none;
             border-radius: 10px;
             width: 100%;
-           
+
             display: inline-block;
             position: relative;
           }

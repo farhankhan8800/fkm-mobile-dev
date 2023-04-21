@@ -1,44 +1,35 @@
-import {
-  Box,
-  Grid,
-  Divider,
-  Typography,
-  Avatar,
-  Button,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  List,
-} from "@mui/material";
+
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
+import dashboardIcon from "../../public/images/icon/sidebar/dashboard.png";
+import shopIcon from "../../public/images/icon/sidebar/store.png";
+import categoryIcon from "../../public/images/icon/sidebar/top categories.png";
+import promoCodeIcon from "../../public/images/icon/sidebar/coupon.png";
+import contentWritingIcon from "../../public/images/icon/sidebar/article.png";
+import phoneCallIcon from "../../public/images/icon/sidebar/contact us.png";
+import powerOffIcon from "../../public/images/icon/sidebar/logout.png";
+import loginIcon from "../../public/images/icon/sidebar/login-account.png";
+import freebies from "../../public/images/icon/sidebar/Freebies.png";
+import livefeed from "../../public/images/icon/sidebar/live.png";
+import festivals from "../../public/images/icon/sidebar/festival.png";
+import cashbackIcon from "../../public/images/icon/sidebar/100cb.png";
+import aboutus from "../../public/images/icon/sidebar/about.png";
+import FAQs from "../../public/images/icon/sidebar/faq.png";
+import addwithUs from "../../public/images/icon/sidebar/advertise with us.png";
 
-import {motion} from "framer-motion"
-import dashboardIcon from "../../public/images/icon/dashboard.png";
-import shopIcon from "../../public/images/icon/shop.png";
-import categoryIcon from "../../public/images/icon/category.png";
-import promoCodeIcon from "../../public/images/icon/promo-code.png";
-import confettiIcon from "../../public/images/icon/confetti.png";
-import cashbackIcon from "../../public/images/icon/cashback.png";
-import contentWritingIcon from "../../public/images/icon/content-writing.png";
-import briefcaseIcon from "../../public/images/icon/briefcase.png";
-import phoneCallIcon from "../../public/images/icon/phone-call.png";
-import questionIcon from "../../public/images/icon/question.png";
-import powerOffIcon from "../../public/images/icon/power-off.png";
-import loginIcon from "../../public/images/icon/login-account.png";
-import { useEffect, useState } from "react";
+import { FaUser } from "react-icons/fa";
+import { useGetUser } from "service/customHooks";
 
 export const menuList = [
-  
   {
     link: "/all-store",
-    menuName: "Store",
+    menuName: "Top Stores",
     menuIcon: shopIcon,
   },
   {
     link: "/category",
-    menuName: "Category",
+    menuName: "Top Categories",
     menuIcon: categoryIcon,
   },
   {
@@ -47,65 +38,79 @@ export const menuList = [
     menuIcon: promoCodeIcon,
   },
   {
-    link: "/",
-    menuName: "Festival",
-    menuIcon: confettiIcon,
+    link: "/freebies",
+    menuName: "Freebies",
+    menuIcon: freebies,
   },
   {
-    link: "/",
+    link: "/live-feed",
+    menuName: "Live Feed",
+    menuIcon:livefeed,
+  },
+  {
+    link: "/articles",
+    menuName: " Articles",
+    menuIcon: contentWritingIcon,
+  },
+  {
+    link: "/festivals",
+    menuName: "Festivals",
+    menuIcon: festivals,
+  },
+  {
+    link: "/cashback-page/cashback",
     menuName: "100% Cashback",
     menuIcon: cashbackIcon,
   },
   {
-    link: "/",
-    menuName: "Hindi Artical",
-    menuIcon: contentWritingIcon,
-  },
-  {
-    link: "/",
-    menuName: "Carrer",
-    menuIcon: briefcaseIcon,
-  },
-  {
-    link: "/",
+    link: "/contact-us",
     menuName: "Contact Us",
     menuIcon: phoneCallIcon,
   },
   {
-    link: "/",
-    menuName: "Help & Support",
-    menuIcon: questionIcon,
+    link: "/about-us",
+    menuName: "About Us",
+    menuIcon: aboutus,
+  },
+  {
+    link: "/advertise-with-us",
+    menuName: "Advertise with Us",
+    menuIcon: addwithUs,
+  },
+  {
+    link: "/faq",
+    menuName: "FAQ's",
+    menuIcon: FAQs,
   },
 ];
 
 const Sidebar = ({ togalButton, closeSidebar }) => {
-  const [userdata, setUserdata] = useState();
 
-  useEffect(() => {
-    setUserdata(localStorage.getItem("user"));
-  }, []);
-  
- 
+  const userdata = useGetUser()
+  // console.log(userdata)
   const router = useRouter();
+
   const sidebarClose = () => {
     setTimeout(() => {
       closeSidebar();
     }, 200);
   };
+
   const logoutUser = () => {
-    localStorage.clear("user");
+    localStorage.clear();
+    sessionStorage.clear();
     router.push("/login");
   };
 
   return (
-    <Box>
+    <div>
       {togalButton ? (
-        <Box
+        <div
+          className=""
           onClick={sidebarClose}
-          component="div"
           style={{
             width: "100%",
-            backgroundColor: "transparent",
+            backgroundColor: "#e7e7e778",
             top: "55px",
             position: "fixed",
             zIndex: "9981",
@@ -113,8 +118,7 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
             overflow: "auto",
           }}
         >
-          <Box
-            component="div"
+          <div className="sidebar_class"
             style={{
               width: "83%",
               minWidth: "250px",
@@ -122,164 +126,185 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
               backgroundColor: "#fff",
               padding: "20px 10px",
               minHeight: "94vh",
-              boxShadow: "0px 0px 28px -3px",
+              boxShadow: "0px 2px 13px 3px #cecece",
             }}
           >
-            <Box
-           
-              component="div"
+            <div>
+
+            <div
               style={{
-                backgroundColor: "#f5f3f3",
                 padding: "10px 13px",
                 borderRadius: "10px",
+               background: "#ff00000d"
               }}
             >
-              <Link  href={userdata ? "/cashback-summary":"/login"}>
-                <Grid
-                  container
-                  justifyContent="space-between"
-                  alignItems="center"
-                  style={{ color: "#000" }}
+              <Link href={userdata ? "/cashback/home" : "/login"}>
+                <div
+                  className="d_flex"
+                  style={{
+                    color: "#000",
+                    justifyContent: "space-evenly",
+                    alignItems: "center",
+                  }}
                 >
-                  <Grid item>
-                    <Avatar
-                      alt="Freekaamaal"
-                      src=""
-                    />
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="p" component="p">
+                  <div className="avatar_div" style={{overflow:"hidden"}}>
+                  
+                    {
+                      userdata ?  <Image src= {userdata.data.user_img_url} alt=""height={45} width={45}></Image>: <FaUser />
+                    }
+                  
+                  </div>
+                  <div>
+                    <p className="p_tag_big" style={{ fontSize: "16px" }}>
                       Hello{" "}
-                    </Typography>
+                    </p>
                     {userdata ? (
-                      <Typography
-                        variant="h6"
-                        component="h6"
-                        sx={{ fontWeight: "600" }}
+                      <p
+                        className="p_tag_big"
+                        style={{
+                          fontWeight: "600",
+                          fontSize: "19px",
+                          letterSpacing: "1px",
+                        }}
                       >
                         {" "}
-                        {JSON.parse(userdata).data.username}
-                      </Typography>
+                        {userdata.data.username}
+                      </p>
                     ) : (
-                      <Typography
-                        variant="h6"
-                        component="h6"
-                        sx={{ fontWeight: "600" }}
+                      <p
+                        className="p_tag_big"
+                        style={{
+                          fontWeight: "600",
+                          fontSize: "19px",
+                          letterSpacing: "1px",
+                        }}
                       >
                         Guest
-                      </Typography>
+                      </p>
                     )}
-                  </Grid>
-                  <Grid item>{
-                    userdata? <Button
-                    onClick={() => router.push("/user-edit-details")}
-                    variant="contained"
-                    sx={{ color: "#fff", borderRadius: "30px" }}
-                    size="small"
-                  >
-                    Edit
-                  </Button>:""
-                  }
-                    
-                  </Grid>
-                </Grid>
-              </Link>
-            </Box>
-            <Box component="div">
-              <List
-                component="nav"
-                aria-label="main mailbox folders"
-                sx={{ width: "100%" }}
-              >
-                   <div>{
-                     userdata ? (
-                     <>
-                     <Link href="/cashback-summary">
-                      <ListItemButton onClick={sidebarClose}>
-                        <ListItemIcon>
-                          <Image
-                            width={17}
-                            height={17}
-                            src={dashboardIcon}
-                            alt="menuIcon"
-                          ></Image>
-                        </ListItemIcon>
-                        <ListItemText
-                          sx={{ color: "#000" }}
-                          primary="Dashboard"
-                        />
-                      </ListItemButton>
-                    </Link>
-                    <Divider sx={{ opacity: "0.4" }} />
-                     </>
-                     ):("")
-                    }
-                    
                   </div>
+                  <div>
+                    {userdata ? (
+                      <button
+                        onClick={() => router.push("/user-edit-details")}
+                        className="text_button"
+                      >
+                        Edit
+                      </button>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+              </Link>
+            </div>
+              <ul
+              className="sidebar_list_ul"
+                style={{ width: "100%" }}
+              >
+                <div>
+                  {userdata ? (
+                    <>
+                      <Link href="/cashback/home">
+                        <div style={{padding:"14px 18px"}} className="d_flex" onClick={sidebarClose}>
+                            <Image
+                              width={17}
+                              height={17}
+                              src={dashboardIcon}
+                              alt="menuIcon"
+                            ></Image>
+                          <p className="list_item_text" style={{ color: "#646161",paddingLeft:"35px"}}>Dashboard</p>
+                        </div>
+                      </Link>
+                      <hr className="divider_class" />
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </div>
                 {menuList.map((item, i) => (
                   <div key={i + 1}>
                     <Link href={item.link}>
-                      <ListItemButton onClick={sidebarClose}>
-                        <ListItemIcon>
+                      <div style={{padding:"14px 18px"}} className="d_flex" onClick={sidebarClose}>
                           <Image
                             width={17}
                             height={17}
                             src={item.menuIcon}
                             alt="menuIcon"
-                          ></Image>
-                        </ListItemIcon>
-                        <ListItemText
-                          sx={{ color: "#000" }}
-                          primary={item.menuName}
-                        />
-                      </ListItemButton>
+                          />
+                        <p className="list_item_text" style={{ color: "#646161",paddingLeft:"35px"}}
+                        >{item.menuName}</p>
+                      </div>
                     </Link>
-                    <Divider sx={{ opacity: "0.4" }} />
+                    <hr className="divider_class" />
                   </div>
                 ))}
                 <div>
-                  {
-                    userdata ?  <div onClick={logoutUser}>
-                    <ListItemButton onClick={sidebarClose}>
-                      <ListItemIcon>
-                        <Image
-                          width={17}
-                          height={17}
-                          src={powerOffIcon}
-                          alt="menuIcon"
-                        ></Image>
-                      </ListItemIcon>
-                      <ListItemText sx={{ color: "#000" }} primary="Logout" />
-                    </ListItemButton>
-                    <Divider sx={{ opacity: "0.4" }} />
-                  </div> :<div >
-                    <Link href="/login">
-                    <ListItemButton onClick={sidebarClose}>
-                      <ListItemIcon>
-                        <Image
-                          width={20}
-                          height={20}
-                          src={loginIcon}
-                          alt="menuIcon"
-                        ></Image>
-                      </ListItemIcon>
-                      <ListItemText sx={{ color: "#000" }} primary="Login" />
-                    </ListItemButton>
-                    </Link>
-                   
-                    <Divider sx={{ opacity: "0.4" }} />
-                  </div>
-                  }
+                  {userdata ? (
+                    <div  onClick={logoutUser}>
+                      <div style={{padding:"14px 18px" ,cursor:"pointer"}} className="d_flex"  onClick={sidebarClose}>
+                          <Image
+                            width={17}
+                            height={17}
+                            src={powerOffIcon}
+                            alt="menuIcon"
+                          ></Image>
+                     
+                        <p  className="list_item_text" style={{ color: "#646161",paddingLeft:"35px",}} >Logout</p>
+                      </div>
+                      <hr className="divider_class" />
+                    </div>
+                  ) : (
+                    <div>
+                      <Link href="/login">
+                        <div style={{padding:"14px 18px"}} className="d_flex" onClick={sidebarClose}>
+                            <Image
+                              width={20}
+                              height={20}
+                              src={loginIcon}
+                              alt="menuIcon"
+                            ></Image>
+                         <p className="list_item_text" style={{ color: "#646161",paddingLeft:"35px"}} >Login</p>
+                        </div>
+                      </Link>
+                      <hr className="divider_class" />
+                    </div>
+                  )}
                 </div>
-               
-              </List>
-            </Box>
-          </Box>
-        </Box>
+              </ul>
+            </div>
+            
+          </div>
+        </div>
       ) : (
         ""
       )}
-    </Box>
+      <style jsx>{`
+      .avatar_div{
+        padding: 10px;
+        border: none;
+        background: #cac3c3;
+        border-radius: 32px;
+        width: 45px;
+        height: 45px;
+        /* text-align: center; */
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        color: #fff;
+        font-size: 21px;
+      }
+      @media screen and (max-width:420px) {
+        .sidebar_class{
+           width:95% !important;
+        }
+      }
+      .divider_class{
+        opacity: 0.1;
+      }
+     
+      `}</style>
+    </div>
   );
 };
 
