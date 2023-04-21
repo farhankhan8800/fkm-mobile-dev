@@ -148,8 +148,11 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
                   }}
                 >
                   <div className="avatar_div" style={{overflow:"hidden"}}>
-                    {/* <FaUser /> */}
-                   <Image src= {userdata.data.user_img_url} alt=""height={45} width={45}></Image>
+                  
+                    {
+                      userdata ?  <Image src= {userdata.data.user_img_url} alt=""height={45} width={45}></Image>: <FaUser />
+                    }
+                  
                   </div>
                   <div>
                     <p className="p_tag_big" style={{ fontSize: "16px" }}>
@@ -280,7 +283,7 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
       .avatar_div{
         padding: 10px;
         border: none;
-        {/* background: #cac3c3; */}
+        background: #cac3c3;
         border-radius: 32px;
         width: 45px;
         height: 45px;

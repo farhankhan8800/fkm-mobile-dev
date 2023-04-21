@@ -16,7 +16,6 @@ const protectRoute = (WrappedComponent) => {
 
     return <WrappedComponent {...props} />;
   };
-
   return Auth;
 };
 

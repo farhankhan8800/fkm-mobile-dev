@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Box, Typography } from "@mui/material";
+
 import { allStores } from "../../service/API";
 import { useState, useEffect } from "react";
 import Image from "next/image";
@@ -8,7 +8,7 @@ import axios from "axios";
 
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-import { isTokenExpired } from "service/helper";
+
 
 const headeTitle = "All Store | Freekaamaal";
 const apiAuth = process.env.API_AUTH;
@@ -18,10 +18,6 @@ const Index = () => {
   const [allStore, setAllStore] = useState([]);
   const [page, setPage] = useState(1);
 
-  // check auth Valid
-  useEffect(() => {
-    isTokenExpired();
-  }, []);
 
   useEffect(() => {
     GetData();
