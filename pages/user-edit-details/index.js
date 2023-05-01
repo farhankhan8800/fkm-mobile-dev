@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
+
 import Image from "next/image";
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
 
-import { FaUser } from "react-icons/fa";
+
 import { BsCheckCircle } from "react-icons/bs";
 import { ImWarning } from "react-icons/im";
 import { updateUserDataAPI } from "service/API";
@@ -35,30 +35,67 @@ const UserEditDetails = () => {
   const onEdit = async (e) => {
     e.preventDefault();
     if(profileImage || userName ){
-      try {
-        let { data } = await axios.post(
-          updateUserDataAPI,
-          {
-            apiAuth: apiAuth,
-            device_type:DEVICE_TYPE,
-            title:userName,
-            profileimage:profileImage
-          },
-          {
-            headers: {
-               "Content-Type": "multipart/form-data",
-               Authorization: authToken,
+      if(!userName){
+        try {
+          let { data } = await axios.post(
+            updateUserDataAPI,
+            {
+              apiAuth: apiAuth,
+              device_type:DEVICE_TYPE,
+              title:userName,
+              profileimage:profileImage
             },
+            {
+              headers: {
+                 "Content-Type": "multipart/form-data",
+                  Authorization: authToken,
+              },
+            }
+          );
+          if(data.code == "401"){
+            return router.push("/session-expired")
           }
-        );
-        
-        // console.log(data)
-        setUpdatedSucc(data.message)
-      } catch (error) {
-      //  console.log(error)
+          setUpdatedSucc(data.message)
+          setUserName("")
+          setProfileImage(null)
+        } catch (error) {
+          console.log(error)
+        }
+      }else{
+        if(userName.length >= 3){
+          try {
+            let { data } = await axios.post(
+              updateUserDataAPI,
+              {
+                apiAuth: apiAuth,
+                device_type:DEVICE_TYPE,
+                title:userName,
+                profileimage:profileImage
+              },
+              {
+                headers: {
+                   "Content-Type": "multipart/form-data",
+                   Authorization: authToken,
+                },
+              }
+            );
+            if(data.code == "401"){
+              return router.push("/session-expired")
+            }
+            setUpdatedSucc(data.message)
+            setUserName("")
+            setProfileImage(null)
+          } catch (error) {
+            console.log(error)
+          }
+        }else{
+            //  console.log("User name att List Min 3 chr")
+             setError("User Name At List Min 3 Chr")
+        }
       }
+     
     }else{
-      setError("Att list Update One Input")
+      setError("At list Update One Input")
     //  console.log("Att list Update One Input")
     }
       

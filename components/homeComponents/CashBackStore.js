@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import cashbackImage from "../../public/images/money.png";
-import { homeAPI2 } from "service/API.js";
+import { homeAPI } from "service/API.js";
 import axios from "axios";
 import { useUserToken } from "service/customHooks";
 
@@ -23,7 +23,7 @@ const CashBackStore = () => {
     const getAPI2 = async () => {
       try {
         let  {data}  = await axios.post(
-          homeAPI2,
+          homeAPI,
           {
             apiAuth: apiAuth,
             page: "1",
@@ -52,8 +52,7 @@ const CashBackStore = () => {
     setCat_id(id)
     setActiveTab(false)
   }
-
-  // console.log(stores)
+  
   return (
     <>
       <div className="d_flex" style={{ padding: "13px 3px 3px" }}>

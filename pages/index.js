@@ -1,4 +1,4 @@
-// home page  -------------------
+
 import React, { useEffect, useState, useCallback }  from "react";
 import dynamic from 'next/dynamic'
 import Header from "components/headerComponent/Header";
@@ -9,8 +9,8 @@ import LiveDeals from "components/homeComponents/LiveDeals";
 const  HotDeals = dynamic(() => import('components/homeComponents/HotDeals'))
 const  HowToEarnCashback = dynamic(() => import('components/HowToEarnCashback'))
 import  CashBackStore from 'components/homeComponents/CashBackStore'
-import { homeAPI1 } from "service/API";
-import { homeAPI2 } from "service/API";
+import { homeAPI } from "service/API";
+
 import axios from "axios";
 
 import {useUserToken} from "service/customHooks"
@@ -37,7 +37,7 @@ export default function Home() {
   const GetData = async () => {
     try {
       let { data } = await axios.post(
-        homeAPI1,
+        homeAPI,
         {
           apiAuth: apiAuth,
           device_type: DEVICE_TYPE,
@@ -49,7 +49,6 @@ export default function Home() {
           },
         }
       );
-      console.log(data)
       setCarousel(data.response.slider);
       setLiveDeal(data.response.live_deals);
       setDealofday(data.response.sticky);
@@ -62,7 +61,7 @@ export default function Home() {
   const getAPI2 = async () => {
     try {
       let { data } = await axios.post(
-        homeAPI2,
+        homeAPI,
         {
           apiAuth: apiAuth,
           page: page,
@@ -72,11 +71,13 @@ export default function Home() {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: authToken,
+             Authorization: authToken,
           },
         }
       );
   
+
+      // console.log(data.response)
       if (data.response.user_summary) {
         localStorage.setItem(
           "usersummary",
@@ -95,8 +96,10 @@ export default function Home() {
 
   useEffect(() => {
     fistApiCallback()
-   
+  
   }, []);
+
+  // console.log(howtoearncashback)
 
 const secondApiCallback = useCallback( getAPI2 ,[authToken, page])
   useEffect(() => {

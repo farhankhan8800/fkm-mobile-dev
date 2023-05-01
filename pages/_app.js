@@ -5,6 +5,7 @@ import theme from "public/theme";
 import { ThemeProvider } from "@mui/material/styles";
 import { Provider } from "react-redux";
 import Store from "../store/index.js";
+import { SessionProvider, session } from "next-auth/react"
 
 
 const roboto = Roboto({
@@ -19,12 +20,14 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <main className={roboto.className } style={{maxWidth:"600px", margin:"auto",position:"relative"}}>
-        <Provider store={Store}>
-         <Component {...pageProps} />
-        </Provider>
-      </main>
-    
+      <SessionProvider session={session}>
+        <main className={roboto.className } style={{maxWidth:"600px", margin:"auto",position:"relative"}}>
+          <Provider store={Store}>
+          <Component { ...pageProps} />
+          </Provider>
+        </main>
+      </SessionProvider>
+     
     </ThemeProvider>
   );
 }

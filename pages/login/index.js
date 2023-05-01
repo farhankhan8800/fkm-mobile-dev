@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import logInImage from "../../public/images/login.png";
 
 import Link from "next/link";
-import googleImage from "public/images/google.png";
+
 import facebookImage from "public/images/facebook.png";
 import Image from "next/image";
 import Header from "components/headerComponent/Header";
@@ -17,6 +17,8 @@ import axios from "axios";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import { ImWarning } from "react-icons/im";
 import authPageProtect from "service/auth-page-protect";
+import {FacebookAuth, GoogleAuth} from "components/social-auth/SocialAuth";
+
 
 
 const apiAuth = process.env.API_AUTH;
@@ -199,61 +201,12 @@ const Login = () => {
             <span className="divider_ab_text">OR</span>
           </div>
           <div  style={{ padding: "8px" }}>
-            <button
-             className="full_with_button"
-              style={{padding: "8px 15px", width: "100%", background: "#f2793552", marginBottom: "15px" }}
-            >
-              {" "}
-              <Link
-                href="/"
-                style={{
-                  color: "#000",
-                  textDecoration: "none",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Image
-                  height={20}
-                  width={20}
-                  style={{ marginRight: "10px" }}
-                  src={googleImage}
-                  alt="Google"
-                ></Image>{" "}
-                <span>Login With Google</span>
-              </Link>{" "}
-            </button>
-            <button
-              className="full_with_button"
-              style={{ padding: "8px 15px", width: "100%", background: "#f2793552", marginBottom: "15px" }}
-            >
-              {" "}
-              <Link
-                href="/"
-                style={{
-                  color: "#000",
-                  textDecoration: "none",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Image
-                  height={20}
-                  width={20}
-                  style={{ marginRight: "10px" }}
-                  src={facebookImage}
-                  alt="Google"
-                ></Image>{" "}
-                <span>Login With Facebook</span>
-              </Link>{" "}
-            </button>
+                <GoogleAuth  Authpage="Login"/>
+                <FacebookAuth />
           </div>
           <div  style={{ padding: "10px" }}>
             <button
-           
-              style={{
+               style={{
                 width: "100%",
                 marginBottom: "5px",
                 color: "gray",
@@ -267,7 +220,6 @@ const Login = () => {
                 style={{
                   color: "#4343e9",
                   textDecoration: "none",
-                  
                 }}
               >
                 &nbsp; Register
@@ -278,7 +230,6 @@ const Login = () => {
       </div>
       <style jsx>
         {`
-
         .divider_line_class{
           position: relative;
           width: 100%;
@@ -289,13 +240,13 @@ const Login = () => {
         }
         .divider_ab_text{
           position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    background: var(--second-color);
-    display: inline-block;
-    padding: 2px;
-    opacity: 1;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%,-50%);
+          background: var(--second-color);
+          display: inline-block;
+          padding: 2px;
+          opacity: 1;
         }
        
         `}

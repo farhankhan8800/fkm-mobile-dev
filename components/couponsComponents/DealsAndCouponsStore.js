@@ -40,10 +40,6 @@ const DealsAndCouponsStore = ({ store_slug }) => {
           },
         }
       );
-
-      if (data.status == 0 && data.error == 0) {
-        router.push(`/404`);
-      } else {
         if (option == "deals") {
           if (data.response.deals.length == "0") {
             setNoData(true);
@@ -57,9 +53,10 @@ const DealsAndCouponsStore = ({ store_slug }) => {
             setCoupons([...coupons, ...data.response.coupons]);
           }
         }
-      }
+     
     } catch (err) { }
   };
+
 
   useEffect(() => {
     storeData();
@@ -106,11 +103,11 @@ const DealsAndCouponsStore = ({ store_slug }) => {
           {clickTab == "deals" ? (
             <div>
               {deals.length > 0 ? (
-                <div>
+                <>
                   <HotDealsCards hotdeals={deals} />
                   <div className="flex_center" style={{ paddingBottom: "20px" }}>
                     {noData ? (
-                      "No More Data"
+                      "No Data Found"
                     ) : (
                       <button
                         className="contain_button"
@@ -121,9 +118,9 @@ const DealsAndCouponsStore = ({ store_slug }) => {
                       </button>
                     )}
                   </div>
-                </div>
+                </>
               ) : (
-                "No Data Found"
+                <div>No Data Found</div>
               )}
             </div>
           ) : (
@@ -131,7 +128,7 @@ const DealsAndCouponsStore = ({ store_slug }) => {
               {coupons.length > 0 ? (
                 <div>
                   <CouponsCade couponCard={coupons} />
-                  <div className="flex_center" style={{ paddingBottom: "20px" }}>
+                  <div className="flex_center" style={{ paddingBottom: "20px",alignItems:"center" }}>
                     {noData ? (
                       "No More Data"
                     ) : (

@@ -89,7 +89,7 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
   const userdata = useGetUser()
   // console.log(userdata)
   const router = useRouter();
-
+  const user = useGetUser()
   const sidebarClose = () => {
     setTimeout(() => {
       closeSidebar();
@@ -135,7 +135,8 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
               style={{
                 padding: "10px 13px",
                 borderRadius: "10px",
-               background: "#ff00000d"
+                background: "#ff00000d",
+                borderBottom:user?.data.is_gold?"3px solid gold":""
               }}
             >
               <Link href={userdata ? "/cashback/home" : "/login"}>
@@ -143,8 +144,9 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
                   className="d_flex"
                   style={{
                     color: "#000",
-                    justifyContent: "space-evenly",
+                    justifyContent: "flex-start",
                     alignItems: "center",
+                    
                   }}
                 >
                   <div className="avatar_div" style={{overflow:"hidden"}}>
@@ -154,7 +156,7 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
                     }
                   
                   </div>
-                  <div>
+                  <div style={{marginLeft:"17px"}}>
                     <p className="p_tag_big" style={{ fontSize: "16px" }}>
                       Hello{" "}
                     </p>
@@ -301,6 +303,14 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
       }
       .divider_class{
         opacity: 0.1;
+      }
+      .sidebar_list_ul{
+        width: 100%;
+       overflow-y: auto;
+       height: 700px;
+      }
+      .sidebar_list_ul::-webkit-scrollbar {
+       display: none;
       }
      
       `}</style>

@@ -14,6 +14,7 @@ import { registerToken } from "redux-store/slices/authSlice";
 import { ImWarning } from "react-icons/im";
 import { BsCheckCircle, BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import authPageProtect from "service/auth-page-protect";
+import  {GoogleAuth} from "components/social-auth/SocialAuth";
 
 const apiAuth = process.env.API_AUTH;
 const DEVICE_TYPE = process.env.DEVICE_TYPE;
@@ -303,29 +304,7 @@ const SignUp = () => {
           </div>
           <div  style={{ padding: "10px", display: "flex" }}>
             <div className="d_flex" style={{justifyContent:"space-around",alignItems:"center",width:"100%"}}>
-              <div >
-                <button className="contain_button"  style={{ bgcolor: "#f2793552" }}>
-                  {" "}
-                  <Link
-                    href="/"
-                    style={{ textDecoration: "none", color: "#000" }}
-                  >
-                    {" "}
-                    Google
-                  </Link>{" "}
-                </button>
-              </div>
-              <div >
-                <button className="contain_button" style={{ bgcolor: "#f2793552" }}>
-                  {" "}
-                  <Link
-                    href="/"
-                    style={{ textDecoration: "none", color: "#000" }}
-                  >
-                    Facebook
-                  </Link>{" "}
-                </button>
-              </div>
+             <GoogleAuth Authpage="Signe Up" />
             </div>
           </div>
         </div>

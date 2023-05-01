@@ -56,7 +56,7 @@ const WithdrawMoney = () => {
       } else {
         setServerdata(data.message);
       }
-    } catch (error) {
+    } catch (err) {
       // console.log(error);
     }
   };

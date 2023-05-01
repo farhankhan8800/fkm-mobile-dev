@@ -19,7 +19,7 @@ const HowToEarnCashback = (props) => {
   return (
     <>
       <div className="d_flex" style={{ padding: "13px 3px 3px",alignItems: "center",
-    justifyContent: "flex-start"}}>
+          justifyContent: "flex-start"}}>
           <div style={{ width: "30px", marginRight: "10px" }}>
             <Image
               src={cashbackImage}
@@ -31,7 +31,7 @@ const HowToEarnCashback = (props) => {
         <div>
           <h6 className="heading">
             {" "}
-            How To Earn <strong>Cashback?</strong>
+            This is how  <strong>Cashback works?</strong>
           </h6>
         </div>
       </div>
@@ -78,10 +78,10 @@ const HowToEarnCashback = (props) => {
                       width={20}
                       height={20}
                     />{" "}
-                    &nbsp; &nbsp; {item.title}{" "}
+                    &nbsp; &nbsp; {item.heading}{" "}
                   </button>
                   <div className="panel" id={`panel${i}`}>
-                    <p>{item.description}</p>
+                    <p>{item.desc}</p>
                   </div>
                 </div>
               );

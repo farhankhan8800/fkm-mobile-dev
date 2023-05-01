@@ -136,7 +136,9 @@ const DealsDetails = () => {
                 </div>
               </div>
               {/* cash backclaim card start  */}
-              <CashBackClimeCard />
+              {
+                user ? <CashBackClimeCard /> :""
+              } 
               {/* cash backclaim card end  */}
               <div
                 style={{
@@ -174,7 +176,7 @@ const DealsDetails = () => {
                 bottom: "0",
                 padding: "1px 4px",
                 width: "100%",
-                maxWidth: "548px",
+                maxWidth: "600px",
                 background: "#fff",
               }}
             >

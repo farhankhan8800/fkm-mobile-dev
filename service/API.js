@@ -1,13 +1,11 @@
 
 
-const mainUrl = "https://fkmdata.freekaamaal.com"
+const mainUrl = "https://apiservice.freekaamaal.com"
 
 export const registerApi = mainUrl + "/user/register";
 
 // export const homeApi = "https://fkmdata.freekaamaal.com/home/home";
-export const homeAPI1 = mainUrl + "/home/part1";
-
-export const homeAPI2 = mainUrl + "/home/part2";
+export const homeAPI = mainUrl + "/home/home";
 
 export const allStores = mainUrl + "/store/allstores";
 

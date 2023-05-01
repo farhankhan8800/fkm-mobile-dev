@@ -28,6 +28,7 @@
     "eslint-config-next": "13.0.2",
     "jwt-decode": "^3.1.2",
     "next": "^13.3.0",
+    "next-auth": "^4.22.1",
     "nextjs-cors": "^2.1.2",
     "node-modules": "^0.0.1",
     "react": "18.2.0",
@@ -40,7 +41,6 @@
     "styled-components": "^5.3.6",
     "swiper": "^8.4.5",
     "web-vitals": "^2.1.4"
-
   },
   "eslintConfig": {
     "extends": [

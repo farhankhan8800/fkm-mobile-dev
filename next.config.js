@@ -222,7 +222,9 @@
    },
    env:{
       API_AUTH : "u636a0295845eb68x",
-      DEVICE_TYPE : "4"
+      DEVICE_TYPE : "4",
+      GOOGLE_CLIENT_SECRET:"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",
+      GOOGLE_CLIENT_ID:"72336151256-jr0o8vh7lkta3qucnk7ko4oq856jl30t.apps.googleusercontent.com"
    },
    eslint: {
      // Warning: This allows production builds to successfully complete even if

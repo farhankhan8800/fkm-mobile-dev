@@ -30,10 +30,8 @@ const StoreDetails = () => {
   const router = useRouter();
   const store_slug = router.query["store"];
 
- 
   const user = useGetUser()
   const authToken = useUserToken();
-
 
   const storeData = async () => {
     try {
@@ -53,13 +51,8 @@ const StoreDetails = () => {
           },
         }
       );
-      // console.log(data)
-      if (data.status == 0 && data.error == 0) {
-        router.push(`/404`);
-      } else {
           setStore_data(data.response.store_details);
           setStoreRate(data.response.store_rates);
-      }
     } catch (err) {
       
     }
@@ -69,7 +62,7 @@ const StoreDetails = () => {
     if (store_slug) {
       storeData();
     }
-  }, [store_slug]);
+  }, [store_slug, ]);
 
   const moreStoreHandel = () => {
     if (storeRateMore == true) {
@@ -217,7 +210,6 @@ const StoreDetails = () => {
                   </div>
                 </div>
               </div>
-
               {storeRate ? (
                 <div
                   style={{

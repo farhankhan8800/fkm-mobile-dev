@@ -8,14 +8,14 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { promoCodeAPI } from "service/API";
-import { useUserToken } from "service/customHooks";
+import { useGetUser, useUserToken } from "service/customHooks";
 import { FaUser } from "react-icons/fa";
 import { AiFillEdit } from "react-icons/ai";
 import { ImWarning } from "react-icons/im";
 import { BsCheckCircle } from "react-icons/bs";
 
 import protectRoute from "service/protect-route";
-
+import Image from "next/image";
 
 const apiAuth = process.env.API_AUTH;
 const DEVICE_TYPE = process.env.DEVICE_TYPE
@@ -27,7 +27,8 @@ const UserProfile = () => {
   const [serverError, setServerError] = useState();
   const [alert_message, set_Alert_message] = useState();
   const router = useRouter();
-  const headeTitle = "User Name | Freekaamaal";
+  const userdata = useGetUser()
+  const headeTitle = ` ${userdata?.data.username }| Freekaamaal`;
 
   const authToken = useUserToken();
  
@@ -38,12 +39,12 @@ const UserProfile = () => {
 
   // session-expired
 
-
     const redeemCode = async (e) => {
     e.preventDefault();
     set_code_error("");
     setServerError("");
     set_Alert_message("");
+
     if (getCode) {
       try {
         let { data } = await axios.post(
@@ -100,10 +101,10 @@ const UserProfile = () => {
               }}
             >
               <div className="avatar_div">
-                <FaUser />
+                {/* <FaUser /> */} <Image src={userdata?.data.user_img_url} alt="userProfile" height={45} width={45}></Image>
               </div>
               <div>
-                <h3 style={{ fontWeight: "600" }}> Freekaamaal</h3>
+                <h3 style={{ fontWeight: "600" }}> {userdata?.data.username}</h3>
                 <p style={{ fontSize: "12px" }}>
                   Check Out Your Cashback Summary{" "}
                 </p>
@@ -303,6 +304,7 @@ const UserProfile = () => {
           background: #cac3c3;
           border-radius: 32px;
           width: 45px;
+          overflow: hidden;
           height: 45px;
           /* text-align: center; */
           justify-content: center;

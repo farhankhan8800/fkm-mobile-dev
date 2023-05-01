@@ -70,7 +70,7 @@ const Header = () => {
 
   const optimizedFunction = useCallback(debounce(OnInputSearchText), []);
 
- 
+ console.log()
 
   const handleKeyPress = (e) => {
     if (searchTextLength >= 3) {
@@ -97,7 +97,8 @@ const Header = () => {
 
   return (
     <>
-      <div className="app_bar d_flex"
+      <div className="app_bar d_flex" 
+      // style={{background:user?.data.is_gold == 1?"#000":""}}
       >
         <div 
           className="app_tool_bar d_flex"
