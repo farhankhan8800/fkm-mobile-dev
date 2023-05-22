@@ -43,7 +43,7 @@ const LiveFeed = () => {
           },
         }
       );
-      console.log(data.response.cate_data);
+      // console.log(data.response);
       if (data.response.cate_data.length == 0) {
         return router.push("/404")
       } else {

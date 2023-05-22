@@ -10,7 +10,7 @@ const contactUs = () => {
   return (
     <>
       <Header />
-      <HeadTag  headeTitle={headeTitle} />
+      <HeadTag headeTitle={headeTitle} />
       <div
         style={{
           backgroundColor: "#fff",
@@ -44,7 +44,7 @@ const contactUs = () => {
           </select>
           <textarea rows="6" className="input_style" placeholder="Meaasge" name="message"  ></textarea>
           <div
-            style={{ width: "50%", backgroundColor: "#eeeeee", padding: "10px", border: "1px solid #999", borderRadius: "5px" }}
+            style={{  backgroundColor: "#eeeeee", padding: "10px", border: "1px solid #999", borderRadius: "5px", width:"300px",minWidth:"200px"  }}
           >
             <div
               className="flex_space_between"

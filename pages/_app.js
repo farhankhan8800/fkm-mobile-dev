@@ -6,6 +6,9 @@ import { ThemeProvider } from "@mui/material/styles";
 import { Provider } from "react-redux";
 import Store from "../store/index.js";
 import { SessionProvider, session } from "next-auth/react"
+import ScrollButton from "components/utilites/BottomToTop.js";
+
+
 
 
 const roboto = Roboto({
@@ -15,19 +18,23 @@ const roboto = Roboto({
 });
 
 
+
 function MyApp({ Component, pageProps }) {
+
+
  
 
   return (
     <ThemeProvider theme={theme}>
       <SessionProvider session={session}>
-        <main className={roboto.className } style={{maxWidth:"600px", margin:"auto",position:"relative"}}>
+        <main className={roboto.className } style={{maxWidth:"600px", margin:"auto",position:"relative"}} >
           <Provider store={Store}>
           <Component { ...pageProps} />
+          <ScrollButton />
           </Provider>
+
         </main>
       </SessionProvider>
-     
     </ThemeProvider>
   );
 }

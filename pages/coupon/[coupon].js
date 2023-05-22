@@ -55,15 +55,18 @@ const CouponCodeCopy = () => {
           },
         }
       );
+      // console.log(data.response)
       if (data.status == 1) {
         setCouponCode(data.response.coupon);
-      } else if (data.status == 2) {
+      }else if (data.status == 2) {
         setCouponNotFound(true);
       }
     } catch (error) {
-      return error;
+      // return error;
     }
   };
+
+  // console.log(couponCode)
 
   useEffect(() => {
     if (couponid) {
@@ -76,6 +79,7 @@ const CouponCodeCopy = () => {
   if (CouponNotFound === true) {
    return router.push("/404")
   }
+
   return (
     <>
       <Header />
@@ -139,18 +143,18 @@ const CouponCodeCopy = () => {
               </div>
               <div style={{display:"flex" ,justifyContent:"space-around", padding:"5px 0"}}>
                 <button>
-                  <Link
-                    href={`/cashback-activated/${1}`}
+                  <a
+                    href={`${couponCode?.cb_landing_url}`}
                     style={{ color: "green" }}
                   >
                     Earn Cashback
-                  </Link>{" "}
+                  </a>
                 </button>
                 <div className="divider_line" />
                 <div>
-                  <Link href="/" style={{ color: "gray" }}>
+                  <a href={`${couponCode?.noncb_landing_url}`} style={{ color: "gray" }}>
                     Skip Cashback
-                  </Link>{" "}
+                  </a>{" "}
                 </div>
               </div>
             </div>

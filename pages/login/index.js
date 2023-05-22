@@ -17,7 +17,7 @@ import axios from "axios";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import { ImWarning } from "react-icons/im";
 import authPageProtect from "service/auth-page-protect";
-import {FacebookAuth, GoogleAuth} from "components/social-auth/SocialAuth";
+import {GoogleAuth} from "components/social-auth/SocialAuth";
 
 
 
@@ -41,8 +41,6 @@ const Login = () => {
 
   const dispatch = useDispatch()
   
-  
-  
   const onSubmit = async (e) => {
     e.preventDefault();
     if (email.length < 4 || password.length < 6) {
@@ -61,7 +59,7 @@ const Login = () => {
             }
         );
 
-        // console.log(data.data)
+        // console.log(data)
         if (data.status == 1) {
           localStorage.setItem("user", JSON.stringify(data));
           dispatch(loginFun(data))
@@ -89,6 +87,7 @@ const Login = () => {
     setEmail(item);
     SetCallWarning(false);
   };
+  
   const passwordChangeHandler = (e) => {
     const item = e.target.value;
     if (item.length < 6) {
@@ -192,7 +191,7 @@ const Login = () => {
               ""
             )}
             {serverErr ? (
-              <div  className="alert_warning_class"> <span><ImWarning /></span> <p>{serverErr.data.message}</p> </div>
+              <div  className="alert_warning_class"> <span><ImWarning /></span> <p>{serverErr.message}</p> </div>
             ) : (
               ""
             )}
@@ -202,7 +201,7 @@ const Login = () => {
           </div>
           <div  style={{ padding: "8px" }}>
                 <GoogleAuth  Authpage="Login"/>
-                <FacebookAuth />
+                {/* <FacebookAuth /> */}
           </div>
           <div  style={{ padding: "10px" }}>
             <button

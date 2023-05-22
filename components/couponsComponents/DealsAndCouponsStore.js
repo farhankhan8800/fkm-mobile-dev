@@ -120,7 +120,7 @@ const DealsAndCouponsStore = ({ store_slug }) => {
                   </div>
                 </>
               ) : (
-                <div>No Data Found</div>
+                <div style={{textAlign:"center"}}>No Data Found</div>
               )}
             </div>
           ) : (
@@ -143,7 +143,7 @@ const DealsAndCouponsStore = ({ store_slug }) => {
                   </div>
                 </div>
               ) : (
-                "No Data Found"
+                <div style={{textAlign:"center"}}>No Data Found</div>
               )}
             </div>
           )}

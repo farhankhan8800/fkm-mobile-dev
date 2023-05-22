@@ -9,23 +9,23 @@
       // common pages routing //
       {
         source: '/contact-us',
-        destination: '/common/contact-us/', 
+        destination: '/common/contact-us', 
       },
       {
         source: '/about-us',
-        destination: '/common/about-us/', 
+        destination: '/common/about-us', 
       },
       {
         source: '/advertise-with-us',
-        destination: '/common/advertise-with-us/', 
+        destination: '/common/advertise-with-us', 
       },
       {
         source: '/faq',
-        destination: '/common/faq/', 
+        destination: '/common/faq', 
       },
       {
         source: '/fkm-testimonial',
-        destination: '/common/fkm-testimonial/', 
+        destination: '/common/fkm-testimonial', 
       },
       {
         source: '/all-hot-deals',
@@ -224,7 +224,8 @@
       API_AUTH : "u636a0295845eb68x",
       DEVICE_TYPE : "4",
       GOOGLE_CLIENT_SECRET:"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",
-      GOOGLE_CLIENT_ID:"72336151256-jr0o8vh7lkta3qucnk7ko4oq856jl30t.apps.googleusercontent.com"
+      GOOGLE_CLIENT_ID:"72336151256-jr0o8vh7lkta3qucnk7ko4oq856jl30t.apps.googleusercontent.com",
+      CHAT_CODE:"054e35ae-561a-4014-a11a-5fec7131fdcd"
    },
    eslint: {
      // Warning: This allows production builds to successfully complete even if

@@ -5,9 +5,9 @@ import HeadTag from "components/headTagComponent/HeadTag";
 
 import { useRouter } from "next/router";
 
-const headeTitle = " Error 404 | Freekaamaal";
+const headeTitle = " Error 404 | Freekaamaal.com";
 
-const Error404 = () => {
+const Custom404 = () => {
   const router = useRouter();
 
   return (
@@ -64,4 +64,4 @@ const Error404 = () => {
   );
 };
 
-export default Error404;
+export default Custom404;

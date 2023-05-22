@@ -760,10 +760,7 @@ const advertiseWithUs = () => {
             padding: 45px 0 20px;
           }
           .slick-track {
-            opacity: 1;
-            width: 2560px;
-            transform: translate3d(0px, 0px, 0px);
-            margin-left: 12px;
+            
             display: flex;
             align-items: center;
           }
@@ -794,11 +791,10 @@ const advertiseWithUs = () => {
             border-radius: 10px;
           }
           .slick-slide {
-            width: 304px;
-            outline: 0;
-            display: block;
-            float: left;
-            height: 100%;
+            width: 95%;
+    margin: 0 10px;
+    margin-bottom: 22px;
+    height: 100%;
           }
           .top-cities p {
             color: #6b6b6b;
@@ -855,11 +851,12 @@ const advertiseWithUs = () => {
             /* section 6 */
           }
           .section6 {
-            padding-top: 20px;
+            padding-top: 40px;
           }
           .b-town-wrapper {
             background-color: #fff;
             padding: 45px 0 0;
+            margin-bottom: 20px;
           }
           .hidebox {
             height: 380px;

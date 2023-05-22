@@ -146,6 +146,7 @@ const CashBackStore = () => {
         justify-content: space-between;
         overflow: auto;
         width: 100%;
+        padding: 0 10px;
        }
        .tab button {
         border: none;

@@ -70,7 +70,7 @@ const Header = () => {
 
   const optimizedFunction = useCallback(debounce(OnInputSearchText), []);
 
- console.log()
+//  console.log()
 
   const handleKeyPress = (e) => {
     if (searchTextLength >= 3) {
@@ -179,7 +179,7 @@ const Header = () => {
                   handleKeyPress(e);
                 }}
                 onChange={optimizedFunction}
-                placeholder="Search Your Favorites Deals"
+                placeholder="Search Your Favorites Store"
                 className="header_input_search"
               ></input>
               <button className="header_input_button"></button>
@@ -196,7 +196,7 @@ const Header = () => {
                       <ul className="search_out_put_box" key={i}>
                         <li>
                           {" "}
-                          <Link style={{ color: "#000" }} href="">
+                          <Link style={{ color: "#000",display:"block" }} href={item.name}>
                             {" "}
                             <span>{item.name}</span>{" "}
                             <span style={{ float: "right" }}>
@@ -263,7 +263,7 @@ const Header = () => {
         }
         .input_box_ab{
           position: absolute;
-          top: 64px;
+          top: 59px;
           background: var(--main-color);
           width: 100%;
         }

@@ -96,6 +96,8 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
     }, 200);
   };
 
+
+  // console.log(user)
   const logoutUser = () => {
     localStorage.clear();
     sessionStorage.clear();
@@ -136,7 +138,7 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
                 padding: "10px 13px",
                 borderRadius: "10px",
                 background: "#ff00000d",
-                borderBottom:user?.data.is_gold?"3px solid gold":""
+                borderBottom:user?.data.is_gold == 1?"3px solid gold":"3px solid gray"
               }}
             >
               <Link href={userdata ? "/cashback/home" : "/login"}>

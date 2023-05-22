@@ -40,7 +40,7 @@ const CategoryDetail = () => {
           },
         }
       );
-      // console.log(data.response.category)
+      console.log(data.response.category)
       setCategoryProduct(data.response.category);
       setCategoryProductTitle(data.response.category.description);
     } catch (error) { }
@@ -49,8 +49,8 @@ const CategoryDetail = () => {
     GetData();
   }, [cate_slug]);
 
-  const regex = /(<([^>]+)>)/ig;
-  const myhtmlresult = categoryProductTitle?.replace(regex, '');
+  // const regex = /(<([^>]+)>)/ig;
+  // const myhtmlresult = categoryProductTitle?.replace(regex, '');
   return (
     <>
       {categoryProduct ? (
@@ -112,7 +112,7 @@ const CategoryDetail = () => {
                   }}
                 >
                   {
-                    <div>{myhtmlresult}</div>
+                    <div>{categoryProductTitle}</div>
                   }
                 </p>
               </div>

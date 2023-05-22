@@ -46,11 +46,10 @@ const Freebies = () => {
         }
       );
       setCate_data(data.response.cate_data);
-      console.log(data.response.offers_data.length);
+      
       if (data.response.offers_data.length == 0) {
         setNoData(true);
       } else {
-        console.log(data.response.offers_data);
         setOffers_data([...offers_data, ...data.response.offers_data]);
       }
     };
@@ -150,7 +149,7 @@ const Freebies = () => {
                             dangerouslySetInnerHTML={{ __html: item.bottom_desc }}
                           ></p>
                           <div className="" style={{ padding: "5px 0 " }}>
-                            <Link href={item.landing_url}>
+                            <Link href={`/deals/${item.landing_url}`}>
                               <button
                                 className="contain_button"
                                 style={{color: "#fff",padding:" 4px 6px" }}

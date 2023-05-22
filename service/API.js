@@ -80,3 +80,7 @@ export const festivalAPI = mainUrl + "/festival/allfestivals"
 export const OneFestivalAPI = mainUrl + "/festival/festivalpage"
 
 export const updateUserDataAPI = mainUrl +"/user/updateprofile"
+
+export const forgotPasswordAPI =  mainUrl + "/user/forgetpass"
+
+export const resetPasswordAPI = mainUrl + "/user/resetpass"

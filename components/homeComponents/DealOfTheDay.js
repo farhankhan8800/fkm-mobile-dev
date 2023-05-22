@@ -32,7 +32,7 @@ const DealOfTheDay = (props) => {
             </div>
             <div  >
               <h6 className="heading" >
-                Deal <strong>Of The Day</strong>
+                Deal <strong>Of The Days</strong>
               </h6>
             </div>
           </div>

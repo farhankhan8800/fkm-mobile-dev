@@ -121,7 +121,7 @@ const DealsAndCouponsCategory = ({ cate_slug }) => {
                   </div>
                 </div>
               ) : (
-                "No Data Found"
+                <div style={{textAlign:"center"}}>No Data Found</div>
               )}
             </div>
           ) : (
@@ -144,7 +144,7 @@ const DealsAndCouponsCategory = ({ cate_slug }) => {
                   </div>
                 </div>
               ) : (
-                "No Data Found"
+                <div style={{textAlign:"center"}}>No Data Found</div>
               )}
             </div>
           )}

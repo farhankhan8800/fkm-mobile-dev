@@ -47,7 +47,10 @@ const SimilarMoreProducts = (props) => {
           </button>
         </div>
       </div>
-        <HotDealsCards hotdeals={store} />
+      <div style={{paddingBottom:"20px"}}>
+      <HotDealsCards hotdeals={store} />
+      </div>
+        
     </>
   );
 };

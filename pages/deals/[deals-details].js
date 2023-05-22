@@ -22,47 +22,53 @@ const DealsDetails = () => {
   const [similarDeal, setSimilarDeal] = useState();
   const [myhtml, setMyHtml] = useState();
   
-  const [DealNotFound, setDealNotFound] = useState(false);
+
   const router = useRouter();
   
   const dealSlug = router.query["deals-details"];
   const authToken = useUserToken();
   const user = useGetUser() 
 
-  useEffect(() => {
-    const storeData = async () => {
-      try {
-        let { data } = await axios.post(
-          deal_detail,
-          {
-            apiAuth: apiAuth,
-            page: "1",
-            deal_slug: dealSlug,
-            device_type: DEVICE_TYPE,
-          },
-          {
-            headers: {
-              Authorization: authToken,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        if (data.status == 1) {
-          setMyHtml(data.response.deal.description);
-          setDeal(data.response.deal);
-          setSimilarDeal(data.response.related_deals);
-        } else if (data.status == 2) {
-          setDealNotFound(true);
-        }
-      } catch (err) {}
-    };
 
-    storeData();
+  const storeData = async () => {
+    try {
+      let { data } = await axios.post(
+        deal_detail,
+        {
+          apiAuth: apiAuth,
+          page: "1",
+          deal_slug: dealSlug,
+          device_type: DEVICE_TYPE,
+        },
+        {
+          headers: {
+            Authorization: authToken,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      //  console.log(data.response)
+       if(data.response <= 1){
+        return router.push("/404");
+       }
+      if (data.status == 1) {
+        setMyHtml(data.response.deal.description);
+        setDeal(data.response.deal);
+        setSimilarDeal(data.response.related_deals);
+      } else if (data.status == 2) {
+        router.push("/404");
+      }
+    } catch (err) {}
+  };
+  useEffect(() => {
+   
+    if(dealSlug){
+      storeData();
+    }
   }, [dealSlug]);
 
-  if (DealNotFound) {
-   router.push("/404")
-  }
+  
   const regex = /(<([^>]+)>)/ig;
   // const myhtmlresult = data.response.store_details.myhtml?.replace(regex, '');
 

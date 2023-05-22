@@ -213,6 +213,7 @@ const AboutUs = () => {
           margin: 15px 0;
           font-weight: 400;
           color: #100f0fbf;
+          line-height: 34px;
         }
         
         `}

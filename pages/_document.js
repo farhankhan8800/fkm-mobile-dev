@@ -9,7 +9,17 @@ class MyDocument extends Document {
     render() {
       return (
         <Html lang="en">
-          <Head />
+          <Head >
+         
+          <script
+            // dangerouslySetInnerHTML={{
+            //   __html: `
+            //     document.addEventListener('contextmenu', event => event.preventDefault());
+            //   `,
+            // }}
+          />
+         
+          </Head>
           <body>
             <Main />
             <NextScript />

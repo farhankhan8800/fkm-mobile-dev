@@ -1,4 +1,5 @@
 import Head from "next/head";
+
 const HeadTag = (props) => {
   return (
     <>
@@ -20,7 +21,9 @@ const HeadTag = (props) => {
           type="image/icon"
           href="https://images.freekaamaal.com/common-images/favicon.ico"
         />
+        
       </Head>
+      
     </>
   );
 };

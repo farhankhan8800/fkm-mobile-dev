@@ -15,6 +15,7 @@ import { BsInfoCircle } from "react-icons/bs";
 import DealsAndCouponsStore from "components/couponsComponents/DealsAndCouponsStore";
 import { useGetUser, useUserToken } from "service/customHooks";
 
+
 const headeTitle = " Store | Freekaamaal";
 const apiAuth = process.env.API_AUTH;
 const DEVICE_TYPE = process.env.DEVICE_TYPE;
@@ -51,6 +52,11 @@ const StoreDetails = () => {
           },
         }
       );
+          // console.log(data)
+          if(data.message === "No store found" ){
+           return router.push("/404") 
+          }
+          
           setStore_data(data.response.store_details);
           setStoreRate(data.response.store_rates);
     } catch (err) {
@@ -62,7 +68,7 @@ const StoreDetails = () => {
     if (store_slug) {
       storeData();
     }
-  }, [store_slug, ]);
+  }, [store_slug]);
 
   const moreStoreHandel = () => {
     if (storeRateMore == true) {
@@ -72,10 +78,6 @@ const StoreDetails = () => {
     }
   };
 
-  useEffect(() => {
-    if (store_data) {
-    }
-  }, [store_data]);
 
   const topDescClick = () => {
     setTopDescState(!topDescState);
@@ -141,13 +143,13 @@ const StoreDetails = () => {
                   </div>
                   <div className="flex_center ">
                     <strong>{store_data.cashback_amount} </strong>
-                    <BsInfoCircle
+                    {/* <BsInfoCircle
                       style={{
                         color: "#000",
                         fontSize: "13px",
                         marginLeft: "10px",
                       }}
-                    />
+                    /> */}
                   </div>
 
                   <div
@@ -404,6 +406,7 @@ const StoreDetails = () => {
             
             top: 40px;
             max-height: 500px;
+            width:100%;
              overflow: auto;
             border-bottom: 6px solid var(--main-color);
           }

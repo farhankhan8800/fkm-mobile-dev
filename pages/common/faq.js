@@ -34,22 +34,22 @@ const faq = () => {
         <div className="faq-list-section">
           <div className="faq-list">
             <p>
-              <Link href="#cashback">CASHBACK</Link>
+              <a href="#cashback">CASHBACK</a>
             </p>
             <p>
-              <Link href="#promo-balance">PROMO BALANCE</Link>
+              <a href="#promo-balance">PROMO BALANCE</a>
             </p>
             <p>
-              <Link href="#fkm-gold">FKM GOLD MEMBERSHIP</Link>
+              <a href="#fkm-gold">FKM GOLD MEMBERSHIP</a>
             </p>
             <p>
-              <Link href="#missing-cashback">CLAIM FORM / MISSING CASHBACK</Link>
+              <a href="#missing-cashback">CLAIM FORM / MISSING CASHBACK</a>
             </p>
             <p>
-              <Link href="#withdraw">WITHDRAW</Link>
+              <a href="#withdraw">WITHDRAW</a>
             </p>
             <p>
-              <Link href="#miscellaneous">MISCELLANEOUS</Link>
+              <a href="#miscellaneous">MISCELLANEOUS</a>
             </p>
           </div>
           <div id="cashback">
