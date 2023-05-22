@@ -27,7 +27,11 @@ const CashbackActivated = () => {
     <>
       <HeadTag headeTitle={headeTitle}></HeadTag>
       <Header />
+<<<<<<< Updated upstream
       {/* <div style={{ paddingTop: "56px" }}>
+=======
+      <div style={{ paddingTop: "56px" }}>
+>>>>>>> Stashed changes
         <Box component="div" sx={{ p: 4, paddingTop: "69px" }}>
           <Box
             component="div"
@@ -152,7 +156,11 @@ const CashbackActivated = () => {
             </Link>
           </Button>
         </Box>
+<<<<<<< Updated upstream
       </div> */}
+=======
+      </div>
+>>>>>>> Stashed changes
     </>
   );
 };
