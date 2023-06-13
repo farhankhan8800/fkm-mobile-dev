@@ -1,9 +1,8 @@
-
 import Link from "next/link";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 const CashBackClaimCard = () => {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <>
       <div
@@ -15,19 +14,18 @@ const CashBackClaimCard = () => {
           background: "#dddddd",
         }}
       >
-        <div className="d_flex" style={{ justifyContent: "space-around", alignItems: "center" }}>
+        <div
+          className="d_flex"
+          style={{ justifyContent: "space-around", alignItems: "center" }}
+        >
           <div style={{ flexBasis: "70%" }}>
-            <div >
-              <h3 >
-                Cashback claim form
-              </h3>
-              <p className="p_tag_small">
-                fill up this form within 24 hrs
-              </p>
+            <div>
+              <h3>Cashback claim form</h3>
+              <p className="p_tag_small">fill up this form within 24 hrs</p>
             </div>
           </div>
           <div style={{ flexBasis: "30%" }}>
-            <div component="div">
+            <div component="div" style={{ textAlign: "right" }}>
               <Link href="/cashback/missing-claimform">
                 <button
                   className="contain_button"
@@ -40,7 +38,6 @@ const CashBackClaimCard = () => {
           </div>
         </div>
       </div>
-
     </>
   );
 };

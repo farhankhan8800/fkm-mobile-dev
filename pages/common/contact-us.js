@@ -1,12 +1,28 @@
-
 import Header from "components/headerComponent/Header";
 import Image from "next/image";
 import React from "react";
-import captcha from "../../public/images/logo_48.png"
+import captcha from "../../public/images/logo_48.png";
 import HeadTag from "components/headTagComponent/HeadTag";
 
 const headeTitle = "Contact Us | Freekaamaal";
 const contactUs = () => {
+  const [inputData, setInputData] = React.useState({
+    name: "",
+    email: "",
+    subject: "",
+    contactpurpose: "",
+    message: "",
+  });
+
+  const formSubmit = (e) => {
+    e.preventDefault();
+    console.log(inputData);
+  };
+
+  const inputHandler = (e) => {
+    setInputData({ ...inputData, [e.target.name]: e.target.value });
+  };
+
   return (
     <>
       <Header />
@@ -21,64 +37,109 @@ const contactUs = () => {
         }}
       >
         <div style={{ padding: "10px" }}>
-          <h1>
-            We would love to listen from you !
-          </h1>
-          <p className="p_tag_big" style={{ lineHeight: "1.45", fontWeight: "100" }}>
-            Do you want to promote your offers on FreeKaaMaal.com or would like to
-            share any queries, thoughts, ideas, feedback ? We are always there to
-            help you. Just fill up the short form below and we will contact you
-            soon
+          <h1>We would love to listen from you !</h1>
+          <p
+            className="p_tag_big"
+            style={{ lineHeight: "1.45", fontWeight: "100" }}
+          >
+            Do you want to promote your offers on FreeKaaMaal.com or would like
+            to share any queries, thoughts, ideas, feedback ? We are always
+            there to help you. Just fill up the short form below and we will
+            contact you soon
           </p>
         </div>
-        <div className="contact_form" >
-
-          <input className="input_style" type="text" id="my-input" placeholder="Enter Your Name" name="name" />
-          <input className="input_style" type="email" id="my-input" placeholder="Enter Your Email" name="email" />
-          <input className="input_style" type="text" id="my-input" placeholder="Subject" name="subject" />
-          <select className="input_style">
-            <option>Select One</option>
-            <option value={10}>Advertising / Partnership Query</option>
-            <option value={20}>General</option>
-            <option value={30}>Cashback or Reward Related Query</option>
-          </select>
-          <textarea rows="6" className="input_style" placeholder="Meaasge" name="message"  ></textarea>
-          <div
-            style={{  backgroundColor: "#eeeeee", padding: "10px", border: "1px solid #999", borderRadius: "5px", width:"300px",minWidth:"200px"  }}
-          >
-            <div
-              className="flex_space_between"
+        <div className="contact_form">
+          <form onSubmit={formSubmit}>
+            <input
+              className="input_style"
+              type="text"
+              id="my-input"
+              onChange={inputHandler}
+              placeholder="Enter Your Name"
+              name="name"
+              value={inputData.name}
+            />
+            <input
+              className="input_style"
+              type="email"
+              id="my-input"
+              value={inputData.email}
+              onChange={inputHandler}
+              placeholder="Enter Your Email"
+              name="email"
+            />
+            <input
+              className="input_style"
+              type="text"
+              id="my-input"
+              value={inputData.subject}
+              onChange={inputHandler}
+              placeholder="Subject"
+              name="subject"
+            />
+            <select
+              className="input_style"
+              name="contactpurpose"
+              onChange={inputHandler}
             >
-              <input
-                type="checkbox"
-                style={{ width: "30px", height: "30px" }}
-              ></input>
-              <h4 >I&#39;m not a robot</h4>
-              <Image
-                alt=""
-                width={50}
-                height={50}
-                src={captcha}
-              />
-            </div>
-            <div style={{ textAlign: "right" }}>
-              <p>reCAPTCHA</p>
-              <div >
-                <span>Privacy -</span>
-                <span>Terms</span>
+              <option>Select One</option>
+              <option value={"Advertising / Partnership Query"}>
+                Advertising / Partnership Query
+              </option>
+              <option value={"General"}>General</option>
+              <option value={"Cashback or Reward Related Query"}>
+                Cashback or Reward Related Query
+              </option>
+            </select>
+            <textarea
+              rows="6"
+              onChange={inputHandler}
+              className="input_style"
+              value={inputData.message}
+              placeholder="Meaasge"
+              name="message"
+            ></textarea>
+            <div
+              style={{
+                backgroundColor: "#eeeeee",
+                padding: "10px",
+                border: "1px solid #999",
+                borderRadius: "5px",
+                width: "300px",
+                minWidth: "200px",
+              }}
+            >
+              <div className="flex_space_between">
+                <input
+                  type="checkbox"
+                  style={{ width: "30px", height: "30px" }}
+                ></input>
+                <h4>I&#39;m not a robot</h4>
+                <Image alt="" width={50} height={50} src={captcha} />
+              </div>
+              <div style={{ textAlign: "right" }}>
+                <p>reCAPTCHA</p>
+                <div>
+                  <span>Privacy -</span>
+                  <span>Terms</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            style={{
-              textAlign: "center",
-              margin: "20px",
-            }}
-          >
-            <button className="contain_button" style={{ fontWeight: "600" }} >
-              Submit
-            </button>
-          </div>
+            <div
+              style={{
+                textAlign: "center",
+                margin: "20px",
+              }}
+            >
+              <button
+                className="contain_button"
+                type="submit"
+                style={{ fontWeight: "600" }}
+              >
+                Submit
+              </button>
+            </div>
+          </form>
         </div>
 
         <div>
@@ -97,7 +158,6 @@ const contactUs = () => {
               height={"200px"}
             ></iframe>
           </div>
-
         </div>
       </div>
       <style jsx>
@@ -109,26 +169,25 @@ const contactUs = () => {
             background-position: right;
             padding: 10px;
           }
-          h1{
-          font-size: 1.75rem;
-          margin: 15px 0;
-          font-weight: 400;
-          color: #100f0fbf;
-        }
-        .contact_form{
-          padding: 20px;
-        }
-        .contact_form input{
-
-        }
-        .input_style{
-          width: 100%;
-    margin-bottom: 10px;
-    border: 1px solid #bbb9b9;
-        }
-        span{
-          font-size:13px;
-        }
+          h1 {
+            font-size: 1.75rem;
+            margin: 15px 0;
+            font-weight: 400;
+            color: #100f0fbf;
+          }
+          .contact_form {
+            padding: 20px;
+          }
+          .contact_form input {
+          }
+          .input_style {
+            width: 100%;
+            margin-bottom: 10px;
+            border: 1px solid #bbb9b9;
+          }
+          span {
+            font-size: 13px;
+          }
         `}
       </style>
     </>

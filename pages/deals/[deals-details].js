@@ -11,8 +11,7 @@ import { deal_detail } from "service/API";
 import Spinner from "components/utilites/Spinner";
 import axios from "axios";
 import { useGetUser, useUserToken } from "service/customHooks";
-
-
+import CashbackRateAndTC from "components/CashbackRateTAndC";
 
 const apiAuth = process.env.API_AUTH;
 const DEVICE_TYPE = process.env.DEVICE_TYPE;
@@ -21,14 +20,12 @@ const DealsDetails = () => {
   const [deal, setDeal] = useState();
   const [similarDeal, setSimilarDeal] = useState();
   const [myhtml, setMyHtml] = useState();
-  
 
   const router = useRouter();
-  
+
   const dealSlug = router.query["deals-details"];
   const authToken = useUserToken();
-  const user = useGetUser() 
-
+  const user = useGetUser();
 
   const storeData = async () => {
     try {
@@ -48,10 +45,9 @@ const DealsDetails = () => {
         }
       );
 
-      //  console.log(data.response)
-       if(data.response <= 1){
+      if (data.response <= 1) {
         return router.push("/404");
-       }
+      }
       if (data.status == 1) {
         setMyHtml(data.response.deal.description);
         setDeal(data.response.deal);
@@ -62,26 +58,30 @@ const DealsDetails = () => {
     } catch (err) {}
   };
   useEffect(() => {
-   
-    if(dealSlug){
+    if (dealSlug) {
       storeData();
     }
   }, [dealSlug]);
 
-  
-  const regex = /(<([^>]+)>)/ig;
+  const regex = /(<([^>]+)>)/gi;
   // const myhtmlresult = data.response.store_details.myhtml?.replace(regex, '');
-
+  // console.log(deal);
   return (
     <>
       <Header />
-      
+
       <div style={{ paddingTop: "56px" }}>
         {deal ? (
           <div>
             <HeadTag headeTitle={`${deal.deal_title} || Freekaamaal`} />
             <div style={{ padding: "10px" }}>
-              <h3 style={{ fontWeight: "600", color: "#4a4a4a",lineHeight: '1.55'}}>
+              <h3
+                style={{
+                  fontWeight: "600",
+                  color: "#4a4a4a",
+                  lineHeight: "1.55",
+                }}
+              >
                 {deal.deal_title}
               </h3>
               <div
@@ -141,10 +141,52 @@ const DealsDetails = () => {
                   </div>
                 </div>
               </div>
+              <div
+                style={{
+                  // position: "fixed",
+                  // bottom: "0",
+                  padding: "1px 4px",
+                  width: "100%",
+                  // maxWidth: "600px",
+                  background: "#fff",
+                }}
+              >
+                {user ? (
+                  <Link href={deal.landing_url}>
+                    <button className="full_with_button">
+                      {deal.is_cashback == 1
+                        ? "Shop & Earn Cashback"
+                        : "Shop Now"}
+                    </button>
+                  </Link>
+                ) : (
+                  <Link href="/login">
+                    <button className="full_with_button">
+                      Login Now & Earn Cashback
+                    </button>
+                  </Link>
+                )}
+              </div>
+
+              <div>
+                {user ? (
+                  deal?.is_cashback == 1 ? (
+                    <CashbackRateAndTC
+                      toc={deal?.is_cashback == 1 ? deal.toc : ""}
+                      store_rates={
+                        deal?.is_cashback == 1 ? deal.store_rates : ""
+                      }
+                    />
+                  ) : (
+                    ""
+                  )
+                ) : (
+                  ""
+                )}
+              </div>
+
               {/* cash backclaim card start  */}
-              {
-                user ? <CashBackClimeCard /> :""
-              } 
+              {user ? deal?.is_claim == 1 ? <CashBackClimeCard /> : "" : ""}
               {/* cash backclaim card end  */}
               <div
                 style={{
@@ -157,11 +199,10 @@ const DealsDetails = () => {
                 <h3 style={{ fontWeight: "600" }}>About The Deals</h3>
                 <div>
                   {
-                   
                     <div
                       id="about_the_deals"
                       className="about_the_deals"
-                      dangerouslySetInnerHTML={{ __html: myhtml }} 
+                      dangerouslySetInnerHTML={{ __html: myhtml }}
                     />
                   }
                 </div>
@@ -175,33 +216,6 @@ const DealsDetails = () => {
                 <SimilarMoreProducts similarDeal={similarDeal} />
               </div>
             )}
-
-            <div
-              style={{
-                position: "fixed",
-                bottom: "0",
-                padding: "1px 4px",
-                width: "100%",
-                maxWidth: "600px",
-                background: "#fff",
-              }}
-            >
-              {user ? (
-                <Link href={deal.landing_url}>
-                  <button className="full_with_button">
-                    {deal.is_cashback == 1
-                      ? "Shop & Earn Cashback"
-                      : "Shop Now"}
-                  </button>
-                </Link>
-              ) : (
-                <Link href="/login">
-                  <button className="full_with_button">
-                    Login Now & Earn Cashback
-                  </button>
-                </Link>
-              )}
-            </div>
           </div>
         ) : (
           <div

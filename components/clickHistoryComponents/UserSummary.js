@@ -1,4 +1,3 @@
-
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -15,7 +14,7 @@ import climeFormImage from "public/images/icon/dashboard/clime-form.png";
 import missingCashbackImage from "public/images/icon/dashboard/missing-cashback.png";
 import addAccountImage from "public/images/icon/dashboard/add-account.png";
 import bellImage from "public/images/icon/dashboard/bell.png";
-
+import { useGetUser } from "service/customHooks";
 
 const userManage = [
   {
@@ -94,17 +93,30 @@ const userManage = [
 ];
 
 const UserSummary = () => {
+  const GetUser = useGetUser();
+
+  console.log(GetUser);
   return (
     <>
       <div>
         {userManage.map((item, i) => (
           <div
             key={i}
-
-            style={{ background: "#fff7f7", margin: "8px", padding: "9px", borderRadius: "5px" }}
+            style={{
+              background:
+                GetUser?.data?.is_gold == 1
+                  ? "rgb(255 248 212 / 98%)"
+                  : "#fff7f7",
+              margin: "8px",
+              padding: "9px",
+              borderRadius: "5px",
+            }}
           >
             <Link href={item.link}>
-              <div className="d_grid" style={{ gridTemplateColumns: "20% auto 20%" }}>
+              <div
+                className="d_grid"
+                style={{ gridTemplateColumns: "20% auto 20%" }}
+              >
                 <div
                   style={{
                     display: "flex",
@@ -120,20 +132,25 @@ const UserSummary = () => {
                     src={item.icon}
                   ></Image>
                 </div>
-                <div >
+                <div>
                   <p
-                    style={{ color: "#000", fontSize: "14px", fontWeight: "600" }}
+                    style={{
+                      color: "#000",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                    }}
                   >
                     {item.headingTag}
                   </p>
-                  <p
-                    style={{ color: "#000", fontSize: "11px" }}
-                  >
+                  <p style={{ color: "#000", fontSize: "11px" }}>
                     {item.pTage}
                   </p>
                 </div>
-                <div >
-                  <button className="text_button" style={{ color: "#bbb7b7", minWidth: "65px" }}>
+                <div>
+                  <button
+                    className="text_button"
+                    style={{ color: "#bbb7b7", minWidth: "65px" }}
+                  >
                     <MdKeyboardArrowRight style={{ fontSize: "25px" }} />
                   </button>
                 </div>

@@ -89,7 +89,22 @@ const MetroCity = [
   },
 ];
 const headeTitle = " Advertise With Us | Freekaamaal";
-const advertiseWithUs = () => {
+const AdvertiseWithUs = () => {
+  const [inputData, setInputData] = React.useState({
+    name: "",
+    email: "",
+    message: "",
+    number: "",
+  });
+  const formSubmit = (e) => {
+    e.preventDefault();
+    console.log(inputData);
+  };
+
+  const inputHandler = (e) => {
+    setInputData({ ...inputData, [e.target.name]: e.target.value });
+  };
+
   return (
     <>
       <HeadTag headeTitle={headeTitle} />
@@ -539,20 +554,44 @@ const advertiseWithUs = () => {
         <div className="section10">
           <div className="contact-us">
             <div className="form-grid">
-              <form action="" id="advertise">
+              <form onSubmit={formSubmit} id="advertise">
                 <h5>GET IN TOUCH</h5>
                 <p>
                   We are so excited to partner with your business to help it
                   grow, we will give you the best affiliate services
                 </p>
                 <div className="form-input-flex">
-                  <input type="text" placeholder="Your Full Name" />
-                  <input type="email" placeholder="Your Email Id" />
-                  <input type="number" placeholder="Contact Number" />
-                  <input type="text" placeholder="Message" />
+                  <input
+                    onChange={inputHandler}
+                    type="text"
+                    name="name"
+                    value={inputData.name}
+                    placeholder="Your Full Name"
+                  />
+                  <input
+                    onChange={inputHandler}
+                    type="email"
+                    name="email"
+                    value={inputData.email}
+                    placeholder="Your Email Id"
+                  />
+                  <input
+                    onChange={inputHandler}
+                    type="number"
+                    name="number"
+                    value={inputData.number}
+                    placeholder="Contact Number"
+                  />
+                  <input
+                    onChange={inputHandler}
+                    type="text"
+                    name="message"
+                    value={inputData.message}
+                    placeholder=" Your Message"
+                  />
                 </div>
                 <div>
-                  <button type="button" className="get-in-touch">
+                  <button type="submit" className="get-in-touch">
                     Get In Touch
                     <Image
                       width={20}
@@ -665,6 +704,7 @@ const advertiseWithUs = () => {
             box-shadow: 0 0 10px 10px whitesmoke;
             display: flex;
             height: 110px;
+            justify-content: center;
             border-radius: 10px;
             align-items: center;
           }
@@ -760,7 +800,6 @@ const advertiseWithUs = () => {
             padding: 45px 0 20px;
           }
           .slick-track {
-            
             display: flex;
             align-items: center;
           }
@@ -792,9 +831,9 @@ const advertiseWithUs = () => {
           }
           .slick-slide {
             width: 95%;
-    margin: 0 10px;
-    margin-bottom: 22px;
-    height: 100%;
+            margin: 0 10px;
+            margin-bottom: 22px;
+            height: 100%;
           }
           .top-cities p {
             color: #6b6b6b;
@@ -1084,4 +1123,4 @@ const advertiseWithUs = () => {
   );
 };
 
-export default advertiseWithUs;
+export default AdvertiseWithUs;

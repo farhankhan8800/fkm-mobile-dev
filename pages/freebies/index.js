@@ -1,4 +1,3 @@
-
 import Header from "components/headerComponent/Header";
 import HeadTag from "components/headTagComponent/HeadTag";
 import React, { useState, useEffect } from "react";
@@ -11,9 +10,8 @@ import axios from "axios";
 import Spinner from "components/utilites/Spinner";
 import { useUserToken } from "service/customHooks";
 
-
 const apiAuth = process.env.API_AUTH;
-const DEVICE_TYPE = process.env.DEVICE_TYPE
+const DEVICE_TYPE = process.env.DEVICE_TYPE;
 
 const Freebies = () => {
   const [readMore, setReadMore] = useState(false);
@@ -24,7 +22,7 @@ const Freebies = () => {
   const [page, setPage] = useState(1);
   const [noData, setNoData] = useState(false);
 
-  const token = useUserToken()
+  const token = useUserToken();
 
   const router = useRouter();
 
@@ -46,16 +44,17 @@ const Freebies = () => {
         }
       );
       setCate_data(data.response.cate_data);
-      
-      if (data.response.offers_data.length == 0) {
+      console.log(data.response.offers_data);
+      if (data.response.length) {
         setNoData(true);
+        console.log(data.response.length);
       } else {
         setOffers_data([...offers_data, ...data.response.offers_data]);
       }
+      // setOffers_data([...offers_data, ...data.response.offers_data]);
     };
     getData();
   }, [token, page]);
-
 
   const readMoreBtn = () => {
     if (readMore === false) {
@@ -73,7 +72,7 @@ const Freebies = () => {
     const panel = document.getElementById(`panel${id}`).classList;
     const accordion = document.getElementById(`accordion${id}`).classList;
     panel.toggle("activeTab");
-    setExpanded(!expanded)
+    setExpanded(!expanded);
     accordion.toggle("accordionActive");
   };
 
@@ -95,16 +94,20 @@ const Freebies = () => {
               {cate_data.top_desc}
             </p>
             <div className="freebise_top_box_button">
-              <button onClick={readMoreBtn}  className="text_button" type="button">
+              <button
+                onClick={readMoreBtn}
+                className="text_button"
+                type="button"
+              >
                 {readMore === true ? "Close" : "Read More"}{" "}
               </button>
             </div>
           </div>
         ) : (
           <>
-          <div style={{minHeight:"95vh"}}>
-          <Spinner  />
-          </div>
+            <div style={{ minHeight: "95vh" }}>
+              <Spinner />
+            </div>
           </>
         )}
 
@@ -115,54 +118,58 @@ const Freebies = () => {
                 offers_data.map((item, i) => {
                   return (
                     <div key={i}>
-                    <button
-                      className={`accordion d_flex ${i==0? "accordionActive":""} ` }
-                      id={`accordion${i}`}
-                      onClick={() => accordionFun(i)}
-                    >
-                     <Image
-                        src={item.store_image}
-                        alt=""
-                        width={80}
-                        height={30}
-                      />
-                      <div style={{paddingLeft:"10px"}}>
-                      <h5> {item.offer_title}</h5>
-                      {item.is_cashback == 1 ? (
-                              <>
-                                <p
-                                 className="p_tag_small"
-                                 style={{color:"red"}} 
-                                >
-                                  {item.max_cashback} &nbsp; Cashback
-                                </p>
-                              </>
-                            ) : (
-                              ""
-                            )}
-                      </div>
-                       
-                    </button>
-                    <div className={`panel ${i==0?"activeTab":""}`} id={`panel${i}`}>
-                          <p
-                            className="accordion_section_bottom_p"
-                            dangerouslySetInnerHTML={{ __html: item.bottom_desc }}
-                          ></p>
-                          <div className="" style={{ padding: "5px 0 " }}>
-                            <Link href={`/deals/${item.landing_url}`}>
-                              <button
-                                className="contain_button"
-                                style={{color: "#fff",padding:" 4px 6px" }}
+                      <button
+                        className={`accordion d_flex ${
+                          i == 0 ? "accordionActive" : ""
+                        } `}
+                        id={`accordion${i}`}
+                        onClick={() => accordionFun(i)}
+                      >
+                        <Image
+                          src={item.store_image}
+                          alt=""
+                          width={80}
+                          height={30}
+                        />
+                        <div style={{ paddingLeft: "10px" }}>
+                          <h5> {item.offer_title}</h5>
+                          {item.is_cashback == 1 ? (
+                            <>
+                              <p
+                                className="p_tag_small"
+                                style={{ color: "red" }}
                               >
-                                {" "}
-                                {item.is_cashback == 1
-                                  ? "Shop & Earn"
-                                  : "Shop Now"}{" "}
-                              </button>
-                            </Link>
-                          </div>
+                                {item.max_cashback} &nbsp; Cashback
+                              </p>
+                            </>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      </button>
+                      <div
+                        className={`panel ${i == 0 ? "activeTab" : ""}`}
+                        id={`panel${i}`}
+                      >
+                        <p
+                          className="accordion_section_bottom_p"
+                          dangerouslySetInnerHTML={{ __html: item.bottom_desc }}
+                        ></p>
+                        <div className="" style={{ padding: "5px 0 " }}>
+                          <Link href={`/deals/${item.landing_url}`}>
+                            <button
+                              className="contain_button"
+                              style={{ color: "#fff", padding: " 4px 6px" }}
+                            >
+                              {" "}
+                              {item.is_cashback == 1
+                                ? "Shop & Earn"
+                                : "Shop Now"}{" "}
+                            </button>
+                          </Link>
+                        </div>
+                      </div>
                     </div>
-                  </div>
                   );
                 })}
               <div style={{ textAlign: "center" }}>
@@ -179,11 +186,13 @@ const Freebies = () => {
                 )}
               </div>
             </>
-          ) : ""}
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <style jsx>{`
-      .accordion {
+        .accordion {
           background-color: #eee;
           color: #444;
           cursor: pointer;

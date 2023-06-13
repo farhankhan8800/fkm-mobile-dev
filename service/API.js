@@ -1,6 +1,4 @@
-
-
-const mainUrl = "https://apiservice.freekaamaal.com"
+const mainUrl = "https://apiservice.freekaamaal.com";
 
 export const registerApi = mainUrl + "/user/register";
 
@@ -17,70 +15,73 @@ export const StoreDetailApi = mainUrl + "/store/storedetail";
 
 export const loginUser = mainUrl + "/user/login";
 
-export const AllCoupons = mainUrl + "/coupons/all-coupons"
+export const AllCoupons = mainUrl + "/coupons/all-coupons";
 
-export const coupon_detail = mainUrl + "/coupons/coupon-detail"
+export const coupon_detail = mainUrl + "/coupons/coupon-detail";
 
-export const deal_detail = mainUrl + "/deals/dealdetail"
+export const deal_detail = mainUrl + "/deals/dealdetail";
 
-export const verifyUser = mainUrl + "/user/verifyuser"
+export const verifyUser = mainUrl + "/user/verifyuser";
 
-export const clickHistoryAPI = mainUrl + "/cashback/click-history"
+export const clickHistoryAPI = mainUrl + "/cashback/click-history";
 
-export const cashbackHistoryAPI = mainUrl + "/cashback/cashback-history"
+export const cashbackHistoryAPI = mainUrl + "/cashback/cashback-history";
 
-export const withdrawal_historyAPI = mainUrl + "/cashback/withdrawal-history"
+export const withdrawal_historyAPI = mainUrl + "/cashback/withdrawal-history";
 
-export const missing_historyAPI = mainUrl + "/cashback/missing-history"
+export const missing_historyAPI = mainUrl + "/cashback/missing-history";
 
-export const referral_summaryAPI = mainUrl + "/cashback/referral-summary"
+export const referral_summaryAPI = mainUrl + "/cashback/referral-summary";
 
-export const add_accountAPI = mainUrl + "/cashback/add-account"
+export const add_accountAPI = mainUrl + "/cashback/add-account";
 
-export const withdrawMoneyAPI = mainUrl + "/cashback/withdraw-money"
+export const withdrawMoneyAPI = mainUrl + "/cashback/withdraw-money";
 
-export const withdrawPaymentModeAPI = mainUrl + "/cashback/withdraw-payment-mode"
+export const withdrawPaymentModeAPI =
+  mainUrl + "/cashback/withdraw-payment-mode";
 
-export const searchSuggestionApi = mainUrl + "/search/suggestion"
+export const searchSuggestionApi = mainUrl + "/search/suggestion";
 
-export const claimformStoreAPI = mainUrl + "/cashback/claimformstore"
+export const claimformStoreAPI = mainUrl + "/cashback/claimformstore";
 
-export const userClaimformAPI = mainUrl + "/cashback/userclaimform"
+export const userClaimformAPI = mainUrl + "/cashback/userclaimform";
 
-export const userclaimdataAPI = mainUrl + "/cashback/userclaimdata"
+export const userclaimdataAPI = mainUrl + "/cashback/userclaimdata";
 
-export const searchAPI = mainUrl + "/search/search"
+export const searchAPI = mainUrl + "/search/search";
 
-export const promoCodeAPI = mainUrl + "/cashback/userpromocode"
+export const promoCodeAPI = mainUrl + "/cashback/userpromocode";
 
-export const missingStoreAPI = mainUrl + "/cashback/missingstore"
+export const missingStoreAPI = mainUrl + "/cashback/missingstore";
 
-export const missingStoreClickAPI = mainUrl + "/cashback/missingstoreclicks"
+export const missingStoreClickAPI = mainUrl + "/cashback/missingstoreclicks";
 
-export const saveMissingAPI = mainUrl + "/cashback/savemissing"
+export const saveMissingAPI = mainUrl + "/cashback/savemissing";
 
-export const allArticleAPI = mainUrl + "/article/allArticle"
+export const allArticleAPI = mainUrl + "/article/allArticle";
 
-export const hindiArticleAPI = mainUrl + "/article/hindi-artilce"
+export const hindiArticleAPI = mainUrl + "/article/hindi-artilce";
 
-export const articleDetailsAPI = mainUrl + "/article/articleDetail"
+export const articleDetailsAPI = mainUrl + "/article/articleDetail";
 
-export const livefeed_detailAPI = mainUrl + "/livefeed/livefeed-detail"
+export const livefeed_detailAPI = mainUrl + "/livefeed/livefeed-detail";
 
-export const freebiesAPI = mainUrl + "/offer/offer-detail"
+export const freebiesAPI = mainUrl + "/offer/offer-detail";
 
-export const cashbackpageAPI = mainUrl + "/cashback/cashbackpage"
+export const cashbackpageAPI = mainUrl + "/cashback/cashbackpage";
 
-export const cashbackdealAPI = mainUrl + "/cashback/cashbackdeal"
+export const cashbackdealAPI = mainUrl + "/cashback/cashbackdeal";
 
-export const cashbackstoreAPI = mainUrl + "/cashback/cashbackstore"
+export const cashbackstoreAPI = mainUrl + "/cashback/cashbackstore";
 
-export const festivalAPI = mainUrl + "/festival/allfestivals"
+export const festivalAPI = mainUrl + "/festival/allfestivals";
 
-export const OneFestivalAPI = mainUrl + "/festival/festivalpage"
+export const OneFestivalAPI = mainUrl + "/festival/festivalpage";
 
-export const updateUserDataAPI = mainUrl +"/user/updateprofile"
+export const updateUserDataAPI = mainUrl + "/user/updateprofile";
 
-export const forgotPasswordAPI =  mainUrl + "/user/forgetpass"
+export const forgotPasswordAPI = mainUrl + "/user/forgetpass";
 
-export const resetPasswordAPI = mainUrl + "/user/resetpass"
+export const resetPasswordAPI = mainUrl + "/user/resetpass";
+
+export const googleLoginAPI = mainUrl + "/user/glogin";

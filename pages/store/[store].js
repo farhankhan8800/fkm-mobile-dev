@@ -1,4 +1,3 @@
-
 import { useRouter } from "next/router";
 import CashBackClaimCard from "components/CashBackClaimCard";
 import Link from "next/link";
@@ -15,7 +14,6 @@ import { BsInfoCircle } from "react-icons/bs";
 import DealsAndCouponsStore from "components/couponsComponents/DealsAndCouponsStore";
 import { useGetUser, useUserToken } from "service/customHooks";
 
-
 const headeTitle = " Store | Freekaamaal";
 const apiAuth = process.env.API_AUTH;
 const DEVICE_TYPE = process.env.DEVICE_TYPE;
@@ -27,11 +25,11 @@ const StoreDetails = () => {
 
   const [topDescState, setTopDescState] = useState(false);
   const [tcOpenState, setTcOpenState] = useState(false);
-  
+
   const router = useRouter();
   const store_slug = router.query["store"];
 
-  const user = useGetUser()
+  const user = useGetUser();
   const authToken = useUserToken();
 
   const storeData = async () => {
@@ -52,16 +50,14 @@ const StoreDetails = () => {
           },
         }
       );
-          // console.log(data)
-          if(data.message === "No store found" ){
-           return router.push("/404") 
-          }
-          
-          setStore_data(data.response.store_details);
-          setStoreRate(data.response.store_rates);
-    } catch (err) {
-      
-    }
+      // console.log(data)
+      if (data.message === "No store found") {
+        return router.push("/404");
+      }
+
+      setStore_data(data.response.store_details);
+      setStoreRate(data.response.store_rates);
+    } catch (err) {}
   };
 
   useEffect(() => {
@@ -77,7 +73,6 @@ const StoreDetails = () => {
       setStoreRateMore(true);
     }
   };
-
 
   const topDescClick = () => {
     setTopDescState(!topDescState);
@@ -212,6 +207,44 @@ const StoreDetails = () => {
                   </div>
                 </div>
               </div>
+              <div
+                style={{
+                  width: "100%",
+                  textAlign: "center",
+                  padding: "4px",
+                  marginTop: "10px",
+                }}
+              >
+                {user ? (
+                  <Link href={store_data.store_landing_url}>
+                    <button
+                      className="full_with_button"
+                      style={{
+                        width: "100%",
+                        maxWidth: "600px",
+                        color: "#fff",
+                      }}
+                    >
+                      {store_data.is_claim == "1"
+                        ? "Shope & earn More"
+                        : "Shope Now"}
+                    </button>
+                  </Link>
+                ) : (
+                  <Link href="/login">
+                    <button
+                      className="full_with_button"
+                      style={{
+                        width: "100%",
+                        maxWidth: "600px",
+                        color: "#fff",
+                      }}
+                    >
+                      Login Now & Earn Cashback
+                    </button>
+                  </Link>
+                )}
+              </div>
               {storeRate ? (
                 <div
                   style={{
@@ -311,19 +344,9 @@ const StoreDetails = () => {
                   </div>
 
                   {storeRate && storeRate.length > 1 ? (
-                    <div
-                    className="flex_center"
-                      style={{width:'100%'}}
-                      
-                    >
-                      <button
-                        onClick={moreStoreHandel}
-                        className="text_button"
-                      >
-                        { 
-                          storeRateMore ? "Close" :"More"
-                        }
-                      
+                    <div className="flex_center" style={{ width: "100%" }}>
+                      <button onClick={moreStoreHandel} className="text_button">
+                        {storeRateMore ? "Close" : "More"}
                       </button>
                     </div>
                   ) : (
@@ -343,41 +366,7 @@ const StoreDetails = () => {
               )}
             </div>
             <div style={{ paddingBottom: "25px" }}>
-              <DealsAndCouponsStore  store_slug={store_slug}/>
-            </div>
-            <div
-              style={{
-                position: "Fixed",
-                width: "100%",
-                textAlign: "center",
-                bottom: "0",
-                left: "0",
-                zIndex:"99",
-                padding: "4px",
-                background: "#fff",
-              }}
-            >
-              {user ? (
-                <Link href={store_data.store_landing_url}>
-                  <button
-                    className="full_with_button"
-                    style={{ width: "100%", maxWidth: "600px", color: "#fff" }}
-                  >
-                    {store_data.is_claim == "1"
-                      ? "Shope & earn More"
-                      : "Shope Now"}
-                  </button>
-                </Link>
-              ) : (
-                <Link href="/login">
-                  <button
-                    className="full_with_button"
-                    style={{ width: "100%", maxWidth: "600px", color: "#fff" }}
-                  >
-                    Login Now & Earn Cashback
-                  </button>
-                </Link>
-              )}
+              <DealsAndCouponsStore store_slug={store_slug} />
             </div>
           </div>
         ) : (
@@ -403,18 +392,17 @@ const StoreDetails = () => {
             box-shadow: 0px 2px 15px -1px gray;
             padding: 16px 10px;
             border-radius: 3px;
-            
+
             top: 40px;
             max-height: 500px;
-            width:100%;
-             overflow: auto;
+            width: 100%;
+            overflow: auto;
             border-bottom: 6px solid var(--main-color);
           }
           .tandc_contant {
             line-height: 23px;
             text-align: left;
           }
-          
         `}
       </style>
       <style>

@@ -21,8 +21,7 @@ const LiveFeed = () => {
   const [page, setPage] = useState(1);
   const [noData, setNoData] = useState(false);
 
-  
-  const userToken = useUserToken()
+  const userToken = useUserToken();
   const DEVICE_TYPE = process.env.DEVICE_TYPE;
   const router = useRouter();
 
@@ -33,7 +32,7 @@ const LiveFeed = () => {
         {
           apiAuth: apiAuth,
           device_type: DEVICE_TYPE,
-          cate_slug: "amazon-summer-sale",
+          cate_slug: "love-week-sale",
           page: page,
         },
         {
@@ -45,7 +44,7 @@ const LiveFeed = () => {
       );
       // console.log(data.response);
       if (data.response.cate_data.length == 0) {
-        return router.push("/404")
+        return router.push("/404");
       } else {
         setFeed_banner(data.response.cate_data);
       }
@@ -155,7 +154,11 @@ const LiveFeed = () => {
               {noData ? (
                 "No Data Found"
               ) : (
-                <button type="button" onClick={lodeMoredata} className="border_button">
+                <button
+                  type="button"
+                  onClick={lodeMoredata}
+                  className="border_button"
+                >
                   Lode More
                 </button>
               )}

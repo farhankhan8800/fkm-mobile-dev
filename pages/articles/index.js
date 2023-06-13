@@ -8,7 +8,7 @@ import HeadTag from "../../components/headTagComponent/HeadTag";
 import Image from "next/image";
 import ArticlesTabs from "components/articles-components/ArticlesTabs";
 import Link from "next/link";
-import { allArticleAPI } from "service/API"
+import { allArticleAPI } from "service/API";
 import axios from "axios";
 import { useUserToken } from "service/customHooks";
 
@@ -17,60 +17,62 @@ const DEVICE_TYPE = process.env.DEVICE_TYPE;
 
 const Articels = () => {
   const [articels_data, setArticels_data] = useState();
-  const [featured_article, setFeatured_article] = useState()
-  const [mviewed_article, setMviewed_article] = useState()
-  const [all_articles, setAll_articles] = useState([])
-  const [page, setPage] = useState(1)
-  const [option, setOption] = useState("all")
-  const [nodata, setNoData] = useState(false)
+  const [featured_article, setFeatured_article] = useState();
+  const [mviewed_article, setMviewed_article] = useState();
+  const [all_articles, setAll_articles] = useState([]);
+  const [page, setPage] = useState(1);
+  const [option, setOption] = useState("all");
+  const [nodata, setNoData] = useState(false);
 
   const lodeMoreData = () => {
-    setPage(page + 1)
-  }
+    setPage(page + 1);
+  };
   const changeOption = (item) => {
-    setNoData(false)
+    setNoData(false);
     //  console.log(item)
-    setAll_articles("")
-    setOption(item)
-    setPage(1)
+    setAll_articles("");
+    setOption(item);
+    setPage(1);
+  };
 
-  }
-
-  const userToken = useUserToken()
+  const userToken = useUserToken();
   const router = useRouter();
 
   const getData = async () => {
     try {
-      let { data } = await axios.post(allArticleAPI, {
-        apiAuth: apiAuth,
-        device_type: DEVICE_TYPE,
-        page: page,
-        option: option
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: userToken,
+      let { data } = await axios.post(
+        allArticleAPI,
+        {
+          apiAuth: apiAuth,
+          device_type: DEVICE_TYPE,
+          page: page,
+          option: option,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: userToken,
+          },
         }
-      })
+      );
 
-      // console.log(data)
+      console.log(data);
       if (option == "all") {
-        setFeatured_article(data.response.featured_article)
-        setMviewed_article(data.response.mviewed_article)
+        setFeatured_article(data.response.featured_article);
+        setMviewed_article(data.response.mviewed_article);
       }
       if (data.response.all_articles.length === 0) {
-        setNoData(true)
+        setNoData(true);
       } else {
-        setAll_articles([...all_articles, ...data.response.all_articles])
+        setAll_articles([...all_articles, ...data.response.all_articles]);
       }
-
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
-    getData()
+    getData();
   }, [userToken, page, option]);
 
   const headeTitle = "Articels | Freekaamaal";
@@ -81,8 +83,12 @@ const Articels = () => {
       <div style={{ paddingTop: "56px" }}>
         <div className="articels_page" style={{ padding: "15px 4px" }}>
           <div className="main_articels">
-            {
-              featured_article ? <Link id={featured_article.post_id} style={{ color: "#000" }} href={`/${featured_article.slug_url}`}>
+            {featured_article ? (
+              <Link
+                id={featured_article.post_id}
+                style={{ color: "#000" }}
+                href={`/${featured_article.slug_url}`}
+              >
                 <div className="" style={{ textAlign: "center" }}>
                   <Image
                     style={{ width: "100%", borderRadius: "8px" }}
@@ -92,9 +98,7 @@ const Articels = () => {
                     width={350}
                   />
                 </div>
-                <h2 className="main_heading">
-                  {featured_article.title}
-                </h2>
+                <h2 className="main_heading">{featured_article.title}</h2>
                 <p className="p_tag_big">{featured_article.description}</p>
                 <div className="main_articels_details">
                   <div>
@@ -116,62 +120,70 @@ const Articels = () => {
                     </p>
                   </div>
                 </div>
-              </Link> : "Loding.."
-            }
+              </Link>
+            ) : (
+              "Loding.."
+            )}
           </div>
           <div className="popular_section_bottom">
             <h2 className="most_popular_title">Most Popular</h2>
             <div className="most_populr_list">
-              {
-                mviewed_article && mviewed_article.map((item, i) => {
-                  return (<>
-                    <div className="most_populr_item" key={i}>
-                      <div className="most_populr_item_img">
-                        <Image
-                          style={{ borderRadius: "5px" }}
-                          src={item.article_image}
-                          alt=""
-                          height={80}
-                          width={70}
-                        />
-                      </div>
-                      <div style={{ paddingLeft: " 14px" }}>
-                        <h3>
-                          {item.title}
-                        </h3>
-                        {/* <Typography>{item.description}</Typography> */}
-                        <div className="main_articels_details">
-                          <div className="main_articels_details_ico">
-                            <p>
-                              {" "}
-                              <BiTime /> <span>{item.update_time}</span>
-                            </p>
-                            <p>
-                              {" "}
-                              <BsFillEyeFill /> <span>{item.views}</span>
-                            </p>
-                          </div>
-                          <div>
-                            <Link href={`/${item.slug_url}`}>
-                              <button
-                                className="text_button"
-                                style={{ fontWeight: "600", letterSpacing: "1px" }}
-                              >
-                                Read Now
-                              </button>
-                            </Link>
+              {mviewed_article &&
+                mviewed_article.map((item, i) => {
+                  return (
+                    <>
+                      <div className="most_populr_item" key={i}>
+                        <div className="most_populr_item_img">
+                          <Image
+                            style={{ borderRadius: "5px" }}
+                            src={item.article_image}
+                            alt=""
+                            height={80}
+                            width={70}
+                          />
+                        </div>
+                        <div style={{ paddingLeft: " 14px" }}>
+                          <h3>{item.title}</h3>
+                          {/* <Typography>{item.description}</Typography> */}
+                          <div className="main_articels_details">
+                            <div className="main_articels_details_ico">
+                              <p>
+                                {" "}
+                                <BiTime /> <span>{item.update_time}</span>
+                              </p>
+                              <p>
+                                {" "}
+                                <BsFillEyeFill /> <span>{item.views}</span>
+                              </p>
+                            </div>
+                            <div>
+                              <Link href={`/${item.slug_url}`}>
+                                <button
+                                  className="text_button"
+                                  style={{
+                                    fontWeight: "600",
+                                    letterSpacing: "1px",
+                                  }}
+                                >
+                                  Read Now
+                                </button>
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </>)
-                })
-              }
-
+                    </>
+                  );
+                })}
             </div>
           </div>
           <div className="categroy_articles">
-            <ArticlesTabs all_articles={all_articles} changeOption={changeOption} nodata={nodata} lodeMoreData={lodeMoreData} />
+            <ArticlesTabs
+              all_articles={all_articles}
+              changeOption={changeOption}
+              nodata={nodata}
+              lodeMoreData={lodeMoreData}
+            />
           </div>
         </div>
       </div>
@@ -194,7 +206,7 @@ const Articels = () => {
           color: #969696;
           flex-wrap: wrap;
           padding-top: 10px;
-          font-size:13px;
+          font-size: 13px;
           align-items: center;
           justify-content: space-between;
         }

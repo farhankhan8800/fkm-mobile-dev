@@ -27,7 +27,9 @@ const Header = () => {
 
   const router = useRouter();
 
-  const user = useGetUser()
+  const user = useGetUser();
+
+  // console.log(user);
 
   const toggleClick = () => {
     setSidebarToggle(!sidebarToggle);
@@ -58,7 +60,7 @@ const Header = () => {
 
   const debounce = (func) => {
     let timer;
-    return function (...args) {
+    return function(...args) {
       const context = this;
       if (timer) clearTimeout(timer);
       timer = setTimeout(() => {
@@ -69,8 +71,6 @@ const Header = () => {
   };
 
   const optimizedFunction = useCallback(debounce(OnInputSearchText), []);
-
-//  console.log()
 
   const handleKeyPress = (e) => {
     if (searchTextLength >= 3) {
@@ -85,7 +85,7 @@ const Header = () => {
       }
     }
   };
-  
+
   const searchButtonClick = (e) => {
     if (searchTextLength >= 3) {
       e.preventDefault();
@@ -97,13 +97,12 @@ const Header = () => {
 
   return (
     <>
-      <div className="app_bar d_flex" 
-      // style={{background:user?.data.is_gold == 1?"#000":""}}
+      <div
+        className="app_bar d_flex"
+        // style={{background:user?.data.is_gold == 1?"#000":""}}
       >
-        <div 
-          className="app_tool_bar d_flex"
-        >
-          <button onClick={toggleClick} >
+        <div className="app_tool_bar d_flex">
+          <button onClick={toggleClick}>
             <Image
               width={24}
               height={24}
@@ -124,17 +123,13 @@ const Header = () => {
             <Image width={130} height={28} src={fkmLogo} alt="fkm-Logo"></Image>
           </Link>
           <div className="flex_center">
-            <div >
+            <div>
               {searchInput ? (
-                <button
-                  onClick={searchInputToggal}
-                >
+                <button onClick={searchInputToggal}>
                   <RxCross2 style={{ height: "20px", width: "20px" }} />
                 </button>
               ) : (
-                <button
-                  onClick={searchInputToggal}
-                >
+                <button onClick={searchInputToggal}>
                   <Image
                     width={19}
                     height={19}
@@ -147,32 +142,32 @@ const Header = () => {
             {user ? (
               ""
             ) : (
-              <button >
-                  <Link
-                    style={{
-                      color: "#fff",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                    href="/login"
-                  >
-                    <Image
-                      src={accountButton}
-                      width={24}
-                      height={24}
-                      alt="account Button"
-                    />
-                  </Link>
+              <button>
+                <Link
+                  style={{
+                    color: "#fff",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  href="/login"
+                >
+                  <Image
+                    src={accountButton}
+                    width={24}
+                    height={24}
+                    alt="account Button"
+                  />
+                </Link>
               </button>
             )}
           </div>
         </div>
         <div className="input_box_ab">
           {searchInput ? (
-            <div className="flex_center"
-              style={{padding: "10px",
-              width: "100%",}}
+            <div
+              className="flex_center"
+              style={{ padding: "10px", width: "100%" }}
             >
               <input
                 onKeyDown={(e) => {
@@ -182,7 +177,7 @@ const Header = () => {
                 placeholder="Search Your Favorites Store"
                 className="header_input_search"
               ></input>
-              <button className="header_input_button"></button>
+              {/* <button className="header_input_button"></button> */}
             </div>
           ) : (
             ""
@@ -196,7 +191,10 @@ const Header = () => {
                       <ul className="search_out_put_box" key={i}>
                         <li>
                           {" "}
-                          <Link style={{ color: "#000",display:"block" }} href={item.name}>
+                          <Link
+                            style={{ color: "#000", display: "block" }}
+                            href={item.name}
+                          >
                             {" "}
                             <span>{item.name}</span>{" "}
                             <span style={{ float: "right" }}>
@@ -232,23 +230,27 @@ const Header = () => {
       </div>
       <Sidebar closeSidebar={toggleClick} togalButton={sidebarToggle} />
       <style jsx>{`
-        .app_bar{
+        .app_bar {
           max-width: 600px;
           position: fixed;
           width: 100%;
           z-index: 9999;
           margin: auto;
-          background: var(--main-color);
+          background: ${user?.data?.is_gold == 1
+            ? "#3b4050"
+            : "var(--main-color)"};
           box-shadow: 0px 3px 13px -5px #a7a2a2;
         }
-        .app_tool_bar{
+        .app_tool_bar {
           padding: 5px;
           width: 100%;
           justify-content: space-between;
           position: relative;
           align-items: center;
         }
-        {/* button:focus{background-color:red;} */}
+         {
+          /* button:focus{background-color:red;} */
+        }
         .header_input_search {
           width: 100%;
           padding: 8px 22px;
@@ -261,21 +263,22 @@ const Header = () => {
           letter-spacing: 1px;
           font-weight: 500;
         }
-        .input_box_ab{
+        .input_box_ab {
           position: absolute;
           top: 59px;
-          background: var(--main-color);
+          background: ${user?.data?.is_gold == 1
+            ? "#202020eb"
+            : "var(--main-color)"};
           width: 100%;
         }
-        button{
+        button {
           color: var(--second-color);
           padding: 10px;
           transition: auto;
           border-radius: 50px;
         }
-        button:hover{
-          background: #e7834a;
-   
+        button:hover {
+          background: ${user?.data?.is_gold == 1 ? "#3c3c3ceb" : "#d8895c"};
         }
         .header_input_button {
           position: absolute;

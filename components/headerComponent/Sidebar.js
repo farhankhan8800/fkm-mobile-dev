@@ -1,4 +1,3 @@
-
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
@@ -45,7 +44,7 @@ export const menuList = [
   {
     link: "/live-feed",
     menuName: "Live Feed",
-    menuIcon:livefeed,
+    menuIcon: livefeed,
   },
   {
     link: "/articles",
@@ -85,17 +84,15 @@ export const menuList = [
 ];
 
 const Sidebar = ({ togalButton, closeSidebar }) => {
-
-  const userdata = useGetUser()
+  const userdata = useGetUser();
   // console.log(userdata)
   const router = useRouter();
-  const user = useGetUser()
+  const user = useGetUser();
   const sidebarClose = () => {
     setTimeout(() => {
       closeSidebar();
     }, 200);
   };
-
 
   // console.log(user)
   const logoutUser = () => {
@@ -120,10 +117,12 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
             overflow: "auto",
           }}
         >
-          <div className="sidebar_class"
+          <div
+            className="sidebar_class"
             style={{
-              width: "83%",
+              width: togalButton ? "83%" : "0px",
               minWidth: "250px",
+
               maxWidth: "450px",
               backgroundColor: "#fff",
               padding: "20px 10px",
@@ -132,92 +131,104 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
             }}
           >
             <div>
-
-            <div
-              style={{
-                padding: "10px 13px",
-                borderRadius: "10px",
-                background: "#ff00000d",
-                borderBottom:user?.data.is_gold == 1?"3px solid gold":"3px solid gray"
-              }}
-            >
-              <Link href={userdata ? "/cashback/home" : "/login"}>
-                <div
-                  className="d_flex"
-                  style={{
-                    color: "#000",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    
-                  }}
-                >
-                  <div className="avatar_div" style={{overflow:"hidden"}}>
-                  
-                    {
-                      userdata ?  <Image src= {userdata.data.user_img_url} alt=""height={45} width={45}></Image>: <FaUser />
-                    }
-                  
-                  </div>
-                  <div style={{marginLeft:"17px"}}>
-                    <p className="p_tag_big" style={{ fontSize: "16px" }}>
-                      Hello{" "}
-                    </p>
-                    {userdata ? (
-                      <p
-                        className="p_tag_big"
-                        style={{
-                          fontWeight: "600",
-                          fontSize: "19px",
-                          letterSpacing: "1px",
-                        }}
-                      >
-                        {" "}
-                        {userdata.data.username}
-                      </p>
-                    ) : (
-                      <p
-                        className="p_tag_big"
-                        style={{
-                          fontWeight: "600",
-                          fontSize: "19px",
-                          letterSpacing: "1px",
-                        }}
-                      >
-                        Guest
-                      </p>
-                    )}
-                  </div>
-                  <div>
-                    {userdata ? (
-                      <button
-                        onClick={() => router.push("/user-edit-details")}
-                        className="text_button"
-                      >
-                        Edit
-                      </button>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </div>
-              </Link>
-            </div>
-              <ul
-              className="sidebar_list_ul"
-                style={{ width: "100%" }}
+              <div
+                style={{
+                  padding: "10px 13px",
+                  borderRadius: "10px",
+                  background: user?.data.is_gold == 1 ? "#3b4050" : "#f27935",
+                  borderBottom:
+                    user?.data.is_gold == 1
+                      ? "3px solid gold"
+                      : "3px solid gray",
+                }}
               >
+                <Link href={userdata ? "/cashback/home" : "/login"}>
+                  <div
+                    className="d_flex"
+                    style={{
+                      color: "#000",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div className="avatar_div" style={{ overflow: "hidden" }}>
+                      {userdata ? (
+                        <Image
+                          src={userdata.data.user_img_url}
+                          alt=""
+                          height={45}
+                          width={45}
+                        ></Image>
+                      ) : (
+                        <FaUser />
+                      )}
+                    </div>
+                    <div style={{ marginLeft: "17px" }}>
+                      <p className="p_tag_big" style={{ fontSize: "16px" }}>
+                        Hello{" "}
+                      </p>
+                      {userdata ? (
+                        <p
+                          className="p_tag_big"
+                          style={{
+                            fontWeight: "600",
+                            fontSize: "19px",
+                            letterSpacing: "1px",
+                          }}
+                        >
+                          {" "}
+                          {userdata.data.username}
+                        </p>
+                      ) : (
+                        <p
+                          className="p_tag_big"
+                          style={{
+                            fontWeight: "600",
+                            fontSize: "19px",
+                            letterSpacing: "1px",
+                          }}
+                        >
+                          Guest
+                        </p>
+                      )}
+                    </div>
+                    <div>
+                      {userdata ? (
+                        <button
+                          onClick={() => router.push("/user-edit-details")}
+                          className="text_button"
+                        >
+                          Edit
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </div>
+                </Link>
+              </div>
+              <ul className="sidebar_list_ul" style={{ width: "100%" }}>
                 <div>
                   {userdata ? (
                     <>
                       <Link href="/cashback/home">
-                        <div style={{padding:"14px 18px"}} className="d_flex" onClick={sidebarClose}>
-                            <Image
-                              width={17}
-                              height={17}
-                              src={dashboardIcon}
-                              alt="menuIcon"
-                            ></Image>
-                          <p className="list_item_text" style={{ color: "#646161",paddingLeft:"35px"}}>Dashboard</p>
+                        <div
+                          style={{ padding: "14px 18px" }}
+                          className="d_flex"
+                          onClick={sidebarClose}
+                        >
+                          <Image
+                            width={17}
+                            height={17}
+                            src={dashboardIcon}
+                            alt="menuIcon"
+                          ></Image>
+                          <p
+                            className="list_item_text"
+                            style={{ color: "#646161", paddingLeft: "35px" }}
+                          >
+                            Dashboard
+                          </p>
                         </div>
                       </Link>
                       <hr className="divider_class" />
@@ -229,15 +240,23 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
                 {menuList.map((item, i) => (
                   <div key={i + 1}>
                     <Link href={item.link}>
-                      <div style={{padding:"14px 18px"}} className="d_flex" onClick={sidebarClose}>
-                          <Image
-                            width={17}
-                            height={17}
-                            src={item.menuIcon}
-                            alt="menuIcon"
-                          />
-                        <p className="list_item_text" style={{ color: "#646161",paddingLeft:"35px"}}
-                        >{item.menuName}</p>
+                      <div
+                        style={{ padding: "14px 18px" }}
+                        className="d_flex"
+                        onClick={sidebarClose}
+                      >
+                        <Image
+                          width={17}
+                          height={17}
+                          src={item.menuIcon}
+                          alt="menuIcon"
+                        />
+                        <p
+                          className="list_item_text"
+                          style={{ color: "#646161", paddingLeft: "35px" }}
+                        >
+                          {item.menuName}
+                        </p>
                       </div>
                     </Link>
                     <hr className="divider_class" />
@@ -245,30 +264,48 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
                 ))}
                 <div>
                   {userdata ? (
-                    <div  onClick={logoutUser}>
-                      <div style={{padding:"14px 18px" ,cursor:"pointer"}} className="d_flex"  onClick={sidebarClose}>
-                          <Image
-                            width={17}
-                            height={17}
-                            src={powerOffIcon}
-                            alt="menuIcon"
-                          ></Image>
-                     
-                        <p  className="list_item_text" style={{ color: "#646161",paddingLeft:"35px",}} >Logout</p>
+                    <div onClick={logoutUser}>
+                      <div
+                        style={{ padding: "14px 18px", cursor: "pointer" }}
+                        className="d_flex"
+                        onClick={sidebarClose}
+                      >
+                        <Image
+                          width={17}
+                          height={17}
+                          src={powerOffIcon}
+                          alt="menuIcon"
+                        ></Image>
+
+                        <p
+                          className="list_item_text"
+                          style={{ color: "#646161", paddingLeft: "35px" }}
+                        >
+                          Logout
+                        </p>
                       </div>
                       <hr className="divider_class" />
                     </div>
                   ) : (
                     <div>
                       <Link href="/login">
-                        <div style={{padding:"14px 18px"}} className="d_flex" onClick={sidebarClose}>
-                            <Image
-                              width={20}
-                              height={20}
-                              src={loginIcon}
-                              alt="menuIcon"
-                            ></Image>
-                         <p className="list_item_text" style={{ color: "#646161",paddingLeft:"35px"}} >Login</p>
+                        <div
+                          style={{ padding: "14px 18px" }}
+                          className="d_flex"
+                          onClick={sidebarClose}
+                        >
+                          <Image
+                            width={20}
+                            height={20}
+                            src={loginIcon}
+                            alt="menuIcon"
+                          ></Image>
+                          <p
+                            className="list_item_text"
+                            style={{ color: "#646161", paddingLeft: "35px" }}
+                          >
+                            Login
+                          </p>
                         </div>
                       </Link>
                       <hr className="divider_class" />
@@ -277,44 +314,48 @@ const Sidebar = ({ togalButton, closeSidebar }) => {
                 </div>
               </ul>
             </div>
-            
           </div>
         </div>
       ) : (
         ""
       )}
       <style jsx>{`
-      .avatar_div{
-        padding: 10px;
-        border: none;
-        background: #cac3c3;
-        border-radius: 32px;
-        width: 45px;
-        height: 45px;
-        /* text-align: center; */
-        justify-content: center;
-        align-items: center;
-        display: flex;
-        color: #fff;
-        font-size: 21px;
-      }
-      @media screen and (max-width:420px) {
-        .sidebar_class{
-           width:95% !important;
+        .avatar_div {
+          padding: 10px;
+          border: none;
+          background: #cac3c3;
+          border-radius: 32px;
+          width: 45px;
+          height: 45px;
+          /* text-align: center; */
+          justify-content: center;
+          align-items: center;
+          display: flex;
+          color: #fff;
+          font-size: 21px;
         }
-      }
-      .divider_class{
-        opacity: 0.1;
-      }
-      .sidebar_list_ul{
-        width: 100%;
-       overflow-y: auto;
-       height: 700px;
-      }
-      .sidebar_list_ul::-webkit-scrollbar {
-       display: none;
-      }
-     
+        // .sidebar_class {
+        //   transition: all 5ms;
+        // }
+        @media screen and (max-width: 420px) {
+          .sidebar_class {
+            width: 95% !important;
+          }
+        }
+        .divider_class {
+          opacity: 0.1;
+        }
+        .sidebar_list_ul {
+          width: 100%;
+          overflow-y: auto;
+          height: 700px;
+        }
+        .sidebar_list_ul::-webkit-scrollbar {
+          display: none;
+        }
+        .p_tag_big {
+          color: ${user?.data.is_gold == 1 ? "#fff" : "#000"};
+        }
       `}</style>
     </div>
   );

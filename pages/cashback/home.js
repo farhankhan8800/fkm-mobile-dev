@@ -1,7 +1,5 @@
-
 import Header from "../../components/headerComponent/Header";
 import HeadTag from "../../components/headTagComponent/HeadTag";
-
 
 import UserSummary from "../../components/clickHistoryComponents/UserSummary";
 import { useRouter } from "next/router";
@@ -18,7 +16,7 @@ import protectRoute from "service/protect-route";
 import Image from "next/image";
 
 const apiAuth = process.env.API_AUTH;
-const DEVICE_TYPE = process.env.DEVICE_TYPE
+const DEVICE_TYPE = process.env.DEVICE_TYPE;
 
 const UserProfile = () => {
   const [user_summary, setUser_summary] = useState();
@@ -27,11 +25,14 @@ const UserProfile = () => {
   const [serverError, setServerError] = useState();
   const [alert_message, set_Alert_message] = useState();
   const router = useRouter();
-  const userdata = useGetUser()
-  const headeTitle = ` ${userdata?.data.username }| Freekaamaal`;
+  const userdata = useGetUser();
+  const headeTitle = ` ${userdata?.data.username}| Freekaamaal`;
 
   const authToken = useUserToken();
- 
+
+  const GetUser = useGetUser();
+
+  // console.log(GetUser?.data?.is_gold);
 
   useEffect(() => {
     setUser_summary(JSON.parse(localStorage.getItem("usersummary")));
@@ -39,7 +40,7 @@ const UserProfile = () => {
 
   // session-expired
 
-    const redeemCode = async (e) => {
+  const redeemCode = async (e) => {
     e.preventDefault();
     set_code_error("");
     setServerError("");
@@ -60,20 +61,19 @@ const UserProfile = () => {
             },
           }
         );
-  
 
         // console.log(data)
-        if(data.code == "401"){
-          return router.push("/session-expired")
+        if (data.code == "401") {
+          return router.push("/session-expired");
         }
         if (data.status == 1) {
           set_Alert_message(data.message);
         } else {
-          setServerError(data.message ? data.message: data.msg ? data.msg :"" );
+          setServerError(
+            data.message ? data.message : data.msg ? data.msg : ""
+          );
         }
-      } catch (error) {
-       
-      }
+      } catch (error) {}
     } else {
       set_code_error("Enter Any Code Then Press Redeem Button");
     }
@@ -87,9 +87,14 @@ const UserProfile = () => {
         <div style={{ padding: "16px" }}>
           <div
             style={{
-              backgroundColor: "#f27935",
+              backgroundColor:
+                GetUser?.data?.is_gold == 1 ? " #3b4050" : "#f27935",
               padding: "10px 20px",
               borderRadius: "10px",
+              borderBottom:
+                GetUser?.data.is_gold == 1
+                  ? "3px solid gold"
+                  : "3px solid gray",
             }}
           >
             <div
@@ -101,10 +106,19 @@ const UserProfile = () => {
               }}
             >
               <div className="avatar_div">
-                {/* <FaUser /> */} <Image src={userdata?.data.user_img_url} alt="userProfile" height={45} width={45}></Image>
+                {/* <FaUser /> */}{" "}
+                <Image
+                  src={userdata?.data.user_img_url}
+                  alt="userProfile"
+                  height={45}
+                  width={45}
+                ></Image>
               </div>
               <div>
-                <h3 style={{ fontWeight: "600" }}> {userdata?.data.username}</h3>
+                <h3 style={{ fontWeight: "600" }}>
+                  {" "}
+                  {userdata?.data.username}
+                </h3>
                 <p style={{ fontSize: "12px" }}>
                   Check Out Your Cashback Summary{" "}
                 </p>
@@ -211,13 +225,16 @@ const UserProfile = () => {
               </div>
             </div>
           </div>
-          
+
           {/* PromoCode  */}
 
           <div
             style={{
               padding: " 20px 10px",
-              border: "1px solid #faecec",
+              border:
+                GetUser?.data?.is_gold == 1
+                  ? "1px solid rgb(52 52 52)"
+                  : "1px solid #faecec",
               borderRadius: "5px",
               marginTop: "20px",
               background: "#fff",
@@ -298,34 +315,38 @@ const UserProfile = () => {
       </div>
       <style jsx>
         {`
-         .avatar_div{
-          padding: 10px;
-          border: none;
-          background: #cac3c3;
-          border-radius: 32px;
-          width: 45px;
-          overflow: hidden;
-          height: 45px;
-          /* text-align: center; */
-          justify-content: center;
-          align-items: center;
-          display: flex;
-          color: #fff;
-          font-size: 21px;
-        }
-        .promocode_input_style{
-          padding: 4px 10px;
-          border: none;
-          letter-spacing: 1px;
-          font-size: 16px;
-          outline: none;
-          color: #343434;
-          border-bottom: 1px solid #c4c3c3;
-        }
+          .avatar_div {
+            padding: 10px;
+            border: none;
+            background: #cac3c3;
+            border-radius: 32px;
+            width: 45px;
+            overflow: hidden;
+            height: 45px;
+            /* text-align: center; */
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            position: relative;
+            color: #fff;
+            font-size: 21px;
+          }
+          // .avatar_div {
+          //      GetUser?.data?.is_gold == 1 ? "4px solid #e9d22f" : ""
+          // }
+          .promocode_input_style {
+            padding: 4px 10px;
+            border: none;
+            letter-spacing: 1px;
+            font-size: 16px;
+            outline: none;
+            color: #343434;
+            border-bottom: 1px solid #c4c3c3;
+          }
         `}
       </style>
     </>
   );
 };
 
-export default protectRoute(UserProfile) ;
+export default protectRoute(UserProfile);
